@@ -81,7 +81,7 @@ public class ExamenesUtils {
 		String[] unidades=getUnidadesExamen(exad);
 		
 		if(exad.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL))
-			prom[0]=resultados.get(0).getResValor1();
+			prom[0]=resultados.get(0).getResValor1()+resultados.get(1).getResValor1();
 		
 		String res = "Resultado";
 		
@@ -208,7 +208,8 @@ public class ExamenesUtils {
 		{
 			Double tiempo=Double.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.TIEMPO.FUERA.PERMITIDO"));
 			Double errores=Double.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.ERRORES.PERMITIDO"));
-			prom[0]=resultados[0].getResValor1();
+			prom[0]=resultados[0].getResValor1()+resultados[1].getResValor1();
+			
 			if(prom[0]<=tiempo && prom[1]<=errores)
 				return Examen.RESULTADO_DENTRO;
 			else

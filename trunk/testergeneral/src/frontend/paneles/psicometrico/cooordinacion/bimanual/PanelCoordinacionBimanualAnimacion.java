@@ -68,8 +68,8 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	private int extraHeigth=1000;
 	private int width;
 	private int heightPantalla;
-	private int widthAuto=40;
-	private int heightAuto=40;
+	private int widthAuto=30;
+	private int heightAuto=30;
 	private int erroresDerecho=0;
 	private int erroresIzq=0;
 	private long tiempoFueraIzq=0;
@@ -259,7 +259,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	public void run() {
 		int i=2;
 		boolean exit=false;
-		int tiempoSleep=40;
+		int tiempoSleep=48;
 		while (!stop) {
 			dibujarAutos();
 			if(!stop && run)
@@ -329,8 +329,6 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 				
 				long timepo=System.currentTimeMillis() - timeIni;
 				
-				if(timepo>44)
-					log.debug("Tiempo RUN: "+(System.currentTimeMillis() - timeIni));
 			}
 			else
 			{
@@ -359,51 +357,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 			throw new RuntimeException(e);
 		}
 	}
-	/*
-java.lang.RuntimeException: java.lang.IllegalStateException: Input not set
-	at frontend.paneles.psicometrico.cooordinacion.bimanual.PanelCoordinacionBimanualAnimacion.initPosicion(PanelCoordinacionBimanualAnimacion.java:360)
-	at frontend.paneles.psicometrico.cooordinacion.bimanual.PanelCoordinacionBimanualAnimacion.setbackImagen(PanelCoordinacionBimanualAnimacion.java:136)
-	at frontend.paneles.psicometrico.cooordinacion.bimanual.PanelCoordinacionBimanualAnimacion.<init>(PanelCoordinacionBimanualAnimacion.java:98)
-	at frontend.paneles.psicometrico.cooordinacion.bimanual.PanelCoordinacionBimanual.mostrarSecondMonitor(PanelCoordinacionBimanual.java:176)
-	at frontend.paneles.psicometrico.cooordinacion.bimanual.PanelCoordinacionBimanual.<init>(PanelCoordinacionBimanual.java:79)
-	at frontend.paneles.examenes.PanelDetalleExamen.addTestCoorBimanual(PanelDetalleExamen.java:274)
-	at frontend.paneles.examenes.PanelDetalleExamen.actionBtnDetalleExamen(PanelDetalleExamen.java:180)
-	at frontend.paneles.examenes.PanelDetalleExamen$1.actionPerformed(PanelDetalleExamen.java:47)
-	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1995)
-	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2318)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:387)
-	at javax.swing.JToggleButton$ToggleButtonModel.setPressed(JToggleButton.java:291)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:236)
-	at org.pushingpixels.substance.internal.utils.RolloverButtonListener.mouseReleased(RolloverButtonListener.java:124)
-	at java.awt.Component.processMouseEvent(Component.java:6134)
-	at javax.swing.JComponent.processMouseEvent(JComponent.java:3265)
-	at java.awt.Component.processEvent(Component.java:5899)
-	at java.awt.Container.processEvent(Container.java:2023)
-	at java.awt.Component.dispatchEventImpl(Component.java:4501)
-	at java.awt.Container.dispatchEventImpl(Container.java:2081)
-	at java.awt.Component.dispatchEvent(Component.java:4331)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4301)
-	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:3965)
-	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:3895)
-	at java.awt.Container.dispatchEventImpl(Container.java:2067)
-	at java.awt.Window.dispatchEventImpl(Window.java:2458)
-	at java.awt.Component.dispatchEvent(Component.java:4331)
-	at java.awt.EventQueue.dispatchEvent(EventQueue.java:599)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:269)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:184)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:174)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:169)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:161)
-	at java.awt.EventDispatchThread.run(EventDispatchThread.java:122)
-Caused by: java.lang.IllegalStateException: Input not set
-	at com.sun.imageio.plugins.jpeg.JPEGImageReader.gotoImage(JPEGImageReader.java:431)
-	at com.sun.imageio.plugins.jpeg.JPEGImageReader.readHeader(JPEGImageReader.java:553)
-	at com.sun.imageio.plugins.jpeg.JPEGImageReader.getHeight(JPEGImageReader.java:655)
-	at frontend.paneles.psicometrico.cooordinacion.bimanual.PanelCoordinacionBimanualAnimacion.initPosicion(PanelCoordinacionBimanualAnimacion.java:356)
-	... 33 more
-
-	 * */
-	
+		
 	public void initValores()
 	{
 		isDerFuera=false;
@@ -467,6 +421,7 @@ Caused by: java.lang.IllegalStateException: Input not set
 		boolean isOutOfTheRoad=isOutOfTheRoad(xAutoDer);
 		if(isOutOfTheRoad && !isDerFuera)
 		{
+			Util.playSound(Constantes.SOUND_ERROR,10);
 			erroresDerecho++;
 			isDerFuera=true;
 			tiempoDesdeFueraDer=System.currentTimeMillis();
@@ -474,7 +429,7 @@ Caused by: java.lang.IllegalStateException: Input not set
 		else if(!isOutOfTheRoad && isDerFuera)
 		{
 			isDerFuera=false;
-			tiempoFueraDer+=System.currentTimeMillis()-tiempoDesdeFueraDer;
+			tiempoFueraDer+=(System.currentTimeMillis()-tiempoDesdeFueraDer);
 		}
 		
 		return isOutOfTheRoad;
@@ -485,7 +440,7 @@ Caused by: java.lang.IllegalStateException: Input not set
 		boolean isOutOfTheRoad=isOutOfTheRoad(xAutoIzq);
 		if(isOutOfTheRoad && !isIzqFuera)
 		{
-			System.out.println("Error izq");
+			Util.playSound(Constantes.SOUND_ERROR,10);
 			erroresIzq++;
 			isIzqFuera=true;
 			tiempoDesdeFueraIzq=System.currentTimeMillis();
@@ -493,7 +448,7 @@ Caused by: java.lang.IllegalStateException: Input not set
 		else if(!isOutOfTheRoad && isIzqFuera)
 		{
 			isIzqFuera=false;
-			tiempoFueraIzq+=System.currentTimeMillis()-tiempoDesdeFueraIzq;
+			tiempoFueraIzq+=(System.currentTimeMillis()-tiempoDesdeFueraIzq);
 		}
 		
 		return isOutOfTheRoad;
@@ -517,10 +472,7 @@ Caused by: java.lang.IllegalStateException: Input not set
 			
 		
 			if(pixel==-16777216)
-			{
-					Util.playSound(Constantes.SOUND_ERROR,600);
 					return true;
-			}
 			
 		}
 		return false;

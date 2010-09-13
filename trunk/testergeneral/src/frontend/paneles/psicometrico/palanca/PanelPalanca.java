@@ -92,6 +92,8 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 		}
 
 		this.validate();
+		g2d.rotate(Math.toRadians(-90), 315, 230);
+		img= buffImg.getScaledInstance(370 - (int) (370 * 0.32),630 - (int) (630 * 0.32), Image.SCALE_SMOOTH);
 		inicializarThreads();
 	}
 
@@ -152,8 +154,8 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 						}
 					}
 				}
-
-				Thread.sleep(110);
+				img= buffImg.getScaledInstance(370 - (int) (370 * 0.32),630 - (int) (630 * 0.32), Image.SCALE_SMOOTH);
+				Thread.sleep(100);
 
 			} catch (InterruptedException e) {
 
@@ -279,11 +281,6 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 
 	@Override
 	public void paint(Graphics g) {
-		BufferedImage buffImg = new BufferedImage(450, 630,
-				BufferedImage.TYPE_INT_ARGB);
-
-		Graphics2D g2d = (Graphics2D) buffImg.getGraphics();
-		g2d.rotate(Math.toRadians(-90), 315, 230);
 		super.paint(g);
 		pintarPuntos(g2d);
 
@@ -302,8 +299,6 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 			}
 		}
 
-		Image img = buffImg.getScaledInstance(370 - (int) (370 * 0.32),
-				630 - (int) (630 * 0.32), Image.SCALE_SMOOTH);
 		g.drawImage(img, 150, 125, this);
 	}
 
@@ -653,7 +648,7 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 				resultados.add(this.resultados.get(i));
 			}*/
 
-			resultadoDetalleExamen.setRdeNota(new Double(tiempoTotal));
+			//resultadoDetalleExamen.setRdeNota(new Double(tiempoTotal));
 			resultadoDetalleExamen.setRdeNota2(new Double(errores));
 			resultadoDetalleExamen.setRdeResultado(getResultado());
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
@@ -892,5 +887,8 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 			.getProperty("EXAMEN.PALANCA.PUNTOS"));
 	private int tiempo = Integer.valueOf(ContextManager
 			.getProperty("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA"));
-
+	private BufferedImage buffImg = new BufferedImage(450, 630,BufferedImage.TYPE_INT_ARGB);
+	private Graphics2D g2d = (Graphics2D) buffImg.getGraphics();
+	private Image img;
+	
 }

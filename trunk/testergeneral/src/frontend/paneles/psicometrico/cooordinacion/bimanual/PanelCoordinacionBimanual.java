@@ -110,19 +110,21 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 				
 				Resultado res=new Resultado();
 				res.setResEtapa(0l);
-				//res.setResEtapaDesc("Auto Derecho");
-				double tiempo=panelCoordinacionBimanualAnimacion.getTiempoFueraDer()+panelCoordinacionBimanualAnimacion.getTiempoFueraIzq();
-				double errores=panelCoordinacionBimanualAnimacion.getErroresDerecho()+panelCoordinacionBimanualAnimacion.getErroresIzq();
+				res.setResEtapaDesc("Auto Derecho");
+				double tiempo=panelCoordinacionBimanualAnimacion.getTiempoFueraDer();
+				double errores=panelCoordinacionBimanualAnimacion.getErroresDerecho();
 				res.setResValor1(tiempo/10);
 				res.setResValor2(errores);
 				resultados.add(res);
 				
-				/*res=new Resultado();
+				res=new Resultado();
 				res.setResEtapa(1l);
 				res.setResEtapaDesc("Auto Izquierdo");
-				res.setResValor2((double)panelCoordinacionBimanualAnimacion.getTiempoFueraIzq());
-				res.setResValor1((double)panelCoordinacionBimanualAnimacion.getErroresIzq());
-				resultados.add(res);*/
+				tiempo=panelCoordinacionBimanualAnimacion.getTiempoFueraIzq();
+				errores=panelCoordinacionBimanualAnimacion.getErroresIzq();
+				res.setResValor1(tiempo/10);
+				res.setResValor2(errores);
+				resultados.add(res);
 				
 				PanelResultado panelResultado=new PanelResultado(resultados,TableModelResultado.ERRORES_Y_RESULTADO,exaDetalle);
 				panelCoordinacionBimanualUsuarioExaminador.getPanelContenido().add(panelResultado);
@@ -382,7 +384,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 			}
 
 			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
-			pro[0]=this.resultados.get(0).getResValor1();
+			pro[0]=this.resultados.get(0).getResValor1()+this.resultados.get(1).getResValor1();
 			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
 			resultadoDetalleExamen.setRdeNota(pro[0]);
 			resultadoDetalleExamen.setRdeNota2(pro[1]);

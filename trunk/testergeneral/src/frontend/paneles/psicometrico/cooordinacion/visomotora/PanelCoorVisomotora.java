@@ -119,14 +119,21 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	}
 
 	public void run() {
+		Random rnd = new Random();
 		while (run) {
 			try {
 
 				if (run && runExamen) {
 
-					pulsadorAPresionar++;
-					if(pulsadorAPresionar>4)
-						pulsadorAPresionar=1;
+					if (pulsadorAPresionar == 0)
+						pulsadorAPresionar = rnd.nextInt(4) + 1;
+					else {
+						int rndAux = rnd.nextInt(4) + 1;
+						while (rndAux == pulsadorAPresionar)
+							rndAux = rnd.nextInt(4) + 1;
+
+						pulsadorAPresionar = rndAux;
+					}
 
 					panelAnimacionDibujar
 							.setPulsadorAPresionar(pulsadorAPresionar);
@@ -220,7 +227,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 		}
 		setAciertos();
 		log.debug("errores: "+errores);
-		SwingUtilities.invokeLater(new Runnable() {
+		/*SwingUtilities.invokeLater(new Runnable() {
 			public void run() {	
 				long tiempoEntroEnPiscion=System.currentTimeMillis();
 				int pruebaTiempoLocal=0;
@@ -240,7 +247,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 				
 				log.debug("pruebaTiempoLocal: "+pruebaTiempoLocal);
 				pruebaTiempoLocal=0;
-			}});
+			}});*/
 
 	}
 	
@@ -299,7 +306,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 		panelAnimacionDibujar.setAciertosDos(aciertosDos);
 		panelAnimacionDibujar.setAciertosTres(aciertosTres);
 		panelAnimacionDibujar.setAciertosCuatro(aciertosCuatro);
-		panelAnimacionDibujar.setTiempoDentro(tiempoAcumuladoEnPosicion/10);
+		//panelAnimacionDibujar.setTiempoDentro(tiempoAcumuladoEnPosicion/10);
 		panelAnimacionDibujar.repaint();
 	}
 	public void prenderLed(int pulsador) {
@@ -575,7 +582,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 				resultadoDetalleExamen = (ResultadoDetalleExamen) lstResultados.get(0);
 			}
 			resultadoDetalleExamen.setRdeNota2(new Double(errores));
-			resultadoDetalleExamen.setRdeNota(new Double(tiempoAcumuladoEnPosicion));
+			//resultadoDetalleExamen.setRdeNota(new Double(tiempoAcumuladoEnPosicion));
 			resultadoDetalleExamen.setRdeResultado(getResultado());
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
@@ -622,9 +629,9 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	public String getResultado() {
 		lbResultados.setVisible(true);
 		Double errores = Double.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA"));
-		Double tiempoMinimo = Double.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.DENTRO.MINIMO.PERMITIDO"));
+		//Double tiempoMinimo = Double.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.DENTRO.MINIMO.PERMITIDO"));
 
-		if (this.errores <= errores && tiempoAcumuladoEnPosicion>=tiempoMinimo)
+		if (this.errores <= errores)
 			return Examen.RESULTADO_DENTRO;
 		else
 			return Examen.RESULTADO_FUERA;
@@ -648,7 +655,6 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 		aciertosCuatro = 0;
 		tiempoTotal = 0;
 		pulsadorAPresionar = 0;
-		tiempoAcumuladoEnPosicion=0;
 
 		setAciertos();
 	}
@@ -818,7 +824,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	private int pulsadorAPresionar = 0;
 	private PanelAnimacion panelAnimacionDibujar = new PanelAnimacion();
 	private long tiempoEntreLuz=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO"));
-	private long tiempoAcumuladoEnPosicion=0;
+	//private long tiempoAcumuladoEnPosicion=0;
 	//private long tiempoEntroEnPiscion=0;
 
 }
