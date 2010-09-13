@@ -27,7 +27,6 @@ public class PanelAnimacion extends javax.swing.JPanel {
 	private int aciertosDos=0;
 	private int aciertosTres=0;
 	private int aciertosCuatro=0;
-	private long tiempoDentro=0;
 	
 	/** Creates new form PanelAnimacion */
 	public PanelAnimacion() {
@@ -81,14 +80,7 @@ public class PanelAnimacion extends javax.swing.JPanel {
 	public int getPulsadorAPresionar() {
 		return pulsadorAPresionar;
 	}
-	
-	public long getTiempoDentro() {
-		return tiempoDentro;
-	}
-	
-	public void setTiempoDentro(long tiempoDentro) {
-		this.tiempoDentro = tiempoDentro;
-	}
+
 
 	@Override
 	public void paint(Graphics g) {
@@ -110,7 +102,7 @@ public class PanelAnimacion extends javax.swing.JPanel {
 		int separacionXPulzadorLuz=20;
 		
 		
-		g.drawString("Tiempo total de permanecía en punteo: "+tiempoDentro,0,separacionTopY);
+		//g.drawString("Tiempo total de permanecía en punteo: "+tiempoDentro,0,separacionTopY);
 		
 		font=new Font(Fonts.SEGOE_UI_NAME,Font.BOLD,25);
 		g.setFont(font);

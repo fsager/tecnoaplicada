@@ -614,6 +614,8 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 
 	private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
 		cargarPersonas();
+		
+
 
 	}
 
