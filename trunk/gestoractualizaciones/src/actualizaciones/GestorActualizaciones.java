@@ -32,20 +32,9 @@ public class GestorActualizaciones extends Thread {
 	private static Exception exception;
 	private static String mensajeExcepcionParaElUsuario;
 	private static boolean seEncontroActualizacion = false;
-	
-	/*
+	private static String urlFTPActual = new String();
+	private static String nombreUsuarioFTPActual = new String();
 
-	private static String ftpActualUrl;
-	private static String ftpActualNombreUsuario;
-	private static String ftpActualPassword;
-	private static String ftpPrincipalUrl;
-	private static String ftpPrincipalNombreUsuario;
-	private static String ftpPrincipalPassword;
-	private static String ftpSecundarioUrl;
-	private static String ftpSecundarioNombreUsuario;
-	private static String ftpSecundarioPassword;
-	private static String codigoRegionDeDestino;
-	private static String versionPrincipal;*/
 
 	public static Exception getException() {
 		return exception;
@@ -78,6 +67,22 @@ public class GestorActualizaciones extends Thread {
 		return seEncontroActualizacion;
 	}
 
+	public static String getUrlFTPActual() {
+		return urlFTPActual;
+	}
+
+	public static void setUrlFTPActual(String urlFTPActual) {
+		GestorActualizaciones.urlFTPActual = urlFTPActual;
+	}
+
+	public static String getNombreUsuarioFTPActual() {
+		return nombreUsuarioFTPActual;
+	}
+
+	public static void setNombreUsuarioFTPActual(String nombreUsuarioFTPActual) {
+		GestorActualizaciones.nombreUsuarioFTPActual = nombreUsuarioFTPActual;
+	}
+
 	@Override
 	public void run() {
 
@@ -85,12 +90,16 @@ public class GestorActualizaciones extends Thread {
 				.cargarParametrosDeActualizacionDesdeArchivo(new File(System
 						.getProperty("user.dir")));
 
-		GestorActualizacionesUtil.establecerServidorAUtilizar();
+		
+		String [] datosFTP = GestorActualizacionesUtil.establecerServidorAUtilizar();
+		
+		urlFTPActual = datosFTP[0];
+		nombreUsuarioFTPActual = datosFTP[1];
 
 		try {
 			GestorActualizacionesUtil.ejecutarActualizacionDeArchivos(new File(System.getProperty("user.dir")));
 		} catch (Exception e) {
-			GestorActualizaciones.setException(e, "Error: Descargando los archivos.");
+			GestorActualizaciones.setException(e, "Error descargando los archivos.");
 			e.printStackTrace();
 		}
 

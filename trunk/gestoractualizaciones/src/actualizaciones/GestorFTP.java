@@ -6,9 +6,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.SocketException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 
 /*
  * To change this template, choose Tools | Templates
@@ -42,7 +48,7 @@ public class GestorFTP {
 	 * @throws MalformedURLException
 	 *             , IOException.
 	 */
-	public static void upload(String ftpServer, String user, String password,
+	public static void upload1(String ftpServer, String user, String password,
 			String fileName, File source) throws MalformedURLException,
 			IOException {
 		if (ftpServer != null && fileName != null && source != null) {
@@ -99,6 +105,34 @@ public class GestorFTP {
 		}
 	}
 
+	public static void download(String ftpServer, String user, String password,
+			String fileName, File destination) {
+		try {
+			System.out.println("Server: "+ftpServer);
+			FTPClient f = new FTPClient();
+
+			f.connect(ftpServer);
+			f.login(user, password);
+            f.setFileType(FTP.BINARY_FILE_TYPE);
+			f.enterLocalPassiveMode();
+			
+			OutputStream output;
+			output = new FileOutputStream(destination);
+			f.retrieveFile(fileName, output);
+			output.close();
+			System.out.println("Se descargó el archivo ftp: "+fileName+" en "+destination.getAbsolutePath());
+
+		} catch (SocketException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+	}
+
 	/**
 	 * Descarga un archivo desde un servidor FTP. Se genera una URL FTP con la
 	 * siguiente sintaxis: ftp://user:password@host:port/filePath;type=i.
@@ -118,11 +152,10 @@ public class GestorFTP {
 	 * @throws MalformedURLException
 	 *             , IOException.
 	 */
-	public static void download(String ftpServer, String user, String password,
-			String fileName, File destination){
+	public static void download1(String ftpServer, String user,
+			String password, String fileName, File destination) {
 
-		try
-		{
+		try {
 			StringBuffer sb = new StringBuffer("ftp://");
 			// Verifica si existen datos de autentificación, si no existen asume
 			// que es un acceso anónimo.
@@ -170,16 +203,31 @@ public class GestorFTP {
 					}
 				}
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	public static boolean existeConexionConServidor(String ftpServerUrl,
 			String user, String password) {
-
+	
+		boolean existeConexion = false;
+		
+		FTPClient ftpClient = new FTPClient();
+		
+		try {
+			ftpClient.connect(ftpServerUrl);
+			existeConexion = ftpClient.login(user, password);
+		} catch (SocketException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return existeConexion;
+		
+		/*
 		if (ftpServerUrl != null) {
 			StringBuffer sb = new StringBuffer("ftp://");
 			// Verifica si existen datos de autentificación, si no existen asume
@@ -206,7 +254,8 @@ public class GestorFTP {
 
 		} else {
 			return false;
-		}
+		}*/
+		
 	}
 
 }// Fin de clase GestorFTP.
