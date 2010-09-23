@@ -41,6 +41,9 @@ public class GestorActualizacionesUtil {
 	private static String codigoRegionDeDestino;
 	private static String versionPrincipal;
 	private static String nombreAplicacion;
+	private static String nombreArchivoActualDescargando = new String();
+	private static int cantidadArchivosDescargando = 0;
+	private static int cantidadTotalArchivos = 0;
 
 	public static void init(String ftpPrincipalUrl,
 			String ftpPrincipalNombreUsuario, String ftpPrincipalPassword,
@@ -116,12 +119,26 @@ public class GestorActualizacionesUtil {
 		return nombreAplicacion;
 	}
 
+	public static String getNombreArchivoActualDescargando() {
+		return nombreArchivoActualDescargando;
+	}
+
+	public static int getCantidadArchivosDescargando() {
+		return cantidadArchivosDescargando;
+	}
+
+	public static int getCantidadTotalArchivos() {
+		return cantidadTotalArchivos;
+	}
+
 	/**
 	 * Establece qué servidor FTP se utilizará para el proceso de actualización
 	 * actual. En caso que el servidor principal no esté disponible, se
 	 * utilizará el secundario.
+	 * 
+	 * @return URL del servidor utilizado...
 	 */
-	public static void establecerServidorAUtilizar() {
+	public static String[] establecerServidorAUtilizar() {
 		try {
 			if (GestorFTP.existeConexionConServidor(getFtpPrincipalUrl(),
 					getFtpPrincipalNombreUsuario(), getFtpPrincipalPassword()) == true) {
@@ -140,9 +157,12 @@ public class GestorActualizacionesUtil {
 						"No se ha podido establecer la conexión con el servidor de actualizaciones primario, ni secundario.");
 			}
 
-			System.out.println("SERVIDOR SELECCIONADO: " + getFtpActualUrl()
-					+ " - USUARIO: "
-					+ desencriptarString(ftpActualNombreUsuario));
+			String[] datosRetorno = new String[2];
+
+			datosRetorno[0] = getFtpActualUrl();
+			datosRetorno[1] = getFtpActualNombreUsuario();
+
+			return datosRetorno;
 
 		} catch (Exception ex) {
 			RuntimeException exRuntime = new RuntimeException(
@@ -204,7 +224,6 @@ public class GestorActualizacionesUtil {
 		return estaActualizado;
 
 	}
-
 
 	/**
 	 * Calcula y retorna el código MD5 de un archivo.
@@ -281,10 +300,11 @@ public class GestorActualizacionesUtil {
 	}
 
 	/**
-	 * Obtiene un archivo desde la carpeta "common" del Servidor FTP.
-	 * Esta carpeta contiene archivos comunes a todas las versiones del programa.
+	 * Obtiene un archivo desde la carpeta "common" del Servidor FTP. Esta
+	 * carpeta contiene archivos comunes a todas las versiones del programa.
 	 */
-	public static void obtenerArchivoComunDeTodasLasVersiones (String nombreArchivoOrigen, File directorioDestino) {
+	public static void obtenerArchivoComunDeTodasLasVersiones(
+			String nombreArchivoOrigen, File directorioDestino) {
 		/*
 		 * Si el directorio destino no existe, lo creamos junto con sus
 		 * directorios padres.
@@ -292,7 +312,7 @@ public class GestorActualizacionesUtil {
 		if (!directorioDestino.exists()) {
 			directorioDestino.mkdirs();
 		}
-		
+
 		try {
 			GestorFTP.download(getFtpActualUrl(),// URL del FTP
 					getFtpActualNombreUsuario(),// Nombre de usuario
@@ -301,16 +321,16 @@ public class GestorActualizacionesUtil {
 					// origen en
 					// servidor.
 					new File(directorioDestino + File.separator
-							+ nombreArchivoOrigen + ".ftptemp"));// Archivo de destino
+							+ nombreArchivoOrigen + ".ftptemp"));// Archivo de
+			// destino
 		} catch (Exception e) {
 			GestorActualizaciones.setException(e,
 					"Error: no se pudo conectar con el servidor FTP.");
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * Obtiene un archivo desde un servidor FTP.
 	 * 
@@ -344,6 +364,9 @@ public class GestorActualizacionesUtil {
 		System.out.println("RUTA DENTRO DEL FTP: "
 				+ rutaDelArchivoDentroDeRaizEnFTP);
 
+		nombreArchivoActualDescargando = nombreArchivoOrigen;
+		cantidadArchivosDescargando = cantidadArchivosDescargando + 1;
+		
 		try {
 			GestorFTP.download(getFtpActualUrl(),// URL del FTP
 					getFtpActualNombreUsuario(),// Nombre de usuario
@@ -355,7 +378,10 @@ public class GestorActualizacionesUtil {
 					// origen en
 					// servidor.
 					new File(directorioDestino + File.separator
-							+ nombreArchivoOrigen + ".ftptemp"));// Archivo de destino
+							+ nombreArchivoOrigen + ".ftptemp"));// Archivo de
+			// destino
+
+
 		} catch (Exception e) {
 			GestorActualizaciones.setException(e,
 					"Error: no se pudo conectar con el servidor FTP.");
@@ -363,7 +389,6 @@ public class GestorActualizacionesUtil {
 		}
 	}
 
-	
 	public static File obtenerArchivoConIndicesMD5DesdeServidorFTP(
 			File directorioDestinoArchivo) {
 		String nombreArchivoMD5DesdeServidor = new String("files.md5");
@@ -424,6 +449,7 @@ public class GestorActualizacionesUtil {
 			throw new RuntimeException(e);
 		}
 
+		cantidadTotalArchivos = listaArchivosADescargar.size();
 		return listaArchivosADescargar;
 	}
 
@@ -505,7 +531,7 @@ public class GestorActualizacionesUtil {
 	public static boolean hayNuevaVersionDelPrograma(File directorioActual) {
 		try {
 
-			//GestorActualizacionesUtil.establecerServidorAUtilizar();
+			// GestorActualizacionesUtil.establecerServidorAUtilizar();
 
 			File rutaArchivoMD5Servidor = GestorActualizacionesUtil
 					.obtenerArchivoConIndicesMD5DesdeServidorFTP(directorioActual);
@@ -648,9 +674,9 @@ public class GestorActualizacionesUtil {
 							"No se encontró el archivo de parámetros GestionActualizaciones.ini");
 
 		} catch (SecurityException ex) {
-			GestorActualizaciones.setException(ex, "Error de seguridad.");
+			GestorActualizaciones.setException(ex, "Error de Seguridad.");
 		} catch (IOException ex) {
-			GestorActualizaciones.setException(ex, "Error de entrada/salida.");
+			GestorActualizaciones.setException(ex, "Error de Entrada/Salida.");
 		}
 
 	}
@@ -720,7 +746,7 @@ public class GestorActualizacionesUtil {
 		 * Si se pudo descargar los archivos sin que ocurra una excepción
 		 * anteriormente, quiere decir que la actualización está lista para ser
 		 * aplicada. Se procede a reemplazar los archivos temporales descargados
-		 * del servidor, por los archivos nuevos.
+		 * del servidor por los archivos nuevos.
 		 */
 		renombrarArchivosTemporales(directorioDestinoRaiz);
 
@@ -732,31 +758,31 @@ public class GestorActualizacionesUtil {
 	 * archivos.
 	 */
 	public static void renombrarArchivosTemporales(File directorio) {
-try	{
-	
+		try {
 
-		File[] archivos = directorio.listFiles();
+			File[] archivos = directorio.listFiles();
 
-		for (int x = 0; x < archivos.length; x++) {
+			for (int x = 0; x < archivos.length; x++) {
 
-			if (archivos[x].getName().endsWith(".ftptemp")) {
-				File rutaArchivoNoTemporal = new File(archivos[x]
-						.getAbsolutePath().substring(
-								0,
-								archivos[x].getAbsolutePath().lastIndexOf(
-										".ftptemp")));
-				rutaArchivoNoTemporal.delete();
-				archivos[x].renameTo(rutaArchivoNoTemporal);
+				if (archivos[x].getName().endsWith(".ftptemp")) {
+					File rutaArchivoNoTemporal = new File(archivos[x]
+							.getAbsolutePath().substring(
+									0,
+									archivos[x].getAbsolutePath().lastIndexOf(
+											".ftptemp")));
+					rutaArchivoNoTemporal.delete();
+					archivos[x].renameTo(rutaArchivoNoTemporal);
+				}
+
+				if (archivos[x].isDirectory()) {
+
+					renombrarArchivosTemporales(archivos[x]);
+				}
 			}
 
-			if (archivos[x].isDirectory()) {
-
-				renombrarArchivosTemporales(archivos[x]);
-			}
+		} catch (NullPointerException ex) {
+			System.out
+					.println("Imposible acceder al directorio: " + directorio);
 		}
-	
-	}catch (NullPointerException ex) {
-		System.out.println("Imposible acceder al directorio: "+directorio);
 	}
-}
 }
