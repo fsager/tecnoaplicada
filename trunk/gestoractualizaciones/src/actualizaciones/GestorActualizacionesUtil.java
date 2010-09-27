@@ -317,7 +317,7 @@ public class GestorActualizacionesUtil {
 			GestorFTP.download(getFtpActualUrl(),// URL del FTP
 					getFtpActualNombreUsuario(),// Nombre de usuario
 					getFtpActualPassword(),// Password
-					"/Common/" + nombreArchivoOrigen,// Archivo de
+					"/"+getNombreAplicacion()+"/Common/" + nombreArchivoOrigen,// Archivo de
 					// origen en
 					// servidor.
 					new File(directorioDestino + File.separator
@@ -371,7 +371,7 @@ public class GestorActualizacionesUtil {
 			GestorFTP.download(getFtpActualUrl(),// URL del FTP
 					getFtpActualNombreUsuario(),// Nombre de usuario
 					getFtpActualPassword(),// Password
-					"/" + getCodigoRegionDeDestino() + "/"
+					"/"+getNombreAplicacion()+"/" + getCodigoRegionDeDestino() + "/"
 							+ getVersionPrincipal() + "/"
 							+ rutaDelArchivoDentroDeRaizEnFTP
 							+ nombreArchivoOrigen,// Archivo de
@@ -399,7 +399,7 @@ public class GestorActualizacionesUtil {
 		GestorFTP.download(getFtpActualUrl(),// URL del FTP
 				getFtpActualNombreUsuario(),// Nombre de usuario
 				getFtpActualPassword(),// Password
-				"/" + getCodigoRegionDeDestino() + "/" + getVersionPrincipal()
+				"/"+getNombreAplicacion()+"/" + getCodigoRegionDeDestino() + "/" + getVersionPrincipal()
 						+ "/" + nombreArchivoMD5DesdeServidor,// Archivo de
 				// origen en
 				// servidor.
