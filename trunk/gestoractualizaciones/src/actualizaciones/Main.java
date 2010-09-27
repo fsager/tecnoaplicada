@@ -1,5 +1,9 @@
 package actualizaciones;
 
+import javax.crypto.spec.SecretKeySpec;
+
+import seguridad.Encriptadora;
+
 public class Main {
 
 	/**
@@ -9,10 +13,13 @@ public class Main {
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				// File directorioAListar = new File
-				// (System.getProperty("user.dir"));
-				// GestorActualizaciones.listarDirectorio(directorioAListar,
-				// "");
+				
+				/**SecretKeySpec clavePrivada = new SecretKeySpec(new String(
+				"czbmrndoritlekaz").getBytes(), "AES");
+				Encriptadora encriptador = new Encriptadora("AES", clavePrivada);
+				System.out.println(encriptador.encriptar("chipio@jttecnologiaaplicada.com"));
+				*/
+				
 				JDialogActualizar dialog = new JDialogActualizar(
 						new javax.swing.JFrame(), true);
 				dialog.addWindowListener(new java.awt.event.WindowAdapter() {
