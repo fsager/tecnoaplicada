@@ -112,7 +112,18 @@ public class PersonaHome extends DAOObject implements PersonaDao {
             p_example.setPerFirma(null);
             p_example.setPerFoto(null); 
             
+            
             cri.add(Example.create(p_example).enableLike().ignoreCase());
+            
+            if(p_example.getPerEstudios().equals("SI"))
+            {
+            	cri.add(Restrictions.isNotNull("perEstudios"));	
+            }
+            else if(p_example.getPerEstudios().equals("NO"))
+            {
+            	cri.add(Restrictions.isNull("perEstudios"));	
+            }
+            	
             
             if(desde!=null)
             {

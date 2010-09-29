@@ -23,6 +23,7 @@ import testerGeneral.seguridad.Encriptadora;
 import testerGeneral.service.AuditoriaDefinition;
 import testerGeneral.threads.ThreadTrama;
 import examenes.psicometrico.domain.TramaPsicologico;
+import examenes.psicometrico.domain.TramaVision;
 import frontend.utils.Util;
 import frontend.ventanas.FrameContenedor;
 

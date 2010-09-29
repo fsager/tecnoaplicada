@@ -1,5 +1,7 @@
 package examenes.psicometrico.domain;
 
+import testerGeneral.threads.ThreadTrama;
+
 public interface Trama {
 
 	public abstract  Trama getInstance();
@@ -52,4 +54,6 @@ public interface Trama {
 	public int getPotenciometroIzquierdo();
 	
 	public int getPotenciometroDerecho();
+	
+	public void desconnect(ThreadTrama threadTrama);
 }

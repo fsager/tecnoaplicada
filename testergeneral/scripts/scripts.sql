@@ -83,6 +83,11 @@ select * from app.resultado_detalle_examen;
 
 --delete from app.resultado_detalle_examen;
 
+insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
+(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',2,null,null,'APROBADO',null,'Profecional');
+
+select * from app.PERSONA_EXAMEN
+
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
      values (1,1,'FUERA DE LOS PARAMETROS',600,10);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo/metros errores 
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
@@ -101,8 +106,27 @@ insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NO
      values (8,1,'FUERA DE LOS PARAMETROS',70,2);--EXAD_CODIGO_TEST_PERC_REAC tiempo/metros errores	
 
 
+select EXAD_DETALLE serie,
+  from app.resultado_detalle_examen RDE,
+  	   app.examen_detalle EXAD
+ where EXAD.EXAD_ID=RDE.EXAD_ID;
      
-     
+select * from app.resultado_detalle_examen;
 
 
 
+select * from app.resultado;
+
+select * from 
+APP.RESULTADO_DETALLE_EXAMEN this_ inner join APP.PERSONA_EXAMEN personaexa1_ 
+on this_.PEXA_ID=personaexa1_.PEXA_ID inner join APP.EXAMEN_DETALLE examendeta2_ 
+on this_.EXAD_ID=examendeta2_.EXAD_ID 
+where (1=1) and personaexa1_.PEXA_ID = 8 
+--and examendeta2_.EXAD_ID = 17 
+order by this_.RDE_ID asc
+
+348935 [AWT-EventQueue-0] DEBUG 133 org.hibernate.type.LongType  - binding '8' to parameter: 1
+348944 [AWT-EventQueue-0] DEBUG 133 org.hibernate.type.LongType  - binding '17' to parameter: 2
+
+
+select * from app.examen_detalle;

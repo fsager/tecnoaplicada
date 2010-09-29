@@ -15,6 +15,7 @@ public class ResultadoDetalleExamen implements java.io.Serializable {
 	private PersonaExamen personaExamen;
 	private ExamenDetalle examenDetalle;
 	private String rdeResultado;
+	private String rdeDetalleResultado;
 	private Double rdeNota;
 	private Double rdeNota2;
 	private Set resultados = new HashSet(0);
@@ -99,6 +100,14 @@ public class ResultadoDetalleExamen implements java.io.Serializable {
 
 	public void setResultados(Set resultados) {
 		this.resultados = resultados;
+	}
+	
+	public String getRdeDetalleResultado() {
+		return rdeDetalleResultado;
+	}
+	
+	public void setRdeDetalleResultado(String rdeDetalleResultado) {
+		this.rdeDetalleResultado = rdeDetalleResultado;
 	}
 
 }

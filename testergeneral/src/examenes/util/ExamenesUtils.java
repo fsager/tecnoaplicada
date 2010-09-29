@@ -1,6 +1,7 @@
 package examenes.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -13,13 +14,12 @@ import org.apache.commons.logging.LogFactory;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Examen;
 import testerGeneral.domain.ExamenDetalle;
-import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Resultado;
-import testerGeneral.exceptions.MyExceptionHandler;
 import testerGeneral.service.ExamenDefinition;
 import frontend.paneles.examenes.PanelExamenes;
 import frontend.paneles.psicometrico.anticipacion.PanelAnticipacion;
+import frontend.paneles.vision.PanelAgudezaVisual;
 import frontend.utils.Util;
 
 public class ExamenesUtils {
@@ -285,14 +285,24 @@ public class ExamenesUtils {
 		return examenes;
 	}
 	
-	public static void mostrarPanelExamenPsicometrico(PersonaExamen personaExamen,JPanel panelContenido)
+	public static void mostrarPanelExamen(PersonaExamen personaExamen,JPanel panelContenido)
 	{
-		log.debug("ini mostrarPanelExamenPsicometrico");
+		log.debug("ini mostrarPanelExamen");
 		try
 		{
-			panelContenido.removeAll();	
-			personaExamen.setPexaId(null);
-			PanelExamenes panelExamen = new PanelExamenes(personaExamen,new PanelAnticipacion(null,personaExamen));
+			PersonaExamen newPersonaExamen=new PersonaExamen();
+			
+			newPersonaExamen.setPexaTipoExamen(personaExamen.getPexaTipoExamen());
+			newPersonaExamen.setPersona(personaExamen.getPersona());
+			newPersonaExamen.setExamen(personaExamen.getExamen());	
+			
+			panelContenido.removeAll();
+			
+			PanelExamenes panelExamen = null;
+			if(newPersonaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_PSICOMETRICO))
+				panelExamen = new PanelExamenes(newPersonaExamen,new PanelAnticipacion(null,newPersonaExamen));
+			else if(newPersonaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_VISION))
+				panelExamen = new PanelExamenes(newPersonaExamen,new PanelAgudezaVisual(null,newPersonaExamen));
 			
 			panelContenido.add(panelExamen);	
 			
@@ -300,7 +310,6 @@ public class ExamenesUtils {
 			throw new RuntimeException(e);
 		}
 		
-		log.debug("fin mostrarPanelExamenPsicometrico");
-	}
-	
+		log.debug("fin mostrarPanelExamen");
+	}	
 }

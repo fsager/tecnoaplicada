@@ -606,12 +606,21 @@ public class PanelMenuPrincipal extends PanelMenu {
 		cargarSubMenuExamenes();
 		unSelectButtons(toolbarSubNivel, btnExamenPsicometrico);
 		panelContenido.removeAll();
-		ExamenesUtils.mostrarPanelExamenPsicometrico(personaExamen,
+		ExamenesUtils.mostrarPanelExamen(personaExamen,
 				panelContenido);
 		doAfterLoadMenuContenido();
 	}
 
-	public void seleccionarExamenVision() {
+	public void seleccionarExamenVision(PersonaExamen personaExamen) {
+		cargarSubMenuExamenes();
+		unSelectButtons(toolbarSubNivel, btnExamenVision);
+		panelContenido.removeAll();
+		ExamenesUtils.mostrarPanelExamen(personaExamen,
+				panelContenido);
+		doAfterLoadMenuContenido();
+	}
+	
+	/*public void seleccionarExamenVision() {
 		testerGeneral.persistence.impl.Util.insertAudit(
 				testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_VISION,
 				null, null);
@@ -621,7 +630,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 		panelContenido.removeAll();
 
 		doAfterLoadMenuContenido();
-	}
+	}*/
 
 	public void seleccionarExamenEquilibrio() {
 		testerGeneral.persistence.impl.Util

@@ -8,6 +8,8 @@ package frontend.paneles.examenes;
 
 import javax.swing.JPanel;
 
+import frontend.utils.Util;
+
 import testerGeneral.domain.PersonaExamen;
 
 /**
@@ -170,6 +172,8 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 		if (panelAnimacion.getComponent(0) instanceof Finalisable) {
 			Finalisable f = (Finalisable) panelAnimacion.getComponent(0);
 			f.finalizar();
+			if(Util.thTrama!=null)
+				Util.thTrama.desconnect();
 		}
 	}
 

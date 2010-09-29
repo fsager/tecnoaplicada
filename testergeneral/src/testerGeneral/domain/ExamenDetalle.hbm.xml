@@ -19,5 +19,8 @@
         <property name="exadCodigo" type="java.lang.String">
             <column name="EXAD_CODIGO" length="200" not-null="true" />
         </property>
+        <property name="exadOrden" type="java.lang.Integer">
+            <column name="EXAD_ORDEN"/>
+        </property>
     </class>
 </hibernate-mapping>
