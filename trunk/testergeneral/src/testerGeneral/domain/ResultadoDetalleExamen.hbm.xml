@@ -25,6 +25,9 @@
         <property name="rdeNota2" type="java.lang.Double">
             <column name="RDE_NOTA2" precision="14" />
         </property>
+        <property name="rdeDetalleResultado" type="java.lang.String">
+            <column name="RDE_DETALLE_RESULTADO" length="500" />
+        </property>
         <set cascade="all-delete-orphan" name="resultados" inverse="true" lazy="false">
             <key>
                 <column name="RDE_ID" not-null="true" />

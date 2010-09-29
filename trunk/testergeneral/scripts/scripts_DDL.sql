@@ -43,6 +43,7 @@
        "EXAD_DETALLE" VARCHAR(200) not null,
        "EXAD_CODIGO" VARCHAR(200) not null unique,
        "EXA_ID" BIGINT not null,
+       "EXAD_ORDEN" BIGINT not null,       
         constraint "SQL100327170410820" primary key ("EXAD_ID")
     );
 	
@@ -160,12 +161,13 @@
        "EXAD_ID" BIGINT not null,
        "PEXA_ID" BIGINT not null,
        "RDE_RESULTADO" VARCHAR(100),
+       "RDE_DETALLE_RESULTADO" VARCHAR(500),
        "RDE_NOTA" NUMERIC(14,3),
        "RDE_NOTA2" NUMERIC(14,3),
         constraint "SQL100414203432130" primary key ("RDE_ID")
     );
-
-    create unique index "SQL100414203432130" on "APP"."RESULTADO_DETALLE_EXAMEN"("RDE_ID");
+    
+	create unique index "SQL100414203432130" on "APP"."RESULTADO_DETALLE_EXAMEN"("RDE_ID");
     create index "SQL100414204041030" on "APP"."RESULTADO_DETALLE_EXAMEN"("PEXA_ID");
     create index "SQL100414204041200" on "APP"."RESULTADO_DETALLE_EXAMEN"("EXAD_ID");
     

@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumn;
 
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -79,7 +80,6 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 				} else {
 					lstResultadoDetalleExamen.add(lstResultados.get(0));
 				}
-
 			}
 
 		} catch (Exception e) {
@@ -88,12 +88,22 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 	}
 
 	public void setTableModel(List lst) {
-		TableModelResultadoExamen tableModel = new TableModelResultadoExamen();
+		TableModelResultadoExamen tableModel = new TableModelResultadoExamen(
+				perExamen.getExamen().getExaCodigo());
+		
+		 
+		
 		tableModel.setLst(lst);
 		tableDetalleExamen.setModel(tableModel);
 		tableDetalleExamen
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableDetalleExamen.setAutoCreateRowSorter(true);
+		
+		if(perExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_VISION))
+		{
+			tableDetalleExamen.setRowHeight(0,75);
+			tableDetalleExamen.setRowHeight(3,60);
+		}
 	}
 
 	/** This method is called from within the constructor to
@@ -152,10 +162,8 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel1Layout.createSequentialGroup().addComponent(
-						jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE,
-						170, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
+						jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE,
+						294, Short.MAX_VALUE).addContainerGap()));
 
 		cbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -163,7 +171,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 		jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18));
 		jLabel1.setText("Resultado General del Examen:");
 
-		jLabel2.setText("Adjuntar Documentación:");
+		jLabel2.setText("Adjuntar Documentacion:");
 
 		btnGuardar.setText("Guardar");
 		btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -199,20 +207,19 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
+								javax.swing.GroupLayout.Alignment.TRAILING,
 								layout
 										.createSequentialGroup()
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
+																javax.swing.GroupLayout.Alignment.TRAILING)
 														.addComponent(
 																jPanel1,
-																javax.swing.GroupLayout.Alignment.TRAILING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
 																layout
 																		.createSequentialGroup()
 																		.addContainerGap()
@@ -252,7 +259,6 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 																				253,
 																				Short.MAX_VALUE))
 														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
 																layout
 																		.createSequentialGroup()
 																		.addContainerGap(
@@ -275,12 +281,10 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 										.addContainerGap()
 										.addComponent(
 												jPanel1,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												17, Short.MAX_VALUE)
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addGap(18, 18, 18)
 										.addGroup(
 												layout
 														.createParallelGroup(
@@ -336,13 +340,13 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 			try {
 
-				
 				File archivoSeleccionado = new File(ventanaExaminar
 						.getRutaSeleccionada());
-				
-				String fileName=archivoSeleccionado.getName();
-				byte[] bytes = testerGeneral.persistence.impl.Util.getBytesFromFile(archivoSeleccionado.getAbsolutePath());
-				perExamen.setPexaNombreAdjunto(fileName);				
+
+				String fileName = archivoSeleccionado.getName();
+				byte[] bytes = testerGeneral.persistence.impl.Util
+						.getBytesFromFile(archivoSeleccionado.getAbsolutePath());
+				perExamen.setPexaNombreAdjunto(fileName);
 				perExamen.setPexaAdj(bytes);
 				JOptionPaneTesterGral.showInternalMessageDialog(
 						"Documentación Adjuntada Correctamente", "Adjuntar",
@@ -355,7 +359,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 	}
 
 	private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
-		
+
 		try {
 			perExamen.setPexaEstado(Examen.ESTADO_FIN);
 			perExamen.setPexaResultadoMedico(cbEstado.getSelectedItem()
@@ -363,15 +367,13 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 			personaExamenService.update(perExamen);
 
 			imprimirResultado();
-			
+
 			JOptionPaneTesterGral.showInternalMessageDialog(
 					Constantes.MENSAJE_GUARDADO,
 					Constantes.MENSAJE_GUARDADO_TIT,
 					JOptionPane.INFORMATION_MESSAGE);
 
-			ExamenesUtils.mostrarPanelExamenPsicometrico(perExamen, Util.panelContenido);
-			
-			
+			ExamenesUtils.mostrarPanelExamen(perExamen, Util.panelContenido);
 
 		} catch (Exception e) {
 			JOptionPaneTesterGral.showInternal(
@@ -379,14 +381,13 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
-	public void imprimirResultado()
-	{
+
+	public void imprimirResultado() {
 
 		HashMap parameterMap = new HashMap();
 		parameterMap.put("p_pexa_id", perExamen.getPexaId());
 
-		new VentanaReportes(this,parameterMap,Constantes.RPT_PERSONA_EXAMEN);
+		new VentanaReportes(this, parameterMap, Constantes.RPT_PERSONA_EXAMEN);
 
 	}
 

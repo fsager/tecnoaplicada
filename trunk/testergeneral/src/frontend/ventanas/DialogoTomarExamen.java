@@ -102,6 +102,23 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 				panelMenu.cargarSubMenuExamenes();
 				panelMenu.seleccionarExamenPsicometrico(personaExamen);
 			}
+			else if (btn.getActionCommand().equals(Examen.EXA_CODIGO_VISION)) {
+				
+				ExamenDefinition examenService = (ExamenDefinition) ContextManager.getBizObject("examenService");
+				Examen exa = new Examen();
+				exa.setExaCodigo(Examen.EXA_CODIGO_VISION);
+				exa = (Examen) examenService.getAll(exa).get(0);
+		
+				testerGeneral.persistence.impl.Util.insertAudit(testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_VISION,null, null);
+		
+				PersonaExamen personaExamen=new PersonaExamen();
+				personaExamen.setPexaTipoExamen(cmbTipoExamen.getSelectedItem().toString());
+				personaExamen.setPersona(per);
+				personaExamen.setExamen(exa);	
+				
+				panelMenu.cargarSubMenuExamenes();
+				panelMenu.seleccionarExamenVision(personaExamen);
+			}
 		}
 		catch(Exception e)
 		{

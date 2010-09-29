@@ -19,10 +19,22 @@ public class ExamenDetalle implements java.io.Serializable {
 	public static final String EXAD_CODIGO_TEST_REAC_MULT_NO_COND="TEST_REAC_MULT_NO_COND";
 	public static final String EXAD_CODIGO_TEST_PERC_REAC="TEST_PERC_REAC";
 	
+	
+	public static final String EXAD_CODIGO_TEST_AGUDEZA_VISUAL="TEST_AGUDEZA_VISUAL";
+	public static final String EXAD_CODIGO_TEST_PROFUNDIDAD="TEST_PROFUNDIDAD";
+	public static final String EXAD_CODIGO_TEST_FOTOCROMATICA="TEST_FOTOCROMATICA";
+	public static final String EXAD_CODIGO_TEST_FORIA="TEST_FORIA";
+	public static final String EXAD_CODIGO_TEST_VISION_NOCTURNA="TEST_VISION_NOCTURNA";
+	public static final String EXAD_CODIGO_TEST_ENCANDILAMIENTO="TEST_ENCANDILAMIENTO";
+	public static final String EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO="TEST_REC_ENCANDILAMIENTO";
+	public static final String EXAD_CODIGO_TEST_CAMPIMETRIA="TEST_CAMPIMETRIA";
+	public static final String EXAD_CODIGO_TEST_AUDIO="TEST_AUDIO";
+	
 	private Long exadId;
 	private Examen examen;
 	private String exadDetalle;
 	private String exadCodigo;
+	private Integer exadOrden;
 
 	// Constructors
 
@@ -69,6 +81,14 @@ public class ExamenDetalle implements java.io.Serializable {
 
 	public void setExadCodigo(String exadCodigo) {
 		this.exadCodigo = exadCodigo;
+	}
+	
+	public void setExadOrden(Integer exadOrden) {
+		this.exadOrden = exadOrden;
+	}
+	
+	public Integer getExadOrden() {
+		return exadOrden;
 	}
 
 }

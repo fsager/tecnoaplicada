@@ -43,6 +43,31 @@ public class ThreadTrama extends Thread{
 	public static final int ORDEN_PRENDER_LED5=53;
 	public static final int ORDEN_PRENDER_LED6=54;
 	
+	/*Ordenes vision*/
+	public static final int ORDEN_APAGAR_TEST_PERIMETRIA=0X20;//Dejo de generar el test ocular o de perimetrias
+	public static final int ORDEN_ENCIENDE_PER_SUP=0x21;//Enciendo la perimetria superior
+	public static final int ORDEN_ENCIENDE_PER_INF=0x22;//Enciendo la perimetria inferior
+	public static final int ORDEN_ENCIENDE_PER_85=0x23;//Enciendo la perimetria de 85º
+	public static final int ORDEN_ENCIENDE_PER_70=0x24;//Enciendo la perimetria de 70º
+	public static final int ORDEN_ENCIENDE_PER_55=0x25;//Enciendo la perimetria de 55º
+	public static final int ORDEN_ENCIENDE_PER_NASAL=0x26;//Enciendo la perimetria nasal
+	public static final int ORDEN_ENCIENDE_PER_IZQ=0x27;//Habilito la perimetria del lado izquierdo
+	public static final int ORDEN_ENCIENDE_PER_DER=0x28;//Habilito la perimetria del lado derecho
+	public static final int ORDEN_CAMBIA_ESTADO_LUZ_DER=0x31;//Cambio de estado la luz del lado derecho
+	public static final int ORDEN_CAMBIA_ESTADO_LUZ_IZQ=0x32;//Cambio de estado la luz del lado izquierdo
+	public static final int ORDEN_RETROCEDER_TEST=0x33;//Retrocede un test el tambor rotatorio
+	public static final int ORDEN_AVANZAR_TEST=0x34;//Avanza un test el tambor rotatorio
+	public static final int ORDEN_IR_TEST1=0x41;//Ir al primer test
+	public static final int ORDEN_IR_TEST2=0x42;//Ir al segundo test
+	public static final int ORDEN_IR_TEST3=0x43;//Ir al tercer test
+	public static final int ORDEN_IR_TEST4=0x44;//Ir al cuarto test
+	public static final int ORDEN_IR_TEST5=0x45;//Ir al quinto test
+	public static final int ORDEN_IR_TEST6=0x46;//Ir al sexto test
+	public static final int ORDEN_IR_TEST7=0x47;//Ir al séptimo test
+	public static final int ORDEN_IR_TEST8=0x48;//Ir al octavo test o publicidad
+	public static final int ORDEN_APAGAR_TEST_LAMINAS=0x49;//Apagar el test de las laminas
+	/*Ordenes vision*/
+	
 	private static final Log log = LogFactory.getLog(ThreadTrama.class);
 	private InputStream in;
 	private OutputStream out;
@@ -127,6 +152,7 @@ public class ThreadTrama extends Thread{
 	{
 		log.debug("ini connect "+commPort);
 		SerialPort serialPort = (SerialPort) commPort;
+		int cant=0;
 	    try {
 			serialPort.setSerialPortParams(19200,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
 	        InputStream in = serialPort.getInputStream();
@@ -135,7 +161,7 @@ public class ThreadTrama extends Thread{
 			int len = -1;
 	        boolean primerLeida = true;
 			try {
-				while ((len = in.read(buffer)) > 0) 
+				while ((len = in.read(buffer)) > 0 && cant<500) 
 				{
 					if (!primerLeida) 
 					{
@@ -151,7 +177,8 @@ public class ThreadTrama extends Thread{
 							}
 						}
 					}
-					primerLeida = false;
+					primerLeida = false;					
+					cant++;
 				}
 			} catch (IOException e) {
 				throw new RuntimeException(e);
@@ -283,15 +310,8 @@ public class ThreadTrama extends Thread{
 		try
 		{
 			Util.thTrama=null;
-			this.sendOrden(this.ORDEN_APAGAR_LAZER);
 			
-			this.sendOrden(this.ORDEN_APAGAR_LED1);
-			this.sendOrden(this.ORDEN_APAGAR_LED2);
-			this.sendOrden(this.ORDEN_APAGAR_LED3);
-			this.sendOrden(this.ORDEN_APAGAR_LED4);
-			this.sendOrden(this.ORDEN_APAGAR_LED5);
-			this.sendOrden(this.ORDEN_APAGAR_LED6);
-			
+			tramaValida.desconnect(this);
 			
 			read=false;
 			try {

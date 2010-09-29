@@ -73,6 +73,7 @@
 	<classpathentry kind="lib" path="lib/jasperreports-javaflow-3.7.3.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.12.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GestorActualizaciones"/>
 	<classpathentry kind="lib" path="lib/beansbinding-1.2.1.jar"/>

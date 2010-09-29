@@ -25,6 +25,15 @@ import frontend.paneles.psicometrico.cooordinacion.visomotora.PanelCoorVisomotor
 import frontend.paneles.psicometrico.palanca.PanelPalanca;
 import frontend.paneles.psicometrico.percepcionreaccion.PanelPercepcionReaccion;
 import frontend.paneles.psicometrico.reaccionsimple.PanelReaccionSimple;
+import frontend.paneles.vision.PanelAgudezaVisual;
+import frontend.paneles.vision.PanelAudio;
+import frontend.paneles.vision.PanelCampimetria;
+import frontend.paneles.vision.PanelEncandilamiento;
+import frontend.paneles.vision.PanelForia;
+import frontend.paneles.vision.PanelFotocromatica;
+import frontend.paneles.vision.PanelProfundidadVisual;
+import frontend.paneles.vision.PanelRecEncandilamiento;
+import frontend.paneles.vision.PanelVisionNocturna;
 
 /**
  *
@@ -50,16 +59,15 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 		
 		actionFinalizar = new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				agregarPanelFinalizar(evt);
+				agregarPanelFinalizar((JToggleButton) evt.getSource());
 			}
 		};
 		
 		cargarDetalleExamenes();		
 	}
 	
-	public void agregarPanelFinalizar(ActionEvent evt)
+	public void agregarPanelFinalizar(JToggleButton btn)
 	{
-		JToggleButton btn = (JToggleButton) evt.getSource();
 		unSelectButtons(btn);
 		panelExamen.getPanelAnimacion().removeAll();
 		
@@ -112,6 +120,8 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 			
 			if(personaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_PSICOMETRICO))
 				unSelectButtons(ExamenDetalle.EXAD_CODIGO_TEST_CTR_TEMPORO);
+			else if(personaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_VISION))
+				unSelectButtons(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL);
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -153,6 +163,11 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 	public void actionBtnDetalleExamen(java.awt.event.ActionEvent evt) {
 		System.gc();
 		JToggleButton btn = (JToggleButton) evt.getSource();
+		seleccionarExamen(btn);
+	}
+	
+	public void seleccionarExamen(JToggleButton btn)
+	{
 		unSelectButtons(btn);
 		panelExamen.getPanelAnimacion().removeAll();
 		
@@ -188,13 +203,223 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 			addTestCoorVisomotora(btn);
 		}
 		
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL))
+		{
+			addTestAgudezaVisual(btn);
+		}
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO))
+		{
+			addTestAudio(btn);
+		}
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_PROFUNDIDAD))
+		{
+			addTestProfundidad(btn);
+		}
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_CAMPIMETRIA))
+		{
+			addTestCampimetria(btn);
+		}
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_ENCANDILAMIENTO))
+		{
+			addTestEncandilamiento(btn);
+		}
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_FORIA))
+		{
+			addTestForia(btn);
+		}
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_FOTOCROMATICA))
+		{
+			addTestFotoCromatica(btn);
+		}
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO))
+		{
+			addTestFotoReacEncandilamiento(btn);
+		}
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_VISION_NOCTURNA))
+		{
+			addTestFotoVisionNoctura(btn);
+		}
+		else if(btn.getActionCommand().equals("finalizar"))
+		{
+			 agregarPanelFinalizar(btn);
+		}
 		
-
+		
 		panelExamen.getPanelAnimacion().repaint();
 		panelExamen.repaint();
 
 		panelExamen.getPanelAnimacion().validate();
 		panelExamen.validate();
+		
+		if(panelExamen.getPanelAnimacion().getComponentCount()>0)
+			panelExamen.getPanelAnimacion().getComponent(0).requestFocus();
+	}
+	
+	
+	
+	public void nextExamen(JToggleButton src)
+	{
+		int nuevaPos=-1;
+		
+		Component[] components=this.getComponents();
+		for(int i=0;i<components.length;i++)
+		{
+			if(components[i].equals(src))
+			{
+				nuevaPos=i+1;
+				break;
+			}
+		}
+		
+		if(nuevaPos<this.getComponentCount())
+		{
+			JToggleButton btn=(JToggleButton)this.getComponent(nuevaPos);
+			seleccionarExamen(btn);
+		}
+	}
+
+
+	public void addTestFotoVisionNoctura(JToggleButton btn)
+	{	
+		try {
+			
+			unSelectButtons(btn.getActionCommand());
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_VISION_NOCTURNA);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelVisionNocturna ppr=new PanelVisionNocturna(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void addTestFotoReacEncandilamiento(JToggleButton btn)
+	{	
+		try {
+			
+			unSelectButtons(btn.getActionCommand());
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelRecEncandilamiento ppr=new PanelRecEncandilamiento(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void addTestFotoCromatica(JToggleButton btn)
+	{	
+		try {
+			
+			unSelectButtons(btn.getActionCommand());
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_FOTOCROMATICA);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelFotocromatica ppr=new PanelFotocromatica(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void addTestForia(JToggleButton btn)
+	{	
+		try {
+			
+			unSelectButtons(btn.getActionCommand());
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_FORIA);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelForia ppr=new PanelForia(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void addTestEncandilamiento(JToggleButton btn)
+	{	
+		try {
+			
+			unSelectButtons(btn.getActionCommand());
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_ENCANDILAMIENTO);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelEncandilamiento ppr=new PanelEncandilamiento(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void addTestCampimetria(JToggleButton btn)
+	{	
+		try {
+			
+			unSelectButtons(btn.getActionCommand());
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_CAMPIMETRIA);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelCampimetria ppr=new PanelCampimetria(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+		
+	public void addTestProfundidad(JToggleButton btn)
+	{	
+		try {
+			
+			unSelectButtons(btn.getActionCommand());
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_PROFUNDIDAD);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelProfundidadVisual ppr=new PanelProfundidadVisual(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+		
+	public void addTestAudio(JToggleButton btn)
+	{	
+		try {
+			
+			unSelectButtons(btn.getActionCommand());
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelAudio ppr=new PanelAudio(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void addTestAgudezaVisual(JToggleButton btn)
+	{	
+		try {
+						
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelAgudezaVisual ppr=new PanelAgudezaVisual(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public void addTestCtrTemporo(JToggleButton btn)
@@ -219,6 +444,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 			throw new RuntimeException(e);
 		}
 	}
+	
 	
 	public void addTestReacioneMultiples(JToggleButton btn)
 	{	

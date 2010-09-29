@@ -68,8 +68,8 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	private int extraHeigth=1000;
 	private int width;
 	private int heightPantalla;
-	private int widthAuto=30;
-	private int heightAuto=30;
+	private int widthAuto=20;
+	private int heightAuto=20;
 	private int erroresDerecho=0;
 	private int erroresIzq=0;
 	private long tiempoFueraIzq=0;
@@ -201,9 +201,9 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 				g.setColor(Color.RED);
 				g.fillOval(xAutoDer, imgDimension.height-100, widthAuto,heightAuto);
 	
-				graphicsCaptura.setColor(Color.YELLOW);
+				graphicsCaptura.setColor(Color.BLUE);
 				graphicsCaptura.fillOval(xAutoIzq-posxImagen, imgDimension.height-100, widthAuto,heightAuto);
-				g.setColor(Color.YELLOW);
+				g.setColor(Color.BLUE);
 				g.fillOval(xAutoIzq, imgDimension.height-100, widthAuto,heightAuto);
 				
 				g.dispose();
@@ -259,7 +259,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	public void run() {
 		int i=2;
 		boolean exit=false;
-		int tiempoSleep=48;
+		int tiempoSleep=48;//48
 		while (!stop) {
 			dibujarAutos();
 			if(!stop && run)
@@ -336,7 +336,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 				{					
 					initPosicion();
 					repaint();
-					Thread.sleep(300);
+					Thread.sleep(300);//300
 					i=2;
 					exit=false;
 				} catch (Exception ex) {
@@ -373,6 +373,8 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	
 	public int getPosInPixel(int posPotenciometro,boolean der)
 	{
+		//if(!der)
+			//System.out.println("posPotenciometro: "+posPotenciometro);
 		
 		int anchoImagen=this.bi.getWidth(this);
 		int medio=anchoImagen/2;
@@ -383,7 +385,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 		float pixelPorPotenciometro=(float)rangoValores/255f;
 		
 		if(posPotenciometro>0)
-			posPotenciometro=254-posPotenciometro;
+			posPotenciometro=255-posPotenciometro;
 		else
 			posPotenciometro=Math.abs(posPotenciometro);
 				

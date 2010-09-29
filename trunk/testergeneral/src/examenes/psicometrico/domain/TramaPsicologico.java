@@ -1,5 +1,7 @@
 package examenes.psicometrico.domain;
 
+import testerGeneral.threads.ThreadTrama;
+
 public class TramaPsicologico implements Trama{
 	
 	private Byte campoCabecera1=new Byte(new Integer(0x31).byteValue());
@@ -286,5 +288,18 @@ public class TramaPsicologico implements Trama{
 	public int getPotenciometroDerecho() {
 		
 		return tramaPsicologico[5];
+	}
+
+	@Override
+	public void desconnect(ThreadTrama threadTrama) {
+		threadTrama.sendOrden(threadTrama.ORDEN_APAGAR_LAZER);
+		
+		threadTrama.sendOrden(threadTrama.ORDEN_APAGAR_LED1);
+		threadTrama.sendOrden(threadTrama.ORDEN_APAGAR_LED2);
+		threadTrama.sendOrden(threadTrama.ORDEN_APAGAR_LED3);
+		threadTrama.sendOrden(threadTrama.ORDEN_APAGAR_LED4);
+		threadTrama.sendOrden(threadTrama.ORDEN_APAGAR_LED5);
+		threadTrama.sendOrden(threadTrama.ORDEN_APAGAR_LED6);
+		
 	}
 }
