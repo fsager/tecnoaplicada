@@ -2436,7 +2436,10 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			persona.setPerTelefono(txtTelefono.getText());
 			persona.setPerCelular(txtCelular.getText());
 			persona.setPerCorreo(txtCorreo.getText());
-			persona.setPerEstudios(txtEstudios.getText());
+			
+			if (!txtEstudios.getText().equals("")) {
+				persona.setPerEstudios(txtEstudios.getText());	
+			}
 			persona.setPerObservaciones(txtOtrasObs.getText());
 
 			persona.setPerEducacion("0");
