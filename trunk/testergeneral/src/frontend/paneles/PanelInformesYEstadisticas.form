@@ -8,6 +8,8 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupPsicofarmacos">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupEstudios">
+    </Component>
   </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -60,7 +62,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jCheckBoxSexo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jRadioButtonMasculino" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jRadioButtonFemenino" min="-2" max="-2" attributes="0"/>
@@ -77,34 +79,38 @@
                           <Component id="jLabelEdad3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="106" max="32767" attributes="0"/>
+                  <EmptySpace pref="92" max="32767" attributes="0"/>
                   <Component id="btnBuscar" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jCheckBoxTomoHoyAlcohol" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jRadioButtonTomoHoyAlcoholSI" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jRadioButtonTomoHoyAlcoholNO" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="250" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Group type="102" attributes="1">
-                          <Component id="jCheckBoxEstudios" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextFieldEstudios" max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jCheckBoxTomoHoyPsicofarmacos" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCheckBoxEstudios" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jCheckBoxTomoHoyPsicofarmacos" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jRadioButtonTomoHoyPsicofarmacosSI" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jRadioButtonTomoHoyPsicofarmacosNO" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jRadioButtonEstudiosSI" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jRadioButtonEstudiosNO" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jRadioButtonTomoHoyAlcoholSI" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jRadioButtonTomoHoyAlcoholNO" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -128,8 +134,9 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jRadioButtonEstudiosSI" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonEstudiosNO" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jCheckBoxEstudios" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldEstudios" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -192,11 +199,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonFemeninoActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldEstudios">
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldEstudiosFocusGained"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnBuscar">
@@ -293,6 +295,28 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonTomoHoyPsicofarmacosNOActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="jRadioButtonEstudiosSI">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroupEstudios"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Si"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonEstudiosSIActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="jRadioButtonEstudiosNO">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroupEstudios"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="No"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonEstudiosNOActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

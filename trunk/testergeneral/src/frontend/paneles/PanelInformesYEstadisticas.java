@@ -59,6 +59,7 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 		buttonGroupSexo = new javax.swing.ButtonGroup();
 		buttonGroupAlcohol = new javax.swing.ButtonGroup();
 		buttonGroupPsicofarmacos = new javax.swing.ButtonGroup();
+		buttonGroupEstudios = new javax.swing.ButtonGroup();
 		jPanelFiltros = new javax.swing.JPanel();
 		jTextFieldEdadInicio = new javax.swing.JTextField();
 		jLabelEdad2 = new javax.swing.JLabel();
@@ -66,7 +67,6 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 		jLabelEdad3 = new javax.swing.JLabel();
 		jRadioButtonMasculino = new javax.swing.JRadioButton();
 		jRadioButtonFemenino = new javax.swing.JRadioButton();
-		jTextFieldEstudios = new javax.swing.JTextField();
 		btnBuscar = new ButtonBuscar();
 		jCheckBoxEdad = new javax.swing.JCheckBox();
 		jCheckBoxSexo = new javax.swing.JCheckBox();
@@ -77,6 +77,8 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 		jCheckBoxTomoHoyPsicofarmacos = new javax.swing.JCheckBox();
 		jRadioButtonTomoHoyPsicofarmacosSI = new javax.swing.JRadioButton();
 		jRadioButtonTomoHoyPsicofarmacosNO = new javax.swing.JRadioButton();
+		jRadioButtonEstudiosSI = new javax.swing.JRadioButton();
+		jRadioButtonEstudiosNO = new javax.swing.JRadioButton();
 		jPanelBusqueda = new javax.swing.JPanel();
 		jScrollPane1 = new javax.swing.JScrollPane();
 		tablePersona = new javax.swing.JTable();
@@ -122,12 +124,6 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 						jRadioButtonFemeninoActionPerformed(evt);
 					}
 				});
-
-		jTextFieldEstudios.addFocusListener(new java.awt.event.FocusAdapter() {
-			public void focusGained(java.awt.event.FocusEvent evt) {
-				jTextFieldEstudiosFocusGained(evt);
-			}
-		});
 
 		btnBuscar.setToolTipText("Buscar");
 		btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -211,6 +207,24 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 					}
 				});
 
+		buttonGroupEstudios.add(jRadioButtonEstudiosSI);
+		jRadioButtonEstudiosSI.setText("Si");
+		jRadioButtonEstudiosSI
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						jRadioButtonEstudiosSIActionPerformed(evt);
+					}
+				});
+
+		buttonGroupEstudios.add(jRadioButtonEstudiosNO);
+		jRadioButtonEstudiosNO.setText("No");
+		jRadioButtonEstudiosNO
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						jRadioButtonEstudiosNOActionPerformed(evt);
+					}
+				});
+
 		javax.swing.GroupLayout jPanelFiltrosLayout = new javax.swing.GroupLayout(
 				jPanelFiltros);
 		jPanelFiltros.setLayout(jPanelFiltrosLayout);
@@ -230,8 +244,10 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 																		.createSequentialGroup()
 																		.addComponent(
 																				jCheckBoxSexo)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																		.addGap(
+																				18,
+																				18,
+																				18)
 																		.addComponent(
 																				jRadioButtonMasculino)
 																		.addPreferredGap(
@@ -267,7 +283,7 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 																				jLabelEdad3)))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												106, Short.MAX_VALUE)
+												92, Short.MAX_VALUE)
 										.addComponent(
 												btnBuscar,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
@@ -275,50 +291,53 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addContainerGap())
 						.addGroup(
-								jPanelFiltrosLayout
-										.createSequentialGroup()
+								jPanelFiltrosLayout.createSequentialGroup()
 										.addComponent(jCheckBoxTomoHoyAlcohol)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jRadioButtonTomoHoyAlcoholSI)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jRadioButtonTomoHoyAlcoholNO)
-										.addContainerGap())
+										.addGap(250, 250, 250))
 						.addGroup(
 								jPanelFiltrosLayout
 										.createSequentialGroup()
 										.addGroup(
 												jPanelFiltrosLayout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																false)
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																jCheckBoxTomoHoyPsicofarmacos)
+														.addComponent(
+																jCheckBoxEstudios))
+										.addGap(4, 4, 4)
+										.addGroup(
+												jPanelFiltrosLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
 														.addGroup(
 																jPanelFiltrosLayout
 																		.createSequentialGroup()
-																		.addComponent(
-																				jCheckBoxEstudios)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				jTextFieldEstudios))
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.LEADING,
-																jPanelFiltrosLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				jCheckBoxTomoHoyPsicofarmacos)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
 																				jRadioButtonTomoHoyPsicofarmacosSI)
 																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
-																				jRadioButtonTomoHoyPsicofarmacosNO)))
-										.addGap(94, 94, 94)));
+																				jRadioButtonTomoHoyPsicofarmacosNO))
+														.addGroup(
+																jPanelFiltrosLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jRadioButtonEstudiosSI)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jRadioButtonEstudiosNO))
+														.addGroup(
+																jPanelFiltrosLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jRadioButtonTomoHoyAlcoholSI)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jRadioButtonTomoHoyAlcoholNO)))
+										.addGap(58, 58, 58)));
 		jPanelFiltrosLayout
 				.setVerticalGroup(jPanelFiltrosLayout
 						.createParallelGroup(
@@ -372,12 +391,11 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 																						.createParallelGroup(
 																								javax.swing.GroupLayout.Alignment.BASELINE)
 																						.addComponent(
-																								jCheckBoxEstudios)
+																								jRadioButtonEstudiosSI)
 																						.addComponent(
-																								jTextFieldEstudios,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.PREFERRED_SIZE))
+																								jRadioButtonEstudiosNO)
+																						.addComponent(
+																								jCheckBoxEstudios))
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																		.addGroup(
@@ -522,6 +540,16 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	private void jRadioButtonEstudiosSIActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		jCheckBoxEstudios.setSelected(true);
+	}
+
+	private void jRadioButtonEstudiosNOActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		jCheckBoxEstudios.setSelected(true);
+	}
+
 	private void jCheckBoxTomoHoyAlcoholActionPerformed(
 			java.awt.event.ActionEvent evt) {
 		if (!jCheckBoxTomoHoyAlcohol.isSelected()) {
@@ -560,15 +588,11 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 		jCheckBoxTomoHoyPsicofarmacos.setSelected(true);
 	}
 
-	private void jTextFieldEstudiosFocusGained(java.awt.event.FocusEvent evt) {
-		jCheckBoxEstudios.setSelected(true);
-	}
-
 	private void jCheckBoxEstudiosActionPerformed(java.awt.event.ActionEvent evt) {
-		if (jCheckBoxEstudios.isSelected()) {
-			jTextFieldEstudios.setEnabled(true);
+		if (!jCheckBoxEstudios.isSelected()) {
+			buttonGroupEstudios.clearSelection();
 		} else {
-			jTextFieldEstudios.setEnabled(false);
+			jRadioButtonEstudiosNO.setSelected(true);
 		}
 	}
 
@@ -614,8 +638,6 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 
 	private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
 		cargarPersonas();
-		
-
 
 	}
 
@@ -641,17 +663,15 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 						&& !jTextFieldEdadFin.getText().isEmpty()) {
 
 					Calendar hoy = Calendar.getInstance();
-					hoy.add(Calendar.YEAR, -Integer.valueOf(jTextFieldEdadInicio
-							.getText()));
+					hoy.add(Calendar.YEAR, -Integer
+							.valueOf(jTextFieldEdadInicio.getText()));
 					fechaInicio = hoy;
-					
+
 					hoy = Calendar.getInstance();
 					hoy.add(Calendar.YEAR, -Integer.valueOf(jTextFieldEdadFin
-							.getText())-1);
-					
-					
+							.getText()) - 1);
+
 					fechaFin = hoy;
-					
 
 					System.out.println(fechaInicio);
 					System.out.println(fechaFin);
@@ -665,7 +685,13 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 			 * Filtro de estudios.
 			 */
 			if (jCheckBoxEstudios.isSelected()) {
-				per.setPerEstudios(jTextFieldEstudios.getText());
+				if (jRadioButtonEstudiosSI.isSelected()) {
+					per.setPerEstudios("SI");
+				}
+				if (jRadioButtonEstudiosNO.isSelected()) {
+					per.setPerEstudios("NO");
+				}
+
 			}
 
 			/*
@@ -712,7 +738,8 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 
 			List<Persona> personas;
 			if (jCheckBoxEdad.isSelected()) {
-				personas = personaService.getAll(per, fechaFin.getTime(), fechaInicio.getTime());
+				personas = personaService.getAll(per, fechaFin.getTime(),
+						fechaInicio.getTime());
 			} else {
 				personas = personaService.getAll(per);
 			}
@@ -725,47 +752,6 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 			throw new RuntimeException(e);
 		}
 	}
-
-	/**
-	 * if (!txtBusquedaDni.getText().equals("") &&
-	 * !Util.validarDni(txtBusquedaDni.getText())) { per.setPerNumeroDoc(null);
-	 * Util.mostrarError(lbSinResultados, Constantes.ERROR_PER_DNI_SINFORMATO,
-	 * false); error = true;
-	 * 
-	 * } else if (!txtBusquedaDni.getText().equals("") &&
-	 * Util.validarDni(txtBusquedaDni.getText())) {
-	 * per.setPerNumeroDoc(txtBusquedaDni.getText()); }
-	 * 
-	 * if (valorPorDefectoFecha.compareTo(txtBusquedaNacimiento.getText()) != 0)
-	 * { AbstractFormatter formatter = txtBusquedaNacimiento .getFormatter(); if
-	 * (formatter != null) { String text = txtBusquedaNacimiento.getText(); try
-	 * { formatter.stringToValue(text); SimpleDateFormat sdf = new
-	 * SimpleDateFormat( formatoFecha); sdf.setLenient(false);
-	 * per.setPerFechaNacimiento(sdf .parse(txtBusquedaNacimiento.getText())); }
-	 * catch (ParseException pe) { per.setPerNumeroDoc(null);
-	 * Util.mostrarError(lbSinResultados, Constantes.ERROR_PER_FECHA_SINFORMATO,
-	 * false); error = true; } } }
-	 */
-
-	// Dominio dom = (Dominio)
-	// cbBusquedaGrupoSanguineo.getSelectedItem();
-	// per.setPerGrupoSanguineo(dom.getDomCodigo());
-	// List<Persona> personas = personaService.getAll(per, fechaInicio,
-	// fechaFin);
-	
-	
-	/*private Date restarAñosAFecha(Date fecha, int cantAnos) {
-		int diferenciaEnAnos = cantAnos;
-		int diferenciaEnDias = diferenciaEnAnos * 365;
-		Date fechaActual = fecha;
-		long tiempoActualEnMilisegundos = fechaActual.getTime();
-		long cantDiasDiferenciaEnMilisegundos = (long) diferenciaEnDias * 24
-				* 60 * 60 * 1000;
-		Date fechaCalculada = new Date((long) tiempoActualEnMilisegundos
-				- cantDiasDiferenciaEnMilisegundos);
-		return fechaCalculada;
-
-	}*/
 
 	public void setTableModel(List lst) {
 		TableModelPersona tableModel = new TableModelPersona();
@@ -789,6 +775,7 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 	// Variables declaration - do not modify
 	private javax.swing.JButton btnBuscar;
 	private javax.swing.ButtonGroup buttonGroupAlcohol;
+	private javax.swing.ButtonGroup buttonGroupEstudios;
 	private javax.swing.ButtonGroup buttonGroupPsicofarmacos;
 	private javax.swing.ButtonGroup buttonGroupSexo;
 	private javax.swing.JCheckBox jCheckBoxEdad;
@@ -800,6 +787,8 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 	private javax.swing.JLabel jLabelEdad3;
 	private javax.swing.JPanel jPanelBusqueda;
 	private javax.swing.JPanel jPanelFiltros;
+	private javax.swing.JRadioButton jRadioButtonEstudiosNO;
+	private javax.swing.JRadioButton jRadioButtonEstudiosSI;
 	private javax.swing.JRadioButton jRadioButtonFemenino;
 	private javax.swing.JRadioButton jRadioButtonMasculino;
 	private javax.swing.JRadioButton jRadioButtonTomoHoyAlcoholNO;
@@ -809,7 +798,6 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTextField jTextFieldEdadFin;
 	private javax.swing.JTextField jTextFieldEdadInicio;
-	private javax.swing.JTextField jTextFieldEstudios;
 	private javax.swing.JLabel lbSinResultados;
 	private javax.swing.JTable tablePersona;
 	// End of variables declaration//GEN-END:variables
