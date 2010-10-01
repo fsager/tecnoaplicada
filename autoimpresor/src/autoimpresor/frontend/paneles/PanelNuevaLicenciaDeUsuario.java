@@ -1834,6 +1834,14 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 			}			
 
 		}
+		
+		// Presenta licencia anterior
+		if (jComboBoxTipoTramite.getSelectedItem().toString().equalsIgnoreCase("Presenta licencia anterior")) {
+
+	
+
+		}
+		
 
 		// Comprobaciones para licencias Duplicado, Modificada y Renovación.
 		if (jComboBoxTipoTramite.getSelectedItem().toString().equalsIgnoreCase(
