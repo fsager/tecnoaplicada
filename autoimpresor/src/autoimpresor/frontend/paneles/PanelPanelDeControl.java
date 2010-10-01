@@ -84,6 +84,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 
 			Propiedad propiedadTamanoFotoRedimensionada = propiedadService
 					.get("SISTEMA.IMAGENES.PORCENTAJE.REDUCCION");
+			Propiedad propiedadTamanoFirmaRedimensionada = propiedadService
+			.get("SISTEMA.FIRMAS.PORCENTAJE.REDUCCION");
 			Propiedad propiedadDispositivoOrigenFoto = propiedadService
 					.get("SISTEMA.ORIGEN.FOTOS");
 			Propiedad propiedadRutaOrigenFoto = propiedadService
@@ -91,6 +93,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 
 			String valorPropiedadTamanoFotoRedimensionada = propiedadTamanoFotoRedimensionada
 					.getPropValor();
+			String valorPropiedadTamanoFirmaRedimensionada = propiedadTamanoFirmaRedimensionada
+			.getPropValor();
 			String valorPropiedadDispositivoOrigenFoto = propiedadDispositivoOrigenFoto
 					.getPropValor();
 			String valorPropiedadRutaOrigenFoto = propiedadRutaOrigenFoto
@@ -109,6 +113,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 			}
 			jSpinnerTamanoFotos.setValue(Integer
 					.valueOf(valorPropiedadTamanoFotoRedimensionada));
+			jSpinnerTamanoFirmas.setValue(Integer
+					.valueOf(valorPropiedadTamanoFirmaRedimensionada));
 			jTextFieldRutaOrigenFotos.setText(valorPropiedadRutaOrigenFoto);
 
 		} catch (Exception ex) {
@@ -409,6 +415,9 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		Propiedad propiedadTamanoFotoRedimensionada = new Propiedad();
 		propiedadTamanoFotoRedimensionada
 				.setPropClave("SISTEMA.IMAGENES.PORCENTAJE.REDUCCION");
+		Propiedad propiedadTamanoFirmaRedimensionada = new Propiedad();
+		propiedadTamanoFirmaRedimensionada
+				.setPropClave("SISTEMA.FIRMAS.PORCENTAJE.REDUCCION");
 		Propiedad propiedadDispositivoOrigenFoto = new Propiedad();
 		propiedadDispositivoOrigenFoto.setPropClave("SISTEMA.ORIGEN.FOTOS");
 		Propiedad propiedadRutaOrigenFoto = new Propiedad();
@@ -416,6 +425,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 
 		propiedadTamanoFotoRedimensionada.setPropValor(String
 				.valueOf(jSpinnerTamanoFotos.getValue()));
+		propiedadTamanoFirmaRedimensionada.setPropValor(String
+				.valueOf(jSpinnerTamanoFirmas.getValue()));
 
 		if (jRadioButtonObtenerFotosDesdeDisco.isSelected()) {
 			propiedadDispositivoOrigenFoto.setPropValor(OrigenFotosEnum.DISCO
@@ -432,6 +443,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 			propiedadService.update(propiedadDispositivoOrigenFoto);
 			propiedadService.update(propiedadRutaOrigenFoto);
 			propiedadService.update(propiedadTamanoFotoRedimensionada);
+			propiedadService.update(propiedadTamanoFirmaRedimensionada);
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
@@ -663,6 +675,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		jSpinnerTamanoFotos = new javax.swing.JSpinner();
 		jLabelTamanoFotos2 = new javax.swing.JLabel();
 		jLabelMostrarFotos = new javax.swing.JLabel();
+		jSpinnerTamanoFirmas = new javax.swing.JSpinner();
+		jLabel1jLabelTamanoFotos3 = new javax.swing.JLabel();
 		jPanelSeguridad = new javax.swing.JPanel();
 		jCheckBoxGuardarLogDeActividades = new javax.swing.JCheckBox();
 		jLabelGuardarLogXDias = new javax.swing.JLabel();
@@ -765,7 +779,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 										.addComponent(
 												jTextFieldRutaOrigenFotos,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
-												236, Short.MAX_VALUE)
+												290, Short.MAX_VALUE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(
@@ -781,7 +795,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																jRadioButtonObtenerFotosDesdeDisco)
 														.addComponent(
 																jRadioButtonObtenerFotosDesdeCamaraWeb))
-										.addContainerGap(209, Short.MAX_VALUE)));
+										.addContainerGap(263, Short.MAX_VALUE)));
 		jPanelOrigenDeFotosLayout
 				.setVerticalGroup(jPanelOrigenDeFotosLayout
 						.createParallelGroup(
@@ -824,9 +838,22 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 					}
 				});
 
-		jLabelTamanoFotos2.setText("% de su tama\u00f1o original.");
+		jLabelTamanoFotos2.setText("% de su tama\u00f1o original y firmas al");
 
 		jLabelMostrarFotos.setText("Mostar fotos al");
+
+		jSpinnerTamanoFirmas.setFont(new java.awt.Font("Segoe UI", 0, 12));
+		jSpinnerTamanoFirmas.setModel(new javax.swing.SpinnerNumberModel(25, 1,
+				365, 1));
+		jSpinnerTamanoFirmas
+				.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+					public void mouseWheelMoved(
+							java.awt.event.MouseWheelEvent evt) {
+						jSpinnerTamanoFirmasMouseWheelMoved(evt);
+					}
+				});
+
+		jLabel1jLabelTamanoFotos3.setText("%.");
 
 		javax.swing.GroupLayout jPanelFotosLayout = new javax.swing.GroupLayout(
 				jPanelFotos);
@@ -850,7 +877,17 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(jLabelTamanoFotos2)
-										.addContainerGap(177, Short.MAX_VALUE))
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												jSpinnerTamanoFirmas,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												47,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(jLabel1jLabelTamanoFotos3)
+										.addContainerGap(107, Short.MAX_VALUE))
 						.addGroup(
 								jPanelFotosLayout
 										.createSequentialGroup()
@@ -879,7 +916,14 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																jLabelTamanoFotos2))
+																jLabelTamanoFotos2)
+														.addComponent(
+																jSpinnerTamanoFirmas,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jLabel1jLabelTamanoFotos3))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(
@@ -957,7 +1001,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																				jLabelGuardarLogXDias2))
 														.addComponent(
 																jCheckBoxGuardarLogDeActividades))
-										.addContainerGap(189, Short.MAX_VALUE)));
+										.addContainerGap(243, Short.MAX_VALUE)));
 		jPanelSeguridadLayout
 				.setVerticalGroup(jPanelSeguridadLayout
 						.createParallelGroup(
@@ -1042,7 +1086,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																				jRadioButtonBuscarActualizacionesNo))
 														.addComponent(
 																jButtonBuscarActualizaciones))
-										.addContainerGap(123, Short.MAX_VALUE)));
+										.addContainerGap(177, Short.MAX_VALUE)));
 		jPanelBuscarActualizacionesLayout
 				.setVerticalGroup(jPanelBuscarActualizacionesLayout
 						.createParallelGroup(
@@ -1430,7 +1474,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 										.addComponent(jCheckBoxExigirFotografia)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												18, Short.MAX_VALUE)
+												72, Short.MAX_VALUE)
 										.addComponent(
 												jCheckBoxExigirFirmaDigital)
 										.addContainerGap()));
@@ -1496,7 +1540,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																		.addComponent(
 																				jTextFieldEmailCentroImpresion,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				269,
+																				323,
 																				Short.MAX_VALUE))
 														.addComponent(
 																jCheckBoxValidarRequisitos))
@@ -1569,7 +1613,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 												jCheckBoxDocumentoPermitirSoloNumeros)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												85, Short.MAX_VALUE)
+												139, Short.MAX_VALUE)
 										.addComponent(
 												jCheckBoxDocumentoCantidadCaracteresFija)
 										.addPreferredGap(
@@ -1789,6 +1833,20 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 										.addGap(14, 14, 14)));
 	}// </editor-fold>
 	//GEN-END:initComponents
+
+	private void jSpinnerTamanoFirmasMouseWheelMoved(
+			java.awt.event.MouseWheelEvent evt) {
+		int valorActualSpinner = new Integer(((Integer) jSpinnerTamanoFirmas
+				.getValue()).intValue()
+				- evt.getWheelRotation());
+
+		if (valorActualSpinner > 0) {
+			jSpinnerTamanoFirmas.setValue(new Integer(
+					((Integer) jSpinnerTamanoFirmas.getValue()).intValue()
+							- evt.getWheelRotation()));
+
+		}
+	}
 
 	private void jCheckBoxValidarRequisitosActionPerformed(
 			java.awt.event.ActionEvent evt) {
@@ -2141,6 +2199,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JCheckBox jCheckBoxHacerBackupSecundario;
 	private javax.swing.JCheckBox jCheckBoxValidarRequisitos;
 	private javax.swing.JColorChooser jColorChooser;
+	private javax.swing.JLabel jLabel1jLabelTamanoFotos3;
 	private javax.swing.JLabel jLabelBackupAutomaticoCadaXDias2;
 	private javax.swing.JLabel jLabelBuscarActualizacionesAlInicio;
 	private javax.swing.JLabel jLabelEmailCentroImpresion;
@@ -2167,6 +2226,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JSpinner jSpinnerBackupAutomaticoCadaXDias;
 	private javax.swing.JSpinner jSpinnerDocumentoCantidadCaracteresFija;
 	private javax.swing.JSpinner jSpinnerGuardarLogXDias;
+	private javax.swing.JSpinner jSpinnerTamanoFirmas;
 	private javax.swing.JSpinner jSpinnerTamanoFotos;
 	private javax.swing.JTextField jTextFieldEmailCentroImpresion;
 	private javax.swing.JTextField jTextFieldRutaOrigenFotos;

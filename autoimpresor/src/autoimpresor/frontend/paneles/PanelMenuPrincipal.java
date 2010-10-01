@@ -147,6 +147,11 @@ public class PanelMenuPrincipal extends PanelMenu {
 		btnCerrarSession
 				.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 		btnCerrarSession.setMargin(null);
+		btnCerrarSession.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btnCerrarSessionActionPerformed(evt);
+			}
+		});
 		toolbarPrincipal.add(btnCerrarSession);
 		toolbarPrincipal.add(jSeparator7);
 
@@ -310,6 +315,10 @@ public class PanelMenuPrincipal extends PanelMenu {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	private void btnCerrarSessionActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+	}
+
 	private void toolbarPrincipalPropertyChange(
 			java.beans.PropertyChangeEvent evt) {
 		// TODO add your handling code here:
@@ -439,6 +448,14 @@ public class PanelMenuPrincipal extends PanelMenu {
 					}
 				});
 
+		btnConfigurarDB
+		.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				seleccionarConfigurarDB();
+			}
+		});
+
+		
 		btnCerrarSession.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -577,6 +594,23 @@ public class PanelMenuPrincipal extends PanelMenu {
 		doAfterLoadMenuContenido();
 	}
 
+	public void seleccionarConfigurarDB() {
+		
+		unSelectButtons(toolbarSubNivel, btnConfigurarDB);
+		panelContenido.removeAll();
+
+		PanelConfiguracionDB panelConfiguracionDB = new PanelConfiguracionDB();
+		panelConfiguracionDB.validate();
+
+		panelConfiguracionDB.setVisible(true);
+		panelContenido.add(panelConfiguracionDB);
+
+		doAfterLoadMenuContenido();
+		
+		
+	}
+	
+	
 	public void seleccionarLicImportadas() {
 
 		testerGeneral.persistence.impl.Util.insertAudit(
@@ -669,6 +703,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 		btnPanelAdminMunicipio.setVisible(true);
 		toolbarSubNivel.add(btnPanelAdminMunicipio);
 
+		btnConfigurarDB.setVisible(true);
+		toolbarSubNivel.add(btnConfigurarDB);
+		
 		/*Refresco para que se visualice correctamente*/
 		doAfterLoadMenu();
 	}
@@ -902,7 +939,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 	private javax.swing.JToggleButton btnCambiarClave = new JToggleButton(
 			Constantes.MENU_SUB_CAMBIAR_CLAVE);
 
-	/*Sub Menu Tareas Admisnitrativas*/
+	/*Sub Menu Tareas Administrativas*/
 	private javax.swing.JToggleButton btnPanelControl = new JToggleButton(
 			Constantes.MENU_SUB_PANEL_CONTROL);
 
@@ -913,6 +950,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 
 	private javax.swing.JToggleButton btnPanelAdminMunicipio = new JToggleButton(
 			Constantes.MENU_SUB_PANEL_ADM_MINICIPIO);
+	
+	private javax.swing.JToggleButton btnConfigurarDB = new JToggleButton(
+			Constantes.MENU_SUB_PANEL_CONFIGURAR_DB);
 
 	private int enPendiente;
 	private int enHistorico;

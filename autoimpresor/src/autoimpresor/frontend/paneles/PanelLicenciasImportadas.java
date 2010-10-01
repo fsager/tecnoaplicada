@@ -120,6 +120,7 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 		btnBuscar = new ButtonBuscar();
 		lbFechaEjemplo = new javax.swing.JLabel();
 		checkSoloImpr = new javax.swing.JCheckBox();
+		checkSoloPendientes = new javax.swing.JCheckBox();
 		jPanel1 = new javax.swing.JPanel();
 		jScrollPane1 = new javax.swing.JScrollPane();
 		tableLicencias = new javax.swing.JTable();
@@ -168,10 +169,10 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 
 		buttonGroup1.add(checkMesActual);
 		checkMesActual.setSelected(true);
-		checkMesActual.setText("Mostrar solo mes actual");
+		checkMesActual.setText("Mostrar s\u00f3lo mes actual");
 
 		buttonGroup1.add(checkEntre);
-		checkEntre.setText("Mostras entre:");
+		checkEntre.setText("Mostrar entre:");
 
 		txtEntreDesde.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusGained(java.awt.event.FocusEvent evt) {
@@ -225,15 +226,12 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 																		.addComponent(
 																				cbBusquedaLocalidad,
 																				0,
-																				218,
+																				207,
 																				Short.MAX_VALUE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				btnBuscar,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				48,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
+																		.addGap(
+																				60,
+																				60,
+																				60))
 														.addGroup(
 																jPanel2Layout
 																		.createSequentialGroup()
@@ -274,9 +272,15 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 																				checkMesActual)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				190,
+																				136,
 																				Short.MAX_VALUE)))
-										.addContainerGap()));
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												btnBuscar,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												48,
+												javax.swing.GroupLayout.PREFERRED_SIZE)));
 
 		jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
 				new java.awt.Component[] { txtEntreDesde, txtEntreHasta });
@@ -288,29 +292,42 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 						.addGroup(
 								jPanel2Layout
 										.createSequentialGroup()
-										.addComponent(checkMesActual)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												jPanel2Layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
+																javax.swing.GroupLayout.Alignment.TRAILING)
 														.addComponent(
-																checkEntre)
-														.addComponent(
-																txtEntreDesde,
+																btnBuscar,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
+																48,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																lbFechaEjemplo))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												txtEntreHasta,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addGroup(
+																jPanel2Layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				checkMesActual)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addGroup(
+																				jPanel2Layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.BASELINE)
+																						.addComponent(
+																								txtEntreDesde,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								lbFechaEjemplo)
+																						.addComponent(
+																								checkEntre))
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				txtEntreHasta,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
@@ -326,21 +343,24 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 																jLabel21,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																22,
-																Short.MAX_VALUE)))
-						.addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
-								jPanel2Layout
-										.createSequentialGroup()
-										.addContainerGap(68, Short.MAX_VALUE)
-										.addComponent(
-												btnBuscar,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												48,
-												javax.swing.GroupLayout.PREFERRED_SIZE)));
+																Short.MAX_VALUE))));
 
 		((ButtonBuscar) btnBuscar).init();
 
-		checkSoloImpr.setText("Mostrar solo licencias impresas");
+		checkSoloImpr.setText("Mostrar s\u00f3lo licencias impresas");
+		checkSoloImpr.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				checkSoloImprActionPerformed(evt);
+			}
+		});
+
+		checkSoloPendientes.setText("Mostrar s\u00f3lo licencias pendientes");
+		checkSoloPendientes
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						checkSoloPendientesActionPerformed(evt);
+					}
+				});
 
 		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(
 				jPanel3);
@@ -405,7 +425,9 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 																112,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																checkSoloImpr))
+																checkSoloImpr)
+														.addComponent(
+																checkSoloPendientes))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(
@@ -413,7 +435,7 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 												javax.swing.GroupLayout.PREFERRED_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(115, Short.MAX_VALUE)));
+										.addContainerGap(78, Short.MAX_VALUE)));
 		jPanel3Layout
 				.setVerticalGroup(jPanel3Layout
 						.createParallelGroup(
@@ -424,8 +446,15 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 										.addGroup(
 												jPanel3Layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																jPanel2,
+																javax.swing.GroupLayout.Alignment.LEADING,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
 														.addGroup(
+																javax.swing.GroupLayout.Alignment.LEADING,
 																jPanel3Layout
 																		.createSequentialGroup()
 																		.addGroup(
@@ -468,12 +497,11 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																		.addComponent(
-																				checkSoloImpr))
-														.addComponent(
-																jPanel2,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
+																				checkSoloImpr)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				checkSoloPendientes)))
 										.addGap(13, 13, 13)));
 
 		jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
@@ -707,19 +735,31 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	private void checkSoloImprActionPerformed(java.awt.event.ActionEvent evt) {
+		if (checkSoloImpr.isSelected()) {
+			checkSoloPendientes.setSelected(false);
+		}
+	}
+
+	private void checkSoloPendientesActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		if (checkSoloPendientes.isSelected()) {
+			checkSoloImpr.setSelected(false);
+		}
+	}
+
 	private void btnImportar2ActionPerformed(java.awt.event.ActionEvent evt) {
-		try
-		{
+		try {
 			int[] rows = tableLicencias.getSelectedRows();
 			for (int i = 0; i < rows.length; i++) {
 				int sel = tableLicencias.convertRowIndexToModel(rows[i]);
-				carnetLicenciasService.delete(((TableModelCarnet) tableLicencias.getModel()).getValueAt(sel));
+				carnetLicenciasService
+						.delete(((TableModelCarnet) tableLicencias.getModel())
+								.getValueAt(sel));
 			}
-			
+
 			buscarCarnets();
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -810,7 +850,7 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 						dom.setDomCodigo("LICENCIAS_IMPORTADAS_CANTIDAD");
 						dom.setDomValorMostrar("" + carnetLicencias.hashCode());
 
-						//if (dominioService.getAll(dom).size() == 0) {
+						if (dominioService.getAll(dom).size() == 0) {
 							for (int i = 0; i < carnetLicencias.size(); i++) {
 								CarnetLicencias carss = carnetLicencias.get(i);
 
@@ -833,12 +873,12 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 
 								dominioService.insert(dom);
 							}
-						/*} else {
+						} else {
 							JOptionPaneTesterGral.showInternalMessageDialog(
 									"Las licencias ya fueron importadas",
 									"Importar Licencias",
 									JOptionPane.ERROR_MESSAGE);
-						}*/
+						}
 
 					}
 					Util.ocultarPanelOperacionesLargas();
@@ -1009,6 +1049,11 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 			} else {
 				car.setCliFechaImpresion(null);
 			}
+			
+			if (checkSoloPendientes.isSelected()) {
+				car.setCliCantImpresiones(new Long(0));
+			} 
+			
 
 			List<CarnetLicencias> carnetLicencias = null;
 			if (!error)
@@ -1097,6 +1142,7 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 	private javax.swing.JRadioButton checkEntre;
 	private javax.swing.JRadioButton checkMesActual;
 	private javax.swing.JCheckBox checkSoloImpr;
+	private javax.swing.JCheckBox checkSoloPendientes;
 	private javax.swing.JLabel jLabel19;
 	private javax.swing.JLabel jLabel21;
 	private javax.swing.JLabel jLabel3;
