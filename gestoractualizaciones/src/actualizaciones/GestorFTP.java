@@ -108,30 +108,31 @@ public class GestorFTP {
 	public static void download(String ftpServer, String user, String password,
 			String fileName, File destination) {
 		try {
-			System.out.println("Server: "+ftpServer);
+			System.out.println("Server: " + ftpServer);
 			FTPClient f = new FTPClient();
 
 			f.connect(ftpServer);
 			f.login(user, password);
-            f.setFileType(FTP.BINARY_FILE_TYPE);
+			f.setFileType(FTP.BINARY_FILE_TYPE);
 			f.enterLocalPassiveMode();
-			
+
 			OutputStream output;
 			output = new FileOutputStream(destination);
-			
+
 			if (!f.printWorkingDirectory().equals("/")) {
-				f.retrieveFile(f.printWorkingDirectory()+fileName, output);	
+				f.retrieveFile(f.printWorkingDirectory() + fileName, output);
 			} else {
 				f.retrieveFile(fileName, output);
 			}
-			
+
 			output.close();
-			System.out.println("Se descargó el archivo ftp: "+fileName+" en "+destination.getAbsolutePath());
+			System.out.println("Se descargó el archivo ftp: " + fileName
+					+ " en " + destination.getAbsolutePath());
 
 		} catch (SocketException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -216,52 +217,20 @@ public class GestorFTP {
 
 	public static boolean existeConexionConServidor(String ftpServerUrl,
 			String user, String password) {
-	
+
 		boolean existeConexion = false;
-		
+
 		FTPClient ftpClient = new FTPClient();
-		
+
 		try {
 			ftpClient.connect(ftpServerUrl);
 			existeConexion = ftpClient.login(user, password);
-		} catch (SocketException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-		return existeConexion;
-		
-		/*
-		if (ftpServerUrl != null) {
-			StringBuffer sb = new StringBuffer("ftp://");
-			// Verifica si existen datos de autentificación, si no existen asume
-			// que es un acceso anónimo.
-			if (user != null && password != null) {
-				sb.append(user);
-				sb.append(':');
-				sb.append(password);
-				sb.append('@');
-			}
-			sb.append(ftpServerUrl);
-			sb.append('/');
-
-			try {
-				URL url = new URL(sb.toString());
-				URLConnection urlc = url.openConnection();
-				urlc.connect();
-				return true;// Se pudo conectar con el servidor FTP.
-			}
-
-			catch (IOException ex) {
-				return false;// No se pudo conectar con el servidor FTP.
-			}
-
-		} else {
+		} catch (Exception e) {
+			System.out.println("No se pudo establecer conexión con el servidor " +ftpServerUrl);
 			return false;
-		}*/
-		
+		} 
+		return existeConexion;
+
 	}
 
 }// Fin de clase GestorFTP.
