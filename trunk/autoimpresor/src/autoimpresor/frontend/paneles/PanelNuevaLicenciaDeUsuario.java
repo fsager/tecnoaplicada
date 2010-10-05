@@ -1927,7 +1927,12 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 
 	private void jComboBoxTipoTramiteActionPerformed(
 			java.awt.event.ActionEvent evt) {
-
+		Dominio dom=(Dominio)jComboBoxTipoTramite.getSelectedItem();
+		
+		/*if(dom.getDomCodigo().equals("Presenta licencia anterior"))
+		{
+			jTextAreaObservaciones.setText("Presenta licencia anterior")
+		}*/
 	}
 
 	private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {

@@ -9,7 +9,15 @@ package autoimpresor.frontend.paneles;
 import java.io.File;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.JOptionPane;
 
+import autoimpresor.business.ContextManager;
+
+import frontend.components.JOptionPaneTesterGral;
+import frontend.utils.Util;
+
+import testerGeneral.db.ConexionManager;
+import testerGeneral.domain.Constantes;
 import testerGeneral.persistence.backup.GestorDBBackup;
 import testerGeneral.seguridad.Encriptadora;
 
@@ -22,10 +30,10 @@ public class PanelConfiguracionDB extends javax.swing.JPanel {
 	/** Creates new form PanelConfiguracionDB */
 	public PanelConfiguracionDB() {
 		initComponents();
-	
+
 		cargarDatos();
 	}
-	
+
 	public void cargarDatos() {
 		File archivoDeConexionDBRemota = new File(System
 				.getProperty("user.dir")
@@ -34,7 +42,7 @@ public class PanelConfiguracionDB extends javax.swing.JPanel {
 				&& archivoDeConexionDBRemota.isFile()
 				&& archivoDeConexionDBRemota.length() > 0) {
 			jRadioButtonConexionRemota.setSelected(true);
-			
+
 			String[] arrayParametrosDB = GestorDBBackup
 					.cargarParametrosDeActualizacionDesdeArchivo(new File(
 							System.getProperty("user.dir")));
@@ -66,10 +74,10 @@ public class PanelConfiguracionDB extends javax.swing.JPanel {
 		jLabelUsuario = new javax.swing.JLabel();
 		jTextFieldNombreDeUsuario = new javax.swing.JTextField();
 		jLabelContrasena = new javax.swing.JLabel();
-		jTextFieldContrasena = new javax.swing.JTextField();
 		jLabelRutaEnDiscoRemoto = new javax.swing.JLabel();
 		jTextFieldRutaEnDiscoRemoto = new javax.swing.JTextField();
 		jFormattedTextFieldPuerto = new javax.swing.JFormattedTextField();
+		jTextFieldContrasena = new javax.swing.JPasswordField();
 		jPanelTipoConexion = new javax.swing.JPanel();
 		jRadioButtonConexionLocal = new javax.swing.JRadioButton();
 		jRadioButtonConexionRemota = new javax.swing.JRadioButton();
@@ -127,29 +135,29 @@ public class PanelConfiguracionDB extends javax.swing.JPanel {
 														.addComponent(
 																jTextFieldRutaEnDiscoRemoto,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																222,
-																Short.MAX_VALUE)
-														.addComponent(
-																jTextFieldContrasena,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																222,
+																304,
 																Short.MAX_VALUE)
 														.addComponent(
 																jTextFieldNombreEquipo,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																222,
+																304,
 																Short.MAX_VALUE)
 														.addComponent(
 																jTextFieldNombreDeUsuario,
 																javax.swing.GroupLayout.Alignment.TRAILING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																222,
+																304,
 																Short.MAX_VALUE)
 														.addComponent(
 																jFormattedTextFieldPuerto,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																100,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jTextFieldContrasena,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																304,
+																Short.MAX_VALUE))
 										.addContainerGap()));
 		jPanelParametrosDBRemotaLayout
 				.setVerticalGroup(jPanelParametrosDBRemotaLayout
@@ -258,7 +266,7 @@ public class PanelConfiguracionDB extends javax.swing.JPanel {
 										jRadioButtonConexionLocal).addGap(18,
 										18, 18).addComponent(
 										jRadioButtonConexionRemota)
-								.addContainerGap(305, Short.MAX_VALUE)));
+								.addContainerGap(387, Short.MAX_VALUE)));
 		jPanelTipoConexionLayout
 				.setVerticalGroup(jPanelTipoConexionLayout
 						.createParallelGroup(
@@ -298,25 +306,25 @@ public class PanelConfiguracionDB extends javax.swing.JPanel {
 												layout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																jPanelTipoConexion,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																jPanelParametrosDBRemota,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
 														.addGroup(
 																javax.swing.GroupLayout.Alignment.TRAILING,
 																layout
 																		.createSequentialGroup()
 																		.addContainerGap(
-																				388,
+																				470,
 																				Short.MAX_VALUE)
 																		.addComponent(
-																				jButtonGuardar)))
+																				jButtonGuardar))
+														.addComponent(
+																jPanelParametrosDBRemota,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addComponent(
+																jPanelTipoConexion,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
 										.addContainerGap()));
 		layout
 				.setVerticalGroup(layout
@@ -340,40 +348,74 @@ public class PanelConfiguracionDB extends javax.swing.JPanel {
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(jButtonGuardar)
-										.addContainerGap(15, Short.MAX_VALUE)));
+										.addContainerGap(17, Short.MAX_VALUE)));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
 	private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {
-
+		File archivoDeConexionDBRemota = new File(System
+				.getProperty("user.dir")
+				+ File.separator + "db_param.cfg");
+		ConexionManager datasource = (ConexionManager) ContextManager.getBizObject("dataSource");
+		
 		if (jRadioButtonConexionRemota.isSelected()) {
 
-			int puerto; 
+			int puerto;
 			try {
-				puerto = Integer
-				.valueOf(jFormattedTextFieldPuerto.getText());	
-			}
-			catch (NumberFormatException ex) {
+				puerto = Integer.valueOf(jFormattedTextFieldPuerto.getText());
+			} catch (NumberFormatException ex) {
 				puerto = 1527;
 			}
-			
+
 			SecretKeySpec clavePrivada = new SecretKeySpec(new String(
-			"czbmrndoritlekaz").getBytes(), "AES");
+					"czbmrndoritlekaz").getBytes(), "AES");
 			Encriptadora encriptador = new Encriptadora("AES", clavePrivada);
-			String encriptPass = encriptador.encriptar(jTextFieldContrasena
-							.getText());
-			
-			
-			
+			String encriptPass = encriptador.encriptar(new String(jTextFieldContrasena.getPassword()));
+
 			GestorDBBackup.generarArchivoDeConexionDBRemota(
 					jTextFieldNombreEquipo.getText(), puerto,
-					jTextFieldNombreDeUsuario.getText(), encriptPass, jTextFieldRutaEnDiscoRemoto.getText());
+					jTextFieldNombreDeUsuario.getText(), encriptPass,
+					jTextFieldRutaEnDiscoRemoto.getText());
+			
+			try
+			{
+				
+				datasource.getConnection();
+				JOptionPaneTesterGral.showInternalMessageDialog(
+						"Se ha establecido la conexión satisfactoriamente",
+						"Conexión",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			catch(Exception e)
+			{
+				if(archivoDeConexionDBRemota.exists())
+					archivoDeConexionDBRemota.delete();
+				try
+				{
+					datasource.getConnection();
+				}
+				catch(Exception ex)
+				{
+					throw new RuntimeException(ex);
+				}
+				
+				JOptionPaneTesterGral.showInternalMessageDialog(
+						"No se ha establecido la conexión. Revise la configuración.",
+						"Conexión",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			
 		} else {
-			File archivoDeConexionDBRemota = new File(System
-					.getProperty("user.dir")
-					+ File.separator + "db_param.cfg");
 
 			archivoDeConexionDBRemota.delete();
+			try
+			{
+				datasource.getConnection();
+			}
+			catch(Exception ex)
+			{
+				throw new RuntimeException(ex);
+			}
 		}
 
 	}
@@ -411,7 +453,7 @@ public class PanelConfiguracionDB extends javax.swing.JPanel {
 	private javax.swing.JPanel jPanelTipoConexion;
 	private javax.swing.JRadioButton jRadioButtonConexionLocal;
 	private javax.swing.JRadioButton jRadioButtonConexionRemota;
-	private javax.swing.JTextField jTextFieldContrasena;
+	private javax.swing.JPasswordField jTextFieldContrasena;
 	private javax.swing.JTextField jTextFieldNombreDeUsuario;
 	private javax.swing.JTextField jTextFieldNombreEquipo;
 	private javax.swing.JTextField jTextFieldRutaEnDiscoRemoto;
