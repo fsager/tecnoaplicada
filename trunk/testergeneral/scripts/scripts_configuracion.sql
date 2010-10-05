@@ -25,7 +25,7 @@ delete from app.EXAMEN_DETALLE;
 */
 --select * from APP.EXAMEN;
 
-select * from app.EXAMEN_DETALLE;
+--select * from app.EXAMEN_DETALLE;
 
 INSERT INTO APP.EXAMEN (EXA_CODIGO,EXA_NOMBRE) VALUES('EXA_VISION','Examen de Visión');
 INSERT INTO APP.EXAMEN (EXA_CODIGO,EXA_NOMBRE) VALUES('EXA_AUDICION','Examen de Audición');

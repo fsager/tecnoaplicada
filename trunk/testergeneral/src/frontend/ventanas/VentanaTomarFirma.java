@@ -197,7 +197,7 @@ public class VentanaTomarFirma extends JInternalFrameTesterGral {
 		btnAceptar.setVisible(true);
 
 		panelContenido.removeAll();
-		panelImage = new PanelImagen(img,new Dimension(200,110));
+		panelImage = new PanelImagen(img,new Dimension(200,110),"SISTEMA.FIRMAS.PORCENTAJE.REDUCCION");
 		panelContenido.add(panelImage);
 		this.panelContenido.setMinimumSize(panelImage.getPreferredSize());
 		this.panelContenido.setMaximumSize(panelImage.getPreferredSize());
