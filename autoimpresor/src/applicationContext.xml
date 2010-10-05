@@ -10,19 +10,14 @@
 		<property name="dataSource" ref="dataSource"/>	
 	</bean>
 
-     <!--bean id="dataSource"  class="org.springframework.jdbc.datasource.DriverManagerDataSource" scope="singleton">
-		<property name="url" value="jdbc:derby:db\autoimpresor"/>
-		<property name="username" value="autoimpresor"/>
-		<property name="password" value="autoimpresor"/>
-		<property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-    </bean-->
-
-    <bean id="dataSource"  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="dataSource"  class="testerGeneral.db.ConexionManager" scope="singleton"/>
+    
+    <!--bean id="dataSource"  class="org.springframework.jdbc.datasource.DriverManagerDataSource" destroy-method="close" >
 		<property name="url" value="jdbc:derby://localhost:1527/C:\programacion\Workspaces3\Autoimpresor\db\autoimpresor"/>
 		<property name="username" value="autoimpresor"/>
 		<property name="password" value="autoimpresor"/>
 		<property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver"/>
-    </bean>
+    </bean-->
     
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
         <property name="dataSource"> 
