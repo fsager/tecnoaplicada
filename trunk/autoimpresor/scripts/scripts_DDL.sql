@@ -176,7 +176,7 @@
 
 	--DROP table "APP"."DOMINIO";
     create table "APP"."DOMINIO"(
-        "DOM_ID" BIGINT not null generated always as identity,
+       "DOM_ID" BIGINT not null generated always as identity,
        "DOM_TIPO" VARCHAR(200),
        "DOM_CLAVE" VARCHAR(200),
        "DOM_CODIGO" VARCHAR(200),
@@ -186,6 +186,8 @@
     );
 
     create unique index "SQL100605120001810" on "APP"."DOMINIO"("DOM_ID");
+    
+    create unique index "UNIQUE_DOMINIO" on "APP"."DOMINIO"("DOM_TIPO","DOM_CLAVE","DOM_CODIGO","DOM_VALOR_MOSTRAR","DOM_DESCRIPCION");
 
 	--DROP table "APP"."PROPIEDAD";
     create table "APP"."PROPIEDAD"(
