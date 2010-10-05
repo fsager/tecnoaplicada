@@ -1883,11 +1883,11 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				Util.mostrarPanelOperacionesLargas();
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
-						GestorExportarDB gestorExportar = new GestorExportarDB();
+						/*GestorExportarDB gestorExportar = new GestorExportarDB();
 						GestorExportarDB
 								.setRutaDestinoBackup(rutaDestinoArchivoSQL);
 						Thread threadExportar = new Thread(gestorExportar);
-						threadExportar.run();
+						threadExportar.run();*/
 
 						DBImporter importadorAccess = new DBImporter();
 						importadorAccess.importar(rutaOrigenArchivoAccess);

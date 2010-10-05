@@ -581,7 +581,7 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 										.addComponent(
 												jScrollPane1,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
-												335,
+												315,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -589,8 +589,7 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 												lbSinResultados,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
 												24,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(14, Short.MAX_VALUE)));
+												javax.swing.GroupLayout.PREFERRED_SIZE)));
 
 		btnReimprimir.setText("Imprimir licencias seleccionadas");
 		btnReimprimir.setEnabled(false);
@@ -635,27 +634,25 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
 								layout
 										.createSequentialGroup()
 										.addContainerGap()
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
+																javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(
 																jPanel1,
-																javax.swing.GroupLayout.Alignment.LEADING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addComponent(
 																jPanel3,
-																javax.swing.GroupLayout.Alignment.LEADING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
 																layout
 																		.createSequentialGroup()
 																		.addComponent(
@@ -1049,11 +1046,10 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 			} else {
 				car.setCliFechaImpresion(null);
 			}
-			
+
 			if (checkSoloPendientes.isSelected()) {
 				car.setCliCantImpresiones(new Long(0));
-			} 
-			
+			}
 
 			List<CarnetLicencias> carnetLicencias = null;
 			if (!error)
