@@ -23,6 +23,7 @@
         constraint "SQL100326234107160" primary key ("DOM_ID")
     );
 
+	create unique index "UNIQUE_DOMINIO" on "APP"."DOMINIO"("DOM_TIPO","DOM_CLAVE","DOM_CODIGO","DOM_VALOR_MOSTRAR","DOM_DESCRIPCION");
     create unique index "SQL100605120001810" on "APP"."DOMINIO"("DOM_ID");
     
 	--DROP table "APP"."EXAMEN";
