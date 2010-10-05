@@ -317,7 +317,7 @@ public class GestorActualizacionesUtil {
 			GestorFTP.download(getFtpActualUrl(),// URL del FTP
 					getFtpActualNombreUsuario(),// Nombre de usuario
 					getFtpActualPassword(),// Password
-					"/"+getNombreAplicacion()+"/Common/" + nombreArchivoOrigen,// Archivo de
+					"/Common/" + nombreArchivoOrigen,// Archivo de
 					// origen en
 					// servidor.
 					new File(directorioDestino + File.separator

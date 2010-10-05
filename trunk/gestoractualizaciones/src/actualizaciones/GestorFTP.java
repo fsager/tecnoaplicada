@@ -118,7 +118,13 @@ public class GestorFTP {
 			
 			OutputStream output;
 			output = new FileOutputStream(destination);
-			f.retrieveFile(fileName, output);
+			
+			if (!f.printWorkingDirectory().equals("/")) {
+				f.retrieveFile(f.printWorkingDirectory()+fileName, output);	
+			} else {
+				f.retrieveFile(fileName, output);
+			}
+			
 			output.close();
 			System.out.println("Se descargó el archivo ftp: "+fileName+" en "+destination.getAbsolutePath());
 
