@@ -1,7 +1,6 @@
 package autoimpresor;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -10,12 +9,10 @@ import javax.swing.UIManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.exception.GenericJDBCException;
-import org.hibernate.exception.JDBCConnectionException;
-import org.hibernate.jdbc.ConnectionManager;
 import org.pushingpixels.substance.api.skin.SubstanceCremeLookAndFeel;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import testerGeneral.actualizaciones.GestorActualizaciones;
+import testerGeneral.db.ConexionManager;
 import testerGeneral.domain.Auditoria;
 import testerGeneral.domain.Constantes;
 import testerGeneral.exceptions.MyExceptionHandler;
@@ -24,9 +21,7 @@ import testerGeneral.service.AuditoriaDefinition;
 import actualizaciones.GestorActualizacionesUtil;
 import autoimpresor.business.ContextManager;
 import autoimpresor.frontend.ventanas.FrameContenedor;
-import frontend.components.JOptionPaneTesterGral;
 import frontend.utils.Util;
-import frontend.ventanas.JInternalFrameTesterGral;
 
 public class Main {
 
@@ -39,38 +34,24 @@ public class Main {
 
 	public static void init() {
 		try {
+			File archivoDeConexionDBRemota = new File(System.getProperty("user.dir")+ File.separator + "db_param.cfg");
+			ConexionManager datasource = (ConexionManager) ContextManager.getBizObject("dataSource");
 			// mostrarError("Version 1.0.6");
+			try {
 
-			File archivoDeConexionDBRemota = new File(System
-					.getProperty("user.dir")
-					+ File.separator + "db_param.cfg");
+				datasource.getConnection();
+				
+			} catch (Exception e) {
+				
+				if(archivoDeConexionDBRemota.exists())
+					archivoDeConexionDBRemota.delete();
+				
+				datasource.getConnection();
+				JOptionPane.showMessageDialog(null,
+								"<HTML><font color=\"red\">No ha sido posible conectarse a la Base de Datos remota. Se iniciará de ahora en adelante el programa conectado a la Base de Datos local.</font><HTML>",
+								"Error al conectarse a la Base de Datos remota, configure nuevamente el acceso remoto",
+								JOptionPane.WARNING_MESSAGE);
 
-			if (archivoDeConexionDBRemota.exists()
-					&& archivoDeConexionDBRemota.isFile()
-					&& archivoDeConexionDBRemota.length() > 0) {
-
-				String arrayParametros[] = GestorDBBackup
-						.cargarParametrosDeActualizacionDesdeArchivo(new File(
-								System.getProperty("user.dir")));
-
-				try {
-					DriverManagerDataSource datasource = (DriverManagerDataSource) ContextManager
-							.getBizObject("dataSource");
-
-					String urlConexion = "jdbc:derby://" + arrayParametros[0]
-							+ ":" + arrayParametros[1] + "/"
-							+ arrayParametros[4];
-					System.out.println("URL DE CONEXIÓN: " + urlConexion);
-					datasource.setUrl(urlConexion);
-
-					datasource.setUsername(arrayParametros[2]);
-					datasource.setPassword(arrayParametros[3]);
-					datasource.setDriverClassName(arrayParametros[5]);
-
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-
-				}
 			}
 
 			Constantes.VTN_TITLE_FRM_PRINCIPAL = "Autoimpresor";
@@ -130,40 +111,7 @@ public class Main {
 				}
 			});
 
-		} catch (JDBCConnectionException ex) {
-			DriverManagerDataSource datasource = (DriverManagerDataSource) ContextManager
-					.getBizObject("dataSource");
-
-			System.out.print("LALALLALALLALLLLALALLALLALALALAL");
-
-			datasource.setUrl("jdbc:derby:db\\autoimpresor");
-			datasource.setUsername("autoimpresor");
-			datasource.setPassword("autoimpresor");
-			datasource
-					.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
-
-			try {
-				datasource.getConnection();
-
-				File archivoDeConexionDBRemota = new File(System
-						.getProperty("user.dir")
-						+ File.separator + "db_param.cfg");
-				archivoDeConexionDBRemota.delete();
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"No ha sido posible conectarse a la Base de Datos remota. Se iniciará de ahora en adelante el programa conectado a la Base de Datos local.",
-								"Error al conectarse a la Base de Datos remota, configure nuevamente el acceso remoto",
-								JOptionPane.WARNING_MESSAGE);
-				
-				init();
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-
-			}
-
 		}
-
 		catch (GenericJDBCException ex) {
 			mostrarError("Se ha detectado que existe otra instancia de la aplicacion que se esta ejecutando. Por favor cierre dicha instancia antes de continuar.");
 			log.error(ex.getMessage(), ex);
