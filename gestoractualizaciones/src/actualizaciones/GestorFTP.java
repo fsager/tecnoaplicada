@@ -15,6 +15,7 @@ import java.net.URLConnection;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
 
 /*
  * To change this template, choose Tools | Templates
@@ -215,6 +216,7 @@ public class GestorFTP {
 		}
 	}
 
+
 	public static boolean existeConexionConServidor(String ftpServerUrl,
 			String user, String password) {
 
@@ -223,8 +225,12 @@ public class GestorFTP {
 		FTPClient ftpClient = new FTPClient();
 
 		try {
+			
+			ftpClient.setDefaultTimeout(8000);//Si no se logra conexión en ese tiempo, se aborta.
 			ftpClient.connect(ftpServerUrl);
+			
 			existeConexion = ftpClient.login(user, password);
+			
 		} catch (Exception e) {
 			System.out.println("No se pudo establecer conexión con el servidor " +ftpServerUrl);
 			return false;
