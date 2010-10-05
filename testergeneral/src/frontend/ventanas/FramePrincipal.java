@@ -151,12 +151,12 @@ public class FramePrincipal extends JInternalFrameTesterGral {
 																panelMenu,
 																javax.swing.GroupLayout.Alignment.LEADING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																1250,//1250 800
+																800,//1250 800
 																Short.MAX_VALUE)
 														.addComponent(
 																panelContenido,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																1250,//1250 800
+																800,//1250 800
 																Short.MAX_VALUE))
 										.addGap(0, 0, 0)).addGroup(
 								layout.createSequentialGroup().addComponent(

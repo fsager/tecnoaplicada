@@ -1,5 +1,7 @@
 package testerGeneral;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -11,19 +13,15 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.exception.GenericJDBCException;
 import org.pushingpixels.substance.api.skin.SubstanceCremeLookAndFeel;
 
-import actualizaciones.GestorActualizacionesUtil;
-
 import testerGeneral.actualizaciones.GestorActualizaciones;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Auditoria;
 import testerGeneral.domain.Constantes;
 import testerGeneral.exceptions.MyExceptionHandler;
 import testerGeneral.persistence.backup.GestorDBBackup;
-import testerGeneral.seguridad.Encriptadora;
 import testerGeneral.service.AuditoriaDefinition;
 import testerGeneral.threads.ThreadTrama;
 import examenes.psicometrico.domain.TramaPsicologico;
-import examenes.psicometrico.domain.TramaVision;
 import frontend.utils.Util;
 import frontend.ventanas.FrameContenedor;
 
@@ -38,8 +36,9 @@ public class Main {
 		//potenciometros();
 	}
 
-	public static void probarLuces() throws UnsupportedLookAndFeelException, InterruptedException
+	public static void probarLuces() throws UnsupportedLookAndFeelException, InterruptedException,Exception
 	{
+		
 		ThreadTrama thTrama = new ThreadTrama(new TramaPsicologico());
 		Util.thTrama = thTrama;
 		thTrama.setEjecucion(99999);

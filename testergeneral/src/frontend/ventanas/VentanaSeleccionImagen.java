@@ -292,7 +292,7 @@ public class VentanaSeleccionImagen extends JInternalFrameTesterGral {
 		btnAceptar.setVisible(true);
 
 		panelContenido.removeAll();
-		panelImage = new PanelImagen(img, dim);
+		panelImage = new PanelImagen(img, dim,"SISTEMA.IMAGENES.PORCENTAJE.REDUCCION");
 		panelContenido.add(panelImage);
 		this.panelContenido.setMinimumSize(panelImage.getPreferredSize());
 		this.panelContenido.setMaximumSize(panelImage.getPreferredSize());

@@ -81,18 +81,15 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 			Util.thTrama = thTrama;
 			thTrama.setEjecucion(99999);
 			thTrama.start();
-			
-			
+
 			thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST8);
-			
-			
+
 		} catch (ExceptionIsNotHadware e) {
 			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
 					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
-
 
 	/** This method is called from within the constructor to
 	 * initialize the form.
@@ -210,6 +207,11 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 				.createTitledBorder("Ojo izquierdo"));
 
 		jCheckIzq85.setText("85\u00b0");
+		jCheckIzq85.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckIzq85ActionPerformed(evt);
+			}
+		});
 
 		jCheckIzq70.setText("70\u00b0");
 
@@ -305,6 +307,10 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 										.addGap(53, 53, 53)));
 	}// </editor-fold>
 	//GEN-END:initComponents
+
+	private void jCheckIzq85ActionPerformed(java.awt.event.ActionEvent evt) {
+		//23
+	}
 
 	public boolean isExamenValid() {
 		Util.mostrarError(lbError, null, true);

@@ -31,7 +31,7 @@ public class PanelImagen extends javax.swing.JPanel {
 	private Image img;
 	private Dimension dim;
 
-	public PanelImagen(ImageIcon image,Dimension dim) {
+	public PanelImagen(ImageIcon image,Dimension dim,String propiedad) {
 		super();
 		this.dim=dim;
 		initComponents();
@@ -43,7 +43,7 @@ public class PanelImagen extends javax.swing.JPanel {
 		panelImagen.add(createColoredLabel(),new Integer(1));
 
 		Integer tamaño = Integer.valueOf(ContextManager
-				.getProperty("SISTEMA.IMAGENES.PORCENTAJE.REDUCCION"));
+				.getProperty(propiedad));
 		txtTamaño.setValue(tamaño);
 		ajustarTamano();
 		panelImagen.setOpaque(true);
