@@ -1,5 +1,6 @@
 package actualizaciones;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,9 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 
 			Thread th = new Thread(this);
 			th.start();
-			jProgressBarProgresoActualizacion.setIndeterminate(true);
+			jProgressBarProgresoActualizacion.setStringPainted(true);
+			jProgressBarProgresoActualizacion.setForeground(Color.blue);
+			jProgressBarProgresoActualizacion.setBackground(Color.white);
 		} catch (RuntimeException ex) {
 			GestorActualizaciones.setException(ex, "Error");
 		} catch (Exception exc) {
@@ -36,8 +39,22 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 	}
 
 	public void run() {
+
 		while (true) {
 			try {
+
+				/*
+				 * Cuando se sabe cuántos archivos se van a descargar del
+				 * servidor, se establece el valor máximo de la barra de
+				 * progreso.
+				 */
+				if (GestorActualizacionesUtil.getCantidadTotalArchivos() != 0
+						&& jProgressBarProgresoActualizacion.getMaximum() != GestorActualizacionesUtil
+								.getCantidadTotalArchivos()) {
+					jProgressBarProgresoActualizacion
+							.setMaximum(GestorActualizacionesUtil
+									.getCantidadTotalArchivos());
+				}
 
 				if (!GestorActualizaciones.getUrlFTPActual().isEmpty()) {
 					jLabelValorUrlServidorSeleccionado
@@ -59,6 +76,14 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 						.setText(GestorActualizacionesUtil
 								.getNombreArchivoActualDescargando());
 
+				/*
+				 * Se actualiza el valor de la barra de progreso. Si se avanzó a
+				 * otro archivo, la barra avanza.
+				 */
+				jProgressBarProgresoActualizacion
+						.setValue(GestorActualizacionesUtil
+								.getCantidadArchivosDescargando());
+
 				jLabelValorDescargandoArchivoNumeroX
 						.setText(GestorActualizacionesUtil
 								.getCantidadArchivosDescargando()
@@ -77,6 +102,7 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 								getClass().getResource("/imagenes/check.gif")));
 
 					} else {
+
 						System.out
 								.println(GestorActualizaciones.getException());
 						jLabelSeEstaActualizando.setText(GestorActualizaciones
@@ -95,12 +121,11 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 						// Logger.getLogger(JDialogActualizar.class.getName()).log(Level.SEVERE,
 						// null, ex);
 						jButtonSalir.setText("Salir");
-						//jButtonSalir.setVisible(true);
 					}
 
 					System.exit(0);
 				}
-				Thread.sleep(50);
+				Thread.sleep(100);
 			} catch (InterruptedException ex) {
 				Logger.getLogger(JDialogActualizar.class.getName()).log(
 						Level.SEVERE, null, ex);
@@ -108,7 +133,7 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 		}
 	}
 
-	//GEN-BEGIN:initComponents
+	// GEN-BEGIN:initComponents
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
 
@@ -172,12 +197,12 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 														.addComponent(
 																jLabelValorUrlServidorSeleccionado,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																397,
+																387,
 																Short.MAX_VALUE)
 														.addComponent(
 																jLabelValorNombreUsuarioEnServidor,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																397,
+																387,
 																Short.MAX_VALUE))
 										.addContainerGap()));
 		jPanelDetallesActualizacionLayout
@@ -337,12 +362,12 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 														.addComponent(
 																jLabelValorNombreArchivoActual,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																446,
+																439,
 																Short.MAX_VALUE)
 														.addComponent(
 																jLabelValorDescargandoArchivoNumeroX,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																446,
+																439,
 																Short.MAX_VALUE))
 										.addContainerGap()));
 		jPanelStatusDescargaLayout
@@ -476,7 +501,8 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 
 		pack();
 	}// </editor-fold>
-	//GEN-END:initComponents
+
+	// GEN-END:initComponents
 
 	private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -494,7 +520,7 @@ public class JDialogActualizar extends javax.swing.JDialog implements Runnable {
 		}
 	}
 
-	//GEN-BEGIN:variables
+	// GEN-BEGIN:variables
 	// Variables declaration - do not modify
 	private javax.swing.JButton jButtonSalir;
 	private javax.swing.JLabel jLabelDescargandoArchivoNumeroX;
