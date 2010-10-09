@@ -74,8 +74,8 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelValorUrlServidorSeleccionado" alignment="0" pref="397" max="32767" attributes="0"/>
-                      <Component id="jLabelValorNombreUsuarioEnServidor" alignment="0" pref="397" max="32767" attributes="0"/>
+                      <Component id="jLabelValorUrlServidorSeleccionado" alignment="0" pref="387" max="32767" attributes="0"/>
+                      <Component id="jLabelValorNombreUsuarioEnServidor" alignment="0" pref="387" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -208,8 +208,8 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelValorNombreArchivoActual" pref="446" max="32767" attributes="1"/>
-                      <Component id="jLabelValorDescargandoArchivoNumeroX" alignment="0" pref="446" max="32767" attributes="1"/>
+                      <Component id="jLabelValorNombreArchivoActual" pref="439" max="32767" attributes="1"/>
+                      <Component id="jLabelValorDescargandoArchivoNumeroX" alignment="0" pref="439" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
