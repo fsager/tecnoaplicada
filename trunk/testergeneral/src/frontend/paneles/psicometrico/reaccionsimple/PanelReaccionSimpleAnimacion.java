@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
+import testerGeneral.threads.ThreadTrama;
 import frontend.paneles.Captura;
 import frontend.utils.Util;
 
@@ -114,6 +115,8 @@ public class PanelReaccionSimpleAnimacion extends javax.swing.JPanel implements 
 						run=false;
 						parent.setInstanteSemaforoRojo(System.currentTimeMillis());
 						parent.incrementarEjecucion();
+						
+						//parent.getThTrama().sendOrden(ThreadTrama.ORDEN_PRENDER_LED1);
 					}
 				}
 				catch (Exception e) {

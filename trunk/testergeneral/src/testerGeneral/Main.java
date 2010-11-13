@@ -1,5 +1,6 @@
 package testerGeneral;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Date;
@@ -15,6 +16,7 @@ import org.pushingpixels.substance.api.skin.SubstanceCremeLookAndFeel;
 
 import testerGeneral.actualizaciones.GestorActualizaciones;
 import testerGeneral.business.ContextManager;
+import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Auditoria;
 import testerGeneral.domain.Constantes;
 import testerGeneral.exceptions.MyExceptionHandler;
@@ -24,6 +26,7 @@ import testerGeneral.threads.ThreadTrama;
 import examenes.psicometrico.domain.TramaPsicologico;
 import frontend.utils.Util;
 import frontend.ventanas.FrameContenedor;
+import frontend.ventanas.VtnConfigurarDb;
 
 public class Main {
 
@@ -115,68 +118,81 @@ public class Main {
 	}
 
 	public static void init() {
-		long iniTime = System.currentTimeMillis();
+		
+		File archivoDeConexionDBRemota = new File(System.getProperty("user.dir")+ File.separator + "db_param.cfg");
+		ConexionManagerTesterGeneral datasource = (ConexionManagerTesterGeneral) ContextManager.getBizObject("dataSource");
+		
 		try {
-			Util.SMALL_ICON = Constantes.IMG_ICON_SMALL;
-
-			Util.obtenerNombrePC();
-			AuditoriaDefinition auditoriaService = (AuditoriaDefinition) ContextManager
-					.getBizObject("auditoriaService");
-			Auditoria auditoria = new Auditoria();
-			auditoria.setAudFecha(new Date());
-			auditoriaService.getAll(auditoria);
-
-			// Se borra el log anterior a los días especificados en el panel de
-			// control.
-			testerGeneral.persistence.impl.Util
-					.borrarAuditoriasAnterioresAXDias();
-
-			/*
-			 * Si la actualización anterior incluía ejecutar un archivo de
-			 * script (actualizar_db.sql), se actualiza con ese archivo la DB
-			 * del programa.
-			 */
-			GestorDBBackup.ejecutarSentenciaSQL();
-
 			try
 			{
-				/* Si se bajó una nueva versión del GestorActualizaciones.jar, se la
-				 activa.*/
-				//GestorActualizacionesUtil.actualizarGestorActualizaciones();
-				
-				/* Se revisa si hay una nueva versión del sistema al iniciar.*/
-
-				GestorActualizaciones gestorActualizaciones = new GestorActualizaciones();
-				gestorActualizaciones.start();
-				
-			}catch(Exception ex)
-			{
-				
-			}
-
-			// Hilo de backup automático al iniciar
-			GestorDBBackup gestorBackup = new GestorDBBackup();
-			Thread hiloBackupAutomatico = new Thread(gestorBackup);
-			hiloBackupAutomatico.start();
-
-			java.awt.EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						UIManager
-								.setLookAndFeel(new SubstanceCremeLookAndFeel());
-
-					} catch (Exception e) {
-						throw new RuntimeException(e);
+					datasource.getConnection();
+					
+					Util.SMALL_ICON = Constantes.IMG_ICON_SMALL;
+					Util.obtenerNombrePC();
+					AuditoriaDefinition auditoriaService = (AuditoriaDefinition) ContextManager
+							.getBizObject("auditoriaService");
+					Auditoria auditoria = new Auditoria();
+					auditoria.setAudFecha(new Date());
+					auditoriaService.getAll(auditoria);
+		
+					// Se borra el log anterior a los días especificados en el panel de
+					// control.
+					testerGeneral.persistence.impl.Util
+							.borrarAuditoriasAnterioresAXDias();
+		
+					/*
+					 * Si la actualización anterior incluía ejecutar un archivo de
+					 * script (actualizar_db.sql), se actualiza con ese archivo la DB
+					 * del programa.
+					 */
+					GestorDBBackup.ejecutarSentenciaSQL();
+		
+					try
+					{
+						/* Si se bajó una nueva versión del GestorActualizaciones.jar, se la
+						 activa.*/
+						//GestorActualizacionesUtil.actualizarGestorActualizaciones();
+						
+						/* Se revisa si hay una nueva versión del sistema al iniciar.*/
+		
+						GestorActualizaciones gestorActualizaciones = new GestorActualizaciones();
+						gestorActualizaciones.start();
+						
+					}catch(Exception ex)
+					{
+						
 					}
-					new FrameContenedor().setVisible(true);
-					Thread
-							.setDefaultUncaughtExceptionHandler(new MyExceptionHandler());
-					System.setProperty("sun.awt.exception.handler",
-							MyExceptionHandler.class.getName());
-				}
-			});
+		
+					// Hilo de backup automático al iniciar
+					GestorDBBackup gestorBackup = new GestorDBBackup();
+					Thread hiloBackupAutomatico = new Thread(gestorBackup);
+					hiloBackupAutomatico.start();
+		
+					java.awt.EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								UIManager
+										.setLookAndFeel(new SubstanceCremeLookAndFeel());
+		
+							} catch (Exception e) {
+								throw new RuntimeException(e);
+							}
+							new FrameContenedor().setVisible(true);
+							Thread
+									.setDefaultUncaughtExceptionHandler(new MyExceptionHandler());
+							System.setProperty("sun.awt.exception.handler",
+									MyExceptionHandler.class.getName());
+						}
+					});
 
-			System.out.println("1: " + (System.currentTimeMillis() - iniTime));
+			} catch (Exception e) {
+				
+				if(archivoDeConexionDBRemota.exists())
+					mostrarFrameJDBCRemoto();
+				else
+					throw new GenericJDBCException(null,null);
+					
+			}
 
 		} catch (GenericJDBCException ex) {
 			mostrarError("Se ha detectado que existe otra instancia de la aplicación que se está ejecutando. Por favor cierre dicha instancia antes de continuar.");
@@ -190,6 +206,22 @@ public class Main {
 	public static void mostrarError(final String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, "Error",
 				JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public static void mostrarFrameJDBCRemoto()
+	{
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UIManager
+							.setLookAndFeel(new SubstanceCremeLookAndFeel());
+
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+				VtnConfigurarDb VtnConfigurarDb=new VtnConfigurarDb("/images/icon.png","TesterGeneral");
+			}
+		});
 	}
 
 }

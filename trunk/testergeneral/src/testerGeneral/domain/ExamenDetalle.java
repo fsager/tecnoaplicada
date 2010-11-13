@@ -20,7 +20,8 @@ public class ExamenDetalle implements java.io.Serializable {
 	public static final String EXAD_CODIGO_TEST_PERC_REAC="TEST_PERC_REAC";
 	
 	
-	public static final String EXAD_CODIGO_TEST_AGUDEZA_VISUAL="TEST_AGUDEZA_VISUAL";
+	public static final String EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA="TEST_AGUDEZA_VISUAL_CERCANA";
+	public static final String EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA="TEST_AGUDEZA_VISUAL_LEJANA";
 	public static final String EXAD_CODIGO_TEST_PROFUNDIDAD="TEST_PROFUNDIDAD";
 	public static final String EXAD_CODIGO_TEST_FOTOCROMATICA="TEST_FOTOCROMATICA";
 	public static final String EXAD_CODIGO_TEST_FORIA="TEST_FORIA";

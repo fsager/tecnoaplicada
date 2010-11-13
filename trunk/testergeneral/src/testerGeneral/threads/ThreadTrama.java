@@ -45,6 +45,8 @@ public class ThreadTrama extends Thread{
 	
 	/*Ordenes vision*/
 	public static final int ORDEN_APAGAR_TEST_PERIMETRIA=0X20;//Dejo de generar el test ocular o de perimetrias
+	
+	/*PERIMETRIA*/
 	public static final int ORDEN_ENCIENDE_PER_SUP=0x21;//Enciendo la perimetria superior
 	public static final int ORDEN_ENCIENDE_PER_INF=0x22;//Enciendo la perimetria inferior
 	public static final int ORDEN_ENCIENDE_PER_85=0x23;//Enciendo la perimetria de 85º
@@ -53,8 +55,26 @@ public class ThreadTrama extends Thread{
 	public static final int ORDEN_ENCIENDE_PER_NASAL=0x26;//Enciendo la perimetria nasal
 	public static final int ORDEN_ENCIENDE_PER_IZQ=0x27;//Habilito la perimetria del lado izquierdo
 	public static final int ORDEN_ENCIENDE_PER_DER=0x28;//Habilito la perimetria del lado derecho
-	public static final int ORDEN_CAMBIA_ESTADO_LUZ_DER=0x31;//Cambio de estado la luz del lado derecho
-	public static final int ORDEN_CAMBIA_ESTADO_LUZ_IZQ=0x32;//Cambio de estado la luz del lado izquierdo
+	
+	
+
+	
+	
+
+	public static final int ORDEN_ENCIENDE_PER_85_IZQ=0x2723;
+	public static final int ORDEN_ENCIENDE_PER_85_DER=0x2826;
+	public static final int ORDEN_ENCIENDE_PER_70_IZQ=0x2724;
+	public static final int ORDEN_ENCIENDE_PER_70_DER=0x2825;
+	public static final int ORDEN_ENCIENDE_PER_55_IZQ=0x2725;
+	public static final int ORDEN_ENCIENDE_PER_55_DER=0x2724;
+	
+	public static final int ORDEN_ENCIENDE_PER_NASAL_IZQ=0x2726;
+	public static final int ORDEN_ENCIENDE_PER_NASAL_DER=0x2823;
+	/*PERIMETRIA*/
+	
+	
+	public static final int ORDEN_CAMBIA_ESTADO_LUZ_DER=0x32;//Cambio de estado la luz del lado derecho
+	public static final int ORDEN_CAMBIA_ESTADO_LUZ_IZQ=0x31;//Cambio de estado la luz del lado izquierdo
 	public static final int ORDEN_RETROCEDER_TEST=0x33;//Retrocede un test el tambor rotatorio
 	public static final int ORDEN_AVANZAR_TEST=0x34;//Avanza un test el tambor rotatorio
 	public static final int ORDEN_IR_TEST1=0x41;//Ir al primer test

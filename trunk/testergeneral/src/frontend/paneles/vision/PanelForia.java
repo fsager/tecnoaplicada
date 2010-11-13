@@ -17,6 +17,7 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
 import testerGeneral.business.ContextManager;
@@ -142,7 +143,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 		lbImagen
 				.setIcon(new javax.swing.ImageIcon(
 						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\foria\\foria.png")); // NOI18N
-		lbImagen.setBounds(10, 10, 540, 360);
+		lbImagen.setBounds(10, 10, 660, 270);
 		jLayeredPane1.add(lbImagen, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 14));
@@ -169,11 +170,11 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 
 		jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 14));
 		jLabel3.setForeground(new java.awt.Color(0, 0, 255));
-		jLabel3.setText("(0-4)");
+		jLabel3.setText("(A-C)");
 
 		jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 14));
 		jLabel4.setForeground(new java.awt.Color(0, 0, 255));
-		jLabel4.setText("(1-9)");
+		jLabel4.setText("(1-13)");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
@@ -184,7 +185,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 						.addGroup(
 								layout
 										.createSequentialGroup()
-										.addGap(0, 0, 0)
+										.addGap(12, 12, 12)
 										.addGroup(
 												layout
 														.createParallelGroup(
@@ -194,9 +195,9 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 																		.createSequentialGroup()
 																		.addComponent(
 																				lbError,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				386,
-																				Short.MAX_VALUE)
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				509,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																		.addComponent(
@@ -204,7 +205,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 														.addComponent(
 																jLayeredPane1,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																555,
+																682,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -246,7 +247,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
 																				jLabel3)))
-										.addGap(182, 182, 182)));
+										.addContainerGap(42, Short.MAX_VALUE)));
 		layout
 				.setVerticalGroup(layout
 						.createParallelGroup(
@@ -296,14 +297,14 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 														.addComponent(
 																jLayeredPane1,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																389,
+																287,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
+																javax.swing.GroupLayout.Alignment.BASELINE)
 														.addComponent(
 																btnGuardar)
 														.addComponent(
@@ -311,7 +312,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																24,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(54, Short.MAX_VALUE)));
+										.addContainerGap(156, Short.MAX_VALUE)));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
@@ -326,14 +327,14 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar una columna indicada válida. Valores entre 1 y 9.",
+							"Debe ingresar una columna indicada válida. Valores entre 1 y 13.",
 							false);
 			return false;
 		} else if (!isFilaValueValid()) {
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar una fila indicada válida. Valores entre 0 y 4.",
+							"Debe ingresar una fila indicada válida. Valores entre A y C.",
 							false);
 			return false;
 		}
@@ -344,7 +345,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 	public boolean isColValueValid() {
 		try {
 			int value = Integer.valueOf(jFormattedColumna.getText());
-			if (value == 0 || value > 9)
+			if (value == 0 || value > 13)
 				return false;
 		} catch (NumberFormatException ex) {
 			return false;
@@ -354,10 +355,13 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 	}
 
 	public boolean isFilaValueValid() {
+
+		
 		try {
 			if (!jFormattedFile.getText().isEmpty()) {
-				int value = Integer.valueOf(jFormattedFile.getText());
-				if (value > 4)
+				
+				int value = getFilaNumber().intValue();
+				if (value==0 || value > 3)
 					return false;
 			}
 		} catch (NumberFormatException ex) {
@@ -365,6 +369,28 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 		}
 
 		return true;
+	}
+	
+	public Double getFilaNumber()
+	{
+		String fila=jFormattedFile.getText();
+		
+		if(fila.compareToIgnoreCase("A")==0)
+		{
+			return new Double(1);
+		}
+		else if(fila.compareToIgnoreCase("B")==0)
+		{
+			return new Double(2);
+		}
+		else if(fila.compareToIgnoreCase("C")==0)
+		{
+			return new Double(3);
+		}
+		else
+		{
+			return new Double(4);
+		}
 	}
 
 	public void cargarResultados() {
@@ -375,25 +401,26 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 		res.setResEtapaDesc("Foria Columna");
 		res.setResValor1(Double.valueOf(jFormattedColumna.getText()));
 
-		if (res.getResValor1().intValue() >= 2
-				&& res.getResValor1().intValue() <= 4)
+		if (res.getResValor1().intValue() >= 4
+				&& res.getResValor1().intValue() <= 6)
 			res.setResEtapaDesc("Ligera foria vertical izquierda.");
-		if (res.getResValor1().intValue() >= 6
-				&& res.getResValor1().intValue() <= 8)
+		if (res.getResValor1().intValue() >= 8
+				&& res.getResValor1().intValue() <= 10)
 			res.setResEtapaDesc("Ligera foria vertical derecha.");
-		else if (res.getResValor1().intValue() == 5)
+		else if (res.getResValor1().intValue() == 7)
 			res.setResEtapaDesc("No presenta foria vertical.");
-		else if (res.getResValor1().intValue() > 8)
+		else if (res.getResValor1().intValue() > 10)
 			res.setResEtapaDesc("Foria vertical derecha.");
-		else if (res.getResValor1().intValue() < 2)
+		else if (res.getResValor1().intValue() < 4)
 			res.setResEtapaDesc("Foria vertical izquierda.");
 
 		resultados.add(res);
 
-		try {
+		if (!jFormattedFile.getText().isEmpty())
+		{
 			res = new Resultado();
 			res.setResEtapa(1l);
-			res.setResValor1(Double.valueOf(jFormattedFile.getText()));
+			res.setResValor1(getFilaNumber());
 
 			if (res.getResValor1().intValue() == 1)
 				res.setResEtapaDesc("Ligera foria horizontal superior.");
@@ -401,15 +428,14 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 				res.setResEtapaDesc("No presenta foria horizontal.");
 			else if (res.getResValor1().intValue() == 3)
 				res.setResEtapaDesc("Ligera foria horizontal inferior.");
-			else if (res.getResValor1().intValue() > 3)
+			/*else if (res.getResValor1().intValue() > 3)
 				res.setResEtapaDesc("Foria horizontal inferior.");
 			else if (res.getResValor1().intValue() < 1)
-				res.setResEtapaDesc("Foria horizontal superior.");
+				res.setResEtapaDesc("Foria horizontal superior.");*/
 
 			resultados.add(res);
-		} catch (java.lang.NumberFormatException e) {
-
 		}
+
 
 	}
 

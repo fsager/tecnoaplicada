@@ -194,9 +194,9 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 		}		
 		else if(exaDetalle.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULT_NO_COND))
 		{
-			setAccionPulsador(Constantes.IMG_REAC_MULT_NO_COND_PUL_SONIDO,texto,"Pedal Izquierdo",ParametrosPercepcionReacion.PULSADOR_FRENO,orden.get(0),Constantes.SONIDO_REAC_MULT_NO_COND_PUL_FRENO);//PARE
+			setAccionPulsador(Constantes.IMG_REAC_MULT_NO_COND_PUL_SONIDO_IZQ,texto,"Pedal Izquierdo",ParametrosPercepcionReacion.PULSADOR_FRENO,orden.get(0),Constantes.SONIDO_REAC_MULT_NO_COND_PUL_FRENO);//PARE
 			
-			setAccionPulsador(Constantes.IMG_REAC_MULT_NO_COND_PUL_SONIDO,texto,"Pedal Derecho",ParametrosPercepcionReacion.PULSADOR_ACELERADOR,orden.get(1),Constantes.SONIDO_REAC_MULT_NO_COND_PUL_ACELERADOR);//Autopista
+			setAccionPulsador(Constantes.IMG_REAC_MULT_NO_COND_PUL_SONIDO_DER,texto,"Pedal Derecho",ParametrosPercepcionReacion.PULSADOR_ACELERADOR,orden.get(1),Constantes.SONIDO_REAC_MULT_NO_COND_PUL_ACELERADOR);//Autopista
 			
 			setAccionPulsador(Constantes.IMG_REAC_MULT_NO_COND_PUL_ROMBO,texto,"Nada",ParametrosPercepcionReacion.PULSADOR_0,orden.get(2),null);//dos flechas
 			

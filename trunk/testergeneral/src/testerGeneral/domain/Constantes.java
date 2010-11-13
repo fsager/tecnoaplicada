@@ -61,6 +61,8 @@ public class Constantes {
 	public static final String IMG_BTN_EXAMINAR="/images/agregar.png";
 	public static final String IMG_BTN_ACEPTAR="/images/aceptar.png";
 	public static final String IMG_ACEPTAR_SMALL="/images/aceptar_small.png";
+	public static final String IMG_CANCEL_SMALL="/images/delete_small.png";
+	
 	
 	public static final String IMG_BTN_CANCELAR="/images/cancelar.png";
 	public static final String IMG_BTN_CANCELAR32="/images/cancelar32X32.png";
@@ -110,12 +112,17 @@ public class Constantes {
 	
 	public static final String IMG_REAC_MULT_NO_COND_PUL_CRUZ="/images/reacionesMultiplesNoCondicionadas/pulsadorCruz.png";
 	public static final String IMG_REAC_MULT_NO_COND_PUL_ESTRELLA="/images/reacionesMultiplesNoCondicionadas/pulsadorEstrella.png";
-	public static final String IMG_REAC_MULT_NO_COND_PUL_SONIDO="/images/reacionesMultiplesNoCondicionadas/pulsadorSonido.png";
+	//public static final String IMG_REAC_MULT_NO_COND_PUL_SONIDO="/images/reacionesMultiplesNoCondicionadas/pulsadorSonido.png";
+	public static final String IMG_REAC_MULT_NO_COND_PUL_SONIDO_DER="/images/reacionesMultiplesNoCondicionadas/pulsadorSonidoPedelDer.png";
+	public static final String IMG_REAC_MULT_NO_COND_PUL_SONIDO_IZQ="/images/reacionesMultiplesNoCondicionadas/pulsadorSonidoPedelIzq.png";
+	
 	
 	public static final String SONIDO_REAC_MULT_NO_COND_PUL_FRENO="sound/freno.wav";
 	public static final String SONIDO_REAC_MULT_NO_COND_PUL_ACELERADOR="sound/aceledaror.wav";
 	public static final String SOUND_ERROR="sound/error.wav";
 	public static final String SOUND_OK="sound/ok.wav";
+	public static final String SOUND_START="sound/start.wav";
+	
 	
 	//public static final String IMG_REAC_MULT_NO_COND_PUL_RECTANGULO="/images/reacionesMultiplesNoCondicionadas/pulsadorRectangulo.png";
 	public static final String IMG_REAC_MULT_NO_COND_PUL_ROMBO="/images/reacionesMultiplesNoCondicionadas/pulsadorRombo.png";

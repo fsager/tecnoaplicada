@@ -1,7 +1,6 @@
 package examenes.util;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -304,7 +303,11 @@ public class ExamenesUtils {
 			else if(newPersonaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_VISION))
 				panelExamen = new PanelExamenes(newPersonaExamen,new PanelAgudezaVisual(null,newPersonaExamen));
 			
-			panelContenido.add(panelExamen);	
+			
+			panelContenido.add(panelExamen);
+			
+			if(panelExamen.getPanelAnimacion().getComponentCount()>0)
+				panelExamen.getPanelAnimacion().getComponent(0).requestFocus();
 			
 		} catch (Exception e) {
 			throw new RuntimeException(e);
