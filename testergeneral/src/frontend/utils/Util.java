@@ -36,7 +36,6 @@ import javax.swing.text.MaskFormatter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -44,12 +43,12 @@ import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
 import testerGeneral.domain.UsuarioCommon;
-import testerGeneral.persistence.backup.GestorDBBackup;
 import testerGeneral.service.DominioDefinition;
 import testerGeneral.threads.ThreadTrama;
 import actualizaciones.GestorActualizacionesUtil;
 import frontend.components.GlassPanel;
 import frontend.components.JOptionPaneTesterGral;
+import frontend.paneles.PanelConfiguracionDB;
 import frontend.paneles.PanelMenu;
 import frontend.paneles.PanelOperacionesLargas;
 import frontend.ventanas.FramePrincipal;
@@ -427,6 +426,27 @@ public class Util {
 		panelOperacionesLargas.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		glass.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 	}
+	
+	
+	public static void mostrarPanelOperacionesLargas(String mensaje)
+	{
+		final GlassPanel glass=new GlassPanel();
+		glass.setOpaque(false);
+		
+		PanelOperacionesLargas panelOperacionesLargas=new PanelOperacionesLargas(mensaje);
+		Point  p=new Point(((Util.framePrincipal.getWidth() - panelOperacionesLargas.getWidth()) / 2),(Util.framePrincipal.getHeight() - panelOperacionesLargas.getHeight()) / 2);
+		panelOperacionesLargas.setLocation(p.x,p.y);
+		
+		panelOperacionesLargas.setVisible(true);
+		glass.add(panelOperacionesLargas);
+		Util.framePrincipal.setGlassPane(glass);
+		glass.setVisible(true);
+		
+		panelOperacionesLargas.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		glass.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+	}
+	
+	
 	
 	public static void ocultarPanelOperacionesLargas()
 	{

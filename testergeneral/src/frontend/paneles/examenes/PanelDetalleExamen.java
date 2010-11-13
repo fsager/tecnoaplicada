@@ -9,7 +9,6 @@ package frontend.paneles.examenes;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 import javax.swing.JToggleButton;
@@ -98,15 +97,22 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 			for(int i=0;i<detallesExamenes.size();i++)
 			{
 				ExamenDetalle de=detallesExamenes.get(i);
-				JToggleButton btnExamen = new JToggleButton(de.getExadDetalle());
-				btnExamen.setActionCommand(de.getExadCodigo());
-				btnExamen.setForeground(Color.red);
-				
-				this.add(btnExamen);
-				btnExamen.addActionListener(action);
-				
-				if(i==0)
-					btnExamenPrimero=btnExamen;
+				if(!de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA))
+				{
+					String detalle=de.getExadDetalle();
+					if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA))
+						detalle=detalle.replaceAll(" cercana","");
+						
+					JToggleButton btnExamen = new JToggleButton(detalle);
+					btnExamen.setActionCommand(de.getExadCodigo());
+					btnExamen.setForeground(Color.red);
+					
+					this.add(btnExamen);
+					btnExamen.addActionListener(action);
+					
+					if(i==0)
+						btnExamenPrimero=btnExamen;
+				}
 			}
 			
 			if(personaExamen.getPersona()!=null)
@@ -121,7 +127,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 			if(personaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_PSICOMETRICO))
 				unSelectButtons(ExamenDetalle.EXAD_CODIGO_TEST_CTR_TEMPORO);
 			else if(personaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_VISION))
-				unSelectButtons(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL);
+				unSelectButtons(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -203,7 +209,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 			addTestCoorVisomotora(btn);
 		}
 		
-		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL))
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA))
 		{
 			addTestAgudezaVisual(btn);
 		}
@@ -412,7 +418,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 		try {
 						
 			ExamenDetalle exaDetalle=new ExamenDetalle(); 
-			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL);
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
 			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
 			PanelAgudezaVisual ppr=new PanelAgudezaVisual(btn,personaExamen);
 			panelExamen.getPanelAnimacion().add(ppr);

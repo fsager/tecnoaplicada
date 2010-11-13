@@ -29,8 +29,7 @@ import testerGeneral.seguridad.Encriptadora;
 import testerGeneral.service.PropiedadDefinition;
 
 public class GestorDBBackup implements Runnable {
-	private static PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
-			.getBizObject("propiedadService");
+	
 
 	public void run() {
 		realizarBackupAutomatico();
@@ -42,7 +41,8 @@ public class GestorDBBackup implements Runnable {
 	 * DIRECTORIO.BACKUP.SECUNDARIO (si aplica).
 	 */
 	public static void realizarBackupAutomatico() {
-
+		PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
+		.getBizObject("propiedadService");
 		if (ContextManager.getProperty("SISTEMA.BACKUP.AUTOMATICO.ACTIVADO")
 				.equals("S")) {
 
@@ -102,7 +102,9 @@ public class GestorDBBackup implements Runnable {
 	 */
 	private static boolean cumplioPlazoMaximoBackup() {
 		try {
-
+			PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
+			.getBizObject("propiedadService");
+			
 			Propiedad propiedadFechaUltimoBackup = propiedadService
 					.get("SISTEMA.BACKUP.FECHAULTIMOBACKUP");
 
@@ -171,7 +173,8 @@ public class GestorDBBackup implements Runnable {
 	 */
 	public static void ejecutarSentenciaSQL() {
 		try {
-
+			PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
+			.getBizObject("propiedadService");
 			File f = new File(System.getProperty("user.dir") + File.separator
 					+ "actualizar_db.sql");
 

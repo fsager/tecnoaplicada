@@ -206,6 +206,33 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 				g.setColor(Color.BLUE);
 				g.fillOval(xAutoIzq, imgDimension.height-100, widthAuto,heightAuto);
 				
+				
+				/*for(int i=0;i<=360;i++)
+				{
+					int radio=widthAuto/2;
+					//int radio=20;
+					double angulo=Math.toDegrees(i);
+					int coorX=(int)(radio*Math.cos(angulo)-1); 
+					int coorY=(int)(radio*Math.sin(angulo)-1); 
+					
+					int posAutoDer = thTrama.getTramaValida().getPotenciometroDerecho();
+					int posAutoIzq= thTrama.getTramaValida().getPotenciometroIzquierdo();
+					
+					xAutoDer=getPosInPixel(posAutoDer,true);
+					xAutoIzq=getPosInPixel(posAutoIzq,false);
+					
+					int finalCoorX=xAutoDer+(coorX+radio);
+					int finalCoorY=yDesde+heightPantalla-100+(coorY)+(radio);
+					
+					finalCoorY=finalCoorY-1000;
+					
+					System.out.println("finalCoorX: "+finalCoorX+" finalCoorY: "+finalCoorY);
+					g.setColor(Color.GREEN);
+					g.drawLine(finalCoorX, finalCoorY, finalCoorX, finalCoorY);
+					//g.drawRect(finalCoorX, finalCoorY-heightPantalla-500, 20, 20);					
+					//g.fillOval(xAutoIzq, imgDimension.height-100, widthAuto,heightAuto);
+				}*/
+				
 				g.dispose();
 				graphicsCaptura.dispose();
 				
@@ -259,7 +286,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	public void run() {
 		int i=2;
 		boolean exit=false;
-		int tiempoSleep=48;//48
+		int tiempoSleep=37;//48
 		while (!stop) {
 			dibujarAutos();
 			if(!stop && run)
@@ -336,7 +363,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 				{					
 					initPosicion();
 					repaint();
-					Thread.sleep(300);//300
+					Thread.sleep(100);//300
 					i=2;
 					exit=false;
 				} catch (Exception ex) {
@@ -463,7 +490,8 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 		
 		for(int i=0;i<=360;i++)
 		{
-			int radio=20;
+			int radio=widthAuto/2;
+			//int radio=20;
 			double angulo=Math.toDegrees(i);
 			int coorX=(int)(radio*Math.cos(angulo)-1); 
 			int coorY=(int)(radio*Math.sin(angulo)-1); 

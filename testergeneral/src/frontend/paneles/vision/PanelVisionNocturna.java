@@ -106,6 +106,7 @@ public class PanelVisionNocturna extends javax.swing.JPanel implements
 	public void cargarImagenes() {
 			String binocular = ContextManager
 					.getProperty("EXAMEN.VISION.NOCTURNA.IMG");
+			Util.setIcon(lbImagen, binocular);
 	}
 
 	/** This method is called from within the constructor to

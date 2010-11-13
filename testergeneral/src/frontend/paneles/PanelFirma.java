@@ -134,7 +134,7 @@ public class PanelFirma extends javax.swing.JPanel implements
 
 		// set the brush's size, and opacity relative to the pressure
 		float pressure = ev.pen.getLevelValue(PLevel.Type.PRESSURE);
-		brushSize = pressure * 20;
+		brushSize = pressure * 2;
 		// get the current cursor location
 		loc.x = ev.pen.getLevelValue(PLevel.Type.X);
 		loc.y = ev.pen.getLevelValue(PLevel.Type.Y);

@@ -16,6 +16,7 @@ import java.awt.SplashScreen;
 import javax.swing.JFrame;
 
 import testerGeneral.business.ContextManager;
+import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Propiedad;
 import testerGeneral.domain.Usuario;
@@ -141,6 +142,8 @@ public class FrameContenedor extends javax.swing.JFrame {
 	private void formWindowClosing(java.awt.event.WindowEvent evt) {
 		if(Util.thTrama!=null)
 			Util.thTrama.desconnect();
+		ConexionManagerTesterGeneral datasource = (ConexionManagerTesterGeneral) ContextManager.getBizObject("dataSource");
+		datasource.destroy();
 		System.exit(0);
 	}
 

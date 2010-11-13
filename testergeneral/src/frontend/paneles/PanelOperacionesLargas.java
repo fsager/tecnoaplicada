@@ -32,6 +32,19 @@ public class PanelOperacionesLargas extends javax.swing.JPanel {
 		this.setPreferredSize(dim);
 
 	}
+	
+	public PanelOperacionesLargas(String mensaje) {
+		initComponents();
+
+		lbIcon.setText(null);
+		Util.setIcon(lbIcon, Constantes.IMG_DIALOG_INFO);
+		lbMessage.setText(mensaje);
+		Dimension dim=new Dimension(600,70);
+		this.setSize(dim);
+		this.setMinimumSize(dim);
+		this.setPreferredSize(dim);
+
+	}
 
 	/** This method is called from within the constructor to
 	 * initialize the form.

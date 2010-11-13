@@ -124,7 +124,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 			try {
 
 				if (run && runExamen) {
-
+					cantidadTotal++;
 					if (pulsadorAPresionar == 0)
 						pulsadorAPresionar = rnd.nextInt(4) + 1;
 					else {
@@ -149,7 +149,8 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 						timeIni = System.currentTimeMillis();
 					}
 					
-					validarPulsacion(pulsadorAPresionar);
+					if(cantidadTotal>5)
+						validarPulsacion(pulsadorAPresionar);
 
 					long itempoASeguirDurmiendo = tiempoLuz - timeSlepped;
 					if (itempoASeguirDurmiendo > 0)
@@ -161,6 +162,9 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 					panelAnimacionDibujar.repaint();
 					
 					Thread.sleep(tiempoEntreLuz);
+					
+					if(cantidadTotal==5)
+						Util.playSound(Constantes.SOUND_START,100);
 				}
 				else
 				{
@@ -639,6 +643,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 
 	public void inicializar() {
 		apagarLed();
+		cantidadTotal=0;
 		runExamen = false;
 		if (task != null)
 			task.cancel(true);
@@ -805,6 +810,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	private JToggleButton btn;
 	private Task task;
 	//private List<Integer> puntosActivados = new LinkedList<Integer>();
+	private int cantidadTotal = 0;
 	private int errores = 0;
 	private int aciertosUno = 0;
 	private int aciertosDos = 0;

@@ -13,7 +13,6 @@ public class TramaVision implements Trama{
 	private int campoNro=0;
 	private Byte[] tramaVision=new Byte[7];
 	
-
 	public boolean addCampo(Byte campo)
 	{
 		if(campoNro<tramaVision.length)
@@ -132,6 +131,27 @@ public class TramaVision implements Trama{
 
 	}
 
+	public boolean isDerButtonPress()
+	{
+		int buttonDer=1;
+		
+		if(tramaVision[4]==buttonDer)
+			return true;
+		
+		return false;
+	}
+	
+	public boolean isIzqButtonPress()
+	{
+		int buttonIzq=2;
+		
+		if(tramaVision[4]==buttonIzq)
+			return true;
+		
+		return false;
+	}
+	
+	
 	@Override
 	public byte getByte(int pos) {
 		return tramaVision[pos];
@@ -239,7 +259,8 @@ public class TramaVision implements Trama{
 		threadTrama.sendOrden(0x5000);
 		threadTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
 		threadTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
-		threadTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_LAMINAS);		
+		threadTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_LAMINAS);
+		threadTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 	}
 	
 }

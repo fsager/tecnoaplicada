@@ -187,6 +187,11 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		
 
 	}
+	
+	public ThreadTrama getThTrama()
+	{
+		return thTrama;
+	}
 
 	public void mostrarSecondMonitor() {
 
@@ -308,6 +313,9 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	public void frenar() throws InterruptedException {
 			long tiempoActual=System.currentTimeMillis();
 			long resEtapa=(tiempoActual - getInstanteSemaforoRojo())/10;
+			
+			//thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED3);
+			
 			setMensajes(continuarAnimacion);
 			Resultado res=resultados.get(etapaActual);
 			res.setResValor1((double)resEtapa);

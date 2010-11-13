@@ -90,19 +90,20 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 	public void setTableModel(List lst) {
 		TableModelResultadoExamen tableModel = new TableModelResultadoExamen(
 				perExamen.getExamen().getExaCodigo());
-		
-		 
-		
+
 		tableModel.setLst(lst);
 		tableDetalleExamen.setModel(tableModel);
 		tableDetalleExamen
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableDetalleExamen.setAutoCreateRowSorter(true);
-		
-		if(perExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_VISION))
-		{
-			tableDetalleExamen.setRowHeight(0,75);
-			tableDetalleExamen.setRowHeight(3,60);
+
+		if (perExamen.getExamen().getExaCodigo().equals(
+				Examen.EXA_CODIGO_VISION)) {
+			tableDetalleExamen.setRowHeight(0, 50);
+			tableDetalleExamen.setRowHeight(1, 50);
+			tableDetalleExamen.setRowHeight(3, 60);
+			tableDetalleExamen.setRowHeight(4, 50);
+			tableDetalleExamen.setRowHeight(8, 130);
 		}
 	}
 
@@ -124,6 +125,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 		btnGuardar = new ButtonGuardar();
 		btnExaminar = new ButtonExaminar();
 		btnCancelarFoto = new ButtonCancelarMini();
+		lbAdjunto = new javax.swing.JLabel();
 
 		jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
 				"Detalle Exámen",
@@ -163,7 +165,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel1Layout.createSequentialGroup().addComponent(
 						jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE,
-						294, Short.MAX_VALUE).addContainerGap()));
+						305, Short.MAX_VALUE).addContainerGap()));
 
 		cbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -199,6 +201,8 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 				btnCancelarFotoActionPerformed(evt);
 			}
 		});
+
+		lbAdjunto.setFont(new java.awt.Font("Segoe UI", 3, 14));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
@@ -251,13 +255,32 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 																												javax.swing.GroupLayout.PREFERRED_SIZE))
 																						.addComponent(
 																								jLabel1))
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				cbEstado,
-																				0,
-																				253,
-																				Short.MAX_VALUE))
+																		.addGroup(
+																				layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addGroup(
+																								layout
+																										.createSequentialGroup()
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addComponent(
+																												cbEstado,
+																												0,
+																												253,
+																												Short.MAX_VALUE))
+																						.addGroup(
+																								layout
+																										.createSequentialGroup()
+																										.addGap(
+																												7,
+																												7,
+																												7)
+																										.addComponent(
+																												lbAdjunto,
+																												javax.swing.GroupLayout.DEFAULT_SIZE,
+																												253,
+																												Short.MAX_VALUE))))
 														.addGroup(
 																layout
 																		.createSequentialGroup()
@@ -284,21 +307,28 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)
-										.addGap(18, 18, 18)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																false)
 														.addComponent(jLabel2)
 														.addComponent(
 																btnExaminar,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
 																25,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
+																Short.MAX_VALUE)
 														.addComponent(
 																btnCancelarFoto,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
 																25,
+																Short.MAX_VALUE)
+														.addComponent(
+																lbAdjunto,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																17,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addGap(11, 11, 11)
 										.addGroup(
@@ -324,6 +354,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 	//GEN-END:initComponents
 
 	private void btnCancelarFotoActionPerformed(java.awt.event.ActionEvent evt) {
+		lbAdjunto.setText(null);
 		perExamen.setPexaAdj(null);
 		perExamen.setPexaNombreAdjunto(null);
 	}
@@ -344,6 +375,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 						.getRutaSeleccionada());
 
 				String fileName = archivoSeleccionado.getName();
+				lbAdjunto.setText(fileName);
 				byte[] bytes = testerGeneral.persistence.impl.Util
 						.getBytesFromFile(archivoSeleccionado.getAbsolutePath());
 				perExamen.setPexaNombreAdjunto(fileName);
@@ -401,6 +433,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JScrollPane jScrollPane1;
+	private javax.swing.JLabel lbAdjunto;
 	private javax.swing.JTable tableDetalleExamen;
 	// End of variables declaration//GEN-END:variables
 	private PersonaExamen perExamen;

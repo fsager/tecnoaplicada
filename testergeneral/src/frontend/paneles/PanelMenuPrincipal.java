@@ -17,6 +17,8 @@ import javax.swing.JToolBar;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import testerGeneral.business.ContextManager;
+import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Usuario;
@@ -145,7 +147,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 				.setHorizontalGroup(panelSubMenuLayout
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGap(0, 1016, Short.MAX_VALUE)
+						.addGap(0, 1082, Short.MAX_VALUE)
 						.addGroup(
 								panelSubMenuLayout
 										.createParallelGroup(
@@ -157,7 +159,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 														.addComponent(
 																toolbarSubNivel,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																1016,
+																1082,
 																Short.MAX_VALUE)
 														.addGap(0, 0, 0))));
 		panelSubMenuLayout
@@ -201,13 +203,12 @@ public class PanelMenuPrincipal extends PanelMenu {
 										.addComponent(
 												toolbarPrincipal,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
-												620, Short.MAX_VALUE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												396, Short.MAX_VALUE)
+										.addGap(0, 0, 0)
 										.addComponent(
 												jLabel1,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
-												391,
+												686,
 												javax.swing.GroupLayout.PREFERRED_SIZE))
 						.addGroup(
 								javax.swing.GroupLayout.Alignment.TRAILING,
@@ -221,7 +222,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 																jSeparator6,
 																javax.swing.GroupLayout.Alignment.LEADING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																1016,
+																1082,
 																Short.MAX_VALUE)
 														.addComponent(
 																panelSubMenu,
@@ -231,7 +232,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 														.addComponent(
 																jSeparator5,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																1016,
+																1082,
 																Short.MAX_VALUE))
 										.addGap(0, 0, 0)));
 		layout
@@ -393,6 +394,12 @@ public class PanelMenuPrincipal extends PanelMenu {
 		btnLogEventos.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				seleccionarLogEventos();
+			}
+		});
+
+		btnConfigurarDB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				seleccionarConfigurarDB();
 			}
 		});
 
@@ -606,8 +613,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 		cargarSubMenuExamenes();
 		unSelectButtons(toolbarSubNivel, btnExamenPsicometrico);
 		panelContenido.removeAll();
-		ExamenesUtils.mostrarPanelExamen(personaExamen,
-				panelContenido);
+		ExamenesUtils.mostrarPanelExamen(personaExamen, panelContenido);
 		doAfterLoadMenuContenido();
 	}
 
@@ -615,11 +621,10 @@ public class PanelMenuPrincipal extends PanelMenu {
 		cargarSubMenuExamenes();
 		unSelectButtons(toolbarSubNivel, btnExamenVision);
 		panelContenido.removeAll();
-		ExamenesUtils.mostrarPanelExamen(personaExamen,
-				panelContenido);
+		ExamenesUtils.mostrarPanelExamen(personaExamen, panelContenido);
 		doAfterLoadMenuContenido();
 	}
-	
+
 	/*public void seleccionarExamenVision() {
 		testerGeneral.persistence.impl.Util.insertAudit(
 				testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_VISION,
@@ -665,6 +670,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 
 		btnLogEventos.setVisible(true);
 		toolbarSubNivel.add(btnLogEventos);
+
+		btnConfigurarDB.setVisible(true);
+		toolbarSubNivel.add(btnConfigurarDB);
 
 		/*Refresco para que se visualice correctamente*/
 		doAfterLoadMenu();
@@ -720,6 +728,22 @@ public class PanelMenuPrincipal extends PanelMenu {
 		doAfterLoadMenuContenido();
 	}
 
+	public void seleccionarConfigurarDB() {
+
+		unSelectButtons(toolbarSubNivel, btnConfigurarDB);
+		panelContenido.removeAll();
+
+		PanelConfiguracionDB panelConfiguracionDB = new PanelConfiguracionDB(
+				ContextManager.getProperty("SISTEMA.NOMBRE.PROGRAMA"), false);
+		panelConfiguracionDB.validate();
+
+		panelConfiguracionDB.setVisible(true);
+		panelContenido.add(panelConfiguracionDB);
+
+		doAfterLoadMenuContenido();
+
+	}
+
 	public void seleccionarCerrarSesion() {
 
 		int op = JOptionPaneTesterGral.showInternal(
@@ -751,6 +775,10 @@ public class PanelMenuPrincipal extends PanelMenu {
 			Util.frameContenedor.dispose();
 			if (Util.thTrama != null)
 				Util.thTrama.desconnect();
+
+			ConexionManagerTesterGeneral datasource = (ConexionManagerTesterGeneral) ContextManager
+					.getBizObject("dataSource");
+			datasource.destroy();
 
 			System.exit(0);
 		}
@@ -829,6 +857,8 @@ public class PanelMenuPrincipal extends PanelMenu {
 			Constantes.MENU_SUB_INFORMES);
 	private javax.swing.JToggleButton btnLogEventos = new JToggleButton(
 			Constantes.MENU_SUB_LOG);
+	private javax.swing.JToggleButton btnConfigurarDB = new JToggleButton(
+			Constantes.MENU_SUB_PANEL_CONFIGURAR_DB);
 
 	@Override
 	public void cargarPrimeraOpcion() {
