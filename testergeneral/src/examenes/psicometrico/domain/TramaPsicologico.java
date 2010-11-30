@@ -1,8 +1,13 @@
 package examenes.psicometrico.domain;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import testerGeneral.threads.ThreadTrama;
 
 public class TramaPsicologico implements Trama{
+	
+	private static final Log log = LogFactory.getLog(TramaPsicologico.class);
 	
 	private Byte campoCabecera1=new Byte(new Integer(0x31).byteValue());
 	private Byte campoCabecera2=new Byte(new Integer(0x42).byteValue());
@@ -20,9 +25,12 @@ public class TramaPsicologico implements Trama{
 		{
 
 			tramaPsicologico[campoNro]=campo;
-			/*if(campoNro==5 || campoNro==4)
+			/*if(campoNro==7)
 			{
-				System.out.println("campo : "+campoNro+" "+Integer.toHexString((int)campo));
+				if(tramaPsicologico[7]==2)
+					log.debug("Freno press: "+System.currentTimeMillis());
+				else if(tramaPsicologico[7]==1)
+					log.debug("Acelerador press: "+System.currentTimeMillis());
 			}*/
 			campoNro++;	
 			

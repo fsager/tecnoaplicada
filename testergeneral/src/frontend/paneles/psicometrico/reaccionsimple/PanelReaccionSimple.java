@@ -313,7 +313,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	public void frenar() throws InterruptedException {
 			long tiempoActual=System.currentTimeMillis();
 			long resEtapa=(tiempoActual - getInstanteSemaforoRojo())/10;
-			
+			//log.debug("Tiempo de Frenado: "+(tiempoActual - getInstanteSemaforoRojo())+" current: "+System.currentTimeMillis());
 			//thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED3);
 			
 			setMensajes(continuarAnimacion);
@@ -372,6 +372,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	
 	public void setInstanteSemaforoRojo(long instanteSemaforoRojo)
 	{
+		//log.debug("Semaforo en rojo: "+instanteSemaforoRojo);
 		this.instanteSemaforoRojo=instanteSemaforoRojo;
 	}
 	

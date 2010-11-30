@@ -17,6 +17,8 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 
+import org.apache.derby.iapi.tools.run;
+
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Examen;
@@ -91,7 +93,19 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			} else
 				thTrama = Util.thTrama;
 
-			thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST1);
+			new Thread()
+			{
+				@Override
+				public void run() {
+					try {
+						thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST8);//PUBLICIDAD
+						Thread.sleep(4000);
+						thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST1);
+					} catch (InterruptedException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}.start();
 
 		} catch (ExceptionIsNotHadware e) {
 			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),

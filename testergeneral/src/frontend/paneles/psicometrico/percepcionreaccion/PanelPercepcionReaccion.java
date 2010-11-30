@@ -891,8 +891,8 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 			
 			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
 			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
-			resultadoDetalleExamen.setRdeNota(pro[0]);
-			resultadoDetalleExamen.setRdeNota2(pro[1]);
+			resultadoDetalleExamen.setRdeNota(pro[0]);//tiempo centecimas de segundos
+			resultadoDetalleExamen.setRdeNota2(pro[1]);//errores
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 

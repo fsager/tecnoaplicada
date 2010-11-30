@@ -4,24 +4,22 @@ import org.apache.commons.lang.NotImplementedException;
 
 import testerGeneral.threads.ThreadTrama;
 
-public class TramaVision implements Trama{
+public class TramaAudio implements Trama{
 	
-	private Byte campoCabecera1=new Byte(new Integer(0x32).byteValue());
+	private Byte campoCabecera1=new Byte(new Integer(0x33).byteValue());
 	private Byte campoCabecera2=new Byte(new Integer(0x42).byteValue());
 	private Byte campoCabecera3=new Byte(new Integer(0x43).byteValue());
 	private Byte campoCabecera4=new Byte(new Integer(0x48).byteValue());
 	private Byte campoCierre1=new Byte(new Integer(0x0D).byteValue());
 	
-	
-	
 	private int campoNro=0;
-	private Byte[] tramaVision=new Byte[7];
+	private Byte[] trama=new Byte[10];
 	
 	public boolean addCampo(Byte campo)
 	{
-		if(campoNro<tramaVision.length)
+		if(campoNro<trama.length)
 		{
-			tramaVision[campoNro]=campo;
+			trama[campoNro]=campo;
 			/*if(campoNro==5 || campoNro==4)
 			{
 				
@@ -38,18 +36,18 @@ public class TramaVision implements Trama{
 	
 	public void setTrama(Byte[] tramaVision)
 	{
-		this.tramaVision=tramaVision;
+		this.trama=tramaVision;
 	}
 	
 	public Byte[] getTrama()
 	{
-		return tramaVision;
+		return trama;
 	}
 	
 	public boolean sync(Byte campo)
 	{
 		//System.out.println("campo: "+Integer.toHexString((int)campo));
-		tramaVision[campoNro]=campo;
+		trama[campoNro]=campo;
 		if(isPositionValid())
 		{
 			campoNro++;
@@ -76,19 +74,19 @@ public class TramaVision implements Trama{
 	{
 		switch (campoNro) {
 			case 0:{
-				return tramaVision[campoNro].compareTo(campoCabecera1)!=0 ? false :  true;
+				return trama[campoNro].compareTo(campoCabecera1)!=0 ? false :  true;
 			}
 			case 1:{
-				return tramaVision[campoNro].compareTo(campoCabecera2)!=0 ? false :  true;
+				return trama[campoNro].compareTo(campoCabecera2)!=0 ? false :  true;
 			}
 			case 2:{
-				return tramaVision[campoNro].compareTo(campoCabecera3)!=0 ? false :  true;
+				return trama[campoNro].compareTo(campoCabecera3)!=0 ? false :  true;
 			}
 			case 3:{
-				return tramaVision[campoNro].compareTo(campoCabecera4)!=0 ? false :  true;
+				return trama[campoNro].compareTo(campoCabecera4)!=0 ? false :  true;
 			}
-			case 7:{
-				return tramaVision[campoNro].compareTo(campoCierre1)!=0 ? false :  true;
+			case 9:{
+				return trama[campoNro].compareTo(campoCierre1)!=0 ? false :  true;
 			}
 			default: return true;
 		}
@@ -98,13 +96,13 @@ public class TramaVision implements Trama{
 	{
 		try
 		{
-			if(tramaVision[0].compareTo(campoCabecera1)!=0)
+			if(trama[0].compareTo(campoCabecera1)!=0)
 				return false;
-			if(tramaVision[1].compareTo(campoCabecera2)!=0)
+			if(trama[1].compareTo(campoCabecera2)!=0)
 				return false;
-			if(tramaVision[2].compareTo(campoCabecera3)!=0)
+			if(trama[2].compareTo(campoCabecera3)!=0)
 				return false;
-			if(tramaVision[3].compareTo(campoCabecera4)!=0)
+			if(trama[3].compareTo(campoCabecera4)!=0)
 				return false;
 		}
 		catch (NullPointerException e) {
@@ -118,7 +116,7 @@ public class TramaVision implements Trama{
 	{
 		try
 		{
-			if(tramaVision[6].compareTo(campoCierre1)!=0)
+			if(trama[9].compareTo(campoCierre1)!=0)
 				return false;
 		
 		}
@@ -128,44 +126,87 @@ public class TramaVision implements Trama{
 		return true;
 	}
 	
-
 	public void init() {
 		campoNro=0;
-		tramaVision=new Byte[7];
-
+		trama=new Byte[10];
 	}
 
-	public boolean isDerButtonPress()
+	public int getFrecuencia()
 	{
-		int buttonDer=1;
-		
-		if(tramaVision[4]==buttonDer)
+		return trama[4];
+	}
+	
+	public String getFrecuencia(int frecuencia)
+	{
+		switch (frecuencia) {
+			case 1: return "250 Hz";
+			case 2: return "500 Hz";
+			case 3: return "1000 Hz";
+			case 4: return "2000 Hz";
+			case 5: return "3000 Hz";
+			case 6: return "4000 Hz";
+			case 7: return "6000 Hz";
+			case 8: return "8000 Hz";
+		default:
+			throw new RuntimeException("Descripcion para la frecuencia: "+frecuencia+" no definido.");
+		}
+	}
+	
+	public int getDbSubida()
+	{
+		return trama[5];
+	}
+	
+	public int getDbBajanda()
+	{
+		return trama[6];
+	}
+	
+	public int getOido()
+	{
+		return trama[7];
+	}
+	
+	public String getOido(int oido)
+	{
+		switch (oido) {
+			case 0: return "Oído derecho";
+			case 1: return "Oído izquierdo";
+			case 2: return "Ambos oídos";
+		default:
+			throw new RuntimeException("Descripcion para el oido: "+oido+" no definido.");
+		}
+	}
+	
+	public boolean isTestNotRunning()
+	{	
+		if(trama!=null && trama[8]!= null && trama[8]==0)
 			return true;
 		
 		return false;
 	}
 	
+	public boolean isDerButtonPress()
+	{
+		throw new NotImplementedException();
+	}
+	
 	public boolean isIzqButtonPress()
 	{
-		int buttonIzq=2;
-		
-		if(tramaVision[4]==buttonIzq)
-			return true;
-		
-		return false;
+		throw new NotImplementedException();
 	}
 	
 	
 	@Override
 	public byte getByte(int pos) {
-		return tramaVision[pos];
+		return trama[pos];
 	}
 	
 	
 	@Override
 	public Trama getInstance() {
 		
-		return new TramaVision();
+		return new TramaAudio();
 	}
 
 	@Override
@@ -202,7 +243,7 @@ public class TramaVision implements Trama{
 	public boolean isButton3Press() {
 		throw new NotImplementedException();
 	}
-	
+
 	@Override
 	public boolean isButton4Press() {
 		throw new NotImplementedException();
@@ -244,13 +285,11 @@ public class TramaVision implements Trama{
 		throw new NotImplementedException();
 		
 	}
+
 	@Override
 	public void desconnect(ThreadTrama threadTrama) {
-		threadTrama.sendOrden(0x5000);
-		threadTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
-		threadTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
-		threadTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_LAMINAS);
-		threadTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
+		threadTrama.sendOrden(threadTrama.ORDEN_STOP_AUTOMATICO);
+		//throw new NotImplementedException();
 	}
 	
 }

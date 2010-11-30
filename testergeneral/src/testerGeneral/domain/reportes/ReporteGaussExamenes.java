@@ -7,26 +7,62 @@ import java.util.List;
 
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import testerGeneral.domain.ExamenDetalle;
 
 
 
 public class ReporteGaussExamenes {
-	private String seria;//Nombre del Examen
-	private List<CategoriaValor> categoriasValores;
+	private String serie;//Nombre del Examen
 	private String categoria;//01,2,3,etc para errores. 1-3, 3-5, etc para tiempo o metros
 	private int value;//Cantidad de personas
+	private String tipo;//C CATEGORIA - E error 
 	
-	public String getSeria() {
-		return seria;
+	public static void addExamen(List<ReporteGaussExamenes> reportesGaussExamenes,ExamenDetalle examenDetalle)
+	{
+		String categorias[]=ReportesExamenesUtil.getCategorias(examenDetalle.getExadCodigo());
+		for(String categoria:categorias)
+		{
+			ReporteGaussExamenes reporteGaussExamenes=new ReporteGaussExamenes();
+			reporteGaussExamenes.setCategoria(categoria);
+			reporteGaussExamenes.setSerie(examenDetalle.getExadDetalle());
+			reporteGaussExamenes.setValue(0);
+			reporteGaussExamenes.setTipo("C");
+			
+			reportesGaussExamenes.add(reporteGaussExamenes);
+		}
+		
+		categorias=ReportesExamenesUtil.getCategoriasErrores();
+		for(String categoria:categorias)
+		{
+			
+			ReporteGaussExamenes reporteGaussExamenes=new ReporteGaussExamenes();
+			reporteGaussExamenes.setCategoria(categoria);
+			reporteGaussExamenes.setSerie(examenDetalle.getExadDetalle());
+			reporteGaussExamenes.setValue(0);
+			reporteGaussExamenes.setTipo("E");
+			
+			reportesGaussExamenes.add(reporteGaussExamenes);
+		}
 	}
-	public void setSeria(String seria) {
-		this.seria = seria;
+	
+	public void addValue()
+	{
+		value++;
 	}
-	public List<CategoriaValor> getCategoriasValores() {
-		return categoriasValores;
+	
+	public String getTipo() {
+		return tipo;
 	}
-	public void setCategoriasValores(List<CategoriaValor> categoriasValores) {
-		this.categoriasValores = categoriasValores;
+	
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
+	public String getSerie() {
+		return serie;
+	}
+	public void setSerie(String seria) {
+		this.serie = seria;
 	}
 	
 	public String getCategoria() {
@@ -47,32 +83,32 @@ public class ReporteGaussExamenes {
 		List<ReporteGaussExamenes> lstReporte=new ArrayList<ReporteGaussExamenes>(); 
 		
 		ReporteGaussExamenes r=new ReporteGaussExamenes();
-		r.setSeria("Examen 1");
+		r.setSerie("Test de control temporo espacial");
 		r.setCategoria("TOP 1");
 		r.setValue(1);
 			
 		lstReporte.add(r);
 			
 		r=new ReporteGaussExamenes();
-		r.setSeria("Examen 1");
+		r.setSerie("Test de control temporo espacial");
 		r.setCategoria("TOP 2");
 		r.setValue(5);
 			
 		lstReporte.add(r);
 			
 		r=new ReporteGaussExamenes();
-		r.setSeria("Examen 1");
+		r.setSerie("Test de control temporo espacial");
 		r.setCategoria("TOP 3");
 		r.setValue(2);
 			
 		lstReporte.add(r);
 		
 			
-		//**//	
-		r=new ReporteGaussExamenes();
-		r.setSeria("Examen 2");
-		//r.setCategoria("TOP 1");
-		//r.setValue(1);
+		
+		/*r=new ReporteGaussExamenes();
+		r.setSerie("Examen 2");
+		r.setCategoria("TOP 1");
+		r.setValue(1);
 		
 		List<CategoriaValor> catLst=new ArrayList<CategoriaValor>();
 		
@@ -92,11 +128,12 @@ public class ReporteGaussExamenes {
 		catLst.add(cat);
 		
 		r.setCategoriasValores(catLst);
-		lstReporte.add(r);
+		lstReporte.add(r);*/
 			
 			
 		return lstReporte;
 	}
+	
 	
 	public static void main(String args[]) throws Exception
 	{

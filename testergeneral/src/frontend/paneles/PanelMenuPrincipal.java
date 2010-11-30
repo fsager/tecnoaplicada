@@ -147,7 +147,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 				.setHorizontalGroup(panelSubMenuLayout
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGap(0, 1082, Short.MAX_VALUE)
+						.addGap(0, 1006, Short.MAX_VALUE)
 						.addGroup(
 								panelSubMenuLayout
 										.createParallelGroup(
@@ -159,7 +159,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 														.addComponent(
 																toolbarSubNivel,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																1082,
+																1006,
 																Short.MAX_VALUE)
 														.addGap(0, 0, 0))));
 		panelSubMenuLayout
@@ -197,42 +197,44 @@ public class PanelMenuPrincipal extends PanelMenu {
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
-								layout
-										.createSequentialGroup()
-										.addComponent(
-												toolbarPrincipal,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												396, Short.MAX_VALUE)
-										.addGap(0, 0, 0)
-										.addComponent(
-												jLabel1,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												686,
-												javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
 								layout
 										.createSequentialGroup()
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				toolbarPrincipal,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				391,
+																				Short.MAX_VALUE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																		.addComponent(
+																				jLabel1,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				603,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
 														.addComponent(
 																jSeparator6,
-																javax.swing.GroupLayout.Alignment.LEADING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																1082,
+																1006,
 																Short.MAX_VALUE)
 														.addComponent(
 																panelSubMenu,
+																javax.swing.GroupLayout.Alignment.TRAILING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addComponent(
 																jSeparator5,
+																javax.swing.GroupLayout.Alignment.TRAILING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																1082,
+																1006,
 																Short.MAX_VALUE))
 										.addGap(0, 0, 0)));
 		layout
