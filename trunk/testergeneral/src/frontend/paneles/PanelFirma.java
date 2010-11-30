@@ -134,12 +134,16 @@ public class PanelFirma extends javax.swing.JPanel implements
 
 		// set the brush's size, and opacity relative to the pressure
 		float pressure = ev.pen.getLevelValue(PLevel.Type.PRESSURE);
+		//PLevel.Type.
+		//ev.pen.g
 		brushSize = pressure * 2;
+		
 		// get the current cursor location
 		loc.x = ev.pen.getLevelValue(PLevel.Type.X);
 		loc.y = ev.pen.getLevelValue(PLevel.Type.Y);
 
 		if (brushSize > 0) {
+				brushSize=15;
 				g2d.setColor(Color.BLACK);
 				stroke = new BasicStroke(brushSize, BasicStroke.CAP_ROUND, // round line endings
 						BasicStroke.JOIN_MITER);

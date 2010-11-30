@@ -314,5 +314,7 @@ public class ExamenesUtils {
 		}
 		
 		log.debug("fin mostrarPanelExamen");
-	}	
+	}
+	
+
 }

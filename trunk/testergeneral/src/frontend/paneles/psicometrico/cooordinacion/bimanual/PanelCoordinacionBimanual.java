@@ -386,8 +386,8 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
 			pro[0]=this.resultados.get(0).getResValor1()+this.resultados.get(1).getResValor1();
 			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
-			resultadoDetalleExamen.setRdeNota(pro[0]);
-			resultadoDetalleExamen.setRdeNota2(pro[1]);
+			resultadoDetalleExamen.setRdeNota(pro[0]);//Promedio de tiempo
+			resultadoDetalleExamen.setRdeNota2(pro[1]);//Promedio de errores
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 

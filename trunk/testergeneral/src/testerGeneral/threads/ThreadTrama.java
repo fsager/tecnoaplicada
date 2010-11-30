@@ -44,9 +44,10 @@ public class ThreadTrama extends Thread{
 	public static final int ORDEN_PRENDER_LED6=54;
 	
 	/*Ordenes vision*/
-	public static final int ORDEN_APAGAR_TEST_PERIMETRIA=0X20;//Dejo de generar el test ocular o de perimetrias
 	
 	/*PERIMETRIA*/
+	
+	public static final int ORDEN_APAGAR_TEST_PERIMETRIA=0X20;//Dejo de generar el test ocular o de perimetrias
 	public static final int ORDEN_ENCIENDE_PER_SUP=0x21;//Enciendo la perimetria superior
 	public static final int ORDEN_ENCIENDE_PER_INF=0x22;//Enciendo la perimetria inferior
 	public static final int ORDEN_ENCIENDE_PER_85=0x23;//Enciendo la perimetria de 85º
@@ -56,20 +57,7 @@ public class ThreadTrama extends Thread{
 	public static final int ORDEN_ENCIENDE_PER_IZQ=0x27;//Habilito la perimetria del lado izquierdo
 	public static final int ORDEN_ENCIENDE_PER_DER=0x28;//Habilito la perimetria del lado derecho
 	
-	
 
-	
-	
-
-	public static final int ORDEN_ENCIENDE_PER_85_IZQ=0x2723;
-	public static final int ORDEN_ENCIENDE_PER_85_DER=0x2826;
-	public static final int ORDEN_ENCIENDE_PER_70_IZQ=0x2724;
-	public static final int ORDEN_ENCIENDE_PER_70_DER=0x2825;
-	public static final int ORDEN_ENCIENDE_PER_55_IZQ=0x2725;
-	public static final int ORDEN_ENCIENDE_PER_55_DER=0x2724;
-	
-	public static final int ORDEN_ENCIENDE_PER_NASAL_IZQ=0x2726;
-	public static final int ORDEN_ENCIENDE_PER_NASAL_DER=0x2823;
 	/*PERIMETRIA*/
 	
 	
@@ -87,6 +75,26 @@ public class ThreadTrama extends Thread{
 	public static final int ORDEN_IR_TEST8=0x48;//Ir al octavo test o publicidad
 	public static final int ORDEN_APAGAR_TEST_LAMINAS=0x49;//Apagar el test de las laminas
 	/*Ordenes vision*/
+	
+	
+	/*Ordenes audio*/
+	public static final int ORDEN_SONIDO_OIDO_IZQ=0x31;//Generar sonido en el oído izquierdo
+	public static final int ORDEN_SONIDO_OIDO_AMBOS=0x32;//Generar sonido en ambos oídos
+	public static final int ORDEN_SONIDO_OIDO_DERECHO=0x33;//Generar sonido en el oído derecho
+	public static final int ORDEN_TONO250=0x41;//Generar el tono de 250 Hz
+	public static final int ORDEN_TONO500=0x42;//Generar el tono de 500 Hz
+	public static final int ORDEN_TONO1000=0x43;//Generar el tono de 1000 Hz
+	public static final int ORDEN_TONO2000=0x44;//Generar el tono de 2000 Hz
+	public static final int ORDEN_TONO3000=0x45;//Generar el tono de 3000 Hz
+	public static final int ORDEN_TONO4000=0x46;//Generar el tono de 4000 Hz
+	public static final int ORDEN_TONO6000=0x47;//Generar el tono de 6000 Hz
+	public static final int ORDEN_TONO8000=0x48;//Generar el tono de 8000 Hz
+	public static final int ORDEN_STOP_AUTOMATICO=0x80;//Dejar de realizar el test en forma automática
+	public static final int ORDEN_START_AUTOMATICO=0x81;//Realizar el test en forma automática
+	public static final int ORDEN_START_AUTOMATICO_STEREO=0x82;//Realizar el test en forma automática en ambos oídos simultáneamente “stereo”
+	public static final int ORDEN_CONFIGURACION_FINA=0x90;//Enviar la configuración fina del equipo
+	/*Ordenes audio*/
+	
 	
 	private static final Log log = LogFactory.getLog(ThreadTrama.class);
 	private InputStream in;
@@ -148,14 +156,16 @@ public class ThreadTrama extends Thread{
 										} catch (IOException e) {											
 											//throw new RuntimeException(e); log.error(e.getMessage(),e);
 										}
-					 				}	
+					 				}
+					 				else
+					 					commPort.close();
 					 			}
 					 			catch(ExceptionIsNotHadware e)
 					 			{}//log.error(e.getMessage(),e);
 					 		}
 			            }
 					} catch (PortInUseException e) {
-						//Puertos en uso los descarto log.error(e.getMessage(),e);
+						//Puertos en uso los descarto log.error(e.getMessage(),e);						
 					}
 		        }
 		 	}
@@ -221,12 +231,19 @@ public class ThreadTrama extends Thread{
 		byte[] buffer = new byte[1024];
 		int len = -1;
 
+		long iniTime=System.currentTimeMillis();
+		
 		boolean primerLeida = true;
 		try {
 			while (read) {
 				if(in!=null)
 				{
-					while (read && (len = in.read(buffer)) > -1) 
+
+				
+					len = in.read(buffer);
+					log.debug("bytes reads: "+len+" bytes: "+buffer+" Instante: "+System.currentTimeMillis());
+					 
+					while (read && (len) > -1) 
 					{
 						if (!primerLeida) 
 						{
@@ -239,16 +256,21 @@ public class ThreadTrama extends Thread{
 									if (trama.addCampo(buffer[i])) {
 										if (trama.isValid())
 										{
+											log.debug("trama valid "+System.currentTimeMillis());
 											setTramaValida(trama);
 											ejecurarAccion();
 											trama.init();
 										}
+										else
+											log.debug("trama not valid "+System.currentTimeMillis());
 									}
 								}
 							}
 						}
 						primerLeida = false;
-						this.sleep(100);
+						len = in.read(buffer);
+						log.debug("bytes reads: "+len+" bytes: "+buffer+" Instante: "+System.currentTimeMillis());
+						//this.sleep(100);
 					}
 				}
 				else
@@ -308,7 +330,7 @@ public class ThreadTrama extends Thread{
 	public void sendOrden(int orden)
 	{
 		try {
-			//System.out.println("Orden enviada: "+orden);
+			System.out.println("Orden enviada: "+orden);
 			log.debug("ini sendOrden: "+orden);
 			out.write(orden);
 			log.debug("fin sendOrden: "+orden);

@@ -50,7 +50,8 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	private static final int LINEA_PROFECIONAL = 6;
 	private static final int LINEA_PARTICULAR = 5;
 	private ThreadTrama thTrama;
-	private int esperarRespuesta = 2500;
+	private int esperarRespuesta = 4000;
+	private int tiempoEspera = 100;
 	private Thread timer;
 	private String operacionLargaMensaje = "Aguarde la respuesta del paciente";
 
@@ -80,8 +81,10 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		try {
 
 			thTrama = Util.thTrama;
-			thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_LAMINAS);
-			thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST8);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_LAMINAS);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST8);
 
 		} catch (ExceptionIsNotHadware e) {
 			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
@@ -97,8 +100,8 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		lbError = new javax.swing.JLabel();
 		jLayeredPane1 = new javax.swing.JLayeredPane();
 		jPanel1 = new javax.swing.JPanel();
-		jRadioNasalSup = new javax.swing.JRadioButton();
-		jRadioNasalInf = new javax.swing.JRadioButton();
+		jRadioNasalIzq = new javax.swing.JRadioButton();
+		jRadioNasalDer = new javax.swing.JRadioButton();
 		lbRespuestaNasalSup = new javax.swing.JLabel();
 		lbRespuestaNasalInf = new javax.swing.JLabel();
 		jPanel2 = new javax.swing.JPanel();
@@ -139,15 +142,15 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 				.setBorder(javax.swing.BorderFactory
 						.createTitledBorder("Nasal"));
 
-		jRadioNasalSup.addActionListener(new java.awt.event.ActionListener() {
+		jRadioNasalIzq.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jRadioNasalSupActionPerformed(evt);
+				jRadioNasalIzqActionPerformed(evt);
 			}
 		});
 
-		jRadioNasalInf.addActionListener(new java.awt.event.ActionListener() {
+		jRadioNasalDer.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jRadioNasalInfActionPerformed(evt);
+				jRadioNasalDerActionPerformed(evt);
 			}
 		});
 
@@ -171,38 +174,27 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 						.addGroup(
 								jPanel1Layout
 										.createSequentialGroup()
-										.addGap(38, 38, 38)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																jPanel1Layout
-																		.createSequentialGroup()
-																		.addComponent(
-																				jRadioNasalInf)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				lbRespuestaNasalInf,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				40,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																jPanel1Layout
-																		.createSequentialGroup()
-																		.addComponent(
-																				jRadioNasalSup)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				lbRespuestaNasalSup,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				40,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+										.addContainerGap()
+										.addComponent(jRadioNasalIzq)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												lbRespuestaNasalSup,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												40,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+												24, Short.MAX_VALUE)
+										.addComponent(jRadioNasalDer)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												lbRespuestaNasalInf,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												40,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addContainerGap()));
 		jPanel1Layout
 				.setVerticalGroup(jPanel1Layout
 						.createParallelGroup(
@@ -210,7 +202,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 						.addGroup(
 								jPanel1Layout
 										.createSequentialGroup()
-										.addGap(22, 22, 22)
+										.addGap(55, 55, 55)
 										.addGroup(
 												jPanel1Layout
 														.createParallelGroup(
@@ -221,22 +213,17 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 																30,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																jRadioNasalSup))
-										.addGap(25, 25, 25)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
+																jRadioNasalIzq)
 														.addComponent(
-																jRadioNasalInf)
+																jRadioNasalDer)
 														.addComponent(
 																lbRespuestaNasalInf,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																30,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(44, Short.MAX_VALUE)));
+										.addContainerGap(66, Short.MAX_VALUE)));
 
-		jPanel1.setBounds(220, 40, 120, 180);
+		jPanel1.setBounds(220, 40, 180, 180);
 		jLayeredPane1.add(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		jPanel2.setBorder(javax.swing.BorderFactory
@@ -387,7 +374,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 																30,
 																javax.swing.GroupLayout.PREFERRED_SIZE))));
 
-		jPanel2.setBounds(340, 40, 200, 180);
+		jPanel2.setBounds(400, 40, 200, 180);
 		jLayeredPane1.add(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		jPanel4.setBorder(javax.swing.BorderFactory
@@ -547,6 +534,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.Alignment.TRAILING,
 																false)
 														.addGroup(
+																javax.swing.GroupLayout.Alignment.LEADING,
 																layout
 																		.createSequentialGroup()
 																		.addComponent(
@@ -562,41 +550,36 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 																				btnGuardar))
 														.addComponent(
 																jLayeredPane1,
+																javax.swing.GroupLayout.Alignment.LEADING,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																548,
+																624,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(100, Short.MAX_VALUE)));
-		layout
-				.setVerticalGroup(layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								layout
-										.createSequentialGroup()
-										.addComponent(
-												jLayeredPane1,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												234,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(18, 18, 18)
-										.addGroup(
-												layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(
-																btnGuardar)
-														.addComponent(
-																lbError,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																24,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(147, 147, 147)));
+										.addContainerGap()));
+		layout.setVerticalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				layout.createSequentialGroup().addComponent(jLayeredPane1,
+						javax.swing.GroupLayout.PREFERRED_SIZE, 234,
+						javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18,
+						18).addGroup(
+						layout.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(lbError,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										24,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnGuardar))
+						.addGap(147, 147, 147)));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
-	private void jRadioNasalInfActionPerformed(java.awt.event.ActionEvent evt) {
+	private void jRadioNasalDerActionPerformed(java.awt.event.ActionEvent evt) {
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+		try {
+			Thread.sleep(tiempoEspera);
+		} catch (Exception exception) {
+		}
+
 		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_INF);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -608,9 +591,14 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		timer.start();
 	}
 
-	private void jRadioNasalSupActionPerformed(java.awt.event.ActionEvent evt) {
+	private void jRadioNasalIzqActionPerformed(java.awt.event.ActionEvent evt) {
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+		try {
+			Thread.sleep(tiempoEspera);
+		} catch (Exception exception) {
+		}
+
 		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_SUP);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -623,9 +611,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioDer55ActionPerformed(java.awt.event.ActionEvent evt) {
-		/*thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);*/
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_DER);
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+		try {
+			Thread.sleep(tiempoEspera);
+		} catch (Exception exception) {
+		}
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
+		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_DER);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -638,9 +630,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioDer70ActionPerformed(java.awt.event.ActionEvent evt) {
-		/*thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);*/
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_DER);
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+		try {
+			Thread.sleep(tiempoEspera);
+		} catch (Exception exception) {
+		}
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
+		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_DER);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -653,9 +649,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioDer85ActionPerformed(java.awt.event.ActionEvent evt) {
-		/*thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);*/
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_DER);
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+		try {
+			Thread.sleep(tiempoEspera);
+		} catch (Exception exception) {
+		}
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
+		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_DER);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -668,9 +668,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioIzq55ActionPerformed(java.awt.event.ActionEvent evt) {
-		/*thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);*/
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_IZQ);
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+		try {
+			Thread.sleep(tiempoEspera);
+		} catch (Exception exception) {
+		}
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
+		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_IZQ);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -683,9 +687,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioIzq70ActionPerformed(java.awt.event.ActionEvent evt) {
-		/*thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);*/
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_IZQ);
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+		try {
+			Thread.sleep(tiempoEspera);
+		} catch (Exception exception) {
+		}
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
+		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_IZQ);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -698,9 +706,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioIzq85ActionPerformed(java.awt.event.ActionEvent evt) {
-		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
-		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_IZQ);
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+		try {
+			Thread.sleep(tiempoEspera);
+		} catch (Exception exception) {
+		}
+		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
+		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_IZQ);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -728,26 +740,36 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 					if (tv.isDerButtonPress() || tv.isIzqButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
+						thTrama
+								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return true;
 					}
 				} else if (der) {
 					if (tv.isDerButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
+						thTrama
+								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return true;
 					} else if (tv.isIzqButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_CANCEL_SMALL);
 						label.setName("No");
+						thTrama
+								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return false;
 					}
 				} else if (!der) {
 					if (tv.isDerButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_CANCEL_SMALL);
 						label.setName("No");
+						thTrama
+								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return false;
 					} else if (tv.isIzqButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
+						thTrama
+								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return true;
 					}
 				}
@@ -756,6 +778,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 
 			Util.setIcon(label, Constantes.IMG_CANCEL_SMALL);
 			label.setName("No");
+			thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 
 		} catch (InterruptedException e) {
 			return false;
@@ -917,8 +940,8 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	private javax.swing.JRadioButton jRadioIzq55;
 	private javax.swing.JRadioButton jRadioIzq70;
 	private javax.swing.JRadioButton jRadioIzq85;
-	private javax.swing.JRadioButton jRadioNasalInf;
-	private javax.swing.JRadioButton jRadioNasalSup;
+	private javax.swing.JRadioButton jRadioNasalDer;
+	private javax.swing.JRadioButton jRadioNasalIzq;
 	private javax.swing.JLabel lbError;
 	private javax.swing.JLabel lbRespuesta55Der;
 	private javax.swing.JLabel lbRespuesta55Izq;

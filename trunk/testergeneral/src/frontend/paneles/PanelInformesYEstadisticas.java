@@ -6,31 +6,35 @@
 
 package frontend.paneles;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
-import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.table.TableColumn;
+
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import testerGeneral.business.ContextManager;
+import testerGeneral.domain.Constantes;
+import testerGeneral.domain.Examen;
+import testerGeneral.domain.Persona;
+import testerGeneral.domain.PersonaExamen;
+import testerGeneral.domain.ResultadoDetalleExamen;
+import testerGeneral.domain.reportes.ReporteGaussExamenes;
+import testerGeneral.domain.reportes.ReportesExamenesUtil;
+import testerGeneral.service.PersonaDefinition;
+import testerGeneral.service.PersonaExamenDefinition;
 import frontend.buttons.ButtonBuscar;
 import frontend.tablemodel.TableModelPersona;
 import frontend.utils.Util;
-
-import testerGeneral.business.ContextManager;
-import testerGeneral.domain.Constantes;
-import testerGeneral.domain.Dominio;
-import testerGeneral.domain.Persona;
-import testerGeneral.service.PersonaDefinition;
 
 /**
  * 
@@ -38,9 +42,9 @@ import testerGeneral.service.PersonaDefinition;
  */
 public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 	private static final Log log = LogFactory.getLog(PanelPersona.class);
-	private PersonaDefinition personaService = (PersonaDefinition) ContextManager
-			.getBizObject("personaService");
-
+	private PersonaDefinition personaService = (PersonaDefinition) ContextManager.getBizObject("personaService");
+	private PersonaExamenDefinition personaExamenService = (PersonaExamenDefinition) ContextManager.getBizObject("personaExamenService");
+	private List<ReporteGaussExamenes> reportesGaussExamenes=new ArrayList();;
 	/** Creates new form PanelInformesYEstadisticas */
 	public PanelInformesYEstadisticas() {
 		initComponents();
@@ -637,12 +641,96 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 	}
 
 	private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-		cargarPersonas();
+		try
+		{
+			reportesGaussExamenes.clear();
+			List<Persona> personas=cargarPersonas();
+			
+			for(Persona persona:personas)
+			{
+				Examen examen=new Examen();
+				examen.setExaId(new Long(3));//TODO obtener id del examen del combo
+				
+				PersonaExamen perExamenExamenple=new PersonaExamen();
+				perExamenExamenple.setPersona(persona);
+				perExamenExamenple.setExamen(examen);
+				
+				List <PersonaExamen> perExamenes=personaExamenService.getAll(perExamenExamenple);
+				for(PersonaExamen perExamen:perExamenes)
+				{
+					
+					Set <ResultadoDetalleExamen> resultadosDetalleExamen=perExamen.getResultadoDetalleExamens();
+					for(ResultadoDetalleExamen resultadoDetalleExamen:resultadosDetalleExamen)
+					{
+						agregarResultadoDetalleExamen(resultadoDetalleExamen);
+					}
+				}
+			}
+			
+			HashMap parameterMap = new HashMap();
+			
+			JRBeanCollectionDataSource ds =new JRBeanCollectionDataSource(reportesGaussExamenes);
+			final byte[] buf = JasperRunManager.runReportToPdf("reportes/estadisticaExamenes.jasper", parameterMap,ds);
+			
+			String file=System.getProperty("java.io.tmpdir")+System.currentTimeMillis()+".pdf";
+			testerGeneral.persistence.impl.Util.toFile(file,buf);
+			
+			Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+ file);
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
 
 	}
+	
+	public void agregarResultadoDetalleExamen(ResultadoDetalleExamen resultadoDetalleExamen)
+	{
+		boolean categoriaEncontrado=false;
+		boolean errorEncontrado=false;
+		
+		for(ReporteGaussExamenes reporteGaussExamene:reportesGaussExamenes)
+		{
+			String serie=resultadoDetalleExamen.getExamenDetalle().getExadDetalle();
+			String categoria=null;
+			String categoriaError=null;
+			
+			if(resultadoDetalleExamen.getRdeNota()!=null)
+				categoria=ReportesExamenesUtil.getCategoria(resultadoDetalleExamen.getExamenDetalle().getExadCodigo(),resultadoDetalleExamen.getRdeNota());
+			else
+				categoriaEncontrado=true;
+			if(resultadoDetalleExamen.getRdeNota2()!=null)
+			{
+				categoriaError=""+ReportesExamenesUtil.getCategoriaErrores(resultadoDetalleExamen.getRdeNota2());
+			}
+			else
+				errorEncontrado=true;
+
+			if(categoria!=null && !categoriaEncontrado && reporteGaussExamene.getTipo().equals("C") && reporteGaussExamene.getSerie().equalsIgnoreCase(serie) && reporteGaussExamene.getCategoria().equalsIgnoreCase(categoria))
+			{
+				reporteGaussExamene.addValue();
+				categoriaEncontrado=true;
+				
+			}
+			
+			if(categoriaError!=null && !errorEncontrado && reporteGaussExamene.getTipo().equals("E") && reporteGaussExamene.getSerie().equalsIgnoreCase(serie) && reporteGaussExamene.getCategoria().equalsIgnoreCase(categoriaError))
+			{
+				reporteGaussExamene.addValue();
+				errorEncontrado=true;
+				
+			}
+			
+			if(errorEncontrado && categoriaEncontrado)
+				return;
+		}
+
+		ReporteGaussExamenes.addExamen(reportesGaussExamenes,resultadoDetalleExamen.getExamenDetalle());
+		agregarResultadoDetalleExamen(resultadoDetalleExamen);
+	}
+	
 
 	@SuppressWarnings("unchecked")
-	public void cargarPersonas() {
+	public List<Persona> cargarPersonas() {
 		log.info("cargarPersonas");
 
 		boolean error = false;
@@ -738,14 +826,11 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 
 			List<Persona> personas;
 			if (jCheckBoxEdad.isSelected()) {
-				personas = personaService.getAll(per, fechaFin.getTime(),
-						fechaInicio.getTime());
+				personas = personaService.getAll(per, fechaFin.getTime(),fechaInicio.getTime());
+				return personas;
 			} else {
 				personas = personaService.getAll(per);
-			}
-
-			if (!error) {
-				setTableModel(personas);
+				return personas; 
 			}
 
 		} catch (Exception e) {

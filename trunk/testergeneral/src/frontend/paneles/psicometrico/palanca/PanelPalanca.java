@@ -648,7 +648,7 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 				resultados.add(this.resultados.get(i));
 			}*/
 
-			//resultadoDetalleExamen.setRdeNota(new Double(tiempoTotal));
+			resultadoDetalleExamen.setRdeNota(new Double(tiempoTotal));
 			resultadoDetalleExamen.setRdeNota2(new Double(errores));
 			resultadoDetalleExamen.setRdeResultado(getResultado());
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);

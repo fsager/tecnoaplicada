@@ -90,6 +90,9 @@ public class PersonaExamenHome extends DAOObject implements PersonaExamenDao {
             
             if(p_example.getPersona()!=null)
             	cri.createCriteria("persona").add(Restrictions.idEq(p_example.getPersona().getPerId()));
+            if(p_example.getExamen()!=null)
+            	cri.createCriteria("examen").add(Restrictions.idEq(p_example.getExamen().getExaId()));
+
             cri.addOrder(Order.desc("pexaFecha"));
             cri.addOrder(Order.asc("examen"));
             List results = cri.list();
