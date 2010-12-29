@@ -50,7 +50,7 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 	private List<Resultado> resultados = new ArrayList<Resultado>();
 	private static final int LINEA_PROFECIONAL = 6;
 	private static final int LINEA_PARTICULAR = 5;
-	private ThreadTrama thTrama;
+	//private ThreadTrama thTrama;
 
 	/** Creates new form PanelAgudezaVisual */
 	public PanelEncandilamiento(JToggleButton btn, PersonaExamen personaExamen) {
@@ -78,6 +78,18 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 	public void inicializarThreads() {
 
 		try {
+			
+			if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaVision))
+				Util.thTrama.desconnect();
+			
+			if (Util.thTrama == null)
+			{
+				ThreadTrama thTrama = new ThreadTrama(new TramaVision());
+				Util.thTrama.setEjecutar(false);
+				Util.thTrama = thTrama;
+				Util.thTrama.setEjecucion(99999);
+				Util.thTrama.start();
+			}
 			
 			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST6);
 			
@@ -216,7 +228,7 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 		if (jRadioSi.isSelected())
 			return Examen.RESULTADO_DENTRO;
 		else
-			return Examen.RESULTADO_FUERA;
+			return Examen.RESULTADO_FUERA_DERIVACION;
 	}
 
 	private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,7 +266,8 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 				resultadoDetalleExamen.setRdeDetalleResultado(jRadioSi.getText());
 			else
 				resultadoDetalleExamen.setRdeDetalleResultado(jRadioNo.getText());
-
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
+			
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
 			btn.setForeground(Color.BLACK);

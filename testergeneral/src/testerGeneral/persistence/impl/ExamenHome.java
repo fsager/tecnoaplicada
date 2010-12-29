@@ -86,7 +86,7 @@ public class ExamenHome extends DAOObject implements ExamenDao {
             Criteria cri = getSession().createCriteria(Examen.class);
             
             cri.add(Example.create(p_example).enableLike().ignoreCase());
-            cri.addOrder(Order.asc("exaNombre"));
+            cri.addOrder(Order.asc("exaOrden"));
             List results = cri.list();
             log.debug("find by example successful, result size: " + results.size());            
             return results;

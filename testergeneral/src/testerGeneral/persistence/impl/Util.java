@@ -42,6 +42,8 @@ public class Util {
 	public static final String ACTION_MENU_EXAMEN_PSICOMETRICO = "Ingresó al Menú "+ Constantes.MENU_SUB_EXAMEN_PSICOMETRICO;
 	public static final String ACTION_MENU_EXAMEN_VISION = "Ingresó al Menú "
 			+ Constantes.MENU_SUB_EXAMEN_VISION;
+	public static final String ACTION_MENU_EXAMEN_AUDIO= "Ingresó al Menú "
+		+ Constantes.MENU_SUB_EXAMEN_AUDIO;	
 	public static final String ACTION_MENU_EXAMEN_EQUILIBRIO = "Ingresó al Menú "
 			+ Constantes.MENU_SUB_EXAMEN_EQUILIBRIO;
 	public static final String ACTION_MENU_USUARIO_CAMBIAR_CLAVE = "Ingresó al Menú "
@@ -182,6 +184,7 @@ public class Util {
 			FileInputStream fin;
 			fin = new FileInputStream(archivoSeleccionado);
 			fin.read(bytes);
+			fin.close();
 
 			return bytes;
 		} catch (Exception e) {

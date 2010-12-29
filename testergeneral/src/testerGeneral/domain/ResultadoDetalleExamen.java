@@ -18,6 +18,9 @@ public class ResultadoDetalleExamen implements java.io.Serializable {
 	private String rdeDetalleResultado;
 	private Double rdeNota;
 	private Double rdeNota2;
+	private Double rdeNota3;
+	private Double rdeNota4;
+	private String rdeParametrosCorrecion;
 	private Set resultados = new HashSet(0);
 
 	// Constructors
@@ -90,6 +93,22 @@ public class ResultadoDetalleExamen implements java.io.Serializable {
 		return rdeNota2;
 	}
 
+	public void setRdeNota3(Double rdeNota3) {
+		this.rdeNota3 = rdeNota3;
+	}
+	
+	public Double getRdeNota3() {
+		return rdeNota3;
+	}
+
+	public void setRdeNota4(Double rdeNota4) {
+		this.rdeNota4 = rdeNota4;
+	}
+	
+	public Double getRdeNota4() {
+		return rdeNota4;
+	}
+
 	public void setRdeNota2(Double rdeNota2) {
 		this.rdeNota2 = rdeNota2;
 	}
@@ -109,5 +128,12 @@ public class ResultadoDetalleExamen implements java.io.Serializable {
 	public void setRdeDetalleResultado(String rdeDetalleResultado) {
 		this.rdeDetalleResultado = rdeDetalleResultado;
 	}
-
+	
+	public String getRdeParametrosCorrecion() {
+		return rdeParametrosCorrecion;
+	}
+	
+	public void setRdeParametrosCorrecion(String rdeParametrosCorrecion) {
+		this.rdeParametrosCorrecion = rdeParametrosCorrecion;
+	}
 }

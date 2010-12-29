@@ -17,17 +17,17 @@ public class ReportesExamenesUtil{
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_CTR_TEMPORO))
 			return 9;
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_PERC_REAC))
-			return 20;
+			return 9;
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULTIPLES_COND))
-			return 20;
+			return 9;
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE))
-			return 20;
+			return 9;
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA))			
-			return 20;
+			return 9;
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULT_NO_COND))
-			return 20;
+			return 9;
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA))
-			return 20;
+			return 9;
 		
 		throw new RuntimeException("getIntervalosInformesExamen: "+exadCodigo);
 	}
@@ -39,38 +39,65 @@ public class ReportesExamenesUtil{
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_CTR_TEMPORO))
 			return new Double(2);
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_PERC_REAC))
-			return new Double(180);
+			return new Double(10);
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULTIPLES_COND))
-			return new Double(180);
+			return new Double(10);
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE))
-			return new Double(180);
+			return new Double(3);
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA))			
-			return new Double(180);
+			return new Double(200);
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULT_NO_COND))
-			return new Double(180);
+			return new Double(10);
 		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA))
 			return new Double(180);
 		
 		throw new RuntimeException("getTamañoIntervaloInformesExamen: "+exadCodigo);
 	}
 	
-	
+	public static Double getOffsetInformesExamen(String  exadCodigo)
+	{
+		if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL))
+			return new Double(0);
+		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_CTR_TEMPORO))
+			return new Double(0);
+		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_PERC_REAC))
+			return new Double(40);
+		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULTIPLES_COND))
+			return new Double(40);
+		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE))
+			return new Double(20);
+		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA))			
+			return new Double(0);
+		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULT_NO_COND))
+			return new Double(40);
+		else if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA))
+			return new Double(0);
+		
+		throw new RuntimeException("getTamañoIntervaloInformesExamen: "+exadCodigo);
+	}
 	
 	public static String[] getCategorias(String exadCodigo)
 	{
 		int intervalos=getIntervalosInformesExamen(exadCodigo);
 		double tamañoIntervalo=getTamañoIntervaloInformesExamen(exadCodigo);
+		double offset=getOffsetInformesExamen(exadCodigo);
 		String[] categorias=new String[intervalos+1];
-		
+
 		for(int intervaloActual=0;intervaloActual<categorias.length-1;intervaloActual++)
 		{
-			double valorActual=(intervaloActual*tamañoIntervalo);
-			double valorSiguiente=valorActual+tamañoIntervalo;
+			double valorActual=(intervaloActual*tamañoIntervalo);			
+			double valorSiguiente=valorActual+tamañoIntervalo+offset;
 			//categorias[intervaloActual]=new String(valorActual+ " - "+valorSiguiente);
 			categorias[intervaloActual]=new String(""+valorSiguiente);
+			
+			/*if(exadCodigo.equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE))
+			{
+			
+				System.out.println("intervalos: "+intervalos+" tamañoIntervalo: "+tamañoIntervalo+" offset: "+offset+" valorSiguiente:"+valorSiguiente);
+			}*/
 		}
 		
-		categorias[categorias.length-1]=new String("Más de "+((categorias.length-1)*tamañoIntervalo));
+		categorias[categorias.length-1]=new String("Más de "+(((categorias.length-1)*tamañoIntervalo)+offset));
 
 		return categorias;
 	}
@@ -79,11 +106,12 @@ public class ReportesExamenesUtil{
 	{
 		String[] categorias=getCategorias(exadCodigo);
 		int intervalos=getIntervalosInformesExamen(exadCodigo);
+		double offset=getOffsetInformesExamen(exadCodigo);
 		double tamañoIntervalo=getTamañoIntervaloInformesExamen(exadCodigo);
 		for(int intervaloActual=0;intervaloActual<categorias.length-1;intervaloActual++)
 		{
 			double valorActual=(intervaloActual*tamañoIntervalo);
-			double valorSiguiente=valorActual+tamañoIntervalo;
+			double valorSiguiente=valorActual+tamañoIntervalo+offset;
 
 			if(valor>=valorActual && valor<valorSiguiente)
 			{

@@ -52,7 +52,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 	private List<Resultado> resultadosLejana = new ArrayList<Resultado>();
 	private static final int LINEA_PROFECIONAL = 6;
 	private static final int LINEA_PARTICULAR = 5;
-	private ThreadTrama thTrama;
+	//private ThreadTrama thTrama;
 	private boolean luzDerechaPrendida = true;
 	private boolean luzIzquierdaPrendida = true;
 	private ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
@@ -76,33 +76,37 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 	public void inicializarThreads() {
 
 		try {
+
+			if (Util.thTrama != null
+					&& !(Util.thTrama.getTrama() instanceof TramaVision))
+				Util.thTrama.desconnect();
+
 			if (Util.thTrama == null) {
-				thTrama = new ThreadTrama(new TramaVision());
+				ThreadTrama thTrama = new ThreadTrama(new TramaVision());
 				thTrama.setEjecutar(false);
 				Util.thTrama = thTrama;
 				thTrama.setEjecucion(99999);
 				thTrama.start();
-
-				thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
-				Thread.sleep(20);
-				thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
-				Thread.sleep(20);
-				thTrama.sendOrden(0x5050);
-				Thread.sleep(250);
-
-			} else
-				thTrama = Util.thTrama;
-
-			new Thread()
-			{
+			}
+			
+			Util.thTrama.sendOrden(0x5000);
+			Thread.sleep(20);
+			/*Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+			Thread.sleep(20);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);*/
+						
+			//Thread.sleep(50);
+			new Thread() {
 				@Override
 				public void run() {
-					try {
-						thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST8);//PUBLICIDAD
-						Thread.sleep(4000);
-						thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST1);
-					} catch (InterruptedException e) {
-						throw new RuntimeException(e);
+					try 
+					{
+						//Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST8);//PUBLICIDAD
+						Thread.sleep(3000);
+						Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST1);
+						
+					} catch (Exception e) {
+						//throw new RuntimeException(e);
 					}
 				}
 			}.start();
@@ -232,7 +236,10 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 														.addGroup(
 																jPanel1Layout
 																		.createSequentialGroup()
-																		.addContainerGap()
+																		.addGap(
+																				28,
+																				28,
+																				28)
 																		.addGroup(
 																				jPanel1Layout
 																						.createParallelGroup(
@@ -282,7 +289,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 												251,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												jPanel1Layout
 														.createParallelGroup(
@@ -305,7 +312,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(45, Short.MAX_VALUE)));
+										.addContainerGap(56, Short.MAX_VALUE)));
 
 		btnGuardar.setFont(new java.awt.Font("Segoe UI", 3, 14));
 		btnGuardar.setForeground(new java.awt.Color(0, 0, 255));
@@ -386,6 +393,18 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																						.createParallelGroup(
 																								javax.swing.GroupLayout.Alignment.LEADING)
 																						.addGroup(
+																								jPanel2Layout
+																										.createSequentialGroup()
+																										.addComponent(
+																												jLabel3)
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addComponent(
+																												jFormattedMonoIzq,
+																												javax.swing.GroupLayout.PREFERRED_SIZE,
+																												31,
+																												javax.swing.GroupLayout.PREFERRED_SIZE))
+																						.addGroup(
 																								javax.swing.GroupLayout.Alignment.TRAILING,
 																								jPanel2Layout
 																										.createSequentialGroup()
@@ -399,19 +418,6 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																										.addComponent(
 																												jFormattedLineaMonocularIzqLe,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												31,
-																												javax.swing.GroupLayout.PREFERRED_SIZE))
-																						.addGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING,
-																								jPanel2Layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												jLabel3)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																										.addComponent(
-																												jFormattedMonoIzq,
 																												javax.swing.GroupLayout.PREFERRED_SIZE,
 																												31,
 																												javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -430,7 +436,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(lbMonoIzq)
 										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												jPanel2Layout
 														.createParallelGroup(
@@ -442,9 +448,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(jLabel8))
 										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												jPanel2Layout
 														.createParallelGroup(
@@ -455,7 +459,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(jLabel3))
-										.addGap(47, 47, 47)));
+										.addGap(58, 58, 58)));
 
 		jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -516,32 +520,37 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 														.addComponent(lbMonoDer)
 														.addGroup(
 																jPanel3Layout
-																		.createSequentialGroup()
-																		.addGap(
-																				10,
-																				10,
-																				10)
-																		.addComponent(
-																				jLabel9)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				jFormattedLineaMonocularDerLe,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				31,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																jPanel3Layout
-																		.createSequentialGroup()
-																		.addComponent(
-																				jLabel4)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				jFormattedMonoDer,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				31,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)))
+																		.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING)
+																		.addGroup(
+																				jPanel3Layout
+																						.createSequentialGroup()
+																						.addComponent(
+																								jLabel4)
+																						.addPreferredGap(
+																								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																						.addComponent(
+																								jFormattedMonoDer,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								31,
+																								javax.swing.GroupLayout.PREFERRED_SIZE))
+																		.addGroup(
+																				javax.swing.GroupLayout.Alignment.TRAILING,
+																				jPanel3Layout
+																						.createSequentialGroup()
+																						.addPreferredGap(
+																								javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																								10,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								jLabel9)
+																						.addPreferredGap(
+																								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																						.addComponent(
+																								jFormattedLineaMonocularDerLe,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								31,
+																								javax.swing.GroupLayout.PREFERRED_SIZE))))
 										.addContainerGap(
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)));
@@ -580,7 +589,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(jLabel4))
-										.addContainerGap(55, Short.MAX_VALUE)));
+										.addContainerGap(60, Short.MAX_VALUE)));
 
 		buttonGroup1.add(jRadioExamenCercana);
 		jRadioExamenCercana.setFont(new java.awt.Font("Segoe UI", 3, 14));
@@ -766,12 +775,12 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 
 		if (jRadioBoxBinocular.isSelected()) {
 			if (!luzDerechaPrendida) {
-				thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
 				luzDerechaPrendida = true;
 			}
 
 			if (!luzIzquierdaPrendida) {
-				thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
 				luzIzquierdaPrendida = true;
 			}
 
@@ -786,12 +795,12 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 
 		} else if (jRadioBoxMonoDer.isSelected()) {
 			if (!luzDerechaPrendida) {
-				thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
 				luzDerechaPrendida = true;
 			}
 
 			if (luzIzquierdaPrendida) {
-				thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
 				luzIzquierdaPrendida = false;
 			}
 
@@ -806,12 +815,12 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 
 		} else if (jRadioBoxMonoIzq.isSelected()) {
 			if (luzDerechaPrendida) {
-				thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
 				luzDerechaPrendida = false;
 			}
 
 			if (!luzIzquierdaPrendida) {
-				thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
 				luzIzquierdaPrendida = true;
 			}
 
@@ -916,7 +925,8 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamen.setRdeDetalleResultado(detalleResultado
 					+ "</HTML>");
-
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
+					.getExadParametrosCorrecion());
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -1094,19 +1104,19 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			int lineaBinocular = Integer.valueOf(jFormattedLineaBinocular
 					.getText());
 			if (!isAprobed(lineaBinocular))
-				return Examen.RESULTADO_FUERA;
+				return Examen.RESULTADO_FUERA_DERIVACION;
 		}
 
 		if (!jFormattedMonoIzq.getText().isEmpty()) {
 			int lineaBinocular = Integer.valueOf(jFormattedMonoIzq.getText());
 			if (!isAprobed(lineaBinocular))
-				return Examen.RESULTADO_FUERA;
+				return Examen.RESULTADO_FUERA_DERIVACION;
 		}
 
 		if (!jFormattedMonoDer.getText().isEmpty()) {
 			int lineaBinocular = Integer.valueOf(jFormattedMonoDer.getText());
 			if (!isAprobed(lineaBinocular))
-				return Examen.RESULTADO_FUERA;
+				return Examen.RESULTADO_FUERA_DERIVACION;
 		}
 
 		return Examen.RESULTADO_DENTRO;
@@ -1118,32 +1128,32 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			int lineaBinocular = Integer.valueOf(jFormattedLineaBinocularLe
 					.getText());
 			if (!isAprobed(lineaBinocular))
-				return Examen.RESULTADO_FUERA;
+				return Examen.RESULTADO_FUERA_DERIVACION;
 		}
 
 		if (!jFormattedLineaMonocularIzqLe.getText().isEmpty()) {
 			int lineaBinocular = Integer.valueOf(jFormattedLineaMonocularIzqLe
 					.getText());
 			if (!isAprobed(lineaBinocular))
-				return Examen.RESULTADO_FUERA;
+				return Examen.RESULTADO_FUERA_DERIVACION;
 		}
 
 		if (!jFormattedLineaMonocularDerLe.getText().isEmpty()) {
 			int lineaBinocular = Integer.valueOf(jFormattedLineaMonocularDerLe
 					.getText());
 			if (!isAprobed(lineaBinocular))
-				return Examen.RESULTADO_FUERA;
+				return Examen.RESULTADO_FUERA_DERIVACION;
 		}
 
 		return Examen.RESULTADO_DENTRO;
 	}
 
 	public boolean isAprobed(int valor) {
-		if (this.personaExamen.getPexaTipoExamen().equals("Profesional")
+		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
 				&& valor < LINEA_PROFECIONAL)
 			return false;
 
-		if (this.personaExamen.getPexaTipoExamen().equals("Particular")
+		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR)
 				&& valor < LINEA_PARTICULAR)
 			return false;
 

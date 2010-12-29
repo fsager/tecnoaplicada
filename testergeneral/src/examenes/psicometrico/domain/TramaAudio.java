@@ -1,6 +1,6 @@
 package examenes.psicometrico.domain;
 
-import org.apache.commons.lang.NotImplementedException;
+import testerGeneral.exceptions.NotImplementedException;
 
 import testerGeneral.threads.ThreadTrama;
 
@@ -20,11 +20,13 @@ public class TramaAudio implements Trama{
 		if(campoNro<trama.length)
 		{
 			trama[campoNro]=campo;
-			/*if(campoNro==5 || campoNro==4)
-			{
-				
-			}*/
-			//System.out.println("campo : "+campoNro+" "+Integer.toHexString((int)campo));
+			/*if(campoNro==5 && campo!=0)
+				System.out.println("Subida : "+campo);
+			
+			if(campoNro==6 && campo!=0)
+				System.out.println("Bajada : "+campo);*/
+			
+
 			campoNro++;	
 			
 			return true;
@@ -288,7 +290,7 @@ public class TramaAudio implements Trama{
 
 	@Override
 	public void desconnect(ThreadTrama threadTrama) {
-		threadTrama.sendOrden(threadTrama.ORDEN_STOP_AUTOMATICO);
+		//threadTrama.sendOrden(threadTrama.ORDEN_STOP_AUTOMATICO);
 		//throw new NotImplementedException();
 	}
 	

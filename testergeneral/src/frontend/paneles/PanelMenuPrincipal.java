@@ -17,6 +17,7 @@ import javax.swing.JToolBar;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import testerGeneral.actualizaciones.GestorActualizaciones;
 import testerGeneral.business.ContextManager;
 import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Constantes;
@@ -25,6 +26,7 @@ import testerGeneral.domain.Usuario;
 import examenes.util.ExamenesUtils;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.utils.Util;
+import frontend.ventanas.FramePrincipal;
 
 /**
  *
@@ -295,7 +297,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 
 	public void doBeforLoadMenu(JToolBar toolbar, JToggleButton button) {
 
-		//((FramePrincipal)Util.framePrincipal).getJButtonActualizarSistema().setVisible(GestorActualizaciones.getSeEncontroActualizacion());
+		((FramePrincipal)Util.framePrincipal).getJButtonActualizarSistema().setVisible(GestorActualizaciones.getSeEncontroActualizacion());
 
 		/*Selecciona del menu principal SOLO el btnPersonas*/
 		unSelectButtons(toolbar, button);
@@ -596,32 +598,28 @@ public class PanelMenuPrincipal extends PanelMenu {
 		doAfterLoadMenuContenido();
 	}
 
-	public void cargarSubMenuExamenes() {
+	public void cargarSubMenuExamenes(javax.swing.JToggleButton button) {
 		toolbarSubNivel.removeAll();
+		
+		button.setVisible(true);
+		toolbarSubNivel.add(button);
 
-		btnExamenPsicometrico.setVisible(true);
-		toolbarSubNivel.add(btnExamenPsicometrico);
-
-		btnExamenVision.setVisible(true);
+		/*btnExamenVision.setVisible(true);
 		toolbarSubNivel.add(btnExamenVision);
 
 		btnExamenEquilibrio.setVisible(true);
-		toolbarSubNivel.add(btnExamenEquilibrio);
+		toolbarSubNivel.add(btnExamenEquilibrio);*/
 
 		doAfterLoadMenu();
 	}
 
 	public void seleccionarExamenPsicometrico(PersonaExamen personaExamen) {
-		cargarSubMenuExamenes();
-		unSelectButtons(toolbarSubNivel, btnExamenPsicometrico);
 		panelContenido.removeAll();
 		ExamenesUtils.mostrarPanelExamen(personaExamen, panelContenido);
 		doAfterLoadMenuContenido();
 	}
 
 	public void seleccionarExamenVision(PersonaExamen personaExamen) {
-		cargarSubMenuExamenes();
-		unSelectButtons(toolbarSubNivel, btnExamenVision);
 		panelContenido.removeAll();
 		ExamenesUtils.mostrarPanelExamen(personaExamen, panelContenido);
 		doAfterLoadMenuContenido();
@@ -640,7 +638,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 	}*/
 
 	public void seleccionarExamenEquilibrio() {
-		testerGeneral.persistence.impl.Util
+		/*testerGeneral.persistence.impl.Util
 				.insertAudit(
 						testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_EQUILIBRIO,
 						null, null);
@@ -648,7 +646,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 		unSelectButtons(toolbarSubNivel, btnExamenEquilibrio);
 		panelContenido.removeAll();
 
-		doAfterLoadMenuContenido();
+		doAfterLoadMenuContenido();*/
 	}
 
 	/*****************************/
@@ -838,12 +836,6 @@ public class PanelMenuPrincipal extends PanelMenu {
 			Constantes.BTN_VER_EXAMENES);
 
 	/*Sub Menu Examenes*/
-	private javax.swing.JToggleButton btnExamenEquilibrio = new JToggleButton(
-			Constantes.MENU_SUB_EXAMEN_EQUILIBRIO);
-	private javax.swing.JToggleButton btnExamenVision = new JToggleButton(
-			Constantes.MENU_SUB_EXAMEN_VISION);
-	private javax.swing.JToggleButton btnExamenPsicometrico = new JToggleButton(
-			Constantes.MENU_SUB_EXAMEN_PSICOMETRICO);
 
 	/*Sub Menu Usuarios*/
 	private javax.swing.JToggleButton btnAdmistracionUsuarios = new JToggleButton(

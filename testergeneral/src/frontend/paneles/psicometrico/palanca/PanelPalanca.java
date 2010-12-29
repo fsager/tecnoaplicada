@@ -92,6 +92,18 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 		}
 
 		this.validate();
+		
+		if(personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL))
+		{
+			tiempo = Integer.valueOf(ContextManager.getProperty("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PROFECIONAL"));
+		}
+		else if(personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR))
+		{
+			tiempo = Integer.valueOf(ContextManager.getProperty("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PARTICULAR"));
+		}
+		
+		
+		
 		g2d.rotate(Math.toRadians(-90), 315, 230);
 		img= buffImg.getScaledInstance(370 - (int) (370 * 0.32),630 - (int) (630 * 0.32), Image.SCALE_SMOOTH);
 		inicializarThreads();
@@ -114,6 +126,7 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 
 		if (finOK) {
 			runExamen = false;
+			Util.playSound(Constantes.SOUND_START,100);
 			mostrarResultados();
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run() {
@@ -648,8 +661,12 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 				resultados.add(this.resultados.get(i));
 			}*/
 
+			int puntosSinActivar=puntos - this.puntosActivados.size();
 			resultadoDetalleExamen.setRdeNota(new Double(tiempoTotal));
 			resultadoDetalleExamen.setRdeNota2(new Double(errores));
+			resultadoDetalleExamen.setRdeNota3(new Double(puntosSinActivar));
+			resultadoDetalleExamen.setRdeDetalleResultado("<HTML>Tiempo fuera del circuito: "+tiempoTotal+" Centésimas de segundos. <BR>Errores: "+errores+".<BR>Puntos sin activar: "+(puntosSinActivar)+".</HTML>");
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 			resultadoDetalleExamen.setRdeResultado(getResultado());
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
@@ -738,6 +755,7 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 	private void iniciarExamen() {
 		if (thTrama.getTramaValida().isPalancaInInicio()) {
 
+			Util.playSound(Constantes.SOUND_START,100);
 			inicializar();
 
 			btnCancelar.setEnabled(true);
@@ -885,8 +903,7 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 	private long tiempoTotal = 0;
 	private int puntos = Integer.valueOf(ContextManager
 			.getProperty("EXAMEN.PALANCA.PUNTOS"));
-	private int tiempo = Integer.valueOf(ContextManager
-			.getProperty("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA"));
+	private int tiempo =-1;
 	private BufferedImage buffImg = new BufferedImage(450, 630,BufferedImage.TYPE_INT_ARGB);
 	private Graphics2D g2d = (Graphics2D) buffImg.getGraphics();
 	private Image img;

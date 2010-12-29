@@ -15,7 +15,7 @@ public class ExamenDetalle implements java.io.Serializable {
 	public static final String EXAD_CODIGO_TEST_CTR_TEMPORO="TEST_CTR_TEMPORO";
 	public static final String EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA="TEST_COOR_BIMANUAL_FINA";
 	public static final String EXAD_CODIGO_TEST_REAC_MULTIPLES_COND="TEST_REAC_MULTIPLES_COND";
-	public static final String EXAD_CODIGO_TEST_REAC_MONOTONIA="TEST_REAC_MONOTONIA";
+	//public static final String EXAD_CODIGO_TEST_REAC_MONOTONIA="TEST_REAC_MONOTONIA";
 	public static final String EXAD_CODIGO_TEST_REAC_MULT_NO_COND="TEST_REAC_MULT_NO_COND";
 	public static final String EXAD_CODIGO_TEST_PERC_REAC="TEST_PERC_REAC";
 	
@@ -36,6 +36,8 @@ public class ExamenDetalle implements java.io.Serializable {
 	private String exadDetalle;
 	private String exadCodigo;
 	private Integer exadOrden;
+	private String exadParametrosCorrecion;
+	
 
 	// Constructors
 
@@ -92,4 +94,11 @@ public class ExamenDetalle implements java.io.Serializable {
 		return exadOrden;
 	}
 
+	public void setExadParametrosCorrecion(String exadParametrosCorrecion) {
+		this.exadParametrosCorrecion = exadParametrosCorrecion;
+	}
+	
+	public String getExadParametrosCorrecion() {
+		return exadParametrosCorrecion;
+	}
 }

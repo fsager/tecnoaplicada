@@ -75,6 +75,18 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		}
 
 		this.validate();
+		
+		if(personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL))
+		{
+			velocidadExamen=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.VELOCIDAD.EXAMEN"));
+			rutasExamen=ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.RUTAS.EXAMEN");
+		}
+		else if(personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR))
+		{
+			velocidadExamen=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.VELOCIDAD.APRENDIZAJE"));
+			rutasExamen=ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.RUTAS.EXAMEN.PARTICULAR");
+		}
+		
 		inicializarThreads();
 		mostrarSecondMonitor();;
 		repaintPanelesAnimacion();					
@@ -98,7 +110,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				btnGuardar.setEnabled((personaExamen.getPersona() != null) && !demo && true);
-				
+				Util.playSound(Constantes.SOUND_START,100);
 				try {
 					Thread.sleep(Constantes.TIEMPO_ENTRE_RESULTADO);
 				} catch (InterruptedException e) {
@@ -386,8 +398,10 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
 			pro[0]=this.resultados.get(0).getResValor1()+this.resultados.get(1).getResValor1();
 			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
-			resultadoDetalleExamen.setRdeNota(pro[0]);//Promedio de tiempo
+			resultadoDetalleExamen.setRdeNota(Util.redondear(pro[0]));//Promedio de tiempo
 			resultadoDetalleExamen.setRdeNota2(pro[1]);//Promedio de errores
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
+			resultadoDetalleExamen.setRdeDetalleResultado("<HTML>Tiempo promedio fuera del circuito: "+Util.redondear(pro[0])+" Centésimas de segundos.<BR>Errores: "+pro[1].intValue()+".</HTML>");
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
@@ -451,6 +465,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		resultados.clear();
 		if(isInInitPosition())
 		{
+			Util.playSound(Constantes.SOUND_START,0);
 			panelCoordinacionBimanualAnimacion.initPosicion();
 			panelCoordinacionBimanualAnimacion.initValores();
 			btnCancelar.setEnabled(true);
@@ -552,9 +567,9 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 	
 	private boolean run = true;
 	private boolean runExamen = false;
-	private String rutasExamen=ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.RUTAS.EXAMEN");
+	private String rutasExamen=null;
 	private String rutasAprendizaje=ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.RUTAS.APRENDIZAJE");
-	private int velocidadExamen=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.VELOCIDAD.EXAMEN"));
+	private int velocidadExamen=-1;//Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.VELOCIDAD.EXAMEN"));
 	private int velocidadAprendizaje=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.VELOCIDAD.APRENDIZAJE"));
 	
 }

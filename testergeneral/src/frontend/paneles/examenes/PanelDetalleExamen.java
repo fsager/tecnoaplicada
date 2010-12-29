@@ -103,15 +103,19 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 					if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA))
 						detalle=detalle.replaceAll(" cercana","");
 						
-					JToggleButton btnExamen = new JToggleButton(detalle);
-					btnExamen.setActionCommand(de.getExadCodigo());
-					btnExamen.setForeground(Color.red);
-					
-					this.add(btnExamen);
-					btnExamen.addActionListener(action);
-					
-					if(i==0)
-						btnExamenPrimero=btnExamen;
+					if(agregarExamen(de))
+					{
+						JToggleButton btnExamen = new JToggleButton(detalle);
+						btnExamen.setActionCommand(de.getExadCodigo());
+						btnExamen.setForeground(Color.red);
+						
+						this.add(btnExamen);
+						btnExamen.addActionListener(action);
+						
+						
+						if(i==0)
+							btnExamenPrimero=btnExamen;
+					}
 				}
 			}
 			
@@ -132,6 +136,66 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public boolean agregarExamen(ExamenDetalle de)
+	{
+		if(personaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_PSICOMETRICO))
+			return agregarExamenPsicometrico(personaExamen.getPexaTipoExamen(),de);
+		else if(personaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_VISION))
+			return agregarExamenVision(personaExamen.getPexaTipoExamen(),de);
+		
+		throw new RuntimeException("Examen no definido");
+	}
+	
+	public boolean agregarExamenPsicometrico(String tipoExamen,ExamenDetalle de)
+	{
+		if(tipoExamen.equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR))
+		{
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL))//Caminos
+				return false;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA))//Punteo
+				return false;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE))//Semaforo
+				return true;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_CTR_TEMPORO))//Autito
+				return true;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA))////Palanca
+				return false;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULTIPLES_COND))//Reacciones múltiples condicionadas
+				return true;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULT_NO_COND))//Reacciones múltiples NO condicionadas
+				return false;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_PERC_REAC))//Colores
+				return true;
+		}	
+		
+		else if(tipoExamen.equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL))
+		{
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL))//Caminos
+				return true;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA))//Punteo
+				return true;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE))//Semaforo
+				return true;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_CTR_TEMPORO))//Autito
+				return true;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA))//Palanca
+				return true;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULTIPLES_COND))//Reacciones múltiples condicionadas
+				return false;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_MULT_NO_COND))//Reacciones múltiples NO condicionadas
+				return true;
+			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_PERC_REAC))//Colores
+				return true;
+		}
+		
+		throw new RuntimeException("Tipo de examen no definido");
+	}
+	
+	public boolean agregarExamenVision(String tipoExamen,ExamenDetalle de)
+	{
+		return true;
 	}
 
 	public PanelExamenes getPanelExamen() {

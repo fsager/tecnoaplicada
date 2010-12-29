@@ -344,7 +344,7 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder title="&lt;User Code&gt;">
-              <Connection PropertyName="titleX" code="Constantes.PANEL_DATOS_USUARIO" type="code"/>
+              <Connection PropertyName="titleX" code="Constantes.PANEL_DATOS_PERSONA" type="code"/>
               <Font PropertyName="font" name="Segoe UI" size="12" style="3"/>
             </TitledBorder>
           </Border>
@@ -361,7 +361,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jPanel8" min="-2" max="-2" attributes="1"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel11" min="-2" pref="209" max="-2" attributes="0"/>
+                          <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="lbError" alignment="0" pref="587" max="32767" attributes="1"/>
                   </Group>
@@ -1245,6 +1245,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jRadioButtonTiempoConduceOpcion2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonTiempoConduceOpcion3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRadioButtonTiempoConduceOpcion1" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jRadioButtonTomoHoyAlcohol_SI" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1266,14 +1270,6 @@
                           <Component id="jRadioButtonLicenciaProfesional" min="-2" max="-2" attributes="0"/>
                           <Component id="jRadioButtonLicenciaParticular" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="jLabel25" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Component id="jRadioButtonTiempoConduceOpcion2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButtonTiempoConduceOpcion1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButtonTiempoConduceOpcion3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jRadioButtonTomaMedicamentosRegularmente_SI" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1310,14 +1306,14 @@
                       <Component id="jRadioButtonLicenciaParticular" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jRadioButtonLicenciaProfesional" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jRadioButtonTiempoConduceOpcion1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jRadioButtonTiempoConduceOpcion2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jRadioButtonTiempoConduceOpcion3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jRadioButtonTiempoConduceOpcion2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>

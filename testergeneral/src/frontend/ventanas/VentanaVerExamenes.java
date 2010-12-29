@@ -23,6 +23,7 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import testerGeneral.business.ContextManager;
 import testerGeneral.comparetors.DateComparator;
 import testerGeneral.domain.Constantes;
+import testerGeneral.domain.Examen;
 import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.service.PersonaExamenDefinition;
@@ -256,7 +257,7 @@ public class VentanaVerExamenes extends JInternalFrameTesterGral {
 			HashMap parameterMap = new HashMap();
 			PersonaExamen perExa = getPersonaExamenFromTable();
 			parameterMap.put("p_pexa_id", perExa.getPexaId());
-	
+			
 			final byte[] buf = JasperRunManager.runReportToPdf(Constantes.RPT_PERSONA_EXAMEN, parameterMap, ContextManager.getCurrentConnection());
 			
 			String file=System.getProperty("java.io.tmpdir")+System.currentTimeMillis()+".pdf";
@@ -273,29 +274,17 @@ public class VentanaVerExamenes extends JInternalFrameTesterGral {
 	}
 
 	private void btnAdjuntoActionPerformed(java.awt.event.ActionEvent evt) {
-		final VentanaExaminar ventanaExaminar = new VentanaExaminar(
-				JFileChooser.DIRECTORIES_ONLY, JFileChooser.SAVE_DIALOG);
-		ventanaExaminar.pack();
-		Util.agregarIframe(ventanaExaminar);
-		ventanaExaminar.doModal(this.getRootPane());
-		ventanaExaminar.setVisible(true);
-
-		if (ventanaExaminar.getRutaSeleccionada() != null) {
 			try {
 				PersonaExamen perExa = getPersonaExamenFromTable();
 
-				String file=ventanaExaminar.getRutaSeleccionada()+ File.separator + perExa.getPexaNombreAdjunto();
+				String file=System.getProperty("java.io.tmpdir")+perExa.getPexaNombreAdjunto();
 				testerGeneral.persistence.impl.Util.toFile(file,perExa.getPexaAdj());
 
+				Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+ file);
 				
-
-					Process p = Runtime.getRuntime().exec(
-							"rundll32 url.dll,FileProtocolHandler "
-									+ file);
 			} catch (Exception e) {
 				JOptionPaneTesterGral.showInternalMessageDialog(this,e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
 			}
-		}
 	}
 
 	public PersonaExamen getPersonaExamenFromTable() {

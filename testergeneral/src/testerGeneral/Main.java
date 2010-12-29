@@ -1,11 +1,10 @@
 package testerGeneral;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -33,7 +32,8 @@ public class Main {
 	private static final Log log = LogFactory.getLog(Main.class);
 
 	public static void main(String[] args)
-			throws UnsupportedLookAndFeelException, InterruptedException {
+			throws UnsupportedLookAndFeelException, InterruptedException,Exception {
+		
 		init();
 		//probarLuces();
 		//potenciometros();
@@ -170,6 +170,8 @@ public class Main {
 		
 					java.awt.EventQueue.invokeLater(new Runnable() {
 						public void run() {
+							ToolTipManager.sharedInstance().setInitialDelay(500);
+							ToolTipManager.sharedInstance().setDismissDelay(15000);
 							try {
 								UIManager
 										.setLookAndFeel(new SubstanceCremeLookAndFeel());

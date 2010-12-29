@@ -1,7 +1,8 @@
 package examenes.psicometrico.domain;
 
-import org.apache.commons.lang.NotImplementedException;
 
+
+import testerGeneral.exceptions.NotImplementedException;
 import testerGeneral.threads.ThreadTrama;
 
 public class TramaVision implements Trama{
@@ -246,7 +247,8 @@ public class TramaVision implements Trama{
 	}
 	@Override
 	public void desconnect(ThreadTrama threadTrama) {
-		threadTrama.sendOrden(0x5000);
+		//TODO COMENTE ESTA LINEA PORQUE NO SE PORQUE ESTA 
+		//threadTrama.sendOrden(0x5000);
 		threadTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
 		threadTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
 		threadTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_LAMINAS);

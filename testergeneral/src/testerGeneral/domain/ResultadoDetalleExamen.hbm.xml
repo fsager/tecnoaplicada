@@ -25,8 +25,17 @@
         <property name="rdeNota2" type="java.lang.Double">
             <column name="RDE_NOTA2" precision="14" />
         </property>
+        <property name="rdeNota3" type="java.lang.Double">
+            <column name="RDE_NOTA3" precision="14" />
+        </property>
+        <property name="rdeNota4" type="java.lang.Double">
+            <column name="RDE_NOTA4" precision="14" />
+        </property>
         <property name="rdeDetalleResultado" type="java.lang.String">
             <column name="RDE_DETALLE_RESULTADO" length="500" />
+        </property>
+        <property name="rdeParametrosCorrecion" type="java.lang.String">
+            <column name="RDE_PARAMETROS_CORRECCION" length="4000"/>
         </property>
         <set cascade="all-delete-orphan" name="resultados" inverse="true" lazy="false">
             <key>

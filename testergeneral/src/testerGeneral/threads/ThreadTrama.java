@@ -104,7 +104,7 @@ public class ThreadTrama extends Thread{
 	private Trama tramaValida;
 	private boolean sync = false;
 	private long timeStartToSync=-1;
-	private int timeToSync=500;//1/2 segundo
+	private int timeToSync=200;//1/2 segundo
 	private List<Accion> mtAccionHard=new ArrayList<Accion>();
 	private List<Accion>  mtAccionSoft=new ArrayList<Accion>();
 	private boolean read=true;
@@ -115,11 +115,13 @@ public class ThreadTrama extends Thread{
 	{
 		if(Util.thTrama!=null)
 			Util.thTrama.desconnect();
-		
+
 		Util.thTrama=this;
 		this.trama=trama;
 		this.tramaValida=trama.getInstance();
+		
 		buscarPuerto();
+
 	}
 
 	public void buscarPuerto(){
@@ -330,11 +332,12 @@ public class ThreadTrama extends Thread{
 	public void sendOrden(int orden)
 	{
 		try {
-			System.out.println("Orden enviada: "+orden);
+			//System.out.println("Orden enviada: "+orden);
 			log.debug("ini sendOrden: "+orden);
 			out.write(orden);
 			log.debug("fin sendOrden: "+orden);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}

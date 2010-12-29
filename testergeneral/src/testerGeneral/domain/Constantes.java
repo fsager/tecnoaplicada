@@ -246,6 +246,7 @@ public class Constantes {
 	public static final String MENU_SUB_EXAMEN_VISION="Examen Visión";
 	public static final String MENU_SUB_EXAMEN_EQUILIBRIO="Examen Equilibrio";
 	public static final String MENU_SUB_EXAMEN_PSICOMETRICO="Examen Psicométrico";
+	public static final String MENU_SUB_EXAMEN_AUDIO="Examen Audio";	
 	
 	/*Textos de Sub Menus Usuarios*/
 	public static final String MENU_SUB_CAMBIAR_CLAVE="Cambiar Clave";
@@ -269,7 +270,7 @@ public class Constantes {
 	public static final String PANEL_PERMISOS="Permisos";
 	public static final String PANEL_RESULTADOS_BUSQUEDA="Resultados de la Búsqueda";
 	public static final String PANEL_DATOS_USUARIO="Datos del Usuario";
-	public static final String PANEL_DATOS_PERSONA="Datos del Usuario";
+	public static final String PANEL_DATOS_PERSONA="Datos de la Persona";
 	public static final String PANEL_FILTROS_BUSQUEDA="Filtros de Búsqueda";
 	public static final String PANEL_TITLE_CAMBIAR_CLAVE="Cambiar Clave";
 	public static final String PANEL_CAMBIAR_CLAVE_MSG="<HTML>Su clave ha sido cambiada o es la primera vez que ingresa.<BR>Si usted no solicito el cambio de la misma comuníquese con el Administrador del Sistema.<BR><BR>Ingrese su nueva clave:</HTML>";
@@ -327,8 +328,8 @@ public class Constantes {
 	
 	/*Textos de ventanes emergentes*/
 	public static final String MENSAJE_GUARDADO_TIT="Guardar";
-	public static final String MENSAJE_GUARDADO="El registro se ha guardado correctamente";
-	public static final String MENSAJE_ELIMINADO="El registro se ha eliminado correctamente";
+	public static final String MENSAJE_GUARDADO="El registro se ha guardado correctamente.";
+	public static final String MENSAJE_ELIMINADO="El registro se ha eliminado correctamente.";
 	public static final String MENSAJE_ELIMINADO_TIT="¿Eliminar?";
 	public static final String MENSAJE_ELIMINAR = "¿Está seguro que desea eliminar el registro?";
 	public static final String MENSAJE_SALIR = "¿Está seguro que desea salir de la aplicación?";

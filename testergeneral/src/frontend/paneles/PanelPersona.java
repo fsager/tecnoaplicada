@@ -681,7 +681,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 								Short.MAX_VALUE)));
 
 		jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
-				Constantes.PANEL_DATOS_USUARIO,
+				Constantes.PANEL_DATOS_PERSONA,
 				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
 				javax.swing.border.TitledBorder.DEFAULT_POSITION,
 				new java.awt.Font("Segoe UI", 3, 12)));
@@ -1832,6 +1832,13 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 												jPanel11Layout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																jRadioButtonTiempoConduceOpcion2)
+														.addComponent(
+																jRadioButtonTiempoConduceOpcion3)
+														.addComponent(jLabel25)
+														.addComponent(
+																jRadioButtonTiempoConduceOpcion1)
 														.addGroup(
 																jPanel11Layout
 																		.createSequentialGroup()
@@ -1869,22 +1876,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 														.addComponent(
 																jRadioButtonLicenciaParticular)
 														.addComponent(jLabel24)
-														.addGroup(
-																jPanel11Layout
-																		.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.TRAILING)
-																		.addComponent(
-																				jLabel25)
-																		.addGroup(
-																				jPanel11Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addComponent(
-																								jRadioButtonTiempoConduceOpcion2)
-																						.addComponent(
-																								jRadioButtonTiempoConduceOpcion1)
-																						.addComponent(
-																								jRadioButtonTiempoConduceOpcion3)))
 														.addGroup(
 																jPanel11Layout
 																		.createSequentialGroup()
@@ -1956,11 +1947,11 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(
-												jRadioButtonTiempoConduceOpcion2)
+												jRadioButtonTiempoConduceOpcion3)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(
-												jRadioButtonTiempoConduceOpcion3)
+												jRadioButtonTiempoConduceOpcion2)
 										.addGap(18, 18, 18)
 										.addComponent(jLabel26)
 										.addGap(2, 2, 2)
@@ -2030,7 +2021,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																		.addComponent(
 																				jPanel11,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				209,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				javax.swing.GroupLayout.PREFERRED_SIZE))
 														.addComponent(
 																lbError,

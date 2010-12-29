@@ -25,6 +25,9 @@ public class PersonaExamen implements java.io.Serializable {
 	private String pexaNombreAdjunto;
 	private String pexaResultadoMedico;
 	private Set resultadoDetalleExamens = new HashSet(0);
+	
+	public static String TIPO_EXAMEN_PROFECIONAL="Profesional";
+	public static String TIPO_EXAMEN_PARTICULAR="Particular";
 
 	// Constructors
 
