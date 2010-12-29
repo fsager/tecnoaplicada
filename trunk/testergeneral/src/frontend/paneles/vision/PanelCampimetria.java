@@ -49,7 +49,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	private List<Resultado> resultados = new ArrayList<Resultado>();
 	private static final int LINEA_PROFECIONAL = 6;
 	private static final int LINEA_PARTICULAR = 5;
-	private ThreadTrama thTrama;
+	//private ThreadTrama thTrama;
 	private int esperarRespuesta = 4000;
 	private int tiempoEspera = 100;
 	private Thread timer;
@@ -80,7 +80,17 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	public void inicializarThreads() {
 		try {
 
-			thTrama = Util.thTrama;
+			if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaVision))
+				Util.thTrama.desconnect();
+			
+			if (Util.thTrama == null)
+			{
+				ThreadTrama thTrama = new ThreadTrama(new TramaVision());
+				Util.thTrama.setEjecutar(false);
+				Util.thTrama = thTrama;
+				Util.thTrama.setEjecucion(99999);
+				Util.thTrama.start();
+			}
 			//thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_LAMINAS);
 			//thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
 			//thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
@@ -573,13 +583,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	//GEN-END:initComponents
 
 	private void jRadioNasalDerActionPerformed(java.awt.event.ActionEvent evt) {
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
 		try {
 			Thread.sleep(tiempoEspera);
 		} catch (Exception exception) {
 		}
 
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -592,13 +602,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioNasalIzqActionPerformed(java.awt.event.ActionEvent evt) {
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
 		try {
 			Thread.sleep(tiempoEspera);
 		} catch (Exception exception) {
 		}
 
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 		Thread timer = new Thread() {
@@ -611,12 +621,12 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioDer55ActionPerformed(java.awt.event.ActionEvent evt) {
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
 		try {
 			Thread.sleep(tiempoEspera);
 		} catch (Exception exception) {
 		}
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
 		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_DER);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
@@ -630,12 +640,12 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioDer70ActionPerformed(java.awt.event.ActionEvent evt) {
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
 		try {
 			Thread.sleep(tiempoEspera);
 		} catch (Exception exception) {
 		}
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
 		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_DER);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
@@ -649,12 +659,12 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioDer85ActionPerformed(java.awt.event.ActionEvent evt) {
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
 		try {
 			Thread.sleep(tiempoEspera);
 		} catch (Exception exception) {
 		}
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
 		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_DER);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
@@ -668,12 +678,12 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioIzq55ActionPerformed(java.awt.event.ActionEvent evt) {
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
 		try {
 			Thread.sleep(tiempoEspera);
 		} catch (Exception exception) {
 		}
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
 		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_IZQ);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
@@ -687,12 +697,12 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioIzq70ActionPerformed(java.awt.event.ActionEvent evt) {
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
 		try {
 			Thread.sleep(tiempoEspera);
 		} catch (Exception exception) {
 		}
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
 		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_IZQ);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
@@ -706,12 +716,12 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	private void jRadioIzq85ActionPerformed(java.awt.event.ActionEvent evt) {
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
 		try {
 			Thread.sleep(tiempoEspera);
 		} catch (Exception exception) {
 		}
-		thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
 		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_IZQ);
 
 		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
@@ -735,12 +745,12 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 				Thread.sleep(sleep);
 				tiempo += sleep;
 
-				TramaVision tv = (TramaVision) thTrama.getTramaValida();
+				TramaVision tv = (TramaVision) Util.thTrama.getTramaValida();
 				if (der == null) {
 					if (tv.isDerButtonPress() || tv.isIzqButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
-						thTrama
+						Util.thTrama
 								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return true;
 					}
@@ -748,13 +758,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 					if (tv.isDerButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
-						thTrama
+						Util.thTrama
 								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return true;
 					} else if (tv.isIzqButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_CANCEL_SMALL);
 						label.setName("No");
-						thTrama
+						Util.thTrama
 								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return false;
 					}
@@ -762,13 +772,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 					if (tv.isDerButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_CANCEL_SMALL);
 						label.setName("No");
-						thTrama
+						Util.thTrama
 								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return false;
 					} else if (tv.isIzqButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
-						thTrama
+						Util.thTrama
 								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return true;
 					}
@@ -778,7 +788,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 
 			Util.setIcon(label, Constantes.IMG_CANCEL_SMALL);
 			label.setName("No");
-			thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 
 		} catch (InterruptedException e) {
 			return false;
@@ -847,7 +857,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		for (Resultado res : resultados) {
 			if (res.getResEtapa() < 30) {
 				if (res.getResValor1().intValue() == 0)
-					return Examen.RESULTADO_FUERA;
+					return Examen.RESULTADO_FUERA_DERIVACION;
 			}
 		}
 
@@ -902,6 +912,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 				resultadoDetalleExamen.setRdeResultado(resultado);
 				resultadoDetalleExamen.setRdeDetalleResultado(detalleResultado
 						+ "</HTML>");
+				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 
 				resultadoDetalleExamenService.update(resultadoDetalleExamen);
 

@@ -26,6 +26,7 @@ import javax.swing.JToggleButton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jfree.chart.plot.ThermometerPlot;
 
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -510,7 +511,7 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 		if (isBtn) {
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run() {
-					Util.playSound(Constantes.SOUND_OK,100);
+					Util.playSound(Constantes.SOUND_OK,100);					
 				}
 			});
 			
@@ -522,7 +523,8 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 			
 			
 			//tiempInicioEtapa = System.currentTimeMillis();
-
+			panelPercepcionReaccionAnimacion.setOk();
+			panelPercepcionReaccionAnimacion.repaint();
 			panelPercepcionReaccionAnimacion.setPosition(panelPercepcionReaccionAnimacion.getPosition() + 1);
 			if(!pulsadorObj.equals(ParametrosPercepcionReacion.PULSADOR_0))
 				thTrama.setEjecucion(thTrama.getEjecucion() + 1);
@@ -665,7 +667,7 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				btnGuardar.setEnabled((personaExamen.getPersona() != null) && !demo && true);
-				
+				Util.playSound(Constantes.SOUND_START,0);
 				try {
 					Thread.sleep(Constantes.TIEMPO_ENTRE_RESULTADO);
 				} catch (InterruptedException e) {
@@ -893,6 +895,8 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
 			resultadoDetalleExamen.setRdeNota(pro[0]);//tiempo centecimas de segundos
 			resultadoDetalleExamen.setRdeNota2(pro[1]);//errores
+			resultadoDetalleExamen.setRdeDetalleResultado("Tiempo promedio: "+pro[0].intValue()+" Errores: "+pro[1].intValue());
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
@@ -930,6 +934,15 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 	
 	public void examinar(JToggleButton btn,boolean examen)
 	{
+		Util.playSound(Constantes.SOUND_START,0);
+		try
+		{
+		Thread.sleep(1400);
+		}
+		catch(Exception e)
+		{
+			
+		}
 		unSelectButtons(btn);
 		btnCancelar.setEnabled(true);
 		btnAprendizaje.setEnabled(false);

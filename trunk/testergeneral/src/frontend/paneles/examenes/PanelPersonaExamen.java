@@ -8,6 +8,7 @@ package frontend.paneles.examenes;
 
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Persona;
+import testerGeneral.domain.PersonaExamen;
 
 /**
  *
@@ -16,13 +17,14 @@ import testerGeneral.domain.Persona;
 public class PanelPersonaExamen extends javax.swing.JPanel {
 
 	/** Creates new form PanelPersonaExamen */
-	public PanelPersonaExamen(Persona per) {
+	public PanelPersonaExamen(PersonaExamen perExamen) {
 		initComponents();
 
-		txtApellido.setText(per.getPerApellido());
-		txtNombre.setText(per.getPerNombre());
-		txtTipoDoc.setText(per.getPerTipoDoc());
-		txtNroDoc.setText(per.getPerNumeroDoc());
+		txtApellido.setText(perExamen.getPersona().getPerApellido());
+		txtNombre.setText(perExamen.getPersona().getPerNombre());
+		txtTipoDoc.setText(perExamen.getPersona().getPerTipoDoc());
+		txtNroDoc.setText(perExamen.getPersona().getPerNumeroDoc());
+		txtTipoExamen.setText(perExamen.getPexaTipoExamen());
 	}
 
 	//GEN-BEGIN:initComponents
@@ -37,6 +39,8 @@ public class PanelPersonaExamen extends javax.swing.JPanel {
 		jLabel4 = new javax.swing.JLabel();
 		jLabel5 = new javax.swing.JLabel();
 		txtTipoDoc = new javax.swing.JFormattedTextField();
+		jLabel3 = new javax.swing.JLabel();
+		txtTipoExamen = new javax.swing.JFormattedTextField();
 
 		txtApellido.setEditable(false);
 
@@ -54,6 +58,10 @@ public class PanelPersonaExamen extends javax.swing.JPanel {
 
 		txtTipoDoc.setEditable(false);
 
+		jLabel3.setText("Tipo Examen:");
+
+		txtTipoExamen.setEditable(false);
+
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout
@@ -67,17 +75,17 @@ public class PanelPersonaExamen extends javax.swing.JPanel {
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING,
-																false)
-														.addComponent(
-																jLabel2,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
+																javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(
 																jLabel1,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																104,
+																86,
+																Short.MAX_VALUE)
+														.addComponent(
+																jLabel4,
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																86,
 																Short.MAX_VALUE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -89,41 +97,54 @@ public class PanelPersonaExamen extends javax.swing.JPanel {
 														.addComponent(
 																txtApellido)
 														.addComponent(
-																txtNombre,
+																txtTipoDoc,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																219,
+																105,
 																Short.MAX_VALUE))
-										.addGap(18, 18, 18)
+										.addGap(53, 53, 53)
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING,
-																false)
+																javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(
 																jLabel5,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
+																89,
 																Short.MAX_VALUE)
 														.addComponent(
-																jLabel4,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																93,
-																Short.MAX_VALUE))
+																jLabel2,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																89,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												layout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				txtNroDoc,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				259,
+																				Short.MAX_VALUE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jLabel3)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				txtTipoExamen,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				108,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
 														.addComponent(
-																txtNroDoc,
+																txtNombre,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																159,
-																Short.MAX_VALUE)
-														.addComponent(
-																txtTipoDoc,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																159,
+																448,
 																Short.MAX_VALUE))
 										.addContainerGap()));
 		layout
@@ -133,44 +154,85 @@ public class PanelPersonaExamen extends javax.swing.JPanel {
 						.addGroup(
 								layout
 										.createSequentialGroup()
-										.addContainerGap()
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel1)
-														.addComponent(jLabel4)
-														.addComponent(
-																txtTipoDoc,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																txtApellido,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(
-												layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel2)
-														.addComponent(jLabel5)
-														.addComponent(
-																txtNombre,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																txtNroDoc,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																layout
+																		.createSequentialGroup()
+																		.addContainerGap(
+																				16,
+																				Short.MAX_VALUE)
+																		.addGroup(
+																				layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addGroup(
+																								layout
+																										.createSequentialGroup()
+																										.addGap(
+																												26,
+																												26,
+																												26)
+																										.addComponent(
+																												jLabel4,
+																												javax.swing.GroupLayout.DEFAULT_SIZE,
+																												23,
+																												Short.MAX_VALUE))
+																						.addGroup(
+																								layout
+																										.createSequentialGroup()
+																										.addGap(
+																												29,
+																												29,
+																												29)
+																										.addGroup(
+																												layout
+																														.createParallelGroup(
+																																javax.swing.GroupLayout.Alignment.BASELINE)
+																														.addComponent(
+																																txtTipoDoc,
+																																javax.swing.GroupLayout.PREFERRED_SIZE,
+																																javax.swing.GroupLayout.DEFAULT_SIZE,
+																																javax.swing.GroupLayout.PREFERRED_SIZE)
+																														.addComponent(
+																																jLabel5)
+																														.addComponent(
+																																txtTipoExamen,
+																																javax.swing.GroupLayout.PREFERRED_SIZE,
+																																javax.swing.GroupLayout.DEFAULT_SIZE,
+																																javax.swing.GroupLayout.PREFERRED_SIZE)
+																														.addComponent(
+																																jLabel3)
+																														.addComponent(
+																																txtNroDoc,
+																																javax.swing.GroupLayout.PREFERRED_SIZE,
+																																javax.swing.GroupLayout.DEFAULT_SIZE,
+																																javax.swing.GroupLayout.PREFERRED_SIZE)))))
+														.addGroup(
+																layout
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addGroup(
+																				layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.BASELINE)
+																						.addComponent(
+																								jLabel2)
+																						.addComponent(
+																								jLabel1)
+																						.addComponent(
+																								txtApellido,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								txtNombre,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.PREFERRED_SIZE))))
+										.addContainerGap()));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
@@ -178,12 +240,14 @@ public class PanelPersonaExamen extends javax.swing.JPanel {
 	// Variables declaration - do not modify
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
+	private javax.swing.JLabel jLabel3;
 	private javax.swing.JLabel jLabel4;
 	private javax.swing.JLabel jLabel5;
 	private javax.swing.JTextField txtApellido;
 	private javax.swing.JTextField txtNombre;
 	private javax.swing.JFormattedTextField txtNroDoc;
 	private javax.swing.JFormattedTextField txtTipoDoc;
+	private javax.swing.JFormattedTextField txtTipoExamen;
 	// End of variables declaration//GEN-END:variables
 
 }

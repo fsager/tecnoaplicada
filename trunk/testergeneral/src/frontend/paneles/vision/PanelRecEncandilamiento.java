@@ -57,7 +57,7 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 	private boolean exito = false;
 	private DecimalFormat df = new DecimalFormat("####");
 	private Thread timer;
-	private ThreadTrama thTrama;
+	//private ThreadTrama thTrama;
 
 	/** Creates new form PanelAgudezaVisual */
 	public PanelRecEncandilamiento(JToggleButton btn,
@@ -93,7 +93,19 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 	public void inicializarThreads() {
 
 		try {
-
+			
+			if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaVision))
+				Util.thTrama.desconnect();
+			
+			if (Util.thTrama == null)
+			{
+				ThreadTrama thTrama = new ThreadTrama(new TramaVision());
+				Util.thTrama.setEjecutar(false);
+				Util.thTrama = thTrama;
+				Util.thTrama.setEjecucion(99999);
+				Util.thTrama.start();
+			}
+			
 			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST7);
 
 		} catch (ExceptionIsNotHadware e) {
@@ -338,7 +350,7 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 
 	public String getResultado() {
 		if (!isAprobed())
-			return Examen.RESULTADO_FUERA;
+			return Examen.RESULTADO_FUERA_DERIVACION;
 
 		return Examen.RESULTADO_DENTRO;
 	}
@@ -398,7 +410,8 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 
 				resultadoDetalleExamen.setRdeResultado(resultado);
 				resultadoDetalleExamen.setRdeDetalleResultado(detalleResultado);
-
+				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
+				
 				resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
 				btn.setForeground(Color.BLACK);

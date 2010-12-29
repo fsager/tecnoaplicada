@@ -446,7 +446,23 @@ public class Util {
 		glass.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 	}
 	
-	
+	public static void mostrarPanelOperacionesLargasConCancelar(String mensaje,JButton cancelar)
+	{
+		final GlassPanel glass=new GlassPanel();
+		glass.setOpaque(false);
+		
+		PanelOperacionesLargas panelOperacionesLargas=new PanelOperacionesLargas(mensaje,cancelar);
+		Point  p=new Point(((Util.framePrincipal.getWidth() - panelOperacionesLargas.getWidth()) / 2),(Util.framePrincipal.getHeight() - panelOperacionesLargas.getHeight()) / 2);
+		panelOperacionesLargas.setLocation(p.x,p.y);
+		
+		panelOperacionesLargas.setVisible(true);
+		glass.add(panelOperacionesLargas);
+		Util.framePrincipal.setGlassPane(glass);
+		glass.setVisible(true);
+		
+		panelOperacionesLargas.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		glass.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+	}
 	
 	public static void ocultarPanelOperacionesLargas()
 	{

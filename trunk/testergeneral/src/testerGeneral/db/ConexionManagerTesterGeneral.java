@@ -36,6 +36,13 @@ public class ConexionManagerTesterGeneral extends org.springframework.jdbc.datas
 			super.setPassword("autoimpresor");
 			super.setDriverClassName("org.apache.derby.jdbc.ClientDriver");*/
 			
+			/*super.setUrl("jdbc:derby://localhost:1527/C:\\programacion\\Workspaces3\\TesterGeneral\\db\\testerGeneral");
+			super.setUsername("testerGeneral");
+			super.setPassword("testerGeneral");
+			super.setDriverClassName("org.apache.derby.jdbc.ClientDriver");*/
+			
+			
+			
 		}
 	}
 

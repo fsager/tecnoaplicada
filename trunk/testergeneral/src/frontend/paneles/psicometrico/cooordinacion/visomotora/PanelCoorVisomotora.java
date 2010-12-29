@@ -88,6 +88,17 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 		}
 
 		this.validate();
+		if(personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL))
+		{
+			tiempoEntreLuz=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PROFECIONAL"));
+			tiempoLuz = Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PROFECIONAL"));
+		}
+		else if(personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR))
+		{
+			tiempoEntreLuz=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PARTICULAR"));
+			tiempoLuz = Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PARTICULAR"));
+		}
+		
 		inicializarThreads();
 	}
 
@@ -107,6 +118,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	public void finalizarExamen() {
 
 		runExamen = false;
+		Util.playSound(Constantes.SOUND_START,100);
 		mostrarResultados();
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -124,6 +136,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 			try {
 
 				if (run && runExamen) {
+					//System.out.println("tiempoLuz: "+tiempoLuz+" tiempoEntreLuz: "+tiempoEntreLuz);
 					cantidadTotal++;
 					if (pulsadorAPresionar == 0)
 						pulsadorAPresionar = rnd.nextInt(4) + 1;
@@ -587,6 +600,8 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 			}
 			resultadoDetalleExamen.setRdeNota2(new Double(errores));
 			//resultadoDetalleExamen.setRdeNota(new Double(tiempoAcumuladoEnPosicion));
+			resultadoDetalleExamen.setRdeDetalleResultado("Errores: "+errores+".");
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 			resultadoDetalleExamen.setRdeResultado(getResultado());
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
@@ -820,7 +835,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	//private boolean finOK = false;
 	private Thread th = new Thread(this);
 	private int tiempoTotal = 0;
-	private int tiempoLuz = Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ"));
+	private int tiempoLuz = -1;
 	private int tiempoAprend = Integer
 			.valueOf(ContextManager
 					.getProperty("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.APRENDEZAJE.DURACION"));
@@ -829,7 +844,8 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 					.getProperty("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.EXAMEN.DURACION"));
 	private int pulsadorAPresionar = 0;
 	private PanelAnimacion panelAnimacionDibujar = new PanelAnimacion();
-	private long tiempoEntreLuz=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO"));
+	private long tiempoEntreLuz=-1;
+	
 	//private long tiempoAcumuladoEnPosicion=0;
 	//private long tiempoEntroEnPiscion=0;
 

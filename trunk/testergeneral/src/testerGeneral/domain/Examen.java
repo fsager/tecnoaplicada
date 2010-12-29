@@ -10,9 +10,9 @@ import java.util.Set;
 public class Examen implements java.io.Serializable {
 
 	// Fields
-	public static final String RESULTADO_DENTRO="DENTRO DE LOS PARAMETROS";
-	public static final String RESULTADO_FUERA="FUERA DE LOS PARAMETROS";
-
+	public static final String RESULTADO_DENTRO="Dentro de los parametros";
+	public static final String RESULTADO_FUERA="Fuera de los parametro";
+	public static final String RESULTADO_FUERA_DERIVACION="Fuera de los parametro, se sugiere derivación a profesional";
 	
 	public static final String ESTADO_INI="INICIADO";
 	public static final String ESTADO_FIN="FINALIZADO";
@@ -25,6 +25,7 @@ public class Examen implements java.io.Serializable {
 	private Long exaId;
 	private String exaCodigo;
 	private String exaNombre;
+	private Integer exaOrden;
 	private Set usuarioExamens = new HashSet(0);
 	private Set examenDetalles = new HashSet(0);
 
@@ -71,6 +72,14 @@ public class Examen implements java.io.Serializable {
 
 	public void setExaNombre(String exaNombre) {
 		this.exaNombre = exaNombre;
+	}
+	
+	public void setExaOrden(Integer exaOrden) {
+		this.exaOrden = exaOrden;
+	}
+	
+	public Integer getExaOrden() {
+		return exaOrden;
 	}
 
 	public Set getUsuarioExamens() {

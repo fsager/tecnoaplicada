@@ -36,8 +36,7 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 				panelExaminado.setVisible(false);
 				lbDemo.setVisible(true);
 			} else {
-				panelPersonaExamen = new PanelPersonaExamen(personaExamen
-						.getPersona());
+				panelPersonaExamen = new PanelPersonaExamen(personaExamen);
 				panelExaminado.add(panelPersonaExamen);
 
 				panelExaminado.setVisible(true);

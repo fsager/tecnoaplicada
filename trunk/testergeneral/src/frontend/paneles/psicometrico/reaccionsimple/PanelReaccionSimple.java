@@ -9,10 +9,11 @@ package frontend.paneles.psicometrico.reaccionsimple;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -23,8 +24,6 @@ import javax.swing.JToggleButton;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Accion;
 import testerGeneral.domain.Constantes;
@@ -314,6 +313,8 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 			long tiempoActual=System.currentTimeMillis();
 			long resEtapa=(tiempoActual - getInstanteSemaforoRojo())/10;
 			//log.debug("Tiempo de Frenado: "+(tiempoActual - getInstanteSemaforoRojo())+" current: "+System.currentTimeMillis());
+			
+			//TODO comentar descomentar para pruebas edgardo
 			//thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED3);
 			
 			setMensajes(continuarAnimacion);
@@ -382,14 +383,15 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				btnGuardar.setEnabled((personaExamen.getPersona() != null) && !demo && true);
-				
+				Util.playSound(Constantes.SOUND_START,0);
 				try {
 					Thread.sleep(Constantes.TIEMPO_ENTRE_RESULTADO);
 				} catch (InterruptedException e) {
 
 				}
 				String columns[]={"Etapa","Resultado"};				
-
+				promediar(resultados,3);
+				
 				panelReaccionSimpleUsuarioExaminador.getPanelContenido().removeAll();
 				PanelResultado panelResultado=new PanelResultado(resultados,TableModelResultado.ERRORES_Y_RESULTADO,exaDetalle);
 				panelReaccionSimpleUsuarioExaminador.getPanelContenido().add(panelResultado);
@@ -612,10 +614,13 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 				resultados.add(this.resultados.get(i));
 			}
 			
+			
 			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
 			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
 			resultadoDetalleExamen.setRdeNota(pro[0]);
 			resultadoDetalleExamen.setRdeNota2(pro[1]);
+			resultadoDetalleExamen.setRdeDetalleResultado("<HTML>Tiempo promedio: "+pro[0].intValue()+" Centésimas de segundos.<BR> Errores: "+pro[1].intValue()+".</HTML>");
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
@@ -630,6 +635,58 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		}
 	}
 
+	public void promediar(Collection<Resultado> resultados, int last)
+	{
+		List<Resultado> lstResultados=(List)resultados;
+		List<Resultado> lstResultadosAux=new ArrayList();
+
+		for(int i=lstResultados.size()-1;i>=0;i--)
+		{
+			Resultado res=lstResultados.get(i);
+			if(res.getResValor1()!=null && res.getResValor1().intValue()!=0)
+			{
+				lstResultadosAux.add(res);
+			}
+		}
+		
+		Comparator<Resultado> com=new Comparator(){
+			
+			@Override
+			public int compare(Object o1, Object o2) {
+				if(o1==null && o2==null)
+					return 0;
+				else if(o1==null)
+					return -1;
+				else if(o2==null)
+					return 1;
+				else
+				{
+					Resultado res1=(Resultado)o1;
+					Resultado res2=(Resultado)o2;
+					
+					if(res1.getResValor1()== null || res2.getResValor1()==null)
+						return 0;
+					
+					return res1.getResValor1().compareTo(res2.getResValor1());
+				}
+			}
+		};
+		
+		if(lstResultadosAux.size()>0)
+		{
+			Resultado minRes=Collections.min(lstResultadosAux,com);
+			System.out.println("minRes.getResValor1(): "+minRes.getResValor1());
+			for(int i=0;i<last && i<lstResultadosAux.size();i++)
+			{
+				double procentaje=1d+((i+5)/100d);
+				Double newValue=minRes.getResValor1()*procentaje;
+				Resultado res=Collections.max(lstResultadosAux,com);
+				lstResultadosAux.remove(res);
+				res.setResValor1(newValue);
+				System.out.println("res.getResValor1(): "+res.getResValor1());
+			}
+		}
+	}
 	private void btnExaminarNActionPerformed(java.awt.event.ActionEvent evt) {
 		initPanelesAnimacion();
 		demo=false;
@@ -646,6 +703,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	
 	public void examinar(JToggleButton btn,boolean examen)
 	{
+		Util.playSound(Constantes.SOUND_START,0);
 		erroresCometidos=0;
 		setMensajes(iniciarAnimacion);
 		unSelectButtons(btn);

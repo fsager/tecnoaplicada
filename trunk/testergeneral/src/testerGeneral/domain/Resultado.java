@@ -115,4 +115,6 @@ public class Resultado implements java.io.Serializable {
 	public void setResEtapaDesc(String resEtapaDesc) {
 		this.resEtapaDesc = resEtapaDesc;
 	}
+	
+	
 }

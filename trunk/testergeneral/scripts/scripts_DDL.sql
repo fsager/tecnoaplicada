@@ -1,6 +1,6 @@
 	--drop table "APP"."AUDITORIA";
     create table "APP"."AUDITORIA"(
-        "AUD_ID" BIGINT not null generated always as identity,
+        "AUD_ID" BIGINT not null generated  BY DEFAULT as identity,
        "AUD_ACCION" VARCHAR(200) not null,
        "AUD_OBJETO" VARCHAR(200),
        "AUD_FK" VARCHAR(100),
@@ -14,7 +14,7 @@
 
 	--DROP table "APP"."DOMINIO";
     create table "APP"."DOMINIO"(
-        "DOM_ID" BIGINT not null generated always as identity,
+        "DOM_ID" BIGINT not null generated  BY DEFAULT as identity,
        "DOM_TIPO" VARCHAR(200),
        "DOM_CLAVE" VARCHAR(200),
        "DOM_CODIGO" VARCHAR(200),
@@ -28,9 +28,10 @@
     
 	--DROP table "APP"."EXAMEN";
     create table "APP"."EXAMEN"(
-       "EXA_ID" BIGINT not null generated always as identity,
+       "EXA_ID" BIGINT not null generated  BY DEFAULT as identity,
        "EXA_CODIGO" VARCHAR(20) not null unique,
        "EXA_NOMBRE" VARCHAR(100) not null,
+       "EXA_ORDEN" BIGINT not null,
         constraint "SQL100326234105961" primary key ("EXA_ID")
     );
 
@@ -40,11 +41,12 @@
     
 	--DROP table "APP"."EXAMEN_DETALLE";
     create table "APP"."EXAMEN_DETALLE"(
-       "EXAD_ID" BIGINT not null generated always as identity,
+       "EXAD_ID" BIGINT not null generated  BY DEFAULT as identity,
        "EXAD_DETALLE" VARCHAR(200) not null,
        "EXAD_CODIGO" VARCHAR(200) not null unique,
        "EXA_ID" BIGINT not null,
-       "EXAD_ORDEN" BIGINT not null,       
+       "EXAD_ORDEN" BIGINT not null,
+       "EXAD_PARAMETROS_CORRECCION" VARCHAR(4000),        
         constraint "SQL100327170410820" primary key ("EXAD_ID")
     );
 	
@@ -54,7 +56,7 @@
     
 	--drop table "APP"."PERMISO";
     create table "APP"."PERMISO"(
-       "PER_ID" BIGINT not null generated always as identity,
+       "PER_ID" BIGINT not null generated  BY DEFAULT as identity,
        "PER_CODIGO" VARCHAR(20) not null unique,
        "PER_DESCRIPCION" VARCHAR(100) not null,
         constraint "SQL100326234106211" primary key ("PER_ID")
@@ -65,7 +67,7 @@
     
 	--drop table "APP"."PERSONA";
      create table "APP"."PERSONA"(
-        "PER_ID" BIGINT not null generated always as identity,
+        "PER_ID" BIGINT not null generated  BY DEFAULT as identity,
        "PER_APELLIDO" VARCHAR(60) not null,
        "PER_NOMBRE" VARCHAR(60) not null,
        "PER_TIPO_DOC" VARCHAR(30) not null,
@@ -99,7 +101,7 @@
     
 	--drop table "APP"."PERSONA_EXAMEN";
     create table "APP"."PERSONA_EXAMEN"(
-       "PEXA_ID" BIGINT not null generated always as identity,
+       "PEXA_ID" BIGINT not null generated  BY DEFAULT as identity,
        "PER_ID" BIGINT not null,
        "EXA_ID" BIGINT not null,
        "PEXA_FECHA" TIMESTAMP not null,
@@ -120,7 +122,7 @@
     
 	--drop table "APP"."PERSONA_RESTRICION";
     create table "APP"."PERSONA_RESTRICION"(
-        "ID" BIGINT not null generated always as identity,
+        "ID" BIGINT not null generated  BY DEFAULT as identity,
        "PER_ID" BIGINT not null,
        "DOM_ID" BIGINT,
        "DESCRIPCION" VARCHAR(200) not null,
@@ -144,7 +146,7 @@
     
     --drop table "APP"."RESULTADO";
     create table "APP"."RESULTADO"(
-        "RES_ID" BIGINT not null generated always as identity,
+        "RES_ID" BIGINT not null generated  BY DEFAULT as identity,
        "RES_ETAPA" BIGINT,
        "RDE_ID" BIGINT not null,
        "RES_VALOR1" NUMERIC(14,3),
@@ -158,13 +160,16 @@
     
     --drop table "APP"."RESULTADO_DETALLE_EXAMEN";
     create table "APP"."RESULTADO_DETALLE_EXAMEN"(
-        "RDE_ID" BIGINT not null generated always as identity,
+        "RDE_ID" BIGINT not null generated  BY DEFAULT as identity,
        "EXAD_ID" BIGINT not null,
        "PEXA_ID" BIGINT not null,
        "RDE_RESULTADO" VARCHAR(100),
        "RDE_DETALLE_RESULTADO" VARCHAR(500),
+       "RDE_PARAMETROS_CORRECCION" VARCHAR(4000),
        "RDE_NOTA" NUMERIC(14,3),
        "RDE_NOTA2" NUMERIC(14,3),
+       "RDE_NOTA3" NUMERIC(14,3),
+       "RDE_NOTA4" NUMERIC(14,3),
         constraint "SQL100414203432130" primary key ("RDE_ID")
     );
     
@@ -186,7 +191,7 @@
     
     --drop table "APP"."USUARIO_PERMISO";
     create table "APP"."USUARIO_PERMISO"(
-        "ID" BIGINT not null generated always as identity,
+        "ID" BIGINT not null generated  BY DEFAULT as identity,
        "PER_ID" BIGINT not null,
        "USR_NOMBRE" VARCHAR(200) not null,
         constraint "SQL100326234106820" primary key ("ID")
@@ -199,7 +204,7 @@
     
     --drop table "APP"."USUARIO_EXAMEN";
     create table "APP"."USUARIO_EXAMEN"(
-        "ID" BIGINT not null generated always as identity,
+        "ID" BIGINT not null generated  BY DEFAULT as identity,
        "EXA_ID" BIGINT not null,
        "USR_NOMBRE" VARCHAR(200) not null,
         constraint "SQL100326234106610" primary key ("ID")

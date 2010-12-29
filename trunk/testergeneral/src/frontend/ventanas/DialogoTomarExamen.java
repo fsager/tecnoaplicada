@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
+import javax.swing.JToggleButton;
 
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
@@ -50,6 +51,10 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 		};
 		cargarTipoExamen();
 		cargarExamenes();
+		
+		btnExamenEquilibrio.setEnabled(false);
+		btnExamenVision.setEnabled(false);
+		btnExamenPsicometrico.setEnabled(false);
 	}
 	
 	public void cargarTipoExamen() {
@@ -72,6 +77,9 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 				btnExamen.setActionCommand(examenes.get(i).getExaCodigo());
 				panelExamenes.add(btnExamen);
 				btnExamen.addActionListener(action);
+				
+				if(examenes.get(i).getExaCodigo().equals("EXA_PERSONALIDAD"))
+					btnExamen.setEnabled(false);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -99,7 +107,7 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 				personaExamen.setPersona(per);
 				personaExamen.setExamen(exa);	
 				
-				panelMenu.cargarSubMenuExamenes();
+				panelMenu.cargarSubMenuExamenes(btnExamenPsicometrico);
 				panelMenu.seleccionarExamenPsicometrico(personaExamen);
 			}
 			else if (btn.getActionCommand().equals(Examen.EXA_CODIGO_VISION)) {
@@ -116,9 +124,26 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 				personaExamen.setPersona(per);
 				personaExamen.setExamen(exa);	
 				
-				panelMenu.cargarSubMenuExamenes();
+				panelMenu.cargarSubMenuExamenes(btnExamenVision);
 				panelMenu.seleccionarExamenVision(personaExamen);
 			}
+			/*else if (btn.getActionCommand().equals(Examen.EXA_CODIGO_AUDICION)) {
+				
+				ExamenDefinition examenService = (ExamenDefinition) ContextManager.getBizObject("examenService");
+				Examen exa = new Examen();
+				exa.setExaCodigo(Examen.EXA_CODIGO_AUDICION);
+				exa = (Examen) examenService.getAll(exa).get(0);
+		
+				testerGeneral.persistence.impl.Util.insertAudit(testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_VISION,null, null);
+		
+				PersonaExamen personaExamen=new PersonaExamen();
+				personaExamen.setPexaTipoExamen(cmbTipoExamen.getSelectedItem().toString());
+				personaExamen.setPersona(per);
+				personaExamen.setExamen(exa);	
+				
+				panelMenu.cargarSubMenuExamenes(btnExamen);
+				panelMenu.seleccionarExamenVision(personaExamen);
+			}*/
 		}
 		catch(Exception e)
 		{
@@ -263,5 +288,12 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 	private javax.swing.JPanel panelExamenes;
 	// End of variables declaration//GEN-END:variables
 	private ActionListener action;
-
+	private javax.swing.JToggleButton btnExamenEquilibrio = new JToggleButton(
+			Constantes.MENU_SUB_EXAMEN_EQUILIBRIO);
+	private javax.swing.JToggleButton btnExamenVision = new JToggleButton(
+			Constantes.MENU_SUB_EXAMEN_VISION);
+	private javax.swing.JToggleButton btnExamenPsicometrico = new JToggleButton(
+			Constantes.MENU_SUB_EXAMEN_PSICOMETRICO);
+	
+	
 }

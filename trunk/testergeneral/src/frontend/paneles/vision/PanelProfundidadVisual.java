@@ -52,7 +52,7 @@ public class PanelProfundidadVisual extends javax.swing.JPanel implements
 	private int dibu1 = 0;
 	private int dibu2 = 0;
 	private int dibu3 = 0;
-	private ThreadTrama thTrama;
+	//private ThreadTrama thTrama;
 
 	/** Creates new form PanelAgudezaVisual */
 	public PanelProfundidadVisual(JToggleButton btn, PersonaExamen personaExamen) {
@@ -83,6 +83,18 @@ public class PanelProfundidadVisual extends javax.swing.JPanel implements
 
 		try {
 		
+			if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaVision))
+				Util.thTrama.desconnect();
+			
+			if (Util.thTrama == null)
+			{
+				ThreadTrama thTrama = new ThreadTrama(new TramaVision());
+				thTrama.setEjecutar(false);
+				Util.thTrama = thTrama;
+				thTrama.setEjecucion(99999);
+				thTrama.start();
+			}
+
 			
 			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST3);
 			
@@ -249,7 +261,7 @@ public class PanelProfundidadVisual extends javax.swing.JPanel implements
 	public String getResultado() {
 
 		if (!isAprobed())
-			return Examen.RESULTADO_FUERA;
+			return Examen.RESULTADO_FUERA_DERIVACION;
 
 		return Examen.RESULTADO_DENTRO;
 	}
@@ -260,11 +272,11 @@ public class PanelProfundidadVisual extends javax.swing.JPanel implements
 	}
 
 	public boolean isAprobed() {
-		if (this.personaExamen.getPexaTipoExamen().equals("Profesional")
+		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
 				&& getPorcentaje().intValue() != 100)
 			return false;
 
-		if (this.personaExamen.getPexaTipoExamen().equals("Particular")
+		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR)
 				&& getPorcentaje().intValue() < 66)
 			return false;
 
@@ -313,6 +325,7 @@ public class PanelProfundidadVisual extends javax.swing.JPanel implements
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamen.setRdeDetalleResultado("Porcentaje: "
 					+ getPorcentaje());
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
 			btn.setForeground(Color.BLACK);

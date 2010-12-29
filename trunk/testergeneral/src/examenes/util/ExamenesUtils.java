@@ -16,6 +16,7 @@ import testerGeneral.domain.ExamenDetalle;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Resultado;
 import testerGeneral.service.ExamenDefinition;
+import frontend.paneles.audio.PanelAudio;
 import frontend.paneles.examenes.PanelExamenes;
 import frontend.paneles.psicometrico.anticipacion.PanelAnticipacion;
 import frontend.paneles.vision.PanelAgudezaVisual;
@@ -176,7 +177,7 @@ public class ExamenesUtils {
 		else if(exad.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE))
 		{
 			Double errores=Double.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.ERRORES.PERMITIDOS.HASTA"));
-			Double tiempo=Double.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.TIEMPO.PERMITIDOS.HASTA"));
+			Double tiempo=(Double.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.TIEMPO.PERMITIDOS.HASTA"))/10d);
 			
 			if(prom[0]<=tiempo && prom[1]<errores)
 				return Examen.RESULTADO_DENTRO;
@@ -302,7 +303,8 @@ public class ExamenesUtils {
 				panelExamen = new PanelExamenes(newPersonaExamen,new PanelAnticipacion(null,newPersonaExamen));
 			else if(newPersonaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_VISION))
 				panelExamen = new PanelExamenes(newPersonaExamen,new PanelAgudezaVisual(null,newPersonaExamen));
-			
+			/*else if(newPersonaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_AUDICION))
+				panelExamen = new PanelExamenes(newPersonaExamen,new PanelAudio(null,newPersonaExamen));*/			
 			
 			panelContenido.add(panelExamen);
 			

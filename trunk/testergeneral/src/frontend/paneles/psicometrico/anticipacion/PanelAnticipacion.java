@@ -104,7 +104,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				btnGuardar.setEnabled((personaExamen.getPersona() != null) && !demo && true);
-				
+				Util.playSound(Constantes.SOUND_START,100);
 				try {
 					Thread.sleep(Constantes.TIEMPO_ENTRE_RESULTADO);
 				} catch (InterruptedException e) {
@@ -638,6 +638,8 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
 			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
 			resultadoDetalleExamen.setRdeNota(pro[0]);
+			resultadoDetalleExamen.setRdeDetalleResultado("Metros promedio: "+pro[0]+".");
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
@@ -675,6 +677,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 		cicloExamen();
 		int speed = Integer.valueOf(ContextManager
 				.getProperty("EXAMEN.ANTICIPACION.ETAPA1.SPEED"));
+		
 		iniciarExamen(-1 * speed, false, false, false, resultados.get(0));
 	}
 
@@ -760,7 +763,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 
 	public void iniciarExamen(int speed, boolean izq, boolean demo,
 			boolean save, Resultado res) {
-		
+		Util.playSound(Constantes.SOUND_START,100);
 		btnCancelar.setEnabled(true);
 		btnAprendizaje.setEnabled(false);
 		btnExaminar.setEnabled(false);

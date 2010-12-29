@@ -52,7 +52,7 @@ public class PanelVisionNocturna extends javax.swing.JPanel implements
 	private int dibu1 = 1;
 	private int dibu2 = 1;
 	private int dibu3 = 1;
-	private ThreadTrama thTrama;
+	//private ThreadTrama thTrama;
 
 	/** Creates new form PanelAgudezaVisual */
 	public PanelVisionNocturna(JToggleButton btn, PersonaExamen personaExamen) {
@@ -83,7 +83,17 @@ public class PanelVisionNocturna extends javax.swing.JPanel implements
 	public void inicializarThreads() {
 
 		try {
+			if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaVision))
+				Util.thTrama.desconnect();
 			
+			if (Util.thTrama == null)
+			{
+				ThreadTrama thTrama = new ThreadTrama(new TramaVision());
+				Util.thTrama.setEjecutar(false);
+				Util.thTrama = thTrama;
+				Util.thTrama.setEjecucion(99999);
+				Util.thTrama.start();
+			}
 			
 			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST5);
 			
@@ -290,17 +300,17 @@ public class PanelVisionNocturna extends javax.swing.JPanel implements
 
 	public String getResultado() {
 		if (!isAprobed())
-			return Examen.RESULTADO_FUERA;
+			return Examen.RESULTADO_FUERA_DERIVACION;
 
 		return Examen.RESULTADO_DENTRO;
 	}
 
 	public boolean isAprobed() {
-		if (this.personaExamen.getPexaTipoExamen().equals("Profesional")
+		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
 				&& getPorcentaje().intValue() < 66)
 			return false;
 
-		if (this.personaExamen.getPexaTipoExamen().equals("Particular")
+		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR)
 				&& getPorcentaje().intValue() < 66)
 			return false;
 
@@ -356,6 +366,7 @@ public class PanelVisionNocturna extends javax.swing.JPanel implements
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamen.setRdeDetalleResultado("Porcentaje: "
 					+ getPorcentaje());
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 

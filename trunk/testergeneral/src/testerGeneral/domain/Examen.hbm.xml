@@ -16,6 +16,9 @@
         <property name="exaNombre" type="java.lang.String">
             <column name="EXA_NOMBRE" length="100" not-null="true" />
         </property>
+        <property name="exaOrden" type="java.lang.Integer">
+            <column name="EXA_ORDEN" not-null="true" />
+        </property>        
         <set name="usuarioExamens" inverse="true">
             <key>
                 <column name="EXA_ID" not-null="true" />

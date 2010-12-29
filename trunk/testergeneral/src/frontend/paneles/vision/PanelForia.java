@@ -52,7 +52,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 	private PersonaExamen personaExamen;
 	private ExamenDetalle exaDetalle;
 	private List<Resultado> resultados = new ArrayList<Resultado>();
-	private ThreadTrama thTrama;
+	//private ThreadTrama thTrama;
 
 	/** Creates new form PanelAgudezaVisual */
 	public PanelForia(JToggleButton btn, PersonaExamen personaExamen) {
@@ -81,6 +81,18 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 
 		try {
 
+			if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaVision))
+				Util.thTrama.desconnect();
+			
+			if (Util.thTrama == null)
+			{
+				ThreadTrama thTrama = new ThreadTrama(new TramaVision());
+				Util.thTrama.setEjecutar(false);
+				Util.thTrama = thTrama;
+				Util.thTrama.setEjecucion(99999);
+				Util.thTrama.start();
+			}
+			
 			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST4);
 
 		} catch (ExceptionIsNotHadware e) {
@@ -442,7 +454,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 	public String getResultado() {
 
 		if (!isAprobed())
-			return Examen.RESULTADO_FUERA;
+			return Examen.RESULTADO_FUERA_DERIVACION;
 
 		return Examen.RESULTADO_DENTRO;
 	}
@@ -451,7 +463,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 
 		int columna = Integer.valueOf(jFormattedColumna.getText());
 
-		if (columna < 2 || columna > 8) {
+		if (columna < 4 || columna > 10) {
 			return false;
 		}
 
@@ -515,7 +527,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 				resultadoDetalleExamen.setRdeResultado(resultado);
 				resultadoDetalleExamen.setRdeDetalleResultado(detalleResultado
 						+ "</HTML>");
-
+				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 				resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
 				btn.setForeground(Color.BLACK);

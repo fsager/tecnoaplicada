@@ -7,19 +7,16 @@
 package frontend.paneles.examenes;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.TableColumn;
 
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JRViewer;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Examen;
@@ -29,14 +26,15 @@ import testerGeneral.domain.ResultadoDetalleExamen;
 import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
-import examenes.util.ExamenesUtils;
 import frontend.buttons.ButtonCancelarMini;
 import frontend.buttons.ButtonExaminar;
 import frontend.buttons.ButtonGuardar;
 import frontend.components.JOptionPaneTesterGral;
+import frontend.paneles.PanelMenuPrincipal;
+import frontend.tablemodel.RowRenderer;
 import frontend.tablemodel.TableModelResultadoExamen;
 import frontend.utils.Util;
-import frontend.ventanas.VentanaExaminar;
+import frontend.ventanas.DialogoTomarExamen;
 import frontend.ventanas.VentanaReportes;
 
 /**
@@ -96,14 +94,31 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 		tableDetalleExamen
 				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableDetalleExamen.setAutoCreateRowSorter(true);
-
+        for(int j = 0; j < tableModel.getColumnCount(); j++)
+        	tableDetalleExamen.getColumnModel().getColumn(j).setCellRenderer(new RowRenderer());
+        
+        for(int i=0;i<tableModel.getLstUsuario().size();i++)
+        {
+        	tableDetalleExamen.setRowHeight(i,100);
+        }
+        
 		if (perExamen.getExamen().getExaCodigo().equals(
 				Examen.EXA_CODIGO_VISION)) {
 			tableDetalleExamen.setRowHeight(0, 50);
+			
+			/*DefaultTableCellRenderer renderer =new DefaultTableCellRenderer();
+			renderer.setToolTipText(ParametrosCorreccion.parametro);
+			tableDetalleExamen.getColumnModel().getColumn(2).setCellRenderer(renderer);*/
+
+	        
+	        //tableModel.get
+			
+			
 			tableDetalleExamen.setRowHeight(1, 50);
 			tableDetalleExamen.setRowHeight(3, 60);
 			tableDetalleExamen.setRowHeight(4, 50);
 			tableDetalleExamen.setRowHeight(8, 130);
+			tableDetalleExamen.setRowHeight(9,80);
 		}
 	}
 
@@ -355,38 +370,51 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 	private void btnCancelarFotoActionPerformed(java.awt.event.ActionEvent evt) {
 		lbAdjunto.setText(null);
-		perExamen.setPexaAdj(null);
+		perExamen.setPexaAdj(new byte[1]);
 		perExamen.setPexaNombreAdjunto(null);
 	}
 
 	private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {
-		final VentanaExaminar ventanaExaminar = new VentanaExaminar(
-				JFileChooser.FILES_ONLY, JFileChooser.OPEN_DIALOG);
-		ventanaExaminar.pack();
-		Util.agregarIframe(ventanaExaminar);
-		ventanaExaminar.doModal(this.getRootPane());
-		ventanaExaminar.setVisible(true);
-
-		if (ventanaExaminar.getRutaSeleccionada() != null) {
-
-			try {
-
-				File archivoSeleccionado = new File(ventanaExaminar
-						.getRutaSeleccionada());
-
-				String fileName = archivoSeleccionado.getName();
-				lbAdjunto.setText(fileName);
-				byte[] bytes = testerGeneral.persistence.impl.Util
-						.getBytesFromFile(archivoSeleccionado.getAbsolutePath());
-				perExamen.setPexaNombreAdjunto(fileName);
-				perExamen.setPexaAdj(bytes);
-				JOptionPaneTesterGral.showInternalMessageDialog(
-						"Documentación Adjuntada Correctamente", "Adjuntar",
-						JOptionPane.INFORMATION_MESSAGE);
-
-			} catch (Exception e) {
-				throw new RuntimeException(e);
+		try
+		{
+			String dirDoc="tmpDocs";
+			String dirArchivo=System.getProperty("user.dir")+File.separator+dirDoc+File.separator;
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy"); 
+			String fileName=System.currentTimeMillis()+".doc";
+			String file=dirArchivo;
+			File f=new File(file);
+			f.mkdir();
+			file=dirArchivo+fileName;
+			f=new File(file);
+			f.createNewFile();
+			
+			//C:\\Program Files (x86)\\Microsoft Office\\Office12\\WINWORD.EXE
+			String application="WINWORD.EXE ";
+			Process p = Runtime.getRuntime().exec(
+					application+"\""+ file+"\"");
+			Util.minimizar(Util.framePrincipal);
+			p.waitFor();
+			
+			Thread.sleep(1000);
+			
+			File renameTo=new File(dirArchivo+System.currentTimeMillis()+".doc");
+			while(!f.renameTo(renameTo))
+			{
+				Thread.sleep(100);
 			}
+			
+			byte[] bytes = testerGeneral.persistence.impl.Util.getBytesFromFile(renameTo.getAbsolutePath());
+			perExamen.setPexaNombreAdjunto(perExamen.getPersona().getPerNumeroDoc()+" "+sdf.format(new Date())+".doc");
+			perExamen.setPexaAdj(bytes);
+			lbAdjunto.setText(perExamen.getPexaNombreAdjunto());
+			renameTo.delete();
+			JOptionPaneTesterGral.showInternalMessageDialog(
+					"Documentación Adjuntada Correctamente", "Adjuntar",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -400,12 +428,26 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 			imprimirResultado();
 
-			JOptionPaneTesterGral.showInternalMessageDialog(
-					Constantes.MENSAJE_GUARDADO,
-					Constantes.MENSAJE_GUARDADO_TIT,
-					JOptionPane.INFORMATION_MESSAGE);
+			int op = JOptionPaneTesterGral.showInternal("<HTML>"+Constantes.MENSAJE_GUARDADO+"<BR>¿Desea continuar tomando exámenes?</HTML>",
+					Constantes.MENSAJE_GUARDADO_TIT, JOptionPane.QUESTION_MESSAGE);
 
-			ExamenesUtils.mostrarPanelExamen(perExamen, Util.panelContenido);
+			if (op == JOptionPane.YES_OPTION) {
+				
+				final DialogoTomarExamen dialogoTomarExamen = new DialogoTomarExamen(perExamen.getPersona(),(PanelMenuPrincipal)Util.panelMenu);
+				dialogoTomarExamen.pack();
+				Util.agregarIframe(dialogoTomarExamen);
+
+				dialogoTomarExamen.doModal(this.getRootPane());
+				dialogoTomarExamen.setVisible(true);
+			}
+			else
+			{
+				Util.panelMenu.cargarSubMenuPersona();
+				Util.panelMenu.seleccionarPersona();				
+			}
+
+			
+			//ExamenesUtils.mostrarPanelExamen(perExamen, Util.panelContenido);
 
 		} catch (Exception e) {
 			JOptionPaneTesterGral.showInternal(
@@ -418,7 +460,6 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 		HashMap parameterMap = new HashMap();
 		parameterMap.put("p_pexa_id", perExamen.getPexaId());
-
 		new VentanaReportes(this, parameterMap, Constantes.RPT_PERSONA_EXAMEN);
 
 	}

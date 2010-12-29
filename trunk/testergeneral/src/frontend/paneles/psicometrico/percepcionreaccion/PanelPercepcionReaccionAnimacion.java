@@ -319,9 +319,7 @@ public class PanelPercepcionReaccionAnimacion extends javax.swing.JPanel impleme
 						g2d2.drawImage(ok,0,0,this);
 						g2d1.dispose();
 						g2d2.dispose();
-					}
-					
-					if(ko!=null && parametros!=null && position< parametros.size())
+					}else if(ko!=null && parametros!=null && position< parametros.size())
 					{			
 						//System.out.println("KO KO KO KO KOKOKO: position: "+position);
 						imgTodo = new BufferedImage(imgIcon.getIconWidth(),imgIcon.getIconHeight()+altoMsj+separacionImgText,BufferedImage.TYPE_INT_RGB);
@@ -337,9 +335,7 @@ public class PanelPercepcionReaccionAnimacion extends javax.swing.JPanel impleme
 						g2d2.drawImage(ko,0,0,this);
 						g2d1.dispose();
 						g2d2.dispose();
-					}
-					
-					if(entrePulsadores!=null && parametros!=null && position< parametros.size())
+					}else if(entrePulsadores!=null && parametros!=null && position< parametros.size())
 					{	
 						//System.out.println("entrePulsadores entrePulsadores entrePulsadores: position: "+position);
 						imgTodo = new BufferedImage(imgIcon.getIconWidth(),imgIcon.getIconHeight()+altoMsj+separacionImgText,BufferedImage.TYPE_INT_RGB);
