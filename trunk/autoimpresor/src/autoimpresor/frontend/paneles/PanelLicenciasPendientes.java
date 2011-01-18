@@ -6,8 +6,6 @@
 
 package autoimpresor.frontend.paneles;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
@@ -21,10 +19,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.TableRowSorter;
 
 import testerGeneral.comparetors.DateComparator;
-import testerGeneral.domain.Constantes;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.CarnetLicencias;
-import autoimpresor.domain.ClaseLicencia;
+import autoimpresor.domain.CarnetLicenciasExtendida;
 import autoimpresor.domain.Licencia;
 import autoimpresor.frontend.tablemodels.TableModelLicenciaFull;
 import autoimpresor.mails.MailSender;
@@ -348,7 +345,7 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 						.getModel()).getValueAt(sel));
 			}
 
-			List<CarnetLicencias> carnetLicencias = listaLicentasToListaCarnets(licencias);
+			List<CarnetLicencias> carnetLicencias = listaLicentasToListaCarnetsParaImpresionLocal(licencias);
 			abrirVentanaMargenes(carnetLicencias, licencias);
 			cargarLicencias();
 
@@ -411,7 +408,7 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 		try {
 			List<Licencia> licencias = ((TableModelLicenciaFull) tableLicencias
 					.getModel()).getLst();
-			List<CarnetLicencias> carnetLicencias = listaLicentasToListaCarnets(licencias);
+			List<CarnetLicencias> carnetLicencias = listaLicentasToListaCarnetsParaImpresionLocal(licencias);
 			abrirVentanaMargenes(carnetLicencias, licencias);
 			cargarLicencias();
 
@@ -499,6 +496,19 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 	}
 
 	public List<CarnetLicencias> listaLicentasToListaCarnets(
+			List<Licencia> licencias) {
+		List<CarnetLicencias> carnetLicencias = new ArrayList();
+		for (int i = 0; i < licencias.size(); i++) {
+			Licencia lic = licencias.get(i);
+			CarnetLicenciasExtendida car = new CarnetLicenciasExtendida(lic, nombreMunicipio,
+					codigoMunicipio, escudoMunicipio);
+			carnetLicencias.add(car);
+		}
+
+		return carnetLicencias;
+	}
+	
+	public List<CarnetLicencias> listaLicentasToListaCarnetsParaImpresionLocal(
 			List<Licencia> licencias) {
 		List<CarnetLicencias> carnetLicencias = new ArrayList();
 		for (int i = 0; i < licencias.size(); i++) {

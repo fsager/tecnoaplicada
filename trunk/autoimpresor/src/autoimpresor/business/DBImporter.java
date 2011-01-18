@@ -84,7 +84,9 @@ public class DBImporter {
 		try
 		{
 			apagarAuditoria(true);
-			        
+			
+			revertImport();
+			
 			File f=null;
 			
 		    if(file==null)

@@ -12,7 +12,7 @@ import org.hibernate.exception.GenericJDBCException;
 import org.pushingpixels.substance.api.skin.SubstanceCremeLookAndFeel;
 
 import testerGeneral.actualizaciones.GestorActualizaciones;
-import testerGeneral.db.ConexionManager;
+import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Auditoria;
 import testerGeneral.domain.Constantes;
 import testerGeneral.exceptions.MyExceptionHandler;
@@ -22,6 +22,7 @@ import actualizaciones.GestorActualizacionesUtil;
 import autoimpresor.business.ContextManager;
 import autoimpresor.frontend.ventanas.FrameContenedor;
 import frontend.utils.Util;
+import frontend.ventanas.VtnConfigurarDb;
 
 public class Main {
 
@@ -29,88 +30,82 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		init();
-		// encriptarString();
+		//encriptarString();
+		//desencriptarString();
 	}
 
 	public static void init() {
 		try {
 			File archivoDeConexionDBRemota = new File(System.getProperty("user.dir")+ File.separator + "db_param.cfg");
-			ConexionManager datasource = (ConexionManager) ContextManager.getBizObject("dataSource");
+			ConexionManagerTesterGeneral datasource = (ConexionManagerTesterGeneral) ContextManager.getBizObject("dataSource");
 			// mostrarError("Version 1.0.6");
 			try {
-
 				datasource.getConnection();
+				Constantes.VTN_TITLE_FRM_PRINCIPAL = "Autoimpresor";
+				Util.SMALL_ICON = Constantes.IMG_ICON_SMALL_AUTOIMPRESOR;
+				Util.obtenerNombrePC();
+				AuditoriaDefinition auditoriaService = (AuditoriaDefinition) ContextManager
+						.getBizObject("auditoriaService");
+				Auditoria auditoria = new Auditoria();
+				auditoria.setAudFecha(new Date());
+				auditoriaService.getAll(auditoria);
+				// Se borra el log anterior a los días especificados en el panel de
+				// control.
+				testerGeneral.persistence.impl.Util
+						.borrarAuditoriasAnterioresAXDias();
+
+				/*
+				 * Si la actualización anterior incluía ejecutar un archivo de
+				 * script (actualizar_db.sql), se actualiza con ese archivo la DB
+				 * del programa.
+				 */
+				GestorDBBackup.ejecutarSentenciaSQL();
+
+				try {
+					/*
+					 * Si se bajó una nueva versión del GestorActualizaciones.jar,
+					 * se la activa.
+					 */
+					// GestorActualizacionesUtil.actualizarGestorActualizaciones();
+					/* Se revisa si hay una nueva versión del sistema al iniciar. */
+
+					GestorActualizaciones gestorActualizaciones = new GestorActualizaciones();
+					gestorActualizaciones.start();
+
+				} catch (Exception ex) {
+
+				}
+
+				// Hilo de backup automático al iniciar
+				GestorDBBackup gestorBackup = new GestorDBBackup();
+				Thread hiloBackupAutomatico = new Thread(gestorBackup);
+				hiloBackupAutomatico.start();
+
+				java.awt.EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							UIManager
+									.setLookAndFeel(new SubstanceCremeLookAndFeel());
+
+						} catch (Exception e) {
+							throw new RuntimeException(e);
+						}
+						new FrameContenedor().setVisible(true);
+						Thread
+								.setDefaultUncaughtExceptionHandler(new MyExceptionHandler());
+						System.setProperty("sun.awt.exception.handler",
+								MyExceptionHandler.class.getName());
+					}
+				});
 				
 			} catch (Exception e) {
 				
 				if(archivoDeConexionDBRemota.exists())
-					archivoDeConexionDBRemota.delete();
-				
-				datasource.getConnection();
-				JOptionPane.showMessageDialog(null,
-								"<HTML><font color=\"red\">No ha sido posible conectarse a la Base de Datos remota. Se iniciará de ahora en adelante el programa conectado a la Base de Datos local.</font><HTML>",
-								"Error al conectarse a la Base de Datos remota, configure nuevamente el acceso remoto",
-								JOptionPane.WARNING_MESSAGE);
-
+					mostrarFrameJDBCRemoto();
+				else
+					throw new GenericJDBCException(null,null);
+					
 			}
-
-			Constantes.VTN_TITLE_FRM_PRINCIPAL = "Autoimpresor";
-			Util.SMALL_ICON = Constantes.IMG_ICON_SMALL_AUTOIMPRESOR;
-			Util.obtenerNombrePC();
-			AuditoriaDefinition auditoriaService = (AuditoriaDefinition) ContextManager
-					.getBizObject("auditoriaService");
-			Auditoria auditoria = new Auditoria();
-			auditoria.setAudFecha(new Date());
-			auditoriaService.getAll(auditoria);
-			// Se borra el log anterior a los días especificados en el panel de
-			// control.
-			testerGeneral.persistence.impl.Util
-					.borrarAuditoriasAnterioresAXDias();
-
-			/*
-			 * Si la actualización anterior incluía ejecutar un archivo de
-			 * script (actualizar_db.sql), se actualiza con ese archivo la DB
-			 * del programa.
-			 */
-			GestorDBBackup.ejecutarSentenciaSQL();
-
-			try {
-				/*
-				 * Si se bajó una nueva versión del GestorActualizaciones.jar,
-				 * se la activa.
-				 */
-				// GestorActualizacionesUtil.actualizarGestorActualizaciones();
-				/* Se revisa si hay una nueva versión del sistema al iniciar. */
-
-				GestorActualizaciones gestorActualizaciones = new GestorActualizaciones();
-				gestorActualizaciones.start();
-
-			} catch (Exception ex) {
-
-			}
-
-			// Hilo de backup automático al iniciar
-			GestorDBBackup gestorBackup = new GestorDBBackup();
-			Thread hiloBackupAutomatico = new Thread(gestorBackup);
-			hiloBackupAutomatico.start();
-
-			java.awt.EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						UIManager
-								.setLookAndFeel(new SubstanceCremeLookAndFeel());
-
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-					new FrameContenedor().setVisible(true);
-					Thread
-							.setDefaultUncaughtExceptionHandler(new MyExceptionHandler());
-					System.setProperty("sun.awt.exception.handler",
-							MyExceptionHandler.class.getName());
-				}
-			});
-
 		}
 		catch (GenericJDBCException ex) {
 			mostrarError("Se ha detectado que existe otra instancia de la aplicacion que se esta ejecutando. Por favor cierre dicha instancia antes de continuar.");
@@ -123,8 +118,9 @@ public class Main {
 	}
 
 	public static void encriptarString() {
+
 		System.out.println(GestorActualizacionesUtil
-				.encriptarString("ftp.jttecnologiaaplicada.com"));
+				.encriptarString("jtftp@jttecnologiaaplicada.com"));
 		System.out.println(GestorActualizacionesUtil.encriptarString("jtftp"));
 		System.out.println(GestorActualizacionesUtil
 				.encriptarString("tecnoapli"));
@@ -136,9 +132,37 @@ public class Main {
 		System.out.println(GestorActualizacionesUtil
 				.encriptarString("lero2lero"));
 	}
+	
+	public static void desencriptarString() {
+
+		
+		System.out.println("FTP_PRINCIPAL_URL: "+GestorActualizacionesUtil.desencriptarString("DXTEn5m2NtfIb0JrQ88tOwkSptl3lH87AJZPfePBh80="));
+		System.out.println("FTP_PRINCIPAL_USER: "+GestorActualizacionesUtil.desencriptarString("K8l004OOY1J6Uup98Cp/pQ=="));
+		System.out.println("FTP_PRINCIPAL_PASSWORD: "+GestorActualizacionesUtil.desencriptarString("uLBg40t0YiQ9/9dBV8UgSg=="));
+
+		System.out.println("FTP_SECUNDARIO_URL: "+GestorActualizacionesUtil.desencriptarString("1yT7xdyXFOC1p1EecQ0V3Q==="));
+		System.out.println("FTP_SECUNDARIO_USER: "+GestorActualizacionesUtil.desencriptarString("sva1t1RMRadkMMoiRlpKWA=="));
+		System.out.println("FTP_SECUNDARIO_PASSWORD: "+GestorActualizacionesUtil.desencriptarString("WXr7F2JirExUiUzOnSAeyA=="));
+	}
 
 	public static void mostrarError(final String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, "Error",
 				JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public static void mostrarFrameJDBCRemoto()
+	{
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UIManager
+							.setLookAndFeel(new SubstanceCremeLookAndFeel());
+
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+				VtnConfigurarDb VtnConfigurarDb=new VtnConfigurarDb("/images/autoimpresor.png","Autoimpresor");
+			}
+		});
 	}
 }// Fin de la clase Main de Autoimpresor.
