@@ -26,6 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import testerGeneral.actualizaciones.GestorActualizaciones;
+import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Constantes;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.Licencia;
@@ -33,6 +34,7 @@ import autoimpresor.domain.Usuario;
 import autoimpresor.service.LicenciaDefinition;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.paneles.PanelCambiarClave;
+import frontend.paneles.PanelConfiguracionDB;
 import frontend.paneles.PanelLogEventos;
 import frontend.paneles.PanelMenu;
 import frontend.utils.Util;
@@ -599,7 +601,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 		unSelectButtons(toolbarSubNivel, btnConfigurarDB);
 		panelContenido.removeAll();
 
-		PanelConfiguracionDB panelConfiguracionDB = new PanelConfiguracionDB();
+		PanelConfiguracionDB panelConfiguracionDB = new PanelConfiguracionDB(ContextManager.getProperty("SISTEMA.NOMBRE.PROGRAMA"),false);
 		panelConfiguracionDB.validate();
 
 		panelConfiguracionDB.setVisible(true);
@@ -810,6 +812,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 			if (Util.thTrama != null)
 				Util.thTrama.desconnect();
 
+			ConexionManagerTesterGeneral datasource = (ConexionManagerTesterGeneral) ContextManager.getBizObject("dataSource");
+			datasource.destroy();
+			
 			System.exit(0);
 		}
 	}
@@ -959,5 +964,17 @@ public class PanelMenuPrincipal extends PanelMenu {
 	private int importadas;
 	private LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager
 			.getBizObject("licenciaService");
+
+	@Override
+	public void cargarSubMenuPersona() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void seleccionarPersona() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

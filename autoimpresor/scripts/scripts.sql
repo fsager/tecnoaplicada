@@ -108,4 +108,13 @@ select *
  select * from APP.CARNET_LICENCIAS
    where cli_id like '10004';
                       100000
+                      
+delete from APP.CARNET_LICENCIAS;
+
+
+DELETE FROM APP.DOMINIO
+where DOM_TIPO = 'LICENCIAS_IMPORTADAS_CANTIDAD';
+
+
+,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION
  

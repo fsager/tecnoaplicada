@@ -13,6 +13,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.SplashScreen;
 
+import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Propiedad;
 import testerGeneral.service.PropiedadDefinition;
@@ -134,6 +135,8 @@ public class FrameContenedor extends javax.swing.JFrame {
 	//GEN-END:initComponents
 
 	private void formWindowClosing(java.awt.event.WindowEvent evt) {
+		ConexionManagerTesterGeneral datasource = (ConexionManagerTesterGeneral) ContextManager.getBizObject("dataSource");
+		datasource.destroy();
 		System.exit(0);
 	}
 

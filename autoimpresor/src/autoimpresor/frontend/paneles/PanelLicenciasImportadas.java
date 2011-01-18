@@ -6,8 +6,6 @@
 
 package autoimpresor.frontend.paneles;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -42,6 +40,7 @@ import testerGeneral.service.DominioDefinition;
 import testerGeneral.service.PropiedadDefinition;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.CarnetLicencias;
+import autoimpresor.domain.CarnetLicenciasExtendida;
 import autoimpresor.frontend.ExtensionFileFilter;
 import autoimpresor.frontend.tablemodels.TableModelCarnet;
 import autoimpresor.service.CarnetLicenciasDefinition;
@@ -836,8 +835,9 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 						FileInputStream fis = new FileInputStream(f);
 						GZIPInputStream gs = new GZIPInputStream(fis);
 						ObjectInputStream ois = new ObjectInputStream(gs);
-						List<CarnetLicencias> carnetLicencias = (List<CarnetLicencias>) ois
-								.readObject();
+						
+						
+						List<CarnetLicencias> carnetLicencias = (List<CarnetLicencias>) ois.readObject();
 						ois.close();
 						fis.close();
 
@@ -850,7 +850,10 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 						if (dominioService.getAll(dom).size() == 0) {
 							for (int i = 0; i < carnetLicencias.size(); i++) {
 								CarnetLicencias carss = carnetLicencias.get(i);
-
+								
+								if(carss instanceof CarnetLicenciasExtendida)
+									carss = new CarnetLicencias((CarnetLicenciasExtendida)carss);
+								
 								if (!(carss.getPerFoto() != null && carss
 										.getPerFoto().length > 1))
 									carss.setPerFoto(new byte[1]);
@@ -865,8 +868,7 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 									carss.setMncEscudo(new byte[1]);
 
 								carss.setCliFechaImport(new Date());
-								carnetLicenciasService.insert(carnetLicencias
-										.get(i));
+								carnetLicenciasService.insert(carss);
 
 								dominioService.insert(dom);
 							}

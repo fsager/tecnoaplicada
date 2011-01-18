@@ -1,7 +1,10 @@
 package autoimpresor.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import frontend.utils.Util;
 
 import autoimpresor.business.ContextManager;
 import autoimpresor.service.ClaseLicenciaDefinition;
@@ -15,6 +18,7 @@ import autoimpresor.service.ClaseLicenciaDefinition;
 
 public class CarnetLicencias  implements java.io.Serializable {
 
+	static final long serialVersionUID = 8792352107667089719L;
 
     // Fields    
 
@@ -81,8 +85,7 @@ public class CarnetLicencias  implements java.io.Serializable {
 			this.setPerMedicacion(lic.getPersona()
 					.getPerMedicacion());
 			this.setPerDomicilio(lic.getPersona().getPerDomicilio());
-			this.setPerObservaciones(lic.getPersona()
-					.getPerObservaciones());
+			this.setPerObservaciones(lic.getLicObservaciones());
 			this.setPerFoto(lic.getPersona().getPerFoto());
 			this.setPerFirma(lic.getPersona().getPerFirma());
 			this.setLicClase(lic.getLicClase());
@@ -106,6 +109,51 @@ public class CarnetLicencias  implements java.io.Serializable {
 			this.setMncNombre(nombreMunicipio);
 			this.setMncCodigo(codigoMunicipio);
 			this.setMncEscudo(escudoMunicipio);
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+    }
+    
+    public CarnetLicencias(CarnetLicenciasExtendida carnetLicenciasExtendida) {
+		try
+		{
+	    	ClaseLicenciaDefinition claseLicenciaService = (ClaseLicenciaDefinition) ContextManager.getBizObject("claseLicenciaService");
+	    	
+			this.setPerApellido(carnetLicenciasExtendida.getPerApellido());
+			this.setPerNombre(carnetLicenciasExtendida.getPerNombre());
+			this.setPerTipoDoc(carnetLicenciasExtendida.getPerTipoDoc());
+			this.setPerNumeroDoc(carnetLicenciasExtendida.getPerNumeroDoc());
+			this.setPerNacionalidad(carnetLicenciasExtendida.getPerNacionalidad());
+			this.setPerGrupoSanguineo(carnetLicenciasExtendida.getPerGrupoSanguineo());
+			this.setPerTelefono(carnetLicenciasExtendida.getPerTelefono());
+			this.setPerDonante(carnetLicenciasExtendida.getPerDonante());
+			this.setPerAlergia(carnetLicenciasExtendida.getPerAlergia());
+			this.setPerRestricciones(carnetLicenciasExtendida.getPerRestricciones());
+			this.setPerMedicacion(carnetLicenciasExtendida.getPerMedicacion());
+			this.setPerDomicilio(carnetLicenciasExtendida.getPerDomicilio());
+			this.setPerObservaciones(carnetLicenciasExtendida.getPerObservaciones());
+			this.setPerFoto(carnetLicenciasExtendida.getPerFoto());
+			this.setPerFirma(carnetLicenciasExtendida.getPerFirma());
+			this.setLicClase(carnetLicenciasExtendida.getLicClase());
+	
+			this.setLicClaseDesc(carnetLicenciasExtendida.getLicClaseDesc());
+			this.setLicTramite(carnetLicenciasExtendida.getLicTramite());
+			this.setUsrNombre(carnetLicenciasExtendida.getUsrNombre());
+			this.setUsrCargo(carnetLicenciasExtendida.getUsrCargo());
+			this.setUsrFirma(carnetLicenciasExtendida.getUsrFirma());
+			this.setLicCodLicencia(carnetLicenciasExtendida.getLicCodLicencia());
+	
+			this.setMncNombre(carnetLicenciasExtendida.getMncNombre());
+			this.setMncCodigo(carnetLicenciasExtendida.getMncCodigo());
+			this.setMncEscudo(carnetLicenciasExtendida.getMncEscudo());
+			
+			SimpleDateFormat sdf=new SimpleDateFormat(Util.formatoFecha); 
+			
+			this.setLicFechaOtorgada(sdf.parse(carnetLicenciasExtendida.getLicFechaOtorgadaTxt()));
+			this.setLicFechaVencimiento(sdf.parse(carnetLicenciasExtendida.getLicFechaVencimientoTxt()));
+			this.setPerFechaNacimiento(sdf.parse(carnetLicenciasExtendida.getPerFechaNacimientoTxt()));
 		}
 		catch(Exception e)
 		{
