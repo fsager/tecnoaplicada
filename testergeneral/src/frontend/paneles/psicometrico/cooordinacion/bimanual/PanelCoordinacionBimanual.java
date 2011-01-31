@@ -187,7 +187,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 					.getProperty("EXAMEN.TAMAÑO.PANTALLA.SECUNDARIA.HEIGHT"));
 
 			panelCoordinacionBimanualAnimacion = new PanelCoordinacionBimanualAnimacion(this,
-					new Dimension(width, heigth),thTrama,rutasAprendizaje);
+					new Dimension(width, heigth),thTrama,rutasAprendizaje,personaExamen);
 
 			panelCoordinacionBimanualUsuarioExaminado = new PanelCoordinacionBimanualUsuario(
 					panelCoordinacionBimanualAnimacion, false);
@@ -203,7 +203,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		} else {
 
 			panelCoordinacionBimanualAnimacion = new PanelCoordinacionBimanualAnimacion(this,
-					new Dimension(813, 320),thTrama,rutasAprendizaje);
+					new Dimension(813, 320),thTrama,rutasAprendizaje,personaExamen);
 		}
 
 		panelCoordinacionBimanualUsuarioExaminador = new PanelCoordinacionBimanualUsuario(
@@ -569,6 +569,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 	private boolean runExamen = false;
 	private String rutasExamen=null;
 	private String rutasAprendizaje=ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.RUTAS.APRENDIZAJE");
+	//Se defini en funcion de si es profecional o particular
 	private int velocidadExamen=-1;//Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.VELOCIDAD.EXAMEN"));
 	private int velocidadAprendizaje=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.VELOCIDAD.APRENDIZAJE"));
 	

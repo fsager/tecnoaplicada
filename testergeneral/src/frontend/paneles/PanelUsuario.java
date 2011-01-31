@@ -1053,7 +1053,7 @@ public class PanelUsuario extends javax.swing.JPanel {
 			panelPermisos.setDatos(usuarioPermisos);
 			panelPermisos.cargarList();
 
-			List<Examen> examenes = ExamenesUtils.obtenerExamenes(true);
+			List<Examen> examenes = ExamenesUtils.obtenerExamenes(true,false);
 			List usuarioExamenes = new ArrayList();
 
 			for (int i = 0; i < examenes.size(); i++) {

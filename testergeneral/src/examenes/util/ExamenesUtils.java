@@ -15,6 +15,7 @@ import testerGeneral.domain.Examen;
 import testerGeneral.domain.ExamenDetalle;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Resultado;
+import testerGeneral.domain.Usuario;
 import testerGeneral.service.ExamenDefinition;
 import frontend.paneles.audio.PanelAudio;
 import frontend.paneles.examenes.PanelExamenes;
@@ -267,18 +268,32 @@ public class ExamenesUtils {
 		return resultadosArray;
 	}
 	
-	public static List<Examen> obtenerExamenes(boolean conLicencia) throws Exception
+	public static List<Examen> obtenerExamenes(boolean conLicencia,boolean conPermiso) throws Exception
 	{
 		log.debug("ini obtenerExamenes");
 		
+		Usuario usr=((Usuario)Util.usuarioCommon);
 		List<Examen> examenes=new ArrayList<Examen>();
 		ExamenDefinition examenService = (ExamenDefinition) ContextManager.getBizObject("examenService");
 		examenes = examenService.getAll(new Examen());
 		
-		if(conLicencia)
+		for(int i=examenes.size()-1;i>=0;i--)
+		{
+			Examen examen=examenes.get(i);
+			boolean usrHasNotExamenPermition=!(usr.hasExamenPermition(examen.getExaCodigo()));
+			if(!conPermiso)
+				usrHasNotExamenPermition=false;
+			
+			boolean hasNotLicence=false;
+			if(hasNotLicence || usrHasNotExamenPermition)
+					examenes.remove(i);
+		}
+		
+		
+		/*if(conLicencia)
 		{
 			//throw new Exception("No esta implementada la validacion de la licencia");	
-		}		
+		}	*/	
 		
 		log.debug("fin obtenerExamenes");
 		

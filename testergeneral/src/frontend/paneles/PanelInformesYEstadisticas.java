@@ -6,15 +6,12 @@
 
 package frontend.paneles;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
-import javax.swing.ImageIcon;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.TableColumn;
 
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -23,7 +20,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import testerGeneral.business.ContextManager;
-import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Examen;
 import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaExamen;
@@ -32,9 +28,6 @@ import testerGeneral.domain.reportes.ReporteGaussExamenes;
 import testerGeneral.domain.reportes.ReportesExamenesUtil;
 import testerGeneral.service.PersonaDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
-import frontend.buttons.ButtonBuscar;
-import frontend.tablemodel.TableModelPersona;
-import frontend.utils.Util;
 
 /**
  * 
@@ -589,11 +582,13 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 
 			parameterMap.put("p_cantidad_examinados", personas.size() + "");
 			parameterMap.put("p_cantidad_examenes", cantidadExamenes + "");
-			//parameterMap.put("SUBREPORT_DIR","C:\\programacion\\Workspaces3\\TesterGeneral\\reportes\\");
-			//parameterMap.put("reportesGaussExamenes",reportesGaussExamenes);
+			parameterMap.put("SUBREPORT_DIR",new File("./reportes").getCanonicalPath()+File.separator);
+			
 
-			//ArrayList dummy=new ArrayList(1);
-			//dummy.add(1);
+			parameterMap.put("reportesGaussExamenes",reportesGaussExamenes);
+
+			ArrayList dummy=new ArrayList(1);
+			dummy.add(1);
 
 			/*for(ReporteGaussExamenes reporteGaussExamenes:reportesGaussExamenes)
 			{
@@ -606,7 +601,7 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 			}*/
 
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(
-					reportesGaussExamenes);
+					dummy);
 			final byte[] buf = JasperRunManager.runReportToPdf(
 					"reportes/estadisticaExamenes.jasper", parameterMap, ds);
 
