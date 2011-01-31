@@ -26,6 +26,8 @@ import javax.imageio.ImageReader;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
+
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -38,6 +40,7 @@ import org.jfree.chart.plot.ThermometerPlot;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 import testerGeneral.domain.Constantes;
+import testerGeneral.domain.PersonaExamen;
 import testerGeneral.threads.ThreadTrama;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.paneles.Captura;
@@ -83,12 +86,13 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	private Thread thThis=new Thread(this);
 	private static final Log log = LogFactory.getLog(PanelCoordinacionBimanualAnimacion.class);
 	private PanelCoordinacionBimanual panelCoordinacionBimanual;
+	private PersonaExamen personaExamen;
 	//private String img;
 	
 	/** Creates new form PanelAnticipacionAnimacion */
-	public PanelCoordinacionBimanualAnimacion(PanelCoordinacionBimanual panelCoordinacionBimanual ,Dimension imgDimension,ThreadTrama thTrama,String img){
+	public PanelCoordinacionBimanualAnimacion(PanelCoordinacionBimanual panelCoordinacionBimanual ,Dimension imgDimension,ThreadTrama thTrama,String img,PersonaExamen personaExamen){
 		this.panelCoordinacionBimanual=panelCoordinacionBimanual;
-		
+		this.personaExamen=personaExamen;		
 		this.thTrama=thTrama;
 		this.imgDimension=imgDimension;
 		setMinimumSize(imgDimension);
@@ -287,6 +291,12 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 		int i=2;
 		boolean exit=false;
 		int tiempoSleep=37;//48
+		
+		if(personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL))
+		{
+			tiempoSleep=tiempoSleep-((int)(tiempoSleep*0.09));
+		}
+		
 		while (!stop) {
 			dibujarAutos();
 			if(!stop && run)

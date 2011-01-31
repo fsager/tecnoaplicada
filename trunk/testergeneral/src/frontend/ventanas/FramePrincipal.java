@@ -79,7 +79,7 @@ public class FramePrincipal extends JInternalFrameTesterGral {
 	private void initComponents() {
 
 		panelContenido = new PanelContenido();
-		panelMenuPrincipal = new frontend.paneles.PanelMenuPrincipal();
+		//panelMenuPrincipal = new frontend.paneles.PanelMenuPrincipal();
 		jButtonActualizarSistema = new javax.swing.JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);

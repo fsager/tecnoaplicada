@@ -1,5 +1,4 @@
 /*
- * DialogoTomarExamen.java
  *
  * Created on __DATE__, __TIME__
  */
@@ -64,7 +63,7 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 	public void cargarExamenes() {
 		try {
 
-			List<Examen> examenes = ExamenesUtils.obtenerExamenes(true);
+			List<Examen> examenes = ExamenesUtils.obtenerExamenes(true,true);
 
 			GridLayout gridLayout = (GridLayout) panelExamenes.getLayout();
 			gridLayout.setHgap(20);
@@ -160,7 +159,7 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 		cmbTipoExamen = new javax.swing.JComboBox();
 		jLabel1 = new javax.swing.JLabel();
 
-		setTitle("Seleccione el examen que sea tomar");
+		setTitle("Seleccione el examen que desea tomar");
 		addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
 			public void internalFrameActivated(
 					javax.swing.event.InternalFrameEvent evt) {

@@ -39,6 +39,10 @@ public class PanelMenuPrincipal extends PanelMenu {
 	/** Creates new form PanelMenuPrincipal */
 	public PanelMenuPrincipal() {
 		initComponents();
+		if (!((Usuario) Util.usuarioCommon).hasAccesoTareasAdmPermition()) {
+			btnAdmGral.setVisible(false);
+			jSeparator4.setVisible(false);
+		}
 		agregarEscuchas();
 
 	}
@@ -562,8 +566,11 @@ public class PanelMenuPrincipal extends PanelMenu {
 		btnCambiarClave.setVisible(true);
 		toolbarSubNivel.add(btnCambiarClave);
 
-		btnAdmistracionUsuarios.setVisible(true);
-		toolbarSubNivel.add(btnAdmistracionUsuarios);
+		if (((Usuario) Util.usuarioCommon).hasAbmUsuarioPermition()) {
+			btnAdmistracionUsuarios.setVisible(true);
+			toolbarSubNivel.add(btnAdmistracionUsuarios);
+		}
+		
 
 		doAfterLoadMenu();
 	}

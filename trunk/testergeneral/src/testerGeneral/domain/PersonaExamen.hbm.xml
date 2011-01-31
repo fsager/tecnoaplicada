@@ -29,7 +29,7 @@
             <column name="PEXA_NOTA" precision="5" />
         </property>
         <property name="pexaObs" type="java.lang.String">
-            <column name="PEXA_OBS" length="200" />
+            <column name="PEXA_OBS" length="2000" />
         </property>
         <property name="pexaNombreAdjunto" type="java.lang.String">
             <column name="PEXA_NOMBRE_ADJUNTO" length="200" />

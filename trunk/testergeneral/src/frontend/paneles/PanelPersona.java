@@ -39,6 +39,7 @@ import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
 import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaRestricion;
+import testerGeneral.domain.Usuario;
 import testerGeneral.focus.MyOwnFocusTraversalPolicy;
 import testerGeneral.service.PersonaDefinition;
 
@@ -174,6 +175,9 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		};
 		menu.getBtnEliminarPersona().addActionListener(eliminar);
 	}
+	
+	
+
 
 	public void btnTomarExamen() {
 		menu.unSelectButtons(menu.getToolbarSubNivel(), menu
@@ -2733,7 +2737,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			menu.getBtnModificarPersona().setEnabled(false);
 
 			if (personas.size() <= 0) {
-				menu.getBtnNuevaPersona().setEnabled(true);
+				menu.getBtnNuevaPersona().setEnabled(true && usr.hasAmPersonaPermition());
 			} else {
 				menu.getBtnNuevaPersona().setEnabled(false);
 			}
@@ -2981,8 +2985,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		btnCancelar.setEnabled(true);
 
 		menu.getBtnNuevaPersona().setEnabled(false);
-		menu.getBtnEliminarPersona().setEnabled(true);
-		menu.getBtnModificarPersona().setEnabled(true);
+		menu.getBtnEliminarPersona().setEnabled(true && usr.hasBPersonaPermition());
+		menu.getBtnModificarPersona().setEnabled(true && usr.hasAmPersonaPermition());
 
 		habilitar(false);
 	}
@@ -3163,6 +3167,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private javax.swing.JTextArea txtOtrasObs;
 	private javax.swing.JTextField txtTelefono;
 	// End of variables declaration//GEN-END:variables
+	
 	private Persona persona = new Persona();
 	private String validarFirma = ContextManager
 			.getProperty("PERSONA.FIRMA.REQUERIDA");
@@ -3179,6 +3184,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private ActionListener actTomarExamen;
 	private ActionListener actVerExamenes;
 	private ActionListener actVerExamen;
+	private Usuario usr=((Usuario)Util.usuarioCommon);
 	// private SharedListSelectionHandler sharedListSelectionHandler=new
 	// SharedListSelectionHandler();
 }

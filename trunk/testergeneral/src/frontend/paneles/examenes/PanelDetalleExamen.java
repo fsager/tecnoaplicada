@@ -153,7 +153,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 		if(tipoExamen.equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR))
 		{
 			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL))//Caminos
-				return false;
+				return true;
 			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA))//Punteo
 				return false;
 			if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE))//Semaforo

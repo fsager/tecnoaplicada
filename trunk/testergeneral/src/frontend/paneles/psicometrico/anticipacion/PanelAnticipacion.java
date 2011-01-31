@@ -269,7 +269,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 			public void run() {
 				try
 				{
-					this.sleep(1500);
+					this.sleep(2500);//1500
 					thTrama.setEjecutar(true);
 				}
 				catch (Exception e) {
