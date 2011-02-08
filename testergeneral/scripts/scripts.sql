@@ -1,3 +1,60 @@
+select per.*,perexa.*,exa.*,detalleRes.*,detalle.*,
+		(select distinct 'SI' from app.persona p, app.persona_restricion pr,app.dominio d
+		where p.per_id =pr.per_id
+		  and d.dom_id=pr.dom_id
+		  and d.dom_clave = 'Restricción Visual'
+		  and p.per_id = per.per_id) utiliza_Correcion
+ from app.persona per,
+              app.persona_examen perexa,
+              app.examen exa,
+              app.resultado_detalle_examen detalleRes,
+	      app.examen_detalle detalle
+where perexa.per_id = per.per_id
+    and exa.exa_id=perexa.exa_id
+    and perexa.pexa_id= detalleRes.pexa_id
+    and detalle.exad_id = detalleRes.exad_id
+    and perexa.pexa_id = $P{p_pexa_id}
+order by detalle.exad_detalle
+
+select 1 from app.persona p, app.persona_restricion pr,app.dominio d
+where p.per_id =pr.per_id
+  and d.dom_id=pr.dom_id
+  and d.dom_clave = 'Restricción Visual'
+  --and p.per_id = 
+  --and dom_id=19;
+
+select per.*,perexa.*,exa.*,detalleRes.*,detalle.*
+ from app.persona per,
+              app.persona_examen perexa,
+              app.examen exa,
+              app.resultado_detalle_examen detalleRes,
+	      app.examen_detalle detalle,
+	      app.RESULTADO res
+where perexa.per_id = per.per_id
+    and exa.exa_id=perexa.exa_id
+    and perexa.pexa_id= detalleRes.pexa_id
+    and detalle.exad_id = detalleRes.exad_id
+    and detalleRes.rde_id = res.rde_id    
+    --and perexa.pexa_id = $P{p_pexa_id}
+    and detalle.exad_codigo = 'TEST_AGUDEZA_VISUAL_CERCANA'
+    --and res.res_etapa=1--derecho
+order by detalle.exad_detalle
+
+
+
+select * from app.persona per,
+              app.persona_examen perexa,
+              app.examen exa,
+              app.resultado_detalle_examen detalleRes,
+	      app.examen_detalle detalle	      
+where perexa.per_id = per.per_id
+    and exa.exa_id=perexa.exa_id
+    and perexa.pexa_id= detalleRes.pexa_id
+    and detalle.exad_id = detalleRes.exad_id
+    --and perexa.pexa_id = 2
+order by detalle.exad_detalle
+
+1 1
 
 /*
 
@@ -171,36 +228,36 @@ delete  from app.PERSONA_EXAMEN;
 
 
 
-select * from APP.EXAMEN_DETALLE;
+select * from APP.PERSONA_EXAMEN;
 
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',2,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',2,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 
 
 select * from APP.PERSONA_EXAMEN;
 
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,83,'FUERA DE LOS PARAMETROS',600,10);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores 
+     values (2,10,'FUERA DE LOS PARAMETROS',600,10);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores 
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,84,'FUERA DE LOS PARAMETROS',239,8);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,11,'FUERA DE LOS PARAMETROS',239,8);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,85,'FUERA DE LOS PARAMETROS',1000,12);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,12,'FUERA DE LOS PARAMETROS',1000,12);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,86,'FUERA DE LOS PARAMETROS',123,9);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,14,'FUERA DE LOS PARAMETROS',123,9);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,87,'FUERA DE LOS PARAMETROS',634,6);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,13,'FUERA DE LOS PARAMETROS',634,6);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,88,'FUERA DE LOS PARAMETROS',534,5);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,4,'FUERA DE LOS PARAMETROS',534,5);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 
 
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
