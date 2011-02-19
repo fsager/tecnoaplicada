@@ -1,9 +1,60 @@
+select d.DOM_VALOR_MOSTRAR from app.persona p, app.persona_restricion pr,app.dominio d
+where p.per_id =pr.per_id
+  and d.dom_id=pr.dom_id
+  and d.dom_clave = 'Restricción Visual'
+  and (lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Lentes de Contacto') or lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Anteojos')) 
+  and p.per_id = 1
+  
+  
+
+
 select per.*,perexa.*,exa.*,detalleRes.*,detalle.*,
 		(select distinct 'SI' from app.persona p, app.persona_restricion pr,app.dominio d
 		where p.per_id =pr.per_id
 		  and d.dom_id=pr.dom_id
 		  and d.dom_clave = 'Restricción Visual'
-		  and p.per_id = per.per_id) utiliza_Correcion
+		  and (lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Lentes de Contacto') or lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Anteojos'))
+		  and p.per_id = per.per_id) utiliza_Correcion,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_VISION_NOCTURNA') as vision_crepuscular,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_ENCANDILAMIENTO') as deslumbramiento,
+		  (select detalleResE.rde_detalle_resultado|| ' centécimas'
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_REC_ENCANDILAMIENTO') as rec_encandilamiento,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_FOTOCROMATICA') as vision_cromatica	,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_CAMPIMETRIA') as campo_visual			    
  from app.persona per,
               app.persona_examen perexa,
               app.examen exa,
@@ -13,34 +64,77 @@ where perexa.per_id = per.per_id
     and exa.exa_id=perexa.exa_id
     and perexa.pexa_id= detalleRes.pexa_id
     and detalle.exad_id = detalleRes.exad_id
-    and perexa.pexa_id = $P{p_pexa_id}
-order by detalle.exad_detalle
-
-select 1 from app.persona p, app.persona_restricion pr,app.dominio d
-where p.per_id =pr.per_id
-  and d.dom_id=pr.dom_id
-  and d.dom_clave = 'Restricción Visual'
-  --and p.per_id = 
-  --and dom_id=19;
-
-select per.*,perexa.*,exa.*,detalleRes.*,detalle.*
- from app.persona per,
-              app.persona_examen perexa,
-              app.examen exa,
-              app.resultado_detalle_examen detalleRes,
-	      app.examen_detalle detalle,
-	      app.RESULTADO res
-where perexa.per_id = per.per_id
-    and exa.exa_id=perexa.exa_id
-    and perexa.pexa_id= detalleRes.pexa_id
-    and detalle.exad_id = detalleRes.exad_id
-    and detalleRes.rde_id = res.rde_id    
-    --and perexa.pexa_id = $P{p_pexa_id}
-    and detalle.exad_codigo = 'TEST_AGUDEZA_VISUAL_CERCANA'
-    --and res.res_etapa=1--derecho
-order by detalle.exad_detalle
+    and perexa.pexa_id = 15--$P{p_pexa_id}
+order by detalle.exad_detalle;
 
 
+select detalleRes.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = 15
+		    and detalleE.exad_codigo = 'TEST_ENCANDILAMIENTO'
+
+
+
+select res.res_etapa_desc,
+		CASE WHEN res.res_valor1=1 THEN '0.1' 
+		 WHEN res.res_valor1=2 THEN '0.3'
+		 WHEN res.res_valor1=3 THEN '0.4'
+		 WHEN res.res_valor1=4 THEN '0.5'
+		 WHEN res.res_valor1=5 THEN '0.7'
+		 WHEN res.res_valor1=6 THEN '0.8'
+		 WHEN res.res_valor1=7 THEN '1.0'
+		 END res_descripcion,perexa.pexa_id,res.res_valor1
+ from app.persona_examen perexa,
+      app.resultado_detalle_examen detalleRes,
+      app.EXAMEN_DETALLE detalle,
+	  app.RESULTADO res
+where perexa.pexa_id= detalleRes.pexa_id
+  and detalleRes.rde_id = res.rde_id
+  and detalle.exad_id = detalleRes.exad_id
+  --and perexa.pexa_id = 24--$P{p_pexa_id}
+  and detalle.exad_codigo = 'TEST_AGUDEZA_VISUAL_LEJANA'
+  and res.res_etapa in (0,3)--binocular    
+order by res.res_etapa
+
+
+select res.res_etapa_desc
+ from app.persona_examen perexa,
+      app.resultado_detalle_examen detalleRes,
+      app.EXAMEN_DETALLE detalle,
+	  app.RESULTADO res
+where perexa.pexa_id= detalleRes.pexa_id
+  and detalleRes.rde_id = res.rde_id
+  and detalle.exad_id = detalleRes.exad_id
+  --and perexa.pexa_id =$P{p_pexa_id}
+  and detalle.exad_codigo = 'TEST_CAMPIMETRIA'
+  and res.res_etapa_desc like ('%izquierda%')    
+order by res.res_etapa
+
+
+select res.res_etapa_desc,perexa.pexa_id 
+ from app.persona_examen perexa,
+      app.resultado_detalle_examen detalleRes,
+      app.EXAMEN_DETALLE detalle,
+	  app.RESULTADO res
+where perexa.pexa_id= detalleRes.pexa_id
+  and detalleRes.rde_id = res.rde_id
+  and detalle.exad_id = detalleRes.exad_id
+  and perexa.pexa_id =26
+  and detalle.exad_codigo = 'TEST_CAMPIMETRIA'
+  and res.res_etapa_desc like ('%Nasal%')
+order by res.res_etapa
+
+
+
+
+select max(pexa_id) from app.persona_examen perexa
+
+
+select * from app.RESULTADO res;
 
 select * from app.persona per,
               app.persona_examen perexa,

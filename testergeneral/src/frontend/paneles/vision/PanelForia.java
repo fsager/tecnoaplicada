@@ -73,7 +73,9 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		inicializarThreads();
+		
+		if(Util.connectToHard)
+			inicializarThreads();
 
 	}
 

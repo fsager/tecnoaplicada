@@ -9,6 +9,7 @@ package frontend.paneles;
 import java.awt.Component;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -23,6 +24,9 @@ import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Usuario;
+import testerGeneral.exceptions.ExceptionIsNotHadware;
+import testerGeneral.threads.ThreadTrama;
+import examenes.psicometrico.domain.TramaVision;
 import examenes.util.ExamenesUtils;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.utils.Util;
@@ -610,6 +614,50 @@ public class PanelMenuPrincipal extends PanelMenu {
 		
 		button.setVisible(true);
 		toolbarSubNivel.add(button);
+		
+		javax.swing.JButton btnResincronizar= new JButton("Calibrar equipo visión");
+		toolbarSubNivel.add(btnResincronizar);
+		
+		btnResincronizar.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					if (Util.connectToHard)
+					{
+						if (Util.thTrama != null
+								&& !(Util.thTrama.getTrama() instanceof TramaVision))
+							Util.thTrama.desconnect();
+	
+						if (Util.thTrama == null) {
+							ThreadTrama thTrama = new ThreadTrama(new TramaVision());
+							thTrama.setEjecutar(false);
+							Util.thTrama = thTrama;
+							thTrama.setEjecucion(99999);
+							thTrama.start();
+						}
+	
+						Util.thTrama.sendOrden(0x5000);
+						Thread.sleep(20);
+						new Thread() {
+							@Override
+							public void run() {
+								try {
+									Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST1);
+	
+								} catch (Exception e) {
+									//throw new RuntimeException(e);
+								}
+							}
+						}.start();
+					}
+
+				} catch (ExceptionIsNotHadware e) {
+					JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+		});
 
 		/*btnExamenVision.setVisible(true);
 		toolbarSubNivel.add(btnExamenVision);

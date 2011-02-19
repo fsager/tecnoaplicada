@@ -7,7 +7,6 @@
 package frontend.paneles.vision;
 
 import java.awt.Color;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
-
-import org.jfree.chart.plot.ThermometerPlot;
 
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
@@ -45,41 +42,39 @@ import frontend.utils.Util;
  *
  * @author  __USER__
  */
-public class PanelRecEncandilamiento extends javax.swing.JPanel implements
-		Finalisable, PanelExamen, Runnable {
+public class PanelVisionIshihara extends javax.swing.JPanel implements
+		Finalisable, PanelExamen {
 
 	private JToggleButton btn;
 	private PersonaExamen personaExamen;
 	private ExamenDetalle exaDetalle;
 	private List<Resultado> resultados = new ArrayList<Resultado>();
-	private int tiempo = 0;
-	private boolean guardar = false;
-	private boolean exito = false;
-	private DecimalFormat df = new DecimalFormat("#.##");
-	private Thread timer;
+	private int dibu1 = 1;
+	private int dibu2 = 1;
+	private int dibu3 = 1;
+	private int dibu4 = 1;
+	private int dibu5 = 1;
 
 	//private ThreadTrama thTrama;
 
 	/** Creates new form PanelAgudezaVisual */
-	public PanelRecEncandilamiento(JToggleButton btn,
-			PersonaExamen personaExamen) {
+	public PanelVisionIshihara(JToggleButton btn, PersonaExamen personaExamen) {
 		this.btn = btn;
 		this.personaExamen = personaExamen;
 		initComponents();
 		cargarImagenes();
 		Util.mostrarError(lbError, null, true);
-		setKoIcon(btn1);
-		setKoIcon(btn4);
-		setKoIcon(btn3);
-
-		lbTiempo.setText(df.format(5));
+		setOkIcon(btn1);
+		setOkIcon(btn2);
+		setOkIcon(btn3);
+		setOkIcon(btn4);
+		setOkIcon(btn5);
 
 		try {
 			ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
 					.getBizObject("examenDetalleService");
 			exaDetalle = new ExamenDetalle();
-			exaDetalle
-					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO);
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_ISHIHARA);
 			exaDetalle = (ExamenDetalle) examenDetalleService
 					.getAll(exaDetalle).get(0);
 
@@ -89,15 +84,11 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 
 		if (Util.connectToHard)
 			inicializarThreads();
-
-		timer = new Thread(this);
-		timer.start();
 	}
 
 	public void inicializarThreads() {
 
 		try {
-
 			if (Util.thTrama != null
 					&& !(Util.thTrama.getTrama() instanceof TramaVision))
 				Util.thTrama.desconnect();
@@ -110,29 +101,13 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 				Util.thTrama.start();
 			}
 
-			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST7);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST2);
 
 		} catch (ExceptionIsNotHadware e) {
 			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
 					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 
-	}
-
-	public void run() {
-		tiempo = 0;
-		long sleep = 30;
-
-		try {
-			while (true) {
-				Thread.sleep(sleep);
-				tiempo +=sleep;
-				lbTiempo.setText(df.format(tiempo/1000f));
-
-			}
-		} catch (InterruptedException e) {
-			return;
-		}
 	}
 
 	public void setOkIcon(JButton btn) {
@@ -144,9 +119,8 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 	}
 
 	public void cargarImagenes() {
-
 		String binocular = ContextManager
-				.getProperty("EXAMEN.REC.ENCANDILAMIENTO.IMG");
+				.getProperty("EXAMEN.VISION.ISHIHARA.IMG");
 		Util.setIcon(lbImagen, binocular);
 	}
 
@@ -162,12 +136,12 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 		btnGuardar = new javax.swing.JToggleButton();
 		lbError = new javax.swing.JLabel();
 		jLayeredPane1 = new javax.swing.JLayeredPane();
-		btn1 = new javax.swing.JButton();
 		btn3 = new javax.swing.JButton();
+		btn1 = new javax.swing.JButton();
+		btn2 = new javax.swing.JButton();
 		btn4 = new javax.swing.JButton();
+		btn5 = new javax.swing.JButton();
 		lbImagen = new javax.swing.JLabel();
-		jLabel1 = new javax.swing.JLabel();
-		lbTiempo = new javax.swing.JLabel();
 
 		setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -188,17 +162,6 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 		jLayeredPane1.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
 
-		btn1
-				.setIcon(new javax.swing.ImageIcon(
-						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\aceptar.png")); // NOI18N
-		btn1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btn1ActionPerformed(evt);
-			}
-		});
-		btn1.setBounds(60, 210, 70, 50);
-		jLayeredPane1.add(btn1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
 		btn3
 				.setIcon(new javax.swing.ImageIcon(
 						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\aceptar.png")); // NOI18N
@@ -207,8 +170,30 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 				btn3ActionPerformed(evt);
 			}
 		});
-		btn3.setBounds(530, 210, 70, 50);
+		btn3.setBounds(80, 310, 70, 50);
 		jLayeredPane1.add(btn3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+		btn1
+				.setIcon(new javax.swing.ImageIcon(
+						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\aceptar.png")); // NOI18N
+		btn1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btn1ActionPerformed(evt);
+			}
+		});
+		btn1.setBounds(70, 130, 70, 50);
+		jLayeredPane1.add(btn1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+		btn2
+				.setIcon(new javax.swing.ImageIcon(
+						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\aceptar.png")); // NOI18N
+		btn2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btn2ActionPerformed(evt);
+			}
+		});
+		btn2.setBounds(280, 130, 70, 50);
+		jLayeredPane1.add(btn2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		btn4
 				.setIcon(new javax.swing.ImageIcon(
@@ -218,26 +203,25 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 				btn4ActionPerformed(evt);
 			}
 		});
-		btn4.setBounds(280, 210, 70, 50);
+		btn4.setBounds(280, 310, 70, 50);
 		jLayeredPane1.add(btn4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+		btn5
+				.setIcon(new javax.swing.ImageIcon(
+						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\aceptar.png")); // NOI18N
+		btn5.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btn5ActionPerformed(evt);
+			}
+		});
+		btn5.setBounds(180, 220, 70, 50);
+		jLayeredPane1.add(btn5, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		lbImagen
 				.setIcon(new javax.swing.ImageIcon(
-						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\encandilamiento\\rec_encandilamiento.png")); // NOI18N
-		lbImagen.setBounds(10, 0, 660, 230);
+						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\isihara\\IsiharaApplicacion.png")); // NOI18N
+		lbImagen.setBounds(10, 10, 400, 360);
 		jLayeredPane1.add(lbImagen, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-		jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18));
-		jLabel1.setForeground(new java.awt.Color(0, 0, 255));
-		jLabel1.setText("Tiempo de respuesta (segundos): ");
-		jLabel1.setBounds(150, 290, 300, 20);
-		jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-		lbTiempo.setFont(new java.awt.Font("Segoe UI", 3, 18));
-		lbTiempo.setForeground(new java.awt.Color(0, 0, 255));
-		lbTiempo.setText("500");
-		lbTiempo.setBounds(450, 290, 100, 20);
-		jLayeredPane1.add(lbTiempo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
@@ -248,11 +232,17 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 						.addGroup(
 								layout
 										.createSequentialGroup()
+										.addContainerGap()
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																false)
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																jLayeredPane1,
+																javax.swing.GroupLayout.Alignment.LEADING,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																436,
+																Short.MAX_VALUE)
 														.addGroup(
 																javax.swing.GroupLayout.Alignment.LEADING,
 																layout
@@ -260,21 +250,15 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 																		.addComponent(
 																				lbError,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				437,
+																				272,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)
 																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
-																				btnGuardar))
-														.addComponent(
-																jLayeredPane1,
-																javax.swing.GroupLayout.Alignment.LEADING,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																662,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(212, Short.MAX_VALUE)));
+																				btnGuardar)))
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 		layout
 				.setVerticalGroup(layout
 						.createParallelGroup(
@@ -285,7 +269,7 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 										.addComponent(
 												jLayeredPane1,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
-												341,
+												380,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -300,55 +284,65 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(
 																btnGuardar))
-										.addGap(87, 87, 87)));
+										.addContainerGap()));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
-	private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {
-		if (timer != null) {
+	private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {
+		if (dibu5 == 1) {
+			dibu5 = 0;
+			setKoIcon((JButton) evt.getSource());
+		} else if (dibu5 == 0) {
+			dibu5 = 1;
 			setOkIcon((JButton) evt.getSource());
-			stopTimer();
+		}
+	}
+
+	private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {
+		if (dibu4 == 1) {
+			dibu4 = 0;
+			setKoIcon((JButton) evt.getSource());
+		} else if (dibu4 == 0) {
+			dibu4 = 1;
+			setOkIcon((JButton) evt.getSource());
 		}
 	}
 
 	private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {
-		if (timer != null) {
+		if (dibu3 == 1) {
+			dibu3 = 0;
+			setKoIcon((JButton) evt.getSource());
+		} else if (dibu3 == 0) {
+			dibu3 = 1;
 			setOkIcon((JButton) evt.getSource());
-			stopTimer();
+		}
+	}
+
+	private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {
+		if (dibu2 == 1) {
+			dibu2 = 0;
+			setKoIcon((JButton) evt.getSource());
+		} else if (dibu2 == 0) {
+			dibu2 = 1;
+			setOkIcon((JButton) evt.getSource());
 		}
 	}
 
 	private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {
-		if (timer != null) {
+		if (dibu1 == 1) {
+			dibu1 = 0;
+			setKoIcon((JButton) evt.getSource());
+		} else if (dibu1 == 0) {
+			dibu1 = 1;
 			setOkIcon((JButton) evt.getSource());
-			stopTimer();
 		}
-	}
-
-	public void stopTimer() {
-		timer.interrupt();
-		guardar = true;
-		exito = true;
-	}
-
-	public boolean isExamenValid() {
-		Util.mostrarError(lbError, null, true);
-
-		if (!guardar) {
-			Util.mostrarError(lbError,
-					"El examen no se ha ejecutado completamente.", false);
-			return false;
-		}
-
-		return true;
 	}
 
 	public void cargarResultados() {
 		resultados.clear();
 		Resultado res = new Resultado();
 		res.setResEtapa(0l);
-		res.setResEtapaDesc("Tiempo de respuesta");
-		res.setResValor1(Double.valueOf(tiempo/1000f));
+		res.setResValor1(getPorcentaje());
 		resultados.add(res);
 	}
 
@@ -360,10 +354,23 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 	}
 
 	public boolean isAprobed() {
-		if (tiempo > 5000)
+		if (this.personaExamen.getPexaTipoExamen().equals(
+				PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
+				&& getPorcentaje().intValue() < 80)
+			return false;
+
+		if (this.personaExamen.getPexaTipoExamen().equals(
+				PersonaExamen.TIPO_EXAMEN_PARTICULAR)
+				&& getPorcentaje().intValue() < 80)
 			return false;
 
 		return true;
+	}
+
+	public Double getPorcentaje() {
+		Double porcentaje = ((dibu1 + dibu2 + dibu3 + dibu4 + dibu5) / 5d) * 100;
+		Util.redondear(porcentaje);
+		return Util.redondear(porcentaje);
 	}
 
 	private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -381,48 +388,49 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 				personaExamenService.insert(personaExamen);
 			}
 
-			if (isExamenValid()) {
-				ResultadoDetalleExamen resultadoDetalleExamen = new ResultadoDetalleExamen();
-				resultadoDetalleExamen.setExamenDetalle(exaDetalle);
-				resultadoDetalleExamen.setPersonaExamen(personaExamen);
-				List lstResultados = resultadoDetalleExamenService
-						.getAll(resultadoDetalleExamen);
+			ResultadoDetalleExamen resultadoDetalleExamen = new ResultadoDetalleExamen();
+			resultadoDetalleExamen.setExamenDetalle(exaDetalle);
+			resultadoDetalleExamen.setPersonaExamen(personaExamen);
+			List lstResultados = resultadoDetalleExamenService
+					.getAll(resultadoDetalleExamen);
 
-				if (lstResultados.size() < 1) {
-					resultadoDetalleExamenService
-							.insert(resultadoDetalleExamen);
-				} else if (lstResultados.size() == 1) {
-					resultadoDetalleExamen = (ResultadoDetalleExamen) lstResultados
-							.get(0);
-				}
-
-				cargarResultados();
-				String detalleResultado = new String();
-				Set setResultados = resultadoDetalleExamen.getResultados();
-				setResultados.clear();
-				for (int i = 0; i < this.resultados.size(); i++) {
-					this.resultados.get(i).setResultadoDetalleExamen(
-							resultadoDetalleExamen);
-					setResultados.add(this.resultados.get(i));
-					detalleResultado = detalleResultado
-							+ this.resultados.get(i).getResEtapaDesc() + ": "
-							+ df.format(this.resultados.get(i).getResValor1());
-				}
-
-				String resultado = getResultado();
-
-				resultadoDetalleExamen.setRdeResultado(resultado);
-				resultadoDetalleExamen.setRdeDetalleResultado(detalleResultado);
-				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
-						.getExadParametrosCorrecion());
-
-				resultadoDetalleExamenService.update(resultadoDetalleExamen);
-
-				btn.setForeground(Color.BLACK);
-				Util.setIcon(btn, Constantes.IMG_ACEPTAR_SMALL);
-
-				((PanelDetalleExamen) btn.getParent()).nextExamen(btn);
+			if (lstResultados.size() < 1) {
+				resultadoDetalleExamenService.insert(resultadoDetalleExamen);
+			} else if (lstResultados.size() == 1) {
+				resultadoDetalleExamen = (ResultadoDetalleExamen) lstResultados
+						.get(0);
 			}
+
+			cargarResultados();
+
+			Set setResultados = resultadoDetalleExamen.getResultados();
+			setResultados.clear();
+			for (int i = 0; i < this.resultados.size(); i++) {
+				this.resultados.get(i).setResultadoDetalleExamen(
+						resultadoDetalleExamen);
+				setResultados.add(this.resultados.get(i));
+			}
+
+			String resultado = getResultado();
+
+			resultadoDetalleExamen.setRdeResultado(resultado);
+
+			String rde_detalle = "Normal";
+			if (getPorcentaje() < 100) {
+				rde_detalle = "Presenta alteraciones";
+			}
+
+			resultadoDetalleExamen.setRdeDetalleResultado(rde_detalle);
+
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
+					.getExadParametrosCorrecion());
+
+			resultadoDetalleExamenService.update(resultadoDetalleExamen);
+
+			btn.setForeground(Color.BLACK);
+			Util.setIcon(btn, Constantes.IMG_ACEPTAR_SMALL);
+
+			((PanelDetalleExamen) btn.getParent()).nextExamen(btn);
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -431,7 +439,7 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 
 	@Override
 	public void finalizar() {
-		stopTimer();
+		// TODO Auto-generated method stub
 
 	}
 
@@ -443,14 +451,14 @@ public class PanelRecEncandilamiento extends javax.swing.JPanel implements
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
 	private javax.swing.JButton btn1;
+	private javax.swing.JButton btn2;
 	private javax.swing.JButton btn3;
 	private javax.swing.JButton btn4;
+	private javax.swing.JButton btn5;
 	private javax.swing.JToggleButton btnGuardar;
-	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLayeredPane jLayeredPane1;
 	private javax.swing.JLabel lbError;
 	private javax.swing.JLabel lbImagen;
-	private javax.swing.JLabel lbTiempo;
 	// End of variables declaration//GEN-END:variables
 
 }

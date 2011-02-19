@@ -22,28 +22,29 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="1">
-                      <Component id="lbError" min="-2" pref="437" max="-2" attributes="1"/>
-                      <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLayeredPane1" alignment="0" pref="436" max="32767" attributes="1"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lbError" min="-2" pref="272" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLayeredPane1" alignment="0" min="-2" pref="662" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="212" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jLayeredPane1" min="-2" pref="341" max="-2" attributes="0"/>
+              <Component id="jLayeredPane1" min="-2" pref="380" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbError" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                   <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,21 +88,6 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btn1">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\aceptar.png"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn1ActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-              <JLayeredPaneConstraints x="60" y="210" width="70" height="50" layer="0" position="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Component class="javax.swing.JButton" name="btn3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -113,7 +99,37 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-              <JLayeredPaneConstraints x="530" y="210" width="70" height="50" layer="0" position="-1"/>
+              <JLayeredPaneConstraints x="80" y="310" width="70" height="50" layer="0" position="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="btn1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\aceptar.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn1ActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
+              <JLayeredPaneConstraints x="70" y="130" width="70" height="50" layer="0" position="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="btn2">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\aceptar.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn2ActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
+              <JLayeredPaneConstraints x="280" y="130" width="70" height="50" layer="0" position="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -128,51 +144,34 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-              <JLayeredPaneConstraints x="280" y="210" width="70" height="50" layer="0" position="-1"/>
+              <JLayeredPaneConstraints x="280" y="310" width="70" height="50" layer="0" position="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="btn5">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\aceptar.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn5ActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
+              <JLayeredPaneConstraints x="180" y="220" width="70" height="50" layer="0" position="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="lbImagen">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\encandilamiento\\rec_encandilamiento.png"/>
+              <Image iconType="2" name="C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\isihara\\IsiharaApplicacion.png"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-              <JLayeredPaneConstraints x="10" y="0" width="660" height="230" layer="0" position="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="3"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Tiempo de respuesta (segundos): "/>
-          </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-              <JLayeredPaneConstraints x="150" y="290" width="300" height="20" layer="0" position="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lbTiempo">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="3"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="500"/>
-          </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout$JLayeredPaneConstraintsDescription">
-              <JLayeredPaneConstraints x="450" y="290" width="100" height="20" layer="0" position="-1"/>
+              <JLayeredPaneConstraints x="10" y="10" width="400" height="360" layer="0" position="-1"/>
             </Constraint>
           </Constraints>
         </Component>

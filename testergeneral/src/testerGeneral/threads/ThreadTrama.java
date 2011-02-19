@@ -48,8 +48,8 @@ public class ThreadTrama extends Thread{
 	/*PERIMETRIA*/
 	
 	public static final int ORDEN_APAGAR_TEST_PERIMETRIA=0X20;//Dejo de generar el test ocular o de perimetrias
-	public static final int ORDEN_ENCIENDE_PER_SUP=0x21;//Enciendo la perimetria superior
-	public static final int ORDEN_ENCIENDE_PER_INF=0x22;//Enciendo la perimetria inferior
+	public static final int ORDEN_ENCIENDE_PER_40_DER=0x21;//Enciendo la perimetria superior
+	public static final int ORDEN_ENCIENDE_PER_40_IZQ=0x22;//Enciendo la perimetria inferior
 	public static final int ORDEN_ENCIENDE_PER_85=0x23;//Enciendo la perimetria de 85º
 	public static final int ORDEN_ENCIENDE_PER_70=0x24;//Enciendo la perimetria de 70º
 	public static final int ORDEN_ENCIENDE_PER_55=0x25;//Enciendo la perimetria de 55º

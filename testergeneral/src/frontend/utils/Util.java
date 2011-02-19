@@ -60,6 +60,9 @@ public class Util {
 	
 	private static final Log log = LogFactory.getLog(Util.class);
 	
+	
+	public static boolean connectToHard=false;
+	
 	public static javax.swing.JDesktopPane dp;
 	public static javax.swing.JDesktopPane dpSecundario;
 	public static JFrame frameContenedor;

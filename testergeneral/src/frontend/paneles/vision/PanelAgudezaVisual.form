@@ -23,30 +23,25 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="lbError" alignment="0" min="-2" pref="642" max="-2" attributes="1"/>
-                  <Group type="102" alignment="1" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jRadioExamenLejana" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jRadioExamenLejana" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jRadioExamenCercana" min="-2" pref="231" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jPanel1" min="-2" pref="324" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="btnGuardar" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="1">
+                      <Component id="lbError" max="32767" attributes="1"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -56,20 +51,17 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jRadioExamenLejana" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jRadioExamenCercana" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Component id="jRadioExamenLejana" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel2" alignment="1" max="32767" attributes="1"/>
+                  <Component id="jPanel1" max="32767" attributes="1"/>
+                  <Component id="jPanel3" max="32767" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jPanel3" alignment="1" max="32767" attributes="1"/>
-                  <Component id="jPanel2" alignment="1" max="32767" attributes="1"/>
-                  <Component id="jPanel1" alignment="1" max="32767" attributes="1"/>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbError" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                   <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbError" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -102,28 +94,13 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lbBinocular" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioBoxBinocular" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jFormattedLineaBinocularLe" min="-2" pref="31" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jFormattedLineaBinocular" min="-2" pref="31" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <EmptySpace pref="2" max="32767" attributes="0"/>
+              <Component id="lbBinocular" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Component id="jRadioBoxBinocular" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jFormattedLineaBinocularLe" min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -138,12 +115,7 @@
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jFormattedLineaBinocularLe" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jFormattedLineaBinocular" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="56" max="32767" attributes="0"/>
+                  <EmptySpace pref="85" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -157,26 +129,6 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="2" name="C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\agudeza visual\\binocular.png"/>
             </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="3"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="L&#xed;nea correcta visi&#xf3;n cercana:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFormattedLineaBinocular">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="#0" subtype="-1" type="0"/>
-            </Property>
-            <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusLostBehavior" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioBoxBinocular">
@@ -199,7 +151,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="L&#xed;nea correcta visi&#xf3;n lejana:"/>
+            <Property name="text" type="java.lang.String" value="L&#xed;nea correcta:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFormattedLineaBinocularLe">
@@ -246,20 +198,10 @@
                       </Group>
                       <Component id="jRadioBoxMonoIzq" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                  <Component id="jFormattedMonoIzq" min="-2" pref="31" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace pref="10" max="-2" attributes="0"/>
-                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jFormattedLineaMonocularIzqLe" min="-2" pref="31" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jFormattedLineaMonocularIzqLe" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -277,12 +219,7 @@
                       <Component id="jFormattedLineaMonocularIzqLe" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jFormattedMonoIzq" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                  <EmptySpace pref="87" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -298,36 +235,16 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFormattedMonoIzq">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="#0" subtype="-1" type="0"/>
-            </Property>
-            <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusLostBehavior" type="int" value="0"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioBoxMonoIzq">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup2"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Visi&#xf3;n monocular izquierdo"/>
+            <Property name="text" type="java.lang.String" value="Visi&#xf3;n monocular derecho"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioBoxMonoIzqActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="3"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="L&#xed;nea correcta visi&#xf3;n cercana:"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFormattedLineaMonocularIzqLe">
           <Properties>
@@ -346,7 +263,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="L&#xed;nea correcta visi&#xf3;n lejana:"/>
+            <Property name="text" type="java.lang.String" value="L&#xed;nea correcta:"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -368,18 +285,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jRadioBoxMonoDer" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="lbMonoDer" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jFormattedMonoDer" min="-2" pref="31" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="10" max="-2" attributes="0"/>
-                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jFormattedLineaMonocularDerLe" min="-2" pref="31" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace pref="10" max="-2" attributes="0"/>
+                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jFormattedLineaMonocularDerLe" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -397,12 +307,7 @@
                       <Component id="jFormattedLineaMonocularDerLe" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jFormattedMonoDer" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="60" max="32767" attributes="0"/>
+                  <EmptySpace pref="87" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -418,36 +323,16 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFormattedMonoDer">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="#0" subtype="-1" type="0"/>
-            </Property>
-            <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusLostBehavior" type="int" value="0"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioBoxMonoDer">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroup2"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Visi&#xf3;n monocular derecho"/>
+            <Property name="text" type="java.lang.String" value="Visi&#xf3;n monocular izquierdo"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioBoxMonoDerActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="3"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="L&#xed;nea correcta visi&#xf3;n cercana:"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFormattedLineaMonocularDerLe">
           <Properties>
@@ -466,25 +351,11 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="L&#xed;nea correcta visi&#xf3;n lejana:"/>
+            <Property name="text" type="java.lang.String" value="L&#xed;nea correcta:"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JRadioButton" name="jRadioExamenCercana">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="buttonGroup1"/>
-        </Property>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="3"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Examen de visi&#xf3;n cercana"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioExamenCercanaActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JRadioButton" name="jRadioExamenLejana">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">

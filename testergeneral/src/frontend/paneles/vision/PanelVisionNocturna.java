@@ -77,7 +77,9 @@ public class PanelVisionNocturna extends javax.swing.JPanel implements
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		inicializarThreads();
+		
+		if(Util.connectToHard)
+			inicializarThreads();
 	}
 
 	public void inicializarThreads() {
@@ -307,20 +309,32 @@ public class PanelVisionNocturna extends javax.swing.JPanel implements
 
 	public boolean isAprobed() {
 		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
-				&& getPorcentaje().intValue() < 66)
+				&& getPorcentaje().intValue() < 80)
 			return false;
 
 		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR)
-				&& getPorcentaje().intValue() < 66)
+				&& getPorcentaje().intValue() < 80)
 			return false;
 
 		return true;
 	}
 
 	public Double getPorcentaje() {
-		Double porcentaje = ((dibu1 + dibu2 + dibu3) / 3d) * 100;
+		int aciertos= (dibu1 + dibu2 + dibu3);
+		switch (aciertos) {
+		case 1:
+			return 40.0;
+			
+		case 2:
+			return 80.0;
+		
+		default:
+			return 100.0;
+		}
+		
+		/*Double porcentaje = ((dibu1 + dibu2 + dibu3) / 3d) * 100;
 		Util.redondear(porcentaje);
-		return Util.redondear(porcentaje);
+		return Util.redondear(porcentaje);*/
 	}
 
 	private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {

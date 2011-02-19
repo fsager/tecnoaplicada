@@ -49,9 +49,9 @@ public class PanelProfundidadVisual extends javax.swing.JPanel implements
 	private PersonaExamen personaExamen;
 	private ExamenDetalle exaDetalle;
 	private List<Resultado> resultados = new ArrayList<Resultado>();
-	private int dibu1 = 0;
-	private int dibu2 = 0;
-	private int dibu3 = 0;
+	private int dibu1 = 1;
+	private int dibu2 = 1;
+	private int dibu3 = 1;
 	//private ThreadTrama thTrama;
 
 	/** Creates new form PanelAgudezaVisual */
@@ -60,9 +60,9 @@ public class PanelProfundidadVisual extends javax.swing.JPanel implements
 		this.personaExamen = personaExamen;
 		initComponents();
 		cargarImagenes();
-		setKoIcon(btn1);
-		setKoIcon(btn2);
-		setKoIcon(btn3);
+		setOkIcon(btn1);
+		setOkIcon(btn2);
+		setOkIcon(btn3);
 
 		try {
 			ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
@@ -76,7 +76,9 @@ public class PanelProfundidadVisual extends javax.swing.JPanel implements
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		inicializarThreads();
+		
+		if(Util.connectToHard)
+			inicializarThreads();
 	}
 
 	public void inicializarThreads() {
