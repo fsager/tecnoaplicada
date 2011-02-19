@@ -25,6 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.event.ListSelectionEvent;
@@ -37,10 +38,13 @@ import org.apache.commons.logging.LogFactory;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
+import testerGeneral.domain.Examen;
 import testerGeneral.domain.Persona;
+import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.PersonaRestricion;
 import testerGeneral.domain.Usuario;
 import testerGeneral.focus.MyOwnFocusTraversalPolicy;
+import testerGeneral.service.ExamenDefinition;
 import testerGeneral.service.PersonaDefinition;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
@@ -148,7 +152,14 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		actTomarExamen = new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnTomarExamen();
+				try
+				{
+					btnTomarExamen();
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
 			}
 		};
 
@@ -179,16 +190,33 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	
 
 
-	public void btnTomarExamen() {
+	public void btnTomarExamen() throws Exception {
 		menu.unSelectButtons(menu.getToolbarSubNivel(), menu
 				.getBtnBuscarPersona());
-		final DialogoTomarExamen dialogoTomarExamen = new DialogoTomarExamen(
+		/*final DialogoTomarExamen dialogoTomarExamen = new DialogoTomarExamen(
 				persona, menu);
 		dialogoTomarExamen.pack();
 		Util.agregarIframe(dialogoTomarExamen);
 
 		dialogoTomarExamen.doModal(this.getRootPane());
-		dialogoTomarExamen.setVisible(true);
+		dialogoTomarExamen.setVisible(true);*/
+		
+		ExamenDefinition examenService = (ExamenDefinition) ContextManager.getBizObject("examenService");
+		Examen exa = new Examen();
+		exa.setExaCodigo(Examen.EXA_CODIGO_VISION);
+		exa = (Examen) examenService.getAll(exa).get(0);
+
+		testerGeneral.persistence.impl.Util.insertAudit(testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_VISION,null, null);
+
+		PersonaExamen personaExamen=new PersonaExamen();
+		personaExamen.setPexaTipoExamen(PersonaExamen.TIPO_EXAMEN_PROFECIONAL);
+		personaExamen.setPersona(persona);
+		personaExamen.setExamen(exa);	
+		
+		javax.swing.JToggleButton btnExamenVision = new JToggleButton(Constantes.MENU_SUB_EXAMEN_VISION);
+		btnExamenVision.setEnabled(false);
+		menu.cargarSubMenuExamenes(btnExamenVision);
+		menu.seleccionarExamenVision(personaExamen);
 	}
 
 	public void btnVerExamen() {
@@ -2590,13 +2618,13 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			return false;
 		}
 
-		if (getFechaNacimiento() == null) {
+		/*if (getFechaNacimiento() == null) {
 			return false;
 		}
 		if (txtDomicilio.getText() == null || txtDomicilio.getText().equals("")) {
 			Util.mostrarError(lbError, Constantes.ERROR_PER_DOMICILIO, false);
 			return false;
-		}
+		}*/
 		if (validarFoto.equals("S") && lbFoto.getIcon() == null) {
 			Util.mostrarError(lbError, Constantes.ERROR_PER_FOTO, false);
 			return false;
@@ -2894,11 +2922,16 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		Util.selectDominios(cbTipoDoc, persona.getPerTipoDoc());
 		txtNroDoc.setText(persona.getPerNumeroDoc());
 		Util.selectDominios(cbSexo, persona.getPerSexo());
-		txtNacimiento.setText(sdf.format(persona.getPerFechaNacimiento()));
+		
+		if(persona.getPerFechaNacimiento()!=null)
+			txtNacimiento.setText(sdf.format(persona.getPerFechaNacimiento()));
+		
 		Util.selectDominios(cbEstadoCivil, persona.getPerEstadoCivil());
 		Util.selectDominios(cbGrupoSanguineo, persona.getPerGrupoSanguineo());
 		Util.selectDominios(cbLocalidad, persona.getPerLocalidad());
-		txtDomicilio.setText(persona.getPerDomicilio());
+		
+		if(persona.getPerDomicilio()!=null)
+			txtDomicilio.setText(persona.getPerDomicilio());
 		txtTelefono.setText(persona.getPerTelefono());
 		txtCelular.setText(persona.getPerCelular());
 		txtCorreo.setText(persona.getPerCorreo());

@@ -49,7 +49,7 @@ public class Constantes {
 	
 
 	//REPORTES
-	public static final String RPT_PERSONA_EXAMEN="reportes/reportPersonaExamen.jasper";
+	public static final String RPT_PERSONA_EXAMEN="reportes/reportPersonaExamenCCT.jasper";
 	
 	
 	/*IMAGENES*/

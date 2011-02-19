@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="agudezaVisualMonocular" language="groovy" pageWidth="300" pageHeight="802" columnWidth="300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_pexa_id" class="java.lang.Long"/>
+	<parameter name="p_codigo_examen" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select res.res_etapa_desc,
+		CASE WHEN res.res_valor1=0.100 THEN '0.1'
+		 WHEN res.res_valor1=0.300 THEN '0.3'
+		 WHEN res.res_valor1=0.400 THEN '0.4'
+		 WHEN res.res_valor1=0.500 THEN '0.5'
+		 WHEN res.res_valor1=0.700 THEN '0.7'
+		 WHEN res.res_valor1=0.800 THEN '0.8'
+		 WHEN res.res_valor1=1.000 THEN '1.0'
+		 END res_descripcion
+ from app.persona_examen perexa,
+      app.resultado_detalle_examen detalleRes,
+      app.EXAMEN_DETALLE detalle,
+      app.RESULTADO res
+where perexa.pexa_id= detalleRes.pexa_id
+  and detalleRes.rde_id = res.rde_id
+  and detalle.exad_id = detalleRes.exad_id
+  and perexa.pexa_id = $P{p_pexa_id}
+  and detalle.exad_codigo = $P{p_codigo_examen}
+  and res.res_etapa not in (0,3)--binocular
+order by res.res_etapa]]>
+	</queryString>
+	<field name="RES_ETAPA_DESC" class="java.lang.String"/>
+	<field name="RES_DESCRIPCION" class="java.lang.String"/>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="2" width="153" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{RES_ETAPA_DESC}+":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="2" width="147" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{RES_DESCRIPCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

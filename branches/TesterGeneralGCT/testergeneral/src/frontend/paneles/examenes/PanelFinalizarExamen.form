@@ -83,7 +83,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="560" max="32767" attributes="1"/>
+                  <Component id="jScrollPane1" pref="617" max="32767" attributes="1"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -148,7 +148,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Comentario:"/>
+        <Property name="text" type="java.lang.String" value="Estudios Complementarios:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnGuardar">

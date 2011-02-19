@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 
 import testerGeneral.business.ContextManager;
@@ -23,6 +24,7 @@ import testerGeneral.domain.Examen;
 import testerGeneral.domain.ExamenDetalle;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.ResultadoDetalleExamen;
+import testerGeneral.service.ExamenDefinition;
 import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
@@ -50,9 +52,11 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 		txtObservaciones.setLineWrap(true);
 		txtObservaciones.setWrapStyleWord(true);
 		txtObservaciones.setRows(4);
-		jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		
+		jScrollPane2
+				.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		jScrollPane2
+				.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
 		Util.cargarDominios(cbEstado, Constantes.ESTADO_EXAMEN, false);
 		detalleExamen();
 		setTableModel(lstResultadoDetalleExamen);
@@ -117,11 +121,20 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 			tableDetalleExamen.getColumnModel().getColumn(2).setCellRenderer(renderer);*/
 
 			//tableModel.get
-			tableDetalleExamen.setRowHeight(1, 50);
-			tableDetalleExamen.setRowHeight(3, 60);
-			tableDetalleExamen.setRowHeight(4, 50);
-			tableDetalleExamen.setRowHeight(8, 130);
-			tableDetalleExamen.setRowHeight(9, 80);
+			if (tableDetalleExamen.getRowCount() < 1)
+				tableDetalleExamen.setRowHeight(1, 50);
+
+			if (tableDetalleExamen.getRowCount() < 3)
+				tableDetalleExamen.setRowHeight(3, 60);
+
+			if (tableDetalleExamen.getRowCount() < 4)
+				tableDetalleExamen.setRowHeight(4, 50);
+
+			if (tableDetalleExamen.getRowCount() < 8)
+				tableDetalleExamen.setRowHeight(8, 130);
+
+			if (tableDetalleExamen.getRowCount() < 9)
+				tableDetalleExamen.setRowHeight(9, 80);
 		}
 	}
 
@@ -171,7 +184,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel1Layout.createSequentialGroup().addContainerGap()
 						.addComponent(jScrollPane1,
-								javax.swing.GroupLayout.DEFAULT_SIZE, 560,
+								javax.swing.GroupLayout.DEFAULT_SIZE, 617,
 								Short.MAX_VALUE).addContainerGap()));
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
@@ -184,7 +197,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 		jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18));
 		jLabel1.setText("Resultado General del Examen:");
 
-		jLabel2.setText("Comentario:");
+		jLabel2.setText("Estudios Complementarios:");
 
 		btnGuardar.setText("Guardar");
 		btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -407,14 +420,32 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 			if (op == JOptionPane.YES_OPTION) {
 
-				final DialogoTomarExamen dialogoTomarExamen = new DialogoTomarExamen(
+				/*final DialogoTomarExamen dialogoTomarExamen = new DialogoTomarExamen(
 						perExamen.getPersona(),
 						(PanelMenuPrincipal) Util.panelMenu);
 				dialogoTomarExamen.pack();
 				Util.agregarIframe(dialogoTomarExamen);
 
 				dialogoTomarExamen.doModal(this.getRootPane());
-				dialogoTomarExamen.setVisible(true);
+				dialogoTomarExamen.setVisible(true);*/
+				
+				ExamenDefinition examenService = (ExamenDefinition) ContextManager.getBizObject("examenService");
+				Examen exa = new Examen();
+				exa.setExaCodigo(Examen.EXA_CODIGO_VISION);
+				exa = (Examen) examenService.getAll(exa).get(0);
+
+				testerGeneral.persistence.impl.Util.insertAudit(testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_VISION,null, null);
+
+				PersonaExamen personaExamen=new PersonaExamen();
+				personaExamen.setPexaTipoExamen(PersonaExamen.TIPO_EXAMEN_PROFECIONAL);
+				personaExamen.setPersona(perExamen.getPersona());
+				personaExamen.setExamen(exa);	
+				
+				javax.swing.JToggleButton btnExamenVision = new JToggleButton(Constantes.MENU_SUB_EXAMEN_VISION);
+				btnExamenVision.setEnabled(false);
+				((PanelMenuPrincipal) Util.panelMenu).cargarSubMenuExamenes(btnExamenVision);
+				((PanelMenuPrincipal) Util.panelMenu).seleccionarExamenVision(personaExamen);
+				
 			} else {
 				Util.panelMenu.cargarSubMenuPersona();
 				Util.panelMenu.seleccionarPersona();
