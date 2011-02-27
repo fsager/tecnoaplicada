@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./wndUsuarioForm" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" 
+	 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd "
+		xmlns:h="http://www.w3.org/1999/xhtml" xmlns:a="http://www.zkoss.org/2005/zk/annotation">
+<window id="wndUsuarioForm" border="normal" closable="true" apply="ar.com.tecnologiaaplicada.controller.ControllerUsuarioForm">
+	<groupbox mold="default" closable="false">
+		<grid>
+			<rows>
+				<row>
+					<h:b>Nombre de usuario:</h:b>
+ 					<textbox id="fld_Nombre" value="@{controller.objUpdated.usrNombre}" maxlength="50" width="200px;" constraint="no empty"/>
+				</row>
+				<row>
+					<h:b>Clave:</h:b>
+ 					<textbox type="password" id="fld_clave" value="@{controller.objUpdated.usrClave}" width="200px;" constraint="no empty"/>
+				</row>
+				<row>
+					<h:b>Reingrese la clave:</h:b>
+ 					<textbox type="password" id="fld_re_clave" width="200px;" constraint="no empty"/>
+				</row>
+				<row spans="2">		
+					<checkbox id="ckHabilitado" label="Habilitado" checked="@{controller.objUpdated.usrHabilitadoSn,converter='ar.com.tecnologiaaplicada.presentation.converters.BooleanConverter'}"/>
+				</row>
+			</rows>			
+		</grid>	
+		<h:center>
+			<button id="btnGuardar" label="Guardar"  width="100px;"/> 
+			<button id="btnCerrar" label="Cerrar" width="100px;"/> 
+		</h:center>
+	</groupbox>
+</window>
+</zk>

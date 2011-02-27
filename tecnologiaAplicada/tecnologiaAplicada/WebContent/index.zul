@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page id="pag_index" title="Tecnología Aplicada"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<window id="wds_login" border="none" width="100%" closable="false"
+	 	xmlns="http://www.zkoss.org/2005/zul" 
+	 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd "
+		xmlns:h="http://www.w3.org/1999/xhtml"
+		apply=" ar.com.tecnologiaaplicada.controller.ControllerIndex">
+<div align="center">
+	<panel width="430px;">
+		<panelchildren>
+			<panel border="normal" title="Ingrese usuario y contraseña">
+				<panelchildren>
+					<separator/>
+					<grid fixedLayout="true" width="420px;">
+						<columns>
+							<column width="150px" align="right"/>
+							<column align="left"/>
+						</columns>
+						<rows>
+							<row>
+								<label value="Nombre de Usuario: " width="150px" />
+								<listbox id="lstUserName" width="250px" focus="true" mold="select"/>
+							</row>
+							<row>
+								<label value="Clave: " width="150px" /> 
+								<textbox id="fldPassword" type="password" constraint="no empty" width="250px" />
+							</row>
+							<row spans="2">
+								<div align="center"><button id="btnIngresar" label="Ingresar"/></div>
+							</row>
+						</rows>
+					</grid>
+					<separator/>
+				</panelchildren>
+			</panel>
+		</panelchildren>
+	</panel>
+</div>
+</window>
+

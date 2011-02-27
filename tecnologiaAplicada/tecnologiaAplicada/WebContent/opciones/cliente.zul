@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./wnd_cliente"?>
+<?component name="sadToolbar" macro-uri="/util/toolbar.zul" inline="true" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" 
+	 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	 	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd "
+		xmlns:h="http://www.w3.org/1999/xhtml">
+<window id="wnd_cliente" border="none" apply="ar.com.tecnologiaaplicada.controller.ControllerCliente">
+	<sadToolbar/>
+	<groupbox mold="default" closable="false">
+		<caption label="Filtros"/>
+		<grid id="gridFiltros">
+			<rows>
+				<row>					
+					<h:b>Razón social:</h:b>	
+					<hbox>
+						<textbox id="txtRazonSocial" value="@{controller.example.cliRazonSocial,access='save'}"  maxlength="25" width="250px;"/>
+					</hbox>
+				</row>
+				<row>					
+					<h:b>CUIL/CUIT:</h:b>	
+					<hbox>
+						<textbox id="txtCuil" value="@{controller.example.cliCuitCuil,access='save'}"  maxlength="25" width="250px;"/>
+					</hbox>
+				</row>
+				<row spans="2">
+					<button id="btnFiltrar" width="100px;" label="Filtrar"/>
+				</row>				
+			</rows>
+		</grid>
+	</groupbox>	
+	<label id="lbNoRegistros" value="No se encontraron resultados con los filtros ingresados" visible="false" style="font-weight:bold; color:#660000;"/>
+	<listbox id="lbMain" mold="paging" rows="10" pageSize="10" model="@{controller.lista, distinct=false}" selectedItem="@{selected}" checkmark="true" fixedLayout="true">
+		<listhead >
+			<listheader label="Razón social" 	sort="auto(cliRazonSocial)"/>		
+			<listheader label="CUIL/CUIT" 		sort="auto(cliCuitCuil)"/>
+			<listheader label="Telefono" 	sort="auto(cliTelefono)"/>
+			<listheader label="Celular" 	sort="auto(cliCelular)"/>
+			<listheader label="Correo" 	sort="auto(cliCorreo)"/>
+			<listheader label="Domicilio" 	sort="auto(cliDomicilio)"/>
+			<listheader label="Observaciones" 	sort="auto(cliObservaciones)"/>
+		</listhead>
+		<listitem self="@{each='itemList'}" value="@{itemList}">
+			<listcell label="@{itemList.cliRazonSocial}" />
+			<listcell label="@{itemList.cliCuitCuil}" />
+			<listcell label="@{itemList.cliTelefono}"/>
+			<listcell label="@{itemList.cliCelular}"/>
+			<listcell label="@{itemList.cliCorreo}"/>
+			<listcell label="@{itemList.cliDomicilio}"/>
+			<listcell label="@{itemList.cliObservaciones}"/>
+		</listitem>
+	</listbox>
+</window></zk>
