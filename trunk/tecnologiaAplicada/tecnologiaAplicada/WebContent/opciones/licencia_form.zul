@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./wndLicenciaForm" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd "
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation">
+	<window id="wndLicenciaForm" border="normal" closable="true"
+		apply="ar.com.tecnologiaaplicada.controller.ControllerLicenciaForm">
+		<groupbox mold="default" closable="false">
+			<grid>
+				<rows>
+					<row>
+						<h:b>Cliente:</h:b>
+						<listbox id="lbCliente" mold="select" />
+					</row>
+					<row>
+						<h:b>Tipo Licencia:</h:b>
+						<listbox id="lbTipoLicencia" mold="select" />
+					</row>
+					<row>
+						<h:b>Producto:</h:b>
+						<listbox id="lbProducto" mold="select" />
+					</row>
+				</rows>
+			</grid>
+			<tree id="treeExamenes" checkmark="true" multiple="true" rows="15" height="300px" width="100%">
+				<treecols>
+					<treecol label="Examenes"/>
+				</treecols>
+				<treechildren id="treeChildrenExamenes">					
+				</treechildren>
+			</tree>
+			<h:center>
+				<button id="btnGuardar" label="Guardar" width="100px;" />
+				<button id="btnCerrar" label="Cerrar" width="100px;" />
+			</h:center>
+		</groupbox>
+	</window>
+</zk>

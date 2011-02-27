@@ -1,0 +1,26 @@
+<?page title="Página Principal" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="wnd_main" border="none" width="100%" height="100%"
+		xmlns:h="http://www.w3.org/1999/xhtml"
+		apply="ar.com.tecnologiaaplicada.controller.ControllerMain">
+		<borderlayout width="100%">
+			<west title="Opciones:" size="15%" flex="true">
+				<div align="center">
+					<vbox>
+						<div>Usuario: <label id="lbUsr"/></div>
+						<button id="btnCerrarSesion" label="Cerrar sesión"/>
+					</vbox>
+					<separator height="20px"/>
+					<listbox id="lstboxOpciones" >
+						<listitem label="Usuarios" value="/opciones/usuario.zul"/>
+						<listitem label="Clientes" value="/opciones/cliente.zul"/>
+						<listitem label="Licencias" value="/opciones/licencia.zul"/>
+					</listbox>
+				</div>
+			</west>
+			<center border="normal" flex="true">
+				<iframe id="iFrameContenido" height="100%"/>
+			</center>
+		</borderlayout>
+	</window>
+</zk>
