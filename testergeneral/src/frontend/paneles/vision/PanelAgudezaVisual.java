@@ -256,7 +256,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\agudeza visual\\monocular_izq.png")); // NOI18N
 
 		buttonGroup2.add(jRadioBoxMonoIzq);
-		jRadioBoxMonoIzq.setText("Visi\u00f3n monocular derecho");
+		jRadioBoxMonoIzq.setText("Visi\u00f3n monocular izquierdo");
 		jRadioBoxMonoIzq.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jRadioBoxMonoIzqActionPerformed(evt);
@@ -349,7 +349,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\agudeza visual\\monocular_der.png")); // NOI18N
 
 		buttonGroup2.add(jRadioBoxMonoDer);
-		jRadioBoxMonoDer.setText("Visi\u00f3n monocular izquierdo");
+		jRadioBoxMonoDer.setText("Visi\u00f3n monocular derecho");
 		jRadioBoxMonoDer.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jRadioBoxMonoDerActionPerformed(evt);
@@ -476,17 +476,12 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																										.addPreferredGap(
 																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																										.addComponent(
-																												jPanel3,
+																												jPanel2,
 																												javax.swing.GroupLayout.PREFERRED_SIZE,
 																												javax.swing.GroupLayout.DEFAULT_SIZE,
 																												javax.swing.GroupLayout.PREFERRED_SIZE)))
 																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				jPanel2,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED))
 														.addGroup(
 																javax.swing.GroupLayout.Alignment.TRAILING,
 																layout
@@ -497,11 +492,22 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				Short.MAX_VALUE)
 																		.addGap(
-																				18,
-																				18,
-																				18)
-																		.addComponent(
-																				btnGuardar)))
+																				177,
+																				177,
+																				177)))
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																jPanel3,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																btnGuardar))
 										.addContainerGap(
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)));
@@ -510,6 +516,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
+								javax.swing.GroupLayout.Alignment.TRAILING,
 								layout
 										.createSequentialGroup()
 										.addComponent(jRadioExamenLejana)
@@ -520,18 +527,18 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(
-																jPanel2,
-																javax.swing.GroupLayout.Alignment.TRAILING,
+																jPanel3,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addComponent(
 																jPanel1,
+																javax.swing.GroupLayout.Alignment.TRAILING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addComponent(
-																jPanel3,
+																jPanel2,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE))
@@ -542,12 +549,12 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.BASELINE)
 														.addComponent(
-																btnGuardar)
-														.addComponent(
 																lbError,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																24,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																btnGuardar))
 										.addContainerGap()));
 	}// </editor-fold>
 	//GEN-END:initComponents
@@ -584,8 +591,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 		if (jRadioBoxBinocular.isSelected()) {
 			if (!luzDerechaPrendida) {
 				if (Util.connectToHard)
-					Util.thTrama
-							.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+					Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
 
 				luzDerechaPrendida = true;
 			}

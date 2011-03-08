@@ -242,11 +242,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		Util.cargarDominios(cbGrupoSanguineo,
 				Constantes.DOMINIO_CLAVE_GRUPO_SAN, false);
 		Util.cargarDominios(cbSexo, Constantes.DOMINIO_CLAVE_SEXO, false);
-		Util
-				.cargarDominios(cbTipoDoc, Constantes.DOMINIO_CLAVE_TIPO_DOC,
-						false);
-		Util.cargarDominios(cbLocalidad, Constantes.DOMINIO_CLAVE_LOCALIDAD,
-				false);
+		Util.cargarDominios(cbTipoDoc, Constantes.DOMINIO_CLAVE_TIPO_DOC,false);
+		Util.cargarDominios(cbLocalidad, Constantes.DOMINIO_CLAVE_LOCALIDAD,false);
 		Util.selectDominios(cbTipoDoc, "DNI");
 	}
 
@@ -3051,7 +3048,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 				}
 			}
 		} else {
-			Util.mostrarError(lbError, Constantes.ERROR_PER_FECHA_NAC, false);
+			//Util.mostrarError(lbError, Constantes.ERROR_PER_FECHA_NAC, false);
 		}
 
 		return null;

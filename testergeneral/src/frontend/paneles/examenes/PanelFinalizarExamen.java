@@ -13,10 +13,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
@@ -28,15 +31,12 @@ import testerGeneral.service.ExamenDefinition;
 import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
-import frontend.buttons.ButtonCancelarMini;
-import frontend.buttons.ButtonExaminar;
 import frontend.buttons.ButtonGuardar;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.paneles.PanelMenuPrincipal;
 import frontend.tablemodel.RowRenderer;
 import frontend.tablemodel.TableModelResultadoExamen;
 import frontend.utils.Util;
-import frontend.ventanas.DialogoTomarExamen;
 import frontend.ventanas.VentanaReportes;
 
 /**
@@ -453,17 +453,23 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 			//ExamenesUtils.mostrarPanelExamen(perExamen, Util.panelContenido);
 
-		} catch (Exception e) {
+		}
+		catch (InvalidDataAccessApiUsageException idau) {
 			JOptionPaneTesterGral.showInternal(
 					"Debe realizar por lo menos una evaluación", "Error",
 					JOptionPane.ERROR_MESSAGE);
+			
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Error desconocido al finalizar examen",e);
 		}
 	}
 
-	public void imprimirResultado() {
+	public void imprimirResultado() throws Exception{
 
 		HashMap parameterMap = new HashMap();
 		parameterMap.put("p_pexa_id", perExamen.getPexaId());
+		parameterMap.put("SUBREPORT_DIR",new File("./reportes").getCanonicalPath()+File.separator);		
 		new VentanaReportes(this, parameterMap, Constantes.RPT_PERSONA_EXAMEN);
 
 	}
@@ -486,4 +492,5 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 	private LinkedList<ResultadoDetalleExamen> lstResultadoDetalleExamen = new LinkedList<ResultadoDetalleExamen>();
 	private PersonaExamenDefinition personaExamenService = (PersonaExamenDefinition) ContextManager
 			.getBizObject("personaExamenService");
+	private static final Log log = LogFactory.getLog(PanelFinalizarExamen.class);
 }

@@ -50,6 +50,7 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 	private List<Resultado> resultados = new ArrayList<Resultado>();
 	private static final int LINEA_PROFECIONAL = 6;
 	private static final int LINEA_PARTICULAR = 5;
+
 	//private ThreadTrama thTrama;
 
 	/** Creates new form PanelAgudezaVisual */
@@ -72,30 +73,29 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
-		if(Util.connectToHard)
+
+		if (Util.connectToHard)
 			inicializarThreads();
 	}
 
 	public void inicializarThreads() {
 
 		try {
-			
-			if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaVision))
+
+			if (Util.thTrama != null
+					&& !(Util.thTrama.getTrama() instanceof TramaVision))
 				Util.thTrama.desconnect();
-			
-			if (Util.thTrama == null)
-			{
+
+			if (Util.thTrama == null) {
 				ThreadTrama thTrama = new ThreadTrama(new TramaVision());
 				Util.thTrama.setEjecutar(false);
 				Util.thTrama = thTrama;
 				Util.thTrama.setEjecucion(99999);
 				Util.thTrama.start();
 			}
-			
+
 			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST6);
-			
-			
+
 		} catch (ExceptionIsNotHadware e) {
 			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
 					"Error", JOptionPane.ERROR_MESSAGE);
@@ -104,10 +104,9 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 	}
 
 	public void cargarImagenes() {
-			String img = ContextManager
-					.getProperty("EXAMEN.ENCANDILAMIENTO.IMG");
+		String img = ContextManager.getProperty("EXAMEN.ENCANDILAMIENTO.IMG");
 
-			Util.setIcon(lbImagen, img);
+		Util.setIcon(lbImagen, img);
 	}
 
 	/** This method is called from within the constructor to
@@ -148,9 +147,9 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 
 		buttonGroup1.add(jRadioSi);
 		jRadioSi.setSelected(true);
-		jRadioSi.setText("Reconoce la figura.");
+		jRadioSi.setText("Normal, reconoce la figura.");
 		jRadioSi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-		jRadioSi.setBounds(550, 240, 130, 25);
+		jRadioSi.setBounds(550, 240, 180, 25);
 		jLayeredPane1.add(jRadioSi, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		lbImagen
@@ -162,6 +161,11 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 		buttonGroup1.add(jRadioNo);
 		jRadioNo.setText("No reconoce la figura.");
 		jRadioNo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+		jRadioNo.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jRadioNoActionPerformed(evt);
+			}
+		});
 		jRadioNo.setBounds(550, 270, 150, 25);
 		jLayeredPane1.add(jRadioNo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -173,30 +177,20 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								layout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.TRAILING,
-												false)
-										.addGroup(
-												javax.swing.GroupLayout.Alignment.LEADING,
-												layout
-														.createSequentialGroup()
-														.addComponent(
-																lbError,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																285,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																btnGuardar))
+										.createSequentialGroup()
 										.addComponent(
-												jLayeredPane1,
-												javax.swing.GroupLayout.Alignment.LEADING,
+												lbError,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
-												704,
-												javax.swing.GroupLayout.PREFERRED_SIZE)));
+												285,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+												284, Short.MAX_VALUE)
+										.addComponent(btnGuardar)
+										.addContainerGap()).addComponent(
+								jLayeredPane1,
+								javax.swing.GroupLayout.DEFAULT_SIZE, 740,
+								Short.MAX_VALUE));
 		layout
 				.setVerticalGroup(layout
 						.createParallelGroup(
@@ -225,6 +219,10 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 										.addContainerGap(31, Short.MAX_VALUE)));
 	}// </editor-fold>
 	//GEN-END:initComponents
+
+	private void jRadioNoActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+	}
 
 	public String getResultado() {
 		if (jRadioSi.isSelected())
@@ -264,12 +262,15 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 			String resultado = getResultado();
 
 			resultadoDetalleExamen.setRdeResultado(resultado);
-			if(jRadioSi.isSelected())
-				resultadoDetalleExamen.setRdeDetalleResultado(jRadioSi.getText());
+			if (jRadioSi.isSelected())
+				resultadoDetalleExamen.setRdeDetalleResultado(jRadioSi
+						.getText());
 			else
-				resultadoDetalleExamen.setRdeDetalleResultado(jRadioNo.getText());
-			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
-			
+				resultadoDetalleExamen.setRdeDetalleResultado(jRadioNo
+						.getText());
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
+					.getExadParametrosCorrecion());
+
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
 			btn.setForeground(Color.BLACK);

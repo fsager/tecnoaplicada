@@ -61,8 +61,8 @@ public class ThreadTrama extends Thread{
 	/*PERIMETRIA*/
 	
 	
-	public static final int ORDEN_CAMBIA_ESTADO_LUZ_DER=0x32;//Cambio de estado la luz del lado derecho
-	public static final int ORDEN_CAMBIA_ESTADO_LUZ_IZQ=0x31;//Cambio de estado la luz del lado izquierdo
+	public static final int ORDEN_CAMBIA_ESTADO_LUZ_DER=0x31;//Cambio de estado la luz del lado derecho
+	public static final int ORDEN_CAMBIA_ESTADO_LUZ_IZQ=0x32;//Cambio de estado la luz del lado izquierdo
 	public static final int ORDEN_RETROCEDER_TEST=0x33;//Retrocede un test el tambor rotatorio
 	public static final int ORDEN_AVANZAR_TEST=0x34;//Avanza un test el tambor rotatorio
 	public static final int ORDEN_IR_TEST1=0x41;//Ir al primer test

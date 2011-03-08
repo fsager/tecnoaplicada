@@ -257,6 +257,7 @@ public class VentanaVerExamenes extends JInternalFrameTesterGral {
 			HashMap parameterMap = new HashMap();
 			PersonaExamen perExa = getPersonaExamenFromTable();
 			parameterMap.put("p_pexa_id", perExa.getPexaId());
+			parameterMap.put("SUBREPORT_DIR",new File("./reportes").getCanonicalPath()+File.separator);
 			
 			final byte[] buf = JasperRunManager.runReportToPdf(Constantes.RPT_PERSONA_EXAMEN, parameterMap, ContextManager.getCurrentConnection());
 			
