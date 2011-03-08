@@ -3,7 +3,7 @@
 	<property name="template.type" value="columnar"/>
 	<property name="ireport.zoom" value="1.2396694214876036"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="468"/>
+	<property name="ireport.y" value="84"/>
 	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -259,17 +259,6 @@ order by detalle.exad_detalle]]>
 				</textElement>
 				<text><![CDATA[Binocular: ]]></text>
 			</staticText>
-			<subreport>
-				<reportElement positionType="Float" x="116" y="173" width="176" height="20"/>
-				<subreportParameter name="p_codigo_examen">
-					<subreportParameterExpression><![CDATA["TEST_AGUDEZA_VISUAL_LEJANA"]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="p_pexa_id">
-					<subreportParameterExpression><![CDATA[$P{p_pexa_id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "agudezaVisualBinocular.jasper"]]></subreportExpression>
-			</subreport>
 			<staticText>
 				<reportElement positionType="Float" x="3" y="203" width="100" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -602,13 +591,6 @@ order by detalle.exad_detalle]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{UTILIZA_CORRECION}==null ? "S/C" : "C/C"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement positionType="Float" x="86" y="174" width="33" height="20"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11" isBold="false"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{UTILIZA_CORRECION}==null ? "S/C" : "C/C"]]></textFieldExpression>
-			</textField>
 			<subreport>
 				<reportElement positionType="Float" x="86" y="493" width="167" height="20"/>
 				<subreportParameter name="p_pexa_id">
@@ -636,6 +618,26 @@ order by detalle.exad_detalle]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "campimetria_na.jasper"]]></subreportExpression>
 			</subreport>
+			<rectangle>
+				<reportElement positionType="Float" x="114" y="177" width="13" height="15"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="141" y="179" width="19" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="165" y="177" width="13" height="15"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="90" y="179" width="19" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Si]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnFooter>

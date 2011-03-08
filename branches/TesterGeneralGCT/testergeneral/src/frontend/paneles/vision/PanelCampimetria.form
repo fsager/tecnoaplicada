@@ -156,7 +156,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="Si"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbRespuestaNasalInf">
@@ -172,7 +171,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="Si"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -181,7 +179,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Ojo derecho"/>
+                <TitledBorder title="Ojo izquierdo"/>
               </Border>
             </Property>
           </Properties>
@@ -292,7 +290,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="Si"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbRespuesta70Der">
@@ -308,7 +305,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="Si"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbRespuesta55Der">
@@ -324,7 +320,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="Si"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbRespuesta40Der">
@@ -340,7 +335,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="Si"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioDer40">
@@ -357,7 +351,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Ojo izquierdo"/>
+                <TitledBorder title="Ojo derecho"/>
               </Border>
             </Property>
           </Properties>
@@ -460,7 +454,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="No"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbRespuesta70Izq">
@@ -476,7 +469,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="No"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbRespuesta55Izq">
@@ -492,7 +484,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="No"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbRespuesta40Izq">
@@ -508,7 +499,6 @@
                     <TitledBorder/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="No"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioIzq40">

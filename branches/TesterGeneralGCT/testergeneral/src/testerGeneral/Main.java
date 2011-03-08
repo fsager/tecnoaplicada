@@ -2,6 +2,7 @@ package testerGeneral;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.ToolTipManager;
@@ -22,6 +23,8 @@ import testerGeneral.exceptions.MyExceptionHandler;
 import testerGeneral.persistence.backup.GestorDBBackup;
 import testerGeneral.service.AuditoriaDefinition;
 import testerGeneral.threads.ThreadTrama;
+import ar.com.tecnologiaaplicada.domain.ExamenDetalle;
+import ar.com.tecnologiaaplicada.service.ExamenDetalleDefinition;
 import examenes.psicometrico.domain.TramaPsicologico;
 import frontend.utils.Util;
 import frontend.ventanas.FrameContenedor;
@@ -33,10 +36,21 @@ public class Main {
 
 	public static void main(String[] args)
 			throws UnsupportedLookAndFeelException, InterruptedException,Exception {
-		
+
 		init();
 		//probarLuces();
 		//potenciometros();
+	}
+	
+	public static void getLicenciInformation() throws Exception
+	{
+		ExamenDetalleDefinition examenDetalleService=(ExamenDetalleDefinition)ContextManager.getBizObject("licenseRemoteService");		
+		List<ExamenDetalle> examenDetalles = examenDetalleService.getDetalleLicenciaPorCliente("VBJ2-M107");
+
+		for (int i = 0; i < examenDetalles.size(); i++) {
+			ExamenDetalle detalle = examenDetalles.get(i);
+			System.out.println("detalle: " + detalle.getExadCodigo());
+		}		
 	}
 
 	public static void probarLuces() throws UnsupportedLookAndFeelException, InterruptedException,Exception

@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 
+import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
 import testerGeneral.persistence.DAOObject;
 import testerGeneral.persistence.DominioDao;
@@ -87,8 +88,11 @@ public class DominioHome extends DAOObject implements DominioDao {
             Criteria cri = getSession().createCriteria(Dominio.class);
             
             cri.add(Example.create(p_example));
+            if(p_example.getDomClave().equals(Constantes.DOMINIO_CLAVE_SEXO))
+            	cri.addOrder(Order.asc("domId"));
+            else
+            	cri.addOrder(Order.asc("domValorMostrar"));
             
-            cri.addOrder(Order.asc("domValorMostrar"));
             List results = cri.list();
             log.debug("find by example successful, result size: " + results.size());
             return results;

@@ -174,13 +174,11 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		lbRespuestaNasalSup.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuestaNasalSup.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuestaNasalSup.setName("Si");
 
 		lbRespuestaNasalInf.setFont(new java.awt.Font("Segoe UI", 3, 18));
 		lbRespuestaNasalInf.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuestaNasalInf.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuestaNasalInf.setName("Si");
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
 				jPanel1);
@@ -245,7 +243,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		jLayeredPane1.add(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		jPanel2.setBorder(javax.swing.BorderFactory
-				.createTitledBorder("Ojo derecho"));
+				.createTitledBorder("Ojo izquierdo"));
 
 		jRadioDer85.setText("85\u00b0");
 		jRadioDer85.addActionListener(new java.awt.event.ActionListener() {
@@ -272,25 +270,21 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		lbRespuesta85Der.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuesta85Der.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuesta85Der.setName("Si");
 
 		lbRespuesta70Der.setFont(new java.awt.Font("Segoe UI", 3, 18));
 		lbRespuesta70Der.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuesta70Der.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuesta70Der.setName("Si");
 
 		lbRespuesta55Der.setFont(new java.awt.Font("Segoe UI", 3, 18));
 		lbRespuesta55Der.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuesta55Der.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuesta55Der.setName("Si");
 
 		lbRespuesta40Der.setFont(new java.awt.Font("Segoe UI", 3, 18));
 		lbRespuesta40Der.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuesta40Der.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuesta40Der.setName("Si");
 
 		jRadioDer40.setText("Oblicua 40\u00b0");
 		jRadioDer40.addActionListener(new java.awt.event.ActionListener() {
@@ -442,7 +436,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		jLayeredPane1.add(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		jPanel4.setBorder(javax.swing.BorderFactory
-				.createTitledBorder("Ojo izquierdo"));
+				.createTitledBorder("Ojo derecho"));
 
 		jRadioIzq85.setText("85\u00b0");
 		jRadioIzq85.addActionListener(new java.awt.event.ActionListener() {
@@ -469,25 +463,21 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		lbRespuesta85Izq.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuesta85Izq.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuesta85Izq.setName("No");
 
 		lbRespuesta70Izq.setFont(new java.awt.Font("Segoe UI", 3, 18));
 		lbRespuesta70Izq.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuesta70Izq.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuesta70Izq.setName("No");
 
 		lbRespuesta55Izq.setFont(new java.awt.Font("Segoe UI", 3, 18));
 		lbRespuesta55Izq.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuesta55Izq.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuesta55Izq.setName("No");
 
 		lbRespuesta40Izq.setFont(new java.awt.Font("Segoe UI", 3, 18));
 		lbRespuesta40Izq.setForeground(new java.awt.Color(0, 0, 255));
 		lbRespuesta40Izq.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
-		lbRespuesta40Izq.setName("No");
 
 		jRadioIzq40.setText("Oblicua 40\u00b0");
 		jRadioIzq40.addActionListener(new java.awt.event.ActionListener() {
@@ -698,7 +688,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
 			Thread timer = new Thread() {
 				public void run() {
-					Boolean ok = escuchar(lbRespuesta40Der, false);
+					Boolean ok = escuchar(lbRespuesta40Der, true);
 					Util.ocultarPanelOperacionesLargas();
 				}
 			};
@@ -894,7 +884,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		}
 	}
 
-	public boolean escuchar(JLabel label, Boolean der) {
+	public boolean escuchar(JLabel label, Boolean izq) {
 		label.setIcon(null);
 
 		int tiempo = 0;
@@ -906,7 +896,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 				tiempo += sleep;
 
 				TramaVision tv = (TramaVision) Util.thTrama.getTramaValida();
-				if (der == null) {
+				if (izq == null) {
 					if (tv.isDerButtonPress() || tv.isIzqButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
@@ -914,7 +904,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return true;
 					}
-				} else if (der) {
+				} else if (izq) {
 					if (tv.isDerButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
@@ -928,7 +918,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return false;
 					}
-				} else if (!der) {
+				} else if (!izq) {
 					if (tv.isDerButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_CANCEL_SMALL);
 						label.setName("No");
@@ -1016,16 +1006,15 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	public String getResultado() {
-		int etapas[] = {115,110,210,115,325,320};
+		int etapas[] = { 115, 110, 210, 115, 325, 320 };
 		for (Resultado res : resultados) {
-			
-			for(int i=0;i<etapas.length;i++)
-			{
+
+			for (int i = 0; i < etapas.length; i++) {
 				if (res.getResEtapa() == etapas[i]) {
 					if (res.getResValor1().intValue() == 0)
 						return Examen.RESULTADO_FUERA_DERIVACION;
 				}
-				
+
 			}
 		}
 
