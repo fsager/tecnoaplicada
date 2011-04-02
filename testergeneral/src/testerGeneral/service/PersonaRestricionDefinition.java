@@ -1,4 +1,5 @@
 package testerGeneral.service;
+import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaRestricion;
 
 /**
@@ -45,4 +46,5 @@ public interface PersonaRestricionDefinition {
 	 */
 	public abstract void update(PersonaRestricion p_domain) throws Exception;
 
+	public abstract String getOtrasAflicciones(Persona p_domain) throws Exception;
 }

@@ -117,8 +117,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		order.add(txtEstudios);
 		order.add(txtOtrasObs);
 		order.add(panelObsOcular.getJlist());
-		order.add(panelObsAuditiva.getJlist());
-		order.add(panelObsFisica.getJlist());
+		//order.add(panelObsAuditiva.getJlist());
+		//order.add(panelObsFisica.getJlist());
 		order.add(btnExamniarFirma);
 		order.add(btnExaminarFoto);
 		order.add(btnGuardar);
@@ -152,12 +152,9 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		actTomarExamen = new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				try
-				{
+				try {
 					btnTomarExamen();
-				}
-				catch(Exception e)
-				{
+				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
 			}
@@ -186,9 +183,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		};
 		menu.getBtnEliminarPersona().addActionListener(eliminar);
 	}
-	
-	
-
 
 	public void btnTomarExamen() throws Exception {
 		menu.unSelectButtons(menu.getToolbarSubNivel(), menu
@@ -200,20 +194,24 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		dialogoTomarExamen.doModal(this.getRootPane());
 		dialogoTomarExamen.setVisible(true);*/
-		
-		ExamenDefinition examenService = (ExamenDefinition) ContextManager.getBizObject("examenService");
+
+		ExamenDefinition examenService = (ExamenDefinition) ContextManager
+				.getBizObject("examenService");
 		Examen exa = new Examen();
 		exa.setExaCodigo(Examen.EXA_CODIGO_VISION);
 		exa = (Examen) examenService.getAll(exa).get(0);
 
-		testerGeneral.persistence.impl.Util.insertAudit(testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_VISION,null, null);
+		testerGeneral.persistence.impl.Util.insertAudit(
+				testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_VISION,
+				null, null);
 
-		PersonaExamen personaExamen=new PersonaExamen();
+		PersonaExamen personaExamen = new PersonaExamen();
 		personaExamen.setPexaTipoExamen(PersonaExamen.TIPO_EXAMEN_PROFECIONAL);
 		personaExamen.setPersona(persona);
-		personaExamen.setExamen(exa);	
-		
-		javax.swing.JToggleButton btnExamenVision = new JToggleButton(Constantes.MENU_SUB_EXAMEN_VISION);
+		personaExamen.setExamen(exa);
+
+		javax.swing.JToggleButton btnExamenVision = new JToggleButton(
+				Constantes.MENU_SUB_EXAMEN_VISION);
 		btnExamenVision.setEnabled(false);
 		menu.cargarSubMenuExamenes(btnExamenVision);
 		menu.seleccionarExamenVision(personaExamen);
@@ -242,8 +240,11 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		Util.cargarDominios(cbGrupoSanguineo,
 				Constantes.DOMINIO_CLAVE_GRUPO_SAN, false);
 		Util.cargarDominios(cbSexo, Constantes.DOMINIO_CLAVE_SEXO, false);
-		Util.cargarDominios(cbTipoDoc, Constantes.DOMINIO_CLAVE_TIPO_DOC,false);
-		Util.cargarDominios(cbLocalidad, Constantes.DOMINIO_CLAVE_LOCALIDAD,false);
+		Util
+				.cargarDominios(cbTipoDoc, Constantes.DOMINIO_CLAVE_TIPO_DOC,
+						false);
+		Util.cargarDominios(cbLocalidad, Constantes.DOMINIO_CLAVE_LOCALIDAD,
+				false);
 		Util.selectDominios(cbTipoDoc, "DNI");
 	}
 
@@ -271,8 +272,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		txtEstudios.setEnabled(habilitar);
 		txtOtrasObs.setEnabled(habilitar);
 		panelObsOcular.setEnabled(habilitar);
-		panelObsAuditiva.setEnabled(habilitar);
-		panelObsFisica.setEnabled(habilitar);
+		//panelObsAuditiva.setEnabled(habilitar);
+		//panelObsFisica.setEnabled(habilitar);
 		btnExamniarFirma.setEnabled(habilitar);
 		btnExaminarFoto.setEnabled(habilitar);
 		btnCancelarFirma.setEnabled(habilitar);
@@ -310,10 +311,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		jPanel7 = new javax.swing.JPanel();
 		jPanel5 = new javax.swing.JPanel();
 		panelObsOcular = new frontend.components.PanelScroll();
-		jPanel6 = new javax.swing.JPanel();
-		panelObsAuditiva = new frontend.components.PanelScroll();
-		jPanel4 = new javax.swing.JPanel();
-		panelObsFisica = new frontend.components.PanelScroll();
 		jPanel9 = new javax.swing.JPanel();
 		lbFoto = new javax.swing.JLabel();
 		btnExaminarFoto = new ButtonExaminar();
@@ -321,8 +318,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		btnExamniarFirma = new ButtonExaminar();
 		btnCancelarFirma = new ButtonCancelarMini();
 		btnCancelarFoto = new ButtonCancelarMini();
-		btnAgregarFisica = new ButtonAgregarMini();
-		btnAgregarAud = new ButtonAgregarMini();
 		btnAgregarOcular = new ButtonAgregarMini();
 		jPanel8 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
@@ -732,47 +727,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 						249, Short.MAX_VALUE).addContainerGap()));
 		jPanel5Layout.setVerticalGroup(jPanel5Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				panelObsOcular, javax.swing.GroupLayout.DEFAULT_SIZE, 58,
+				panelObsOcular, javax.swing.GroupLayout.DEFAULT_SIZE, 242,
 				Short.MAX_VALUE));
-
-		jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
-				Constantes.LB_OBSERVACIONES_AUDITIVA,
-				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-				javax.swing.border.TitledBorder.DEFAULT_POSITION,
-				new java.awt.Font("Tahoma", 3, 11)));
-
-		javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(
-				jPanel6);
-		jPanel6.setLayout(jPanel6Layout);
-		jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				jPanel6Layout.createSequentialGroup().addComponent(
-						panelObsAuditiva, javax.swing.GroupLayout.DEFAULT_SIZE,
-						249, Short.MAX_VALUE).addContainerGap()));
-		jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				panelObsAuditiva, javax.swing.GroupLayout.DEFAULT_SIZE, 58,
-				Short.MAX_VALUE));
-
-		jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
-				Constantes.LB_OBSERVACIONES_FISICA,
-				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-				javax.swing.border.TitledBorder.DEFAULT_POSITION,
-				new java.awt.Font("Tahoma", 3, 11)));
-
-		javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(
-				jPanel4);
-		jPanel4.setLayout(jPanel4Layout);
-		jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				jPanel4Layout.createSequentialGroup().addComponent(
-						panelObsFisica, javax.swing.GroupLayout.DEFAULT_SIZE,
-						249, Short.MAX_VALUE).addContainerGap()));
-		jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				panelObsFisica, javax.swing.GroupLayout.PREFERRED_SIZE, 58,
-				javax.swing.GroupLayout.PREFERRED_SIZE));
 
 		lbFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		lbFoto.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -938,26 +894,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																				25,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)))));
 
-		btnAgregarFisica.setIcon(new ImageIcon(getClass().getResource(
-				"/images/agregar.png")));
-		btnAgregarFisica.setToolTipText("Examinar");
-		((ButtonAgregarMini) btnAgregarFisica).init();
-		btnAgregarFisica.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnAgregarFisicaActionPerformed(evt);
-			}
-		});
-
-		btnAgregarAud.setIcon(new ImageIcon(getClass().getResource(
-				"/images/agregar.png")));
-		btnAgregarAud.setToolTipText("Examinar");
-		((ButtonAgregarMini) btnAgregarAud).init();
-		btnAgregarAud.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnAgregarAudActionPerformed(evt);
-			}
-		});
-
 		btnAgregarOcular.setIcon(new ImageIcon(getClass().getResource(
 				"/images/agregar.png")));
 		btnAgregarOcular.setToolTipText("Examinar");
@@ -993,47 +929,20 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																jPanel7Layout
 																		.createSequentialGroup()
 																		.addContainerGap()
-																		.addGroup(
-																				jPanel7Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addComponent(
-																								jPanel5,
-																								javax.swing.GroupLayout.Alignment.TRAILING,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								jPanel6,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								jPanel4,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.PREFERRED_SIZE))
+																		.addComponent(
+																				jPanel5,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addGroup(
-																				jPanel7Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addComponent(
-																								btnAgregarOcular,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								22,
-																								javax.swing.GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								btnAgregarAud,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								22,
-																								javax.swing.GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								btnAgregarFisica,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								22,
-																								javax.swing.GroupLayout.PREFERRED_SIZE))))
+																		.addComponent(
+																				btnAgregarOcular,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				22,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
 										.addContainerGap()));
 		jPanel7Layout
 				.setVerticalGroup(jPanel7Layout
@@ -1045,60 +954,17 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 										.addGroup(
 												jPanel7Layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING,
-																false)
-														.addGroup(
-																jPanel7Layout
-																		.createSequentialGroup()
-																		.addGap(
-																				69,
-																				69,
-																				69)
-																		.addComponent(
-																				btnAgregarOcular,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				22,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addGap(
-																				65,
-																				65,
-																				65)
-																		.addComponent(
-																				btnAgregarAud,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				22,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				btnAgregarFisica,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				22,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																jPanel7Layout
-																		.createSequentialGroup()
-																		.addComponent(
-																				jPanel5,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				jPanel6,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				jPanel4,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)))
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																btnAgregarOcular,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																22,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jPanel5,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(
@@ -2086,7 +1952,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																						.addComponent(
 																								jPanel8,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								503,
+																								509,
 																								Short.MAX_VALUE)
 																						.addComponent(
 																								jPanel11,
@@ -2260,20 +2126,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		calcularEdad();
 	}
 
-	private void btnAgregarFisicaActionPerformed(java.awt.event.ActionEvent evt) {
-		Dominio dom = new Dominio();
-		dom.setDomClave(Constantes.DOMINIO_CLAVE_RES_FISICA);
-		dom.setDomTipo(Constantes.DOMINIO_TIPO_RES_FISICA);
-		mostrarVentanaDominios(dom);
-	}
-
-	private void btnAgregarAudActionPerformed(java.awt.event.ActionEvent evt) {
-		Dominio dom = new Dominio();
-		dom.setDomClave(Constantes.DOMINIO_CLAVE_RES_AUD);
-		dom.setDomTipo(Constantes.DOMINIO_TIPO_RES_AUD);
-		mostrarVentanaDominios(dom);
-	}
-
 	private void btnAgregarOcularActionPerformed(java.awt.event.ActionEvent evt) {
 		Dominio dom = new Dominio();
 		dom.setDomClave(Constantes.DOMINIO_CLAVE_RES_VISUAL);
@@ -2422,8 +2274,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		txtEstudios.setText("");
 		txtOtrasObs.setText("");
 		panelObsOcular.inicializar();
-		panelObsAuditiva.inicializar();
-		panelObsFisica.inicializar();
+		//panelObsAuditiva.inicializar();
+		//panelObsFisica.inicializar();
 
 		lbEdad.setText(Constantes.LB_EDAD);
 		lbFirma.setIcon(null);
@@ -2542,18 +2394,18 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 			Set personaRestricciones = persona.getPersonaRestricions();
 			personaRestricciones.clear();
-			for (int i = 0; i < panelObsFisica.getSeleccionados().size(); i++) {
+			/*for (int i = 0; i < panelObsFisica.getSeleccionados().size(); i++) {
 				personaRestricciones.add(panelObsFisica.getSeleccionados().get(
 						i));
-			}
+			}*/
 			for (int i = 0; i < panelObsOcular.getSeleccionados().size(); i++) {
 				personaRestricciones.add(panelObsOcular.getSeleccionados().get(
 						i));
 			}
-			for (int i = 0; i < panelObsAuditiva.getSeleccionados().size(); i++) {
+			/*for (int i = 0; i < panelObsAuditiva.getSeleccionados().size(); i++) {
 				personaRestricciones.add(panelObsAuditiva.getSeleccionados()
 						.get(i));
-			}
+			}*/
 
 			try {
 
@@ -2762,7 +2614,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			menu.getBtnModificarPersona().setEnabled(false);
 
 			if (personas.size() <= 0) {
-				menu.getBtnNuevaPersona().setEnabled(true && usr.hasAmPersonaPermition());
+				menu.getBtnNuevaPersona().setEnabled(
+						true && usr.hasAmPersonaPermition());
 			} else {
 				menu.getBtnNuevaPersona().setEnabled(false);
 			}
@@ -2854,8 +2707,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			List restriccionAuditiva = Util
 					.getDominios(Constantes.DOMINIO_CLAVE_RES_AUD);
 
-			cargarPanel(panelObsAuditiva, restriccionAuditiva);
-			cargarPanel(panelObsFisica, restriccionFisica);
+			//cargarPanel(panelObsAuditiva, restriccionAuditiva);
+			//cargarPanel(panelObsFisica, restriccionFisica);
 			cargarPanel(panelObsOcular, restriccionVision);
 
 		} catch (Exception e) {
@@ -2919,15 +2772,15 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		Util.selectDominios(cbTipoDoc, persona.getPerTipoDoc());
 		txtNroDoc.setText(persona.getPerNumeroDoc());
 		Util.selectDominios(cbSexo, persona.getPerSexo());
-		
-		if(persona.getPerFechaNacimiento()!=null)
+
+		if (persona.getPerFechaNacimiento() != null)
 			txtNacimiento.setText(sdf.format(persona.getPerFechaNacimiento()));
-		
+
 		Util.selectDominios(cbEstadoCivil, persona.getPerEstadoCivil());
 		Util.selectDominios(cbGrupoSanguineo, persona.getPerGrupoSanguineo());
 		Util.selectDominios(cbLocalidad, persona.getPerLocalidad());
-		
-		if(persona.getPerDomicilio()!=null)
+
+		if (persona.getPerDomicilio() != null)
 			txtDomicilio.setText(persona.getPerDomicilio());
 		txtTelefono.setText(persona.getPerTelefono());
 		txtCelular.setText(persona.getPerCelular());
@@ -3002,9 +2855,9 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		}
 		cargarPaneles();
 
-		panelObsFisica.setSeleccionados(persona.getPersonaRestricions());
+		//panelObsFisica.setSeleccionados(persona.getPersonaRestricions());
 		panelObsOcular.setSeleccionados(persona.getPersonaRestricions());
-		panelObsAuditiva.setSeleccionados(persona.getPersonaRestricions());
+		//panelObsAuditiva.setSeleccionados(persona.getPersonaRestricions());
 
 		calcularEdad();
 
@@ -3015,8 +2868,10 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		btnCancelar.setEnabled(true);
 
 		menu.getBtnNuevaPersona().setEnabled(false);
-		menu.getBtnEliminarPersona().setEnabled(true && usr.hasBPersonaPermition());
-		menu.getBtnModificarPersona().setEnabled(true && usr.hasAmPersonaPermition());
+		menu.getBtnEliminarPersona().setEnabled(
+				true && usr.hasBPersonaPermition());
+		menu.getBtnModificarPersona().setEnabled(
+				true && usr.hasAmPersonaPermition());
 
 		habilitar(false);
 	}
@@ -3092,9 +2947,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
-	private javax.swing.JButton btnAgregarAud;
 	private javax.swing.JButton btnAgregarEstadoCivil;
-	private javax.swing.JButton btnAgregarFisica;
 	private javax.swing.JButton btnAgregarLocalidad;
 	private javax.swing.JButton btnAgregarOcular;
 	private javax.swing.JButton btnAgregarTipoDoc;
@@ -3147,9 +3000,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private javax.swing.JPanel jPanel11;
 	private javax.swing.JPanel jPanel2;
 	private javax.swing.JPanel jPanel3;
-	private javax.swing.JPanel jPanel4;
 	private javax.swing.JPanel jPanel5;
-	private javax.swing.JPanel jPanel6;
 	private javax.swing.JPanel jPanel7;
 	private javax.swing.JPanel jPanel8;
 	private javax.swing.JPanel jPanel9;
@@ -3178,8 +3029,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private javax.swing.JLabel lbFirma;
 	private javax.swing.JLabel lbFoto;
 	private javax.swing.JLabel lbSinResultados;
-	private frontend.components.PanelScroll panelObsAuditiva;
-	private frontend.components.PanelScroll panelObsFisica;
 	private frontend.components.PanelScroll panelObsOcular;
 	private javax.swing.JTable tablePersona;
 	private javax.swing.JTextField txtApellido;
@@ -3197,7 +3046,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private javax.swing.JTextArea txtOtrasObs;
 	private javax.swing.JTextField txtTelefono;
 	// End of variables declaration//GEN-END:variables
-	
+
 	private Persona persona = new Persona();
 	private String validarFirma = ContextManager
 			.getProperty("PERSONA.FIRMA.REQUERIDA");
@@ -3214,7 +3063,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private ActionListener actTomarExamen;
 	private ActionListener actVerExamenes;
 	private ActionListener actVerExamen;
-	private Usuario usr=((Usuario)Util.usuarioCommon);
+	private Usuario usr = ((Usuario) Util.usuarioCommon);
 	// private SharedListSelectionHandler sharedListSelectionHandler=new
 	// SharedListSelectionHandler();
 }
