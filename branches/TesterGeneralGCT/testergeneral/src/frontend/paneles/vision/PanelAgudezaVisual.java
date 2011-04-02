@@ -97,6 +97,9 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				public void run() {
 					try {
 						Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST1);
+						Thread.sleep(20);
+
+						habilitarTextField();
 
 					} catch (Exception e) {
 						//throw new RuntimeException(e);
@@ -169,7 +172,6 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\agudeza visual\\binocular.png")); // NOI18N
 
 		buttonGroup2.add(jRadioBoxBinocular);
-		jRadioBoxBinocular.setSelected(true);
 		jRadioBoxBinocular.setText("Visi\u00f3n binocular");
 		jRadioBoxBinocular
 				.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +188,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
 						new javax.swing.text.NumberFormatter(
 								new java.text.DecimalFormat("#0"))));
+		jFormattedLineaBinocularLe.setEnabled(false);
 		jFormattedLineaBinocularLe
 				.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
 
@@ -339,7 +342,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(jLabel8))
-										.addContainerGap(87, Short.MAX_VALUE)));
+										.addContainerGap(88, Short.MAX_VALUE)));
 
 		jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -349,6 +352,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 						"C:\\programacion\\Workspaces3\\TesterGeneral\\images\\images\\vision\\agudeza visual\\monocular_der.png")); // NOI18N
 
 		buttonGroup2.add(jRadioBoxMonoDer);
+		jRadioBoxMonoDer.setSelected(true);
 		jRadioBoxMonoDer.setText("Visi\u00f3n monocular derecho");
 		jRadioBoxMonoDer.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -360,7 +364,6 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
 						new javax.swing.text.NumberFormatter(
 								new java.text.DecimalFormat("#0"))));
-		jFormattedLineaMonocularDerLe.setEnabled(false);
 		jFormattedLineaMonocularDerLe
 				.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
 
@@ -428,7 +431,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(jLabel9))
-										.addContainerGap(87, Short.MAX_VALUE)));
+										.addContainerGap(88, Short.MAX_VALUE)));
 
 		buttonGroup1.add(jRadioExamenLejana);
 		jRadioExamenLejana.setFont(new java.awt.Font("Segoe UI", 3, 14));
@@ -453,64 +456,55 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING,
+																javax.swing.GroupLayout.Alignment.TRAILING,
 																false)
 														.addGroup(
+																javax.swing.GroupLayout.Alignment.LEADING,
 																layout
 																		.createSequentialGroup()
 																		.addContainerGap()
-																		.addGroup(
-																				layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addComponent(
-																								jRadioExamenLejana)
-																						.addGroup(
-																								layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												jPanel1,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																										.addComponent(
-																												jPanel2,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)))
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+																		.addComponent(
+																				jRadioExamenLejana))
 														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
+																javax.swing.GroupLayout.Alignment.LEADING,
 																layout
 																		.createSequentialGroup()
 																		.addComponent(
 																				lbError,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				714,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				Short.MAX_VALUE)
-																		.addGap(
-																				177,
-																				177,
-																				177)))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(
-												layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
-														.addComponent(
-																jPanel3,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																btnGuardar))
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+																		.addComponent(
+																				btnGuardar))
+														.addGroup(
+																javax.swing.GroupLayout.Alignment.LEADING,
+																layout
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addComponent(
+																				jPanel3,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanel2,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanel1,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap()));
 		layout
 				.setVerticalGroup(layout
 						.createParallelGroup(
@@ -532,13 +526,12 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addComponent(
-																jPanel1,
-																javax.swing.GroupLayout.Alignment.TRAILING,
+																jPanel2,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addComponent(
-																jPanel2,
+																jPanel1,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE))
@@ -573,7 +566,8 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 	}
 
 	private void formFocusGained(java.awt.event.FocusEvent evt) {
-		jFormattedLineaBinocularLe.requestFocus();
+		//jFormattedLineaBinocularLe.requestFocus();
+		jFormattedLineaMonocularIzqLe.requestFocus();
 	}
 
 	public void habilitarTextField() {
@@ -591,7 +585,8 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 		if (jRadioBoxBinocular.isSelected()) {
 			if (!luzDerechaPrendida) {
 				if (Util.connectToHard)
-					Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+					Util.thTrama
+							.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
 
 				luzDerechaPrendida = true;
 			}
@@ -809,7 +804,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar la línea correcta para binocular lejana. Valores entre 1 y 7.",
+							"Debe ingresar la línea correcta para binocular lejana. Valores entre 1 y 8.",
 							false);
 			return false;
 		}
@@ -819,7 +814,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar la línea correcta para monocular izquierda lejana. Valores entre 1 y 7.",
+							"Debe ingresar la línea correcta para monocular izquierda lejana. Valores entre 1 y 8.",
 							false);
 			return false;
 		}
@@ -829,7 +824,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar la línea correcta para monocular derecha lejana. Valores entre 1 y 7.",
+							"Debe ingresar la línea correcta para monocular derecha lejana. Valores entre 1 y 8.",
 							false);
 			return false;
 		}
@@ -862,7 +857,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 	public boolean isLineaValueValid(JFormattedTextField jFormattedLinea) {
 		try {
 			int value = Integer.valueOf(jFormattedLinea.getText());
-			if (value == 0 || value > 7)
+			if (value == 0 || value > 8)
 				return false;
 		} catch (NumberFormatException ex) {
 			return false;
@@ -943,14 +938,16 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 		case 1:
 			return 0.1;
 		case 2:
-			return 0.3;
+			return 0.2;
 		case 3:
-			return 0.4;
+			return 0.3;
 		case 4:
-			return 0.5;
+			return 0.4;
 		case 5:
-			return 0.7;
+			return 0.5;
 		case 6:
+			return 0.7;
+		case 7:
 			return 0.8;
 		default:
 			return 1.0;

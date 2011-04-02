@@ -27,6 +27,7 @@ import testerGeneral.domain.Examen;
 import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.service.PersonaExamenDefinition;
+import testerGeneral.service.PersonaRestricionDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.tablemodel.TableModelPersonaExamen;
@@ -254,9 +255,12 @@ public class VentanaVerExamenes extends JInternalFrameTesterGral {
 	private void btnDetalleActionPerformed(java.awt.event.ActionEvent evt) {
 		try
 		{
+			PersonaRestricionDefinition personaRestriccionService=(PersonaRestricionDefinition)ContextManager.getBizObject("personaRestricionService");
+			
 			HashMap parameterMap = new HashMap();
 			PersonaExamen perExa = getPersonaExamenFromTable();
 			parameterMap.put("p_pexa_id", perExa.getPexaId());
+			parameterMap.put("otrasAflicciones",personaRestriccionService.getOtrasAflicciones(perExa.getPersona()));
 			parameterMap.put("SUBREPORT_DIR",new File("./reportes").getCanonicalPath()+File.separator);
 			
 			final byte[] buf = JasperRunManager.runReportToPdf(Constantes.RPT_PERSONA_EXAMEN, parameterMap, ContextManager.getCurrentConnection());

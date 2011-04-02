@@ -1,7 +1,9 @@
 package testerGeneral.business;
 
 import java.util.List;
+import java.util.Set;
 
+import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaRestricion;
 import testerGeneral.persistence.PersonaRestricionDao;
 import testerGeneral.service.PersonaRestricionDefinition;
@@ -34,4 +36,31 @@ public class PersonaRestricionBiz implements PersonaRestricionDefinition {
 		dao.update(p_domain);
 	}
 
+	public String getOtrasAflicciones(Persona p_domain) throws Exception {
+		String otrasAflicciones=new String();
+		Set<PersonaRestricion> restricciones=p_domain.getPersonaRestricions();
+		
+		String[] restriccionesADescartar={"Usa Lentes de Contacto","Lentes de Contacto","Usa Anteojos","Anteojos"};
+
+		for(PersonaRestricion perRestriccion:restricciones)
+		{
+			boolean agregar=true;
+			for(int i=0;i<restriccionesADescartar.length;i++)
+			{
+				if(perRestriccion.getDescripcion().equals(restriccionesADescartar[i]))
+				{
+					agregar=false;
+					break;
+				}
+			}
+			
+			if(agregar)
+				otrasAflicciones+=perRestriccion.getDescripcion()+", ";
+		}
+		
+		if(otrasAflicciones.lastIndexOf(",")!=-1)
+			otrasAflicciones=otrasAflicciones.substring(0,otrasAflicciones.lastIndexOf(","));
+		
+		return otrasAflicciones;
+	}
 }

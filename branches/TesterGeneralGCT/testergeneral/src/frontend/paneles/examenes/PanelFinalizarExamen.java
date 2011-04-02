@@ -14,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 
 import org.apache.commons.logging.Log;
@@ -27,13 +26,12 @@ import testerGeneral.domain.Examen;
 import testerGeneral.domain.ExamenDetalle;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.ResultadoDetalleExamen;
-import testerGeneral.service.ExamenDefinition;
 import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
+import testerGeneral.service.PersonaRestricionDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
 import frontend.buttons.ButtonGuardar;
 import frontend.components.JOptionPaneTesterGral;
-import frontend.paneles.PanelMenuPrincipal;
 import frontend.tablemodel.RowRenderer;
 import frontend.tablemodel.TableModelResultadoExamen;
 import frontend.utils.Util;
@@ -412,44 +410,12 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 			imprimirResultado();
 
-			int op = JOptionPaneTesterGral.showInternal("<HTML>"
-					+ Constantes.MENSAJE_GUARDADO
-					+ "<BR>¿Desea continuar tomando exámenes?</HTML>",
+			JOptionPaneTesterGral.showInternalMessageDialog(
+					Constantes.MENSAJE_GUARDADO,
 					Constantes.MENSAJE_GUARDADO_TIT,
-					JOptionPane.QUESTION_MESSAGE);
-
-			if (op == JOptionPane.YES_OPTION) {
-
-				/*final DialogoTomarExamen dialogoTomarExamen = new DialogoTomarExamen(
-						perExamen.getPersona(),
-						(PanelMenuPrincipal) Util.panelMenu);
-				dialogoTomarExamen.pack();
-				Util.agregarIframe(dialogoTomarExamen);
-
-				dialogoTomarExamen.doModal(this.getRootPane());
-				dialogoTomarExamen.setVisible(true);*/
-				
-				ExamenDefinition examenService = (ExamenDefinition) ContextManager.getBizObject("examenService");
-				Examen exa = new Examen();
-				exa.setExaCodigo(Examen.EXA_CODIGO_VISION);
-				exa = (Examen) examenService.getAll(exa).get(0);
-
-				testerGeneral.persistence.impl.Util.insertAudit(testerGeneral.persistence.impl.Util.ACTION_MENU_EXAMEN_VISION,null, null);
-
-				PersonaExamen personaExamen=new PersonaExamen();
-				personaExamen.setPexaTipoExamen(PersonaExamen.TIPO_EXAMEN_PROFECIONAL);
-				personaExamen.setPersona(perExamen.getPersona());
-				personaExamen.setExamen(exa);	
-				
-				javax.swing.JToggleButton btnExamenVision = new JToggleButton(Constantes.MENU_SUB_EXAMEN_VISION);
-				btnExamenVision.setEnabled(false);
-				((PanelMenuPrincipal) Util.panelMenu).cargarSubMenuExamenes(btnExamenVision);
-				((PanelMenuPrincipal) Util.panelMenu).seleccionarExamenVision(personaExamen);
-				
-			} else {
-				Util.panelMenu.cargarSubMenuPersona();
-				Util.panelMenu.seleccionarPersona();
-			}
+					JOptionPane.INFORMATION_MESSAGE);
+			Util.panelMenu.cargarSubMenuPersona();
+			Util.panelMenu.seleccionarPersona();
 
 			//ExamenesUtils.mostrarPanelExamen(perExamen, Util.panelContenido);
 
@@ -467,8 +433,12 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 	public void imprimirResultado() throws Exception{
 
+		PersonaRestricionDefinition personaRestriccionService=(PersonaRestricionDefinition)ContextManager.getBizObject("personaRestricionService");
 		HashMap parameterMap = new HashMap();
 		parameterMap.put("p_pexa_id", perExamen.getPexaId());
+		parameterMap.put("otrasAflicciones",personaRestriccionService.getOtrasAflicciones(perExamen.getPersona()));
+		
+		
 		parameterMap.put("SUBREPORT_DIR",new File("./reportes").getCanonicalPath()+File.separator);		
 		new VentanaReportes(this, parameterMap, Constantes.RPT_PERSONA_EXAMEN);
 

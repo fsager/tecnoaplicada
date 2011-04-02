@@ -3,7 +3,7 @@
 	<property name="template.type" value="columnar"/>
 	<property name="ireport.zoom" value="1.2396694214876036"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="84"/>
+	<property name="ireport.y" value="28"/>
 	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -31,6 +31,7 @@ where p.per_id =pr.per_id
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\programacion\\Workspaces3\\TesterGeneral\\reportes\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="otrasAflicciones" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select per.*,perexa.*,exa.*,detalleRes.*,detalle.*,
 		(select distinct 'SI' from app.persona p, app.persona_restricion pr,app.dominio d
@@ -162,7 +163,7 @@ order by detalle.exad_detalle]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="624" splitType="Stretch">
+		<band height="637" splitType="Stretch">
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="3" y="80" width="140" height="20" forecolor="#000000"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -213,7 +214,7 @@ order by detalle.exad_detalle]]>
 				<text><![CDATA[EXÁMEN OFTALMOLÓGICO]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="146" y="103" width="253" height="31" isRemoveLineWhenBlank="true"/>
+				<reportElement x="146" y="103" width="253" height="20" isRemoveLineWhenBlank="true"/>
 				<subreportParameter name="per_id">
 					<subreportParameterExpression><![CDATA[$F{PER_ID}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -235,14 +236,14 @@ order by detalle.exad_detalle]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{UTILIZA_CORRECION}==null ? "NO" : $F{UTILIZA_CORRECION}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="144" width="83" height="20"/>
+				<reportElement positionType="Float" x="3" y="158" width="83" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Agudeza Visual:]]></text>
 			</staticText>
 			<subreport>
-				<reportElement positionType="Float" x="118" y="142" width="176" height="20"/>
+				<reportElement positionType="Float" x="118" y="156" width="176" height="20"/>
 				<subreportParameter name="p_codigo_examen">
 					<subreportParameterExpression><![CDATA["TEST_AGUDEZA_VISUAL_LEJANA"]]></subreportParameterExpression>
 				</subreportParameter>
@@ -253,223 +254,223 @@ order by detalle.exad_detalle]]>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "agudezaVisualMonocular.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="174" width="83" height="20"/>
+				<reportElement positionType="Float" x="3" y="188" width="83" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Binocular: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="203" width="100" height="20"/>
+				<reportElement positionType="Float" x="3" y="217" width="100" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Anisometropía:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="2" y="228" width="122" height="20"/>
+				<reportElement positionType="Float" x="2" y="242" width="122" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[VISION NOCTURNA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="132" y="229" width="100" height="20"/>
+				<reportElement positionType="Float" x="132" y="243" width="100" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Visión Crepuscular:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="241" y="229" width="158" height="20"/>
+				<reportElement positionType="Float" x="241" y="243" width="158" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{VISION_CREPUSCULAR}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="241" y="252" width="158" height="20"/>
+				<reportElement positionType="Float" x="241" y="266" width="158" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESLUMBRAMIENTO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="132" y="252" width="100" height="20"/>
+				<reportElement positionType="Float" x="132" y="266" width="100" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Deslumbramiento:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="354" y="279" width="203" height="20"/>
+				<reportElement positionType="Float" x="354" y="293" width="203" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{REC_ENCANDILAMIENTO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="131" y="279" width="223" height="20"/>
+				<reportElement positionType="Float" x="131" y="293" width="223" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Tiempo de readaptacion al encandilamiento:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="307" width="101" height="20"/>
+				<reportElement positionType="Float" x="3" y="321" width="101" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Visión Cromática:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="2" y="332" width="181" height="20"/>
+				<reportElement positionType="Float" x="2" y="346" width="181" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Movimientos Oculares Extrínsecos:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="188" y="332" width="64" height="20"/>
+				<reportElement positionType="Float" x="188" y="346" width="64" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Estrabismo]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="201" y="537" width="351" height="20"/>
+				<reportElement positionType="Float" x="201" y="551" width="351" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PEXA_OBS}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="147" y="601" width="62" height="20" forecolor="#000000"/>
+				<reportElement style="Column header" positionType="Float" x="147" y="615" width="62" height="20" forecolor="#000000"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[CÓDIGO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="537" width="194" height="20"/>
+				<reportElement positionType="Float" x="3" y="551" width="194" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Estudios Complementarios solicitados:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="3" y="581" width="59" height="20" forecolor="#000000"/>
+				<reportElement style="Column header" positionType="Float" x="3" y="595" width="59" height="20" forecolor="#000000"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[APTITUD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="3" y="558" width="87" height="20" forecolor="#000000"/>
+				<reportElement style="Column header" positionType="Float" x="3" y="572" width="87" height="20" forecolor="#000000"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Conclusiones:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="149" y="516" width="19" height="20"/>
+				<reportElement positionType="Float" x="149" y="530" width="19" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Si]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="224" y="516" width="13" height="20"/>
+				<reportElement positionType="Float" x="224" y="530" width="13" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="200" y="516" width="19" height="20"/>
+				<reportElement positionType="Float" x="200" y="530" width="19" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="2" y="355" width="181" height="20"/>
+				<reportElement positionType="Float" x="2" y="369" width="181" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Movimientos Oculares Extrínsecos:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="189" y="356" width="64" height="20"/>
+				<reportElement positionType="Float" x="189" y="370" width="64" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Anisocoría]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="173" y="516" width="13" height="20"/>
+				<reportElement positionType="Float" x="173" y="530" width="13" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="380" width="40" height="20"/>
+				<reportElement positionType="Float" x="3" y="394" width="40" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[BMC:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="44" y="387" width="68" height="20"/>
+				<reportElement positionType="Float" x="44" y="401" width="68" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Conjuntivas:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="44" y="407" width="68" height="20"/>
+				<reportElement positionType="Float" x="44" y="421" width="68" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Córneas:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="44" y="427" width="68" height="20"/>
+				<reportElement positionType="Float" x="44" y="441" width="68" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[C. Ant:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="43" y="447" width="68" height="20"/>
+				<reportElement positionType="Float" x="43" y="461" width="68" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Cristalinos:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="471" width="107" height="20"/>
+				<reportElement positionType="Float" x="3" y="485" width="107" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Tensión Ocular: O.D]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="285" y="471" width="34" height="20"/>
+				<reportElement positionType="Float" x="285" y="485" width="34" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[O.I]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="493" width="82" height="20"/>
+				<reportElement positionType="Float" x="3" y="507" width="82" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Campo Visual:(Conclusión)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="516" width="83" height="20"/>
+				<reportElement positionType="Float" x="3" y="530" width="83" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Fondo de Ojo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="88" y="516" width="55" height="20"/>
+				<reportElement positionType="Float" x="88" y="530" width="55" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
@@ -479,120 +480,120 @@ order by detalle.exad_detalle]]>
 				<reportElement positionType="Float" x="4" y="136" width="545" height="1" forecolor="#FFFFFF"/>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="6" y="169" width="545" height="1" forecolor="#FFFFFF"/>
+				<reportElement positionType="Float" x="6" y="183" width="545" height="1" forecolor="#FFFFFF"/>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="5" y="199" width="545" height="1" forecolor="#FFFFFF"/>
+				<reportElement positionType="Float" x="5" y="213" width="545" height="1" forecolor="#FFFFFF"/>
 			</line>
 			<staticText>
-				<reportElement positionType="Float" x="163" y="207" width="19" height="13"/>
+				<reportElement positionType="Float" x="163" y="221" width="19" height="13"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11"/>
 				</textElement>
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="112" y="207" width="19" height="13"/>
+				<reportElement positionType="Float" x="112" y="221" width="19" height="13"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11"/>
 				</textElement>
 				<text><![CDATA[Si]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="187" y="205" width="13" height="15"/>
+				<reportElement positionType="Float" x="187" y="219" width="13" height="15"/>
 			</rectangle>
 			<rectangle>
-				<reportElement positionType="Float" x="136" y="205" width="13" height="15"/>
+				<reportElement positionType="Float" x="136" y="219" width="13" height="15"/>
 			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="111" y="307" width="355" height="20"/>
+				<reportElement positionType="Float" x="111" y="321" width="355" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{VISION_CROMATICA}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="312" y="332" width="19" height="20"/>
+				<reportElement positionType="Float" x="312" y="346" width="19" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="336" y="332" width="13" height="20"/>
+				<reportElement positionType="Float" x="336" y="346" width="13" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="261" y="332" width="19" height="20"/>
+				<reportElement positionType="Float" x="261" y="346" width="19" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Si]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="285" y="332" width="13" height="20"/>
+				<reportElement positionType="Float" x="285" y="346" width="13" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="313" y="356" width="19" height="20"/>
+				<reportElement positionType="Float" x="313" y="370" width="19" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="337" y="356" width="13" height="20"/>
+				<reportElement positionType="Float" x="337" y="370" width="13" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="262" y="356" width="19" height="20"/>
+				<reportElement positionType="Float" x="262" y="370" width="19" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Si]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="286" y="356" width="13" height="20"/>
+				<reportElement positionType="Float" x="286" y="370" width="13" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="59" y="581" width="36" height="20"/>
+				<reportElement positionType="Float" x="59" y="595" width="36" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[APTO]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="95" y="581" width="47" height="20"/>
+				<reportElement positionType="Float" x="95" y="595" width="47" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement positionType="Float" x="200" y="581" width="47" height="20"/>
+				<reportElement positionType="Float" x="200" y="595" width="47" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="147" y="581" width="51" height="20"/>
+				<reportElement positionType="Float" x="147" y="595" width="51" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[NO APTO]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="200" y="601" width="47" height="20"/>
+				<reportElement positionType="Float" x="200" y="615" width="47" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement positionType="Float" x="312" y="582" width="47" height="20"/>
+				<reportElement positionType="Float" x="312" y="596" width="47" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="252" y="582" width="62" height="20"/>
+				<reportElement positionType="Float" x="252" y="596" width="62" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[RETENIDO]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="85" y="144" width="33" height="20"/>
+				<reportElement positionType="Float" x="85" y="158" width="33" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{UTILIZA_CORRECION}==null ? "S/C" : "C/C"]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement positionType="Float" x="86" y="493" width="167" height="20"/>
+				<reportElement positionType="Float" x="86" y="507" width="167" height="20"/>
 				<subreportParameter name="p_pexa_id">
 					<subreportParameterExpression><![CDATA[$P{p_pexa_id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -600,10 +601,10 @@ order by detalle.exad_detalle]]>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "campimetria_izq.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement positionType="Float" x="3" y="513" width="545" height="1" forecolor="#FFFFFF"/>
+				<reportElement positionType="Float" x="3" y="527" width="545" height="1" forecolor="#FFFFFF"/>
 			</line>
 			<subreport>
-				<reportElement positionType="Float" x="255" y="493" width="181" height="20"/>
+				<reportElement positionType="Float" x="255" y="507" width="181" height="20"/>
 				<subreportParameter name="p_pexa_id">
 					<subreportParameterExpression><![CDATA[$P{p_pexa_id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -611,7 +612,7 @@ order by detalle.exad_detalle]]>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "campimetria_der.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="439" y="493" width="113" height="20"/>
+				<reportElement positionType="Float" x="439" y="507" width="113" height="20"/>
 				<subreportParameter name="p_pexa_id">
 					<subreportParameterExpression><![CDATA[$P{p_pexa_id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -619,25 +620,42 @@ order by detalle.exad_detalle]]>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "campimetria_na.jasper"]]></subreportExpression>
 			</subreport>
 			<rectangle>
-				<reportElement positionType="Float" x="114" y="177" width="13" height="15"/>
+				<reportElement positionType="Float" x="114" y="191" width="13" height="15"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="141" y="179" width="19" height="13"/>
+				<reportElement positionType="Float" x="141" y="193" width="19" height="13"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11"/>
 				</textElement>
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement positionType="Float" x="165" y="177" width="13" height="15"/>
+				<reportElement positionType="Float" x="165" y="191" width="13" height="15"/>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="90" y="179" width="19" height="13"/>
+				<reportElement positionType="Float" x="90" y="193" width="19" height="13"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11"/>
 				</textElement>
 				<text><![CDATA[Si]]></text>
 			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="3" y="129" width="92" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Otras Aflicciones:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="95" y="129" width="457" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{otrasAflicciones}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="3" y="126" width="545" height="1" forecolor="#FFFFFF"/>
+			</line>
 		</band>
 	</title>
 	<columnFooter>

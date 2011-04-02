@@ -8,6 +8,7 @@
 	<queryString>
 		<![CDATA[select res.res_etapa_desc,
 		CASE WHEN res.res_valor1=0.100 THEN '0.1'
+		 WHEN res.res_valor1=0.200 THEN '0.2'
 		 WHEN res.res_valor1=0.300 THEN '0.3'
 		 WHEN res.res_valor1=0.400 THEN '0.4'
 		 WHEN res.res_valor1=0.500 THEN '0.5'
