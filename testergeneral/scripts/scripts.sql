@@ -1,3 +1,197 @@
+alter table "APP"."EXAMEN" add EXA_LICENCED VARCHAR(1) not null default 'S';
+alter table "APP"."EXAMEN_DETALLE" add EXAD_LICENCED VARCHAR(1) not null default 'S';
+
+
+select detalleRes.*,detalle.*,perexa.*,exa.*,
+		CASE
+		 WHEN exad_codigo='TEST_CTR_TEMPORO' THEN 'Metros'
+		 WHEN exad_codigo='TEST_PERC_REAC' THEN 'Tiempo en responder'
+		 WHEN exad_codigo='TEST_REAC_MULTIPLES_COND' THEN 'Tiempo en responder'
+		 WHEN exad_codigo='TEST_REAC_SIMPLE' THEN 'Tiempo en responder'
+		 WHEN exad_codigo='TEST_COOR_BIMANUAL_FINA' THEN 'Tiempo fuera del circuito'
+		 WHEN exad_codigo='TEST_REAC_MULT_NO_COND' THEN 'Tiempo en responder'
+		 WHEN exad_codigo='TEST_COOR_VISOMOTORA' THEN ''
+		 WHEN exad_codigo='TEST_COOR_BIMANUAL' THEN 'Tiempo fuera del circuito'
+		 END interpretacion_nota1,
+		CASE
+		WHEN exad_codigo='TEST_CTR_TEMPORO' THEN ''
+		 WHEN exad_codigo='TEST_PERC_REAC' THEN 'Errores'
+		 WHEN exad_codigo='TEST_REAC_MULTIPLES_COND' THEN 'Errores'
+		 WHEN exad_codigo='TEST_REAC_SIMPLE' THEN ''
+		 WHEN exad_codigo='TEST_COOR_BIMANUAL_FINA' THEN 'Puntos sin activar'
+		 WHEN exad_codigo='TEST_REAC_MULT_NO_COND' THEN 'Errores'
+		 WHEN exad_codigo='TEST_COOR_VISOMOTORA' THEN 'Errores'
+		 WHEN exad_codigo='TEST_COOR_BIMANUAL' THEN 'Errores'
+		 END interpretacion_nota2
+		 ,(select avg(rde_nota) from app.RESULTADO_DETALLE_EXAMEN res where res.exad_id = detalle.exad_id and res.pexa_id in $P!{p_pexa_id}) promedio_nota
+		 ,(select avg(rde_nota2) from app.RESULTADO_DETALLE_EXAMEN res where res.exad_id = detalle.exad_id and res.pexa_id in $P!{p_pexa_id}) promedio_nota2
+  from app.persona per,
+              app.persona_examen perexa,
+              app.examen exa,
+              app.resultado_detalle_examen detalleRes,
+	      app.examen_detalle detalle
+where perexa.per_id = per.per_id
+    and exa.exa_id=perexa.exa_id
+    and perexa.pexa_id= detalleRes.pexa_id
+    and detalle.exad_id = detalleRes.exad_id
+    and perexa.pexa_id in $P!{p_pexa_id}
+order by detalle.exad_orden,detalleRes.exad_id,detalle.exad_id
+
+
+select avg(rde_nota) from app.RESULTADO_DETALLE_EXAMEN
+
+
+select d.DOM_VALOR_MOSTRAR from app.persona p, app.persona_restricion pr,app.dominio d
+where p.per_id =pr.per_id
+  and d.dom_id=pr.dom_id
+  and d.dom_clave = 'Restricción Visual'
+  and (lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Lentes de Contacto') or lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Anteojos')) 
+  and p.per_id = 1
+  
+  
+
+
+select per.*,perexa.*,exa.*,detalleRes.*,detalle.*,
+		(select distinct 'SI' from app.persona p, app.persona_restricion pr,app.dominio d
+		where p.per_id =pr.per_id
+		  and d.dom_id=pr.dom_id
+		  and d.dom_clave = 'Restricción Visual'
+		  and (lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Lentes de Contacto') or lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Anteojos'))
+		  and p.per_id = per.per_id) utiliza_Correcion,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_VISION_NOCTURNA') as vision_crepuscular,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_ENCANDILAMIENTO') as deslumbramiento,
+		  (select detalleResE.rde_detalle_resultado|| ' centécimas'
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_REC_ENCANDILAMIENTO') as rec_encandilamiento,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_FOTOCROMATICA') as vision_cromatica	,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_CAMPIMETRIA') as campo_visual			    
+ from app.persona per,
+              app.persona_examen perexa,
+              app.examen exa,
+              app.resultado_detalle_examen detalleRes,
+	      app.examen_detalle detalle
+where perexa.per_id = per.per_id
+    and exa.exa_id=perexa.exa_id
+    and perexa.pexa_id= detalleRes.pexa_id
+    and detalle.exad_id = detalleRes.exad_id
+    and perexa.pexa_id = 15--$P{p_pexa_id}
+order by detalle.exad_detalle;
+
+
+select detalleRes.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = 15
+		    and detalleE.exad_codigo = 'TEST_ENCANDILAMIENTO'
+
+
+
+select res.res_etapa_desc,
+		CASE WHEN res.res_valor1=1 THEN '0.1' 
+		 WHEN res.res_valor1=2 THEN '0.3'
+		 WHEN res.res_valor1=3 THEN '0.4'
+		 WHEN res.res_valor1=4 THEN '0.5'
+		 WHEN res.res_valor1=5 THEN '0.7'
+		 WHEN res.res_valor1=6 THEN '0.8'
+		 WHEN res.res_valor1=7 THEN '1.0'
+		 END res_descripcion,perexa.pexa_id,res.res_valor1
+ from app.persona_examen perexa,
+      app.resultado_detalle_examen detalleRes,
+      app.EXAMEN_DETALLE detalle,
+	  app.RESULTADO res
+where perexa.pexa_id= detalleRes.pexa_id
+  and detalleRes.rde_id = res.rde_id
+  and detalle.exad_id = detalleRes.exad_id
+  --and perexa.pexa_id = 24--$P{p_pexa_id}
+  and detalle.exad_codigo = 'TEST_AGUDEZA_VISUAL_LEJANA'
+  and res.res_etapa in (0,3)--binocular    
+order by res.res_etapa
+
+
+select res.res_etapa_desc
+ from app.persona_examen perexa,
+      app.resultado_detalle_examen detalleRes,
+      app.EXAMEN_DETALLE detalle,
+	  app.RESULTADO res
+where perexa.pexa_id= detalleRes.pexa_id
+  and detalleRes.rde_id = res.rde_id
+  and detalle.exad_id = detalleRes.exad_id
+  --and perexa.pexa_id =$P{p_pexa_id}
+  and detalle.exad_codigo = 'TEST_CAMPIMETRIA'
+  and res.res_etapa_desc like ('%izquierda%')    
+order by res.res_etapa
+
+
+select res.res_etapa_desc,perexa.pexa_id 
+ from app.persona_examen perexa,
+      app.resultado_detalle_examen detalleRes,
+      app.EXAMEN_DETALLE detalle,
+	  app.RESULTADO res
+where perexa.pexa_id= detalleRes.pexa_id
+  and detalleRes.rde_id = res.rde_id
+  and detalle.exad_id = detalleRes.exad_id
+  and perexa.pexa_id =26
+  and detalle.exad_codigo = 'TEST_CAMPIMETRIA'
+  and res.res_etapa_desc like ('%Nasal%')
+order by res.res_etapa
+
+
+
+
+select max(pexa_id) from app.persona_examen perexa
+
+
+select * from app.RESULTADO res;
+
+select * from app.persona per,
+              app.persona_examen perexa,
+              app.examen exa,
+              app.resultado_detalle_examen detalleRes,
+	      app.examen_detalle detalle	      
+where perexa.per_id = per.per_id
+    and exa.exa_id=perexa.exa_id
+    and perexa.pexa_id= detalleRes.pexa_id
+    and detalle.exad_id = detalleRes.exad_id
+    --and perexa.pexa_id = 2
+order by detalle.exad_detalle
+
+1 1
 
 /*
 
@@ -171,36 +365,36 @@ delete  from app.PERSONA_EXAMEN;
 
 
 
-select * from APP.EXAMEN_DETALLE;
+select * from APP.PERSONA_EXAMEN;
 
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',2,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',2,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN) values 
-(1,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
+(2,3,CURRENT TIMESTAMP,'DENTRO DE LOS PARAMETROS','FINALIZADO',null,null,null,'APROBADO',null,'Profecional');
 
 
 select * from APP.PERSONA_EXAMEN;
 
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,83,'FUERA DE LOS PARAMETROS',600,10);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores 
+     values (2,10,'FUERA DE LOS PARAMETROS',600,10);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores 
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,84,'FUERA DE LOS PARAMETROS',239,8);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,11,'FUERA DE LOS PARAMETROS',239,8);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,85,'FUERA DE LOS PARAMETROS',1000,12);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,12,'FUERA DE LOS PARAMETROS',1000,12);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,86,'FUERA DE LOS PARAMETROS',123,9);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,14,'FUERA DE LOS PARAMETROS',123,9);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,87,'FUERA DE LOS PARAMETROS',634,6);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,13,'FUERA DE LOS PARAMETROS',634,6);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 
-     values (2,88,'FUERA DE LOS PARAMETROS',534,5);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
+     values (2,4,'FUERA DE LOS PARAMETROS',534,5);--EXAD_CODIGO_TEST_COOR_BIMANUAL  tiempo centecimas de segundos/errores
 
 
 insert into app.resultado_detalle_examen (EXAD_ID, PEXA_ID, RDE_RESULTADO,RDE_NOTA,RDE_NOTA2) 

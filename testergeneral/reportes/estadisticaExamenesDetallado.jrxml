@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estadisticaExamenesDetallado.jrxml" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="p_cantidad_examenes" class="java.lang.String"/>
+	<parameter name="p_cantidad_examinados" class="java.lang.String"/>
+	<parameter name="p_pexa_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select detalleRes.*,detalle.*,perexa.*,exa.*,
+		CASE
+		 WHEN exad_codigo='TEST_CTR_TEMPORO' THEN 'Metros'
+		 WHEN exad_codigo='TEST_PERC_REAC' THEN 'Tiempo en responder'
+		 WHEN exad_codigo='TEST_REAC_MULTIPLES_COND' THEN 'Tiempo en responder'
+		 WHEN exad_codigo='TEST_REAC_SIMPLE' THEN 'Tiempo en responder'
+		 WHEN exad_codigo='TEST_COOR_BIMANUAL_FINA' THEN 'Tiempo fuera del circuito'
+		 WHEN exad_codigo='TEST_REAC_MULT_NO_COND' THEN 'Tiempo en responder'
+		 WHEN exad_codigo='TEST_COOR_VISOMOTORA' THEN ''
+		 WHEN exad_codigo='TEST_COOR_BIMANUAL' THEN 'Tiempo fuera del circuito'
+		 END interpretacion_nota1,
+		CASE
+		WHEN exad_codigo='TEST_CTR_TEMPORO' THEN ''
+		 WHEN exad_codigo='TEST_PERC_REAC' THEN 'Errores'
+		 WHEN exad_codigo='TEST_REAC_MULTIPLES_COND' THEN 'Errores'
+		 WHEN exad_codigo='TEST_REAC_SIMPLE' THEN ''
+		 WHEN exad_codigo='TEST_COOR_BIMANUAL_FINA' THEN 'Puntos sin activar'
+		 WHEN exad_codigo='TEST_REAC_MULT_NO_COND' THEN 'Errores'
+		 WHEN exad_codigo='TEST_COOR_VISOMOTORA' THEN 'Errores'
+		 WHEN exad_codigo='TEST_COOR_BIMANUAL' THEN 'Errores'
+		 END interpretacion_nota2
+		 ,(select avg(rde_nota) from app.RESULTADO_DETALLE_EXAMEN res where res.exad_id = detalle.exad_id and res.pexa_id in $P!{p_pexa_id}) promedio_nota
+		 ,(select avg(rde_nota2) from app.RESULTADO_DETALLE_EXAMEN res where res.exad_id = detalle.exad_id and res.pexa_id in $P!{p_pexa_id}) promedio_nota2
+  from app.persona per,
+              app.persona_examen perexa,
+              app.examen exa,
+              app.resultado_detalle_examen detalleRes,
+	      app.examen_detalle detalle
+where perexa.per_id = per.per_id
+    and exa.exa_id=perexa.exa_id
+    and perexa.pexa_id= detalleRes.pexa_id
+    and detalle.exad_id = detalleRes.exad_id
+    and perexa.pexa_id in $P!{p_pexa_id}
+order by detalle.exad_orden,detalleRes.exad_id,detalle.exad_id]]>
+	</queryString>
+	<field name="RDE_ID" class="java.lang.Long"/>
+	<field name="EXAD_ID" class="java.lang.Long"/>
+	<field name="PEXA_ID" class="java.lang.Long"/>
+	<field name="RDE_RESULTADO" class="java.lang.String"/>
+	<field name="RDE_DETALLE_RESULTADO" class="java.lang.String"/>
+	<field name="RDE_PARAMETROS_CORRECCION" class="java.lang.String"/>
+	<field name="RDE_NOTA" class="java.math.BigDecimal"/>
+	<field name="RDE_NOTA2" class="java.math.BigDecimal"/>
+	<field name="RDE_NOTA3" class="java.math.BigDecimal"/>
+	<field name="RDE_NOTA4" class="java.math.BigDecimal"/>
+	<field name="RDE_IMAGEN" class="java.sql.Blob"/>
+	<field name="EXAD_DETALLE" class="java.lang.String"/>
+	<field name="EXAD_CODIGO" class="java.lang.String"/>
+	<field name="EXA_ID" class="java.lang.Long"/>
+	<field name="EXAD_ORDEN" class="java.lang.Long"/>
+	<field name="EXAD_PARAMETROS_CORRECCION" class="java.lang.String"/>
+	<field name="PER_ID" class="java.lang.Long"/>
+	<field name="PEXA_FECHA" class="java.sql.Timestamp"/>
+	<field name="PEXA_RESULTADO" class="java.lang.String"/>
+	<field name="PEXA_ESTADO" class="java.lang.String"/>
+	<field name="PEXA_NOTA" class="java.math.BigDecimal"/>
+	<field name="PEXA_OBS" class="java.lang.String"/>
+	<field name="PEXA_ADJ" class="java.sql.Blob"/>
+	<field name="PEXA_RESULTADO_MEDICO" class="java.lang.String"/>
+	<field name="PEXA_NOMBRE_ADJUNTO" class="java.lang.String"/>
+	<field name="PEXA_TIPO_EXAMEN" class="java.lang.String"/>
+	<field name="EXA_CODIGO" class="java.lang.String"/>
+	<field name="EXA_NOMBRE" class="java.lang.String"/>
+	<field name="EXA_ORDEN" class="java.lang.Long"/>
+	<field name="INTERPRETACION_NOTA1" class="java.lang.String"/>
+	<field name="INTERPRETACION_NOTA2" class="java.lang.String"/>
+	<field name="PROMEDIO_NOTA" class="java.math.BigDecimal"/>
+	<field name="PROMEDIO_NOTA2" class="java.math.BigDecimal"/>
+	<variable name="PEXA_NOTA_1" class="java.math.BigDecimal" resetType="Group" resetGroup="ExamenDetalle" calculation="Average">
+		<variableExpression><![CDATA[$F{PEXA_NOTA}]]></variableExpression>
+	</variable>
+	<group name="ExamenDetalle">
+		<groupExpression><![CDATA[$F{EXAD_DETALLE}]]></groupExpression>
+		<groupHeader>
+			<band height="34">
+				<textField>
+					<reportElement x="0" y="0" width="150" height="34"/>
+					<textElement>
+						<font fontName="Arial" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{EXAD_DETALLE}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="20">
+				<textField>
+					<reportElement x="150" y="0" width="130" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{INTERPRETACION_NOTA1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="280" y="0" width="140" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{INTERPRETACION_NOTA2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="150" y="0" width="130" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Float"><![CDATA[$F{PROMEDIO_NOTA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="280" y="0" width="139" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Float"><![CDATA[$F{PROMEDIO_NOTA2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="150" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Promedio:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="3" width="555" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle de exámenes Psicométricos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="62" width="150" height="20"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ Cantidad de exáminados:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="37" width="150" height="20"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ Cantidad de exámenes :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="37" width="131" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{p_cantidad_examenes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="62" width="131" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{p_cantidad_examinados}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField isBlankWhenNull="true">
+				<reportElement x="419" y="0" width="136" height="20"/>
+				<textElement markup="html">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{RDE_DETALLE_RESULTADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="150" y="0" width="130" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{RDE_NOTA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="280" y="0" width="140" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{RDE_NOTA2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
