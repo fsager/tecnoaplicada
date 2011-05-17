@@ -389,8 +389,7 @@ public class GestorActualizacionesUtil {
 		}
 	}
 
-	public static File obtenerArchivoConIndicesMD5DesdeServidorFTP(
-			File directorioDestinoArchivo) {
+	public static File obtenerArchivoConIndicesMD5DesdeServidorFTP(File directorioDestinoArchivo) {
 		String nombreArchivoMD5DesdeServidor = new String("files.md5");
 		File rutaArchivoMD5 = new File(directorioDestinoArchivo
 				.getAbsolutePath()
@@ -404,6 +403,7 @@ public class GestorActualizacionesUtil {
 				// origen en
 				// servidor.
 				rutaArchivoMD5);// Ruta al archivo de destino
+
 
 		return rutaArchivoMD5;
 	}
@@ -533,8 +533,7 @@ public class GestorActualizacionesUtil {
 
 			// GestorActualizacionesUtil.establecerServidorAUtilizar();
 
-			File rutaArchivoMD5Servidor = GestorActualizacionesUtil
-					.obtenerArchivoConIndicesMD5DesdeServidorFTP(directorioActual);
+			File rutaArchivoMD5Servidor = GestorActualizacionesUtil.obtenerArchivoConIndicesMD5DesdeServidorFTP(directorioActual);
 			File rutaArchivoMD5Local = new File(directorioActual
 					.getAbsolutePath()
 					+ File.separator + "files.md5");
