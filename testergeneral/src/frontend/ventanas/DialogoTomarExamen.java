@@ -106,7 +106,7 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 				personaExamen.setPersona(per);
 				personaExamen.setExamen(exa);	
 				
-				panelMenu.cargarSubMenuExamenes(btnExamenPsicometrico);
+				panelMenu.cargarSubMenuExamenes(btnExamenPsicometrico,false);
 				panelMenu.seleccionarExamenPsicometrico(personaExamen);
 			}
 			else if (btn.getActionCommand().equals(Examen.EXA_CODIGO_VISION)) {
@@ -123,7 +123,7 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 				personaExamen.setPersona(per);
 				personaExamen.setExamen(exa);	
 				
-				panelMenu.cargarSubMenuExamenes(btnExamenVision);
+				panelMenu.cargarSubMenuExamenes(btnExamenVision,true);
 				panelMenu.seleccionarExamenVision(personaExamen);
 			}
 			/*else if (btn.getActionCommand().equals(Examen.EXA_CODIGO_AUDICION)) {

@@ -195,7 +195,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 		log.debug("validarPulsacion: "+pulsador);
 		switch (pulsador) {
 			case 1: {
-				if (!thTrama.getTramaValida().isButton1Press()) {
+				if (!Util.thTrama.getTramaValida().isButton1Press()) {
 					addError();
 				} else
 				{
@@ -206,7 +206,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 			}
 				break;
 			case 2: {
-				if (!thTrama.getTramaValida().isButton2Press()) {
+				if (!Util.thTrama.getTramaValida().isButton2Press()) {
 					addError();
 				} else
 				{
@@ -218,7 +218,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 			}
 				break;
 			case 3: {
-				if (!thTrama.getTramaValida().isButton3Press()) {
+				if (!Util.thTrama.getTramaValida().isButton3Press()) {
 					addError();
 				} else
 				{
@@ -230,7 +230,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 			}
 				break;
 			case 4: {
-				if (!thTrama.getTramaValida().isButton4Press()) {
+				if (!Util.thTrama.getTramaValida().isButton4Press()) {
 					addError();
 				} else
 				{
@@ -272,25 +272,25 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	{
 		switch (pulsador) {
 			case 1: {
-				if (!thTrama.getTramaValida().isButton1Press()) {
+				if (!Util.thTrama.getTramaValida().isButton1Press()) {
 					return false;
 				} 
 			}
 				break;
 			case 2: {
-				if (!thTrama.getTramaValida().isButton2Press()) {
+				if (!Util.thTrama.getTramaValida().isButton2Press()) {
 					return false;
 				} 
 			}
 				break;
 			case 3: {
-				if (!thTrama.getTramaValida().isButton3Press()) {
+				if (!Util.thTrama.getTramaValida().isButton3Press()) {
 					return false;
 				}
 			}
 				break;
 			case 4: {
-				if (!thTrama.getTramaValida().isButton4Press()) {
+				if (!Util.thTrama.getTramaValida().isButton4Press()) {
 					return false;
 				} 
 			}
@@ -329,16 +329,16 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	public void prenderLed(int pulsador) {
 		switch (pulsador) {
 		case 1:
-			thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED1);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED1);
 			break;
 		case 2:
-			thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED2);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED2);
 			break;
 		case 3:
-			thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED3);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED3);
 			break;
 		case 4:
-			thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED4);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED4);
 			break;
 		}
 	}
@@ -346,37 +346,37 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	public void apagarLed() {		
 		/*switch (pulsador) {
 		case 1:
-			thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED1);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED1);
 			break;
 		case 2:
-			thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED2);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED2);
 			break;
 		case 3:
-			thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED3);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED3);
 			break;
 		case 4:
-			thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED4);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED4);
 			break;
 		}*/
 		
-		thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED1);
-		thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED2);
-		thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED3);
-		thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED4);		
-		thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED5);
-		thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED6);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED1);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED2);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED3);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED4);		
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED5);
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LED6);
 	}
 
 	public boolean isAnyButtonPress() {
 		
-		log.debug("thTrama.getTramaValida: "+thTrama.getTramaValida().getByte(6));
-		if (thTrama.getTramaValida().isButton1Press())
+		log.debug("Util.thTrama.getTramaValida: "+Util.thTrama.getTramaValida().getByte(6));
+		if (Util.thTrama.getTramaValida().isButton1Press())
 			return true;
-		if (thTrama.getTramaValida().isButton2Press())
+		if (Util.thTrama.getTramaValida().isButton2Press())
 			return true;
-		if (thTrama.getTramaValida().isButton3Press())
+		if (Util.thTrama.getTramaValida().isButton3Press())
 			return true;
-		if (thTrama.getTramaValida().isButton4Press())
+		if (Util.thTrama.getTramaValida().isButton4Press())
 			return true;
 
 		return false;
@@ -394,15 +394,20 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	}
 
 	public void inicializarThreads() {
+		if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaPsicologico))
+			Util.thTrama.desconnect();
 
-		try {
-			thTrama = new ThreadTrama(new TramaPsicologico());
-			Util.thTrama = thTrama;
-			thTrama.setEjecucion(99999);
-			thTrama.start();
-		} catch (ExceptionIsNotHadware e) {
-			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
-					"Error", JOptionPane.ERROR_MESSAGE);
+		if (Util.thTrama == null) {
+
+			try {
+				ThreadTrama thTrama = new ThreadTrama(new TramaPsicologico());
+				Util.thTrama = thTrama;
+				thTrama.setEjecucion(99999);
+				thTrama.start();
+			} catch (ExceptionIsNotHadware e) {
+				JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 
 	}
@@ -747,10 +752,10 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 		if (task != null)
 			task.cancel(true);
 
-		if (thTrama != null) {
-			thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LAZER);
+		if (Util.thTrama != null) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LAZER);
 			apagarLed();
-			thTrama.desconnect();
+			//thTrama.desconnect();
 		}
 
 	}
@@ -809,7 +814,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	// End of variables declaration//GEN-END:variables
 
 	private ExamenDetalle exaDetalle;
-	private ThreadTrama thTrama;//Thread
+	//private ThreadTrama thTrama;//Thread
 
 	//private List<Resultado> resultados = new ArrayList<Resultado>();
 	private PersonaExamen personaExamen;

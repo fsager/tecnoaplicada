@@ -162,9 +162,9 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 		
 		accionResultados();
 
-		thTrama.setMtAccionHard(mtAccionHardLst);
-		thTrama.setMtAccionSoft(mtAccionSoftLst);
-		thTrama.setEjecucion(99999);
+		Util.thTrama.setMtAccionHard(mtAccionHardLst);
+		Util.thTrama.setMtAccionSoft(mtAccionSoftLst);
+		Util.thTrama.setEjecucion(99999);
 
 	}
 
@@ -215,9 +215,9 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 		//Frena cuando se aprieta el freno
 		accionFrenar();
 
-		thTrama.setMtAccionHard(mtAccionHardLst);
-		thTrama.setMtAccionSoft(mtAccionSoftLst);
-		thTrama.setEjecucion(99999);
+		Util.thTrama.setMtAccionHard(mtAccionHardLst);
+		Util.thTrama.setMtAccionSoft(mtAccionSoftLst);
+		Util.thTrama.setEjecucion(99999);
 	}
 
 	public void accionFrenar() {
@@ -228,7 +228,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 				Method mtAccionSoft = PanelAnticipacionAnimacion.class
 						.getMethod("setMostrarParedFalse", null);
 
-				mtAccionHardLst.add(new Accion(mtAccionHard, thTrama.getTramaValida(),
+				mtAccionHardLst.add(new Accion(mtAccionHard, Util.thTrama.getTramaValida(),
 						null, null));
 				mtAccionSoftLst.add(new Accion(mtAccionSoft,
 						panelAnticipacionAnimacion, null, null));
@@ -263,14 +263,14 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 	
 	public void esperar()
 	{
-		thTrama.setEjecutar(false);
+		Util.thTrama.setEjecutar(false);
 		Thread t1=new Thread()
 		{
 			public void run() {
 				try
 				{
 					this.sleep(2500);//1500
-					thTrama.setEjecutar(true);
+					Util.thTrama.setEjecutar(true);
 				}
 				catch (Exception e) {
 					e.printStackTrace();
@@ -402,19 +402,23 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 	}
 
 	public void inicializarThreads() {
-
-		try
-		{
-		thTrama = new ThreadTrama(new TramaPsicologico());
-		Util.thTrama = thTrama;
-		thTrama.setEjecucion(99999);
-		thTrama.start();
-		}
-		catch (ExceptionIsNotHadware e) {
-			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
 		
+		if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaPsicologico))
+			Util.thTrama.desconnect();
+
+		if (Util.thTrama == null) {
+			try
+			{
+			ThreadTrama thTrama = new ThreadTrama(new TramaPsicologico());
+			Util.thTrama = thTrama;
+			thTrama.setEjecucion(99999);
+			thTrama.start();
+			}
+			catch (ExceptionIsNotHadware e) {
+				JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 
 	public void mostrarSecondMonitor() {
@@ -426,7 +430,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 					.getProperty("EXAMEN.TAMAÑO.PANTALLA.SECUNDARIA.HEIGHT"));
 
 			panelAnticipacionAnimacion = new PanelAnticipacionAnimacion(this,
-					new Dimension(width, heigth),thTrama);
+					new Dimension(width, heigth),Util.thTrama);
 
 			panelAnticipacionUsuarioExaminado = new PanelAnticipacionUsuario(
 					panelAnticipacionAnimacion, false);
@@ -442,7 +446,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 		} else {
 
 			panelAnticipacionAnimacion = new PanelAnticipacionAnimacion(this,
-					new Dimension(813, 320),thTrama);
+					new Dimension(813, 320),Util.thTrama);
 		}
 
 		panelAnticipacionUsuarioExaminador = new PanelAnticipacionUsuario(
@@ -586,7 +590,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 		panelAnticipacionAnimacion.initParamtros(false, Integer.valueOf(ContextManager
 				.getProperty("EXAMEN.ANTICIPACION.APRENDIZAJE.SPEED")),true,false,null);
 		
-		thTrama.setEjecucion(9999);
+		Util.thTrama.setEjecucion(9999);
 		habilitarBotones();
 	}
 
@@ -770,7 +774,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 		btnExaminarN.setEnabled(false);
 		btnGuardar.setEnabled(false);
 		
-		thTrama.setEjecucion(0);
+		Util.thTrama.setEjecucion(0);
 		panelAnticipacionAnimacion.initParamtros(izq, speed, demo, save, res);
 		panelAnticipacionAnimacion.ajustarTamañoAuto(izq);
 		panelAnticipacionAnimacion.iniciar();
@@ -786,7 +790,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 
 	public boolean isTrue() {
 		
-		if(thTrama.getEjecucion()+1>=thTrama.getMtAccionHard().size())
+		if(Util.thTrama.getEjecucion()+1>=Util.thTrama.getMtAccionHard().size())
 		{
 			finalizarExamen();
 		}
@@ -817,8 +821,8 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 			Util.frameSecundario.validate();
 		}
 
-		if (thTrama != null)
-			thTrama.desconnect();
+		/*if (Util.thTrama != null)
+			Util.thTrama.desconnect();*/
 
 		if (panelAnticipacionAnimacion != null) {
 			panelAnticipacionAnimacion.setRun(false);
@@ -851,7 +855,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 	private PanelAnticipacionUsuario panelAnticipacionUsuarioExaminado;
 	private ExamenDetalle exaDetalle;
 	//private TramaPsicologico tramaPsicologico = new TramaPsicologico();
-	private ThreadTrama thTrama;//Thread
+	//private ThreadTrama thTrama;//Thread
 
 	private List<Accion> mtAccionHardLst = new ArrayList<Accion>();
 	private List<Accion> mtAccionSoftLst = new ArrayList<Accion>();

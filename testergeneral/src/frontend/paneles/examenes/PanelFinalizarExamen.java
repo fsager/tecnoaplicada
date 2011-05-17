@@ -13,9 +13,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
@@ -25,9 +28,8 @@ import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.ResultadoDetalleExamen;
 import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
+import testerGeneral.service.PersonaRestricionDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
-import frontend.buttons.ButtonCancelarMini;
-import frontend.buttons.ButtonExaminar;
 import frontend.buttons.ButtonGuardar;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.paneles.PanelMenuPrincipal;
@@ -117,11 +119,20 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 			tableDetalleExamen.getColumnModel().getColumn(2).setCellRenderer(renderer);*/
 
 			//tableModel.get
-			tableDetalleExamen.setRowHeight(1, 50);
-			tableDetalleExamen.setRowHeight(3, 60);
-			tableDetalleExamen.setRowHeight(4, 50);
-			tableDetalleExamen.setRowHeight(8, 130);
-			tableDetalleExamen.setRowHeight(9, 80);
+			if (tableDetalleExamen.getRowCount() > 1)
+				tableDetalleExamen.setRowHeight(1, 50);
+
+			if (tableDetalleExamen.getRowCount() > 3)
+				tableDetalleExamen.setRowHeight(3, 60);
+
+			if (tableDetalleExamen.getRowCount() > 4)
+				tableDetalleExamen.setRowHeight(4, 50);
+
+			if (tableDetalleExamen.getRowCount() > 8)
+				tableDetalleExamen.setRowHeight(8, 80);
+
+			if (tableDetalleExamen.getRowCount() > 9)
+				tableDetalleExamen.setRowHeight(9, 120);
 		}
 	}
 
@@ -171,7 +182,7 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel1Layout.createSequentialGroup().addContainerGap()
 						.addComponent(jScrollPane1,
-								javax.swing.GroupLayout.DEFAULT_SIZE, 560,
+								javax.swing.GroupLayout.DEFAULT_SIZE, 617,
 								Short.MAX_VALUE).addContainerGap()));
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
@@ -422,17 +433,27 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 			//ExamenesUtils.mostrarPanelExamen(perExamen, Util.panelContenido);
 
-		} catch (Exception e) {
+		}
+		catch (InvalidDataAccessApiUsageException idau) {
 			JOptionPaneTesterGral.showInternal(
 					"Debe realizar por lo menos una evaluación", "Error",
 					JOptionPane.ERROR_MESSAGE);
+			
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Error desconocido al finalizar examen",e);
 		}
 	}
 
-	public void imprimirResultado() {
+	public void imprimirResultado() throws Exception{
 
+		PersonaRestricionDefinition personaRestriccionService=(PersonaRestricionDefinition)ContextManager.getBizObject("personaRestricionService");
 		HashMap parameterMap = new HashMap();
 		parameterMap.put("p_pexa_id", perExamen.getPexaId());
+		parameterMap.put("otrasAflicciones",personaRestriccionService.getOtrasAflicciones(perExamen.getPersona()));
+		
+		
+		parameterMap.put("SUBREPORT_DIR",new File("./reportes").getCanonicalPath()+File.separator);		
 		new VentanaReportes(this, parameterMap, Constantes.RPT_PERSONA_EXAMEN);
 
 	}
@@ -455,4 +476,5 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 	private LinkedList<ResultadoDetalleExamen> lstResultadoDetalleExamen = new LinkedList<ResultadoDetalleExamen>();
 	private PersonaExamenDefinition personaExamenService = (PersonaExamenDefinition) ContextManager
 			.getBizObject("personaExamenService");
+	private static final Log log = LogFactory.getLog(PanelFinalizarExamen.class);
 }

@@ -70,7 +70,8 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 		cargarImagenes();
 		Util.mostrarError(lbError, null, true);
 
-		inicializarThreads();
+		if (Util.connectToHard)
+			inicializarThreads();
 	}
 
 	public void inicializarThreads() {
@@ -88,23 +89,18 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				thTrama.setEjecucion(99999);
 				thTrama.start();
 			}
-			
+
 			Util.thTrama.sendOrden(0x5000);
 			Thread.sleep(20);
-			/*Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
-			Thread.sleep(20);
-			Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);*/
-						
-			//Thread.sleep(50);
 			new Thread() {
 				@Override
 				public void run() {
-					try 
-					{
-						//Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST8);//PUBLICIDAD
-						Thread.sleep(3000);
+					try {
 						Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST1);
-						
+						Thread.sleep(20);
+
+						habilitarTextField();
+
 					} catch (Exception e) {
 						//throw new RuntimeException(e);
 					}
@@ -195,7 +191,6 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
 
 		buttonGroup2.add(jRadioBoxBinocular);
-		jRadioBoxBinocular.setSelected(true);
 		jRadioBoxBinocular.setText("Visi\u00f3n binocular");
 		jRadioBoxBinocular
 				.addActionListener(new java.awt.event.ActionListener() {
@@ -212,6 +207,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
 						new javax.swing.text.NumberFormatter(
 								new java.text.DecimalFormat("#0"))));
+		jFormattedLineaBinocularLe.setEnabled(false);
 		jFormattedLineaBinocularLe
 				.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
 
@@ -272,7 +268,9 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																												javax.swing.GroupLayout.PREFERRED_SIZE,
 																												31,
 																												javax.swing.GroupLayout.PREFERRED_SIZE)))))
-										.addContainerGap(2, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 		jPanel1Layout
 				.setVerticalGroup(jPanel1Layout
 						.createParallelGroup(
@@ -339,6 +337,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
 
 		buttonGroup2.add(jRadioBoxMonoIzq);
+		jRadioBoxMonoIzq.setSelected(true);
 		jRadioBoxMonoIzq.setText("Visi\u00f3n monocular izquierdo");
 		jRadioBoxMonoIzq.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,7 +353,6 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
 						new javax.swing.text.NumberFormatter(
 								new java.text.DecimalFormat("#0"))));
-		jFormattedLineaMonocularIzqLe.setEnabled(false);
 		jFormattedLineaMonocularIzqLe
 				.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
 
@@ -589,7 +587,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(jLabel4))
-										.addContainerGap(60, Short.MAX_VALUE)));
+										.addContainerGap(61, Short.MAX_VALUE)));
 
 		buttonGroup1.add(jRadioExamenCercana);
 		jRadioExamenCercana.setFont(new java.awt.Font("Segoe UI", 3, 14));
@@ -619,19 +617,12 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
 								layout
 										.createSequentialGroup()
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
-														.addComponent(
-																lbError,
-																javax.swing.GroupLayout.Alignment.LEADING,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																642,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
+																javax.swing.GroupLayout.Alignment.LEADING)
 														.addGroup(
 																layout
 																		.createSequentialGroup()
@@ -654,36 +645,37 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 																												javax.swing.GroupLayout.PREFERRED_SIZE))
 																						.addGroup(
 																								layout
-																										.createSequentialGroup()
+																										.createParallelGroup(
+																												javax.swing.GroupLayout.Alignment.TRAILING)
 																										.addComponent(
-																												jPanel1,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												324,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																												btnGuardar)
 																										.addGroup(
 																												layout
-																														.createParallelGroup(
-																																javax.swing.GroupLayout.Alignment.TRAILING)
+																														.createSequentialGroup()
 																														.addComponent(
-																																btnGuardar)
-																														.addGroup(
-																																javax.swing.GroupLayout.Alignment.LEADING,
-																																layout
-																																		.createSequentialGroup()
-																																		.addComponent(
-																																				jPanel2,
-																																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																																		.addPreferredGap(
-																																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																																		.addComponent(
-																																				jPanel3,
-																																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																																				javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+																																jPanel2,
+																																javax.swing.GroupLayout.PREFERRED_SIZE,
+																																javax.swing.GroupLayout.DEFAULT_SIZE,
+																																javax.swing.GroupLayout.PREFERRED_SIZE)
+																														.addPreferredGap(
+																																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																														.addComponent(
+																																jPanel3,
+																																javax.swing.GroupLayout.PREFERRED_SIZE,
+																																javax.swing.GroupLayout.DEFAULT_SIZE,
+																																javax.swing.GroupLayout.PREFERRED_SIZE)
+																														.addPreferredGap(
+																																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																														.addComponent(
+																																jPanel1,
+																																javax.swing.GroupLayout.PREFERRED_SIZE,
+																																javax.swing.GroupLayout.DEFAULT_SIZE,
+																																javax.swing.GroupLayout.PREFERRED_SIZE)))))
+														.addComponent(
+																lbError,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																743,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addContainerGap(
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)));
@@ -692,6 +684,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
+								javax.swing.GroupLayout.Alignment.TRAILING,
 								layout
 										.createSequentialGroup()
 										.addGroup(
@@ -709,6 +702,11 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.TRAILING)
 														.addComponent(
+																jPanel1,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addComponent(
 																jPanel3,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -716,26 +714,21 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 														.addComponent(
 																jPanel2,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																jPanel1,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
+																406,
 																Short.MAX_VALUE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																btnGuardar)
 														.addComponent(
 																lbError,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																24,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																btnGuardar))
+																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addContainerGap()));
 	}// </editor-fold>
 	//GEN-END:initComponents
@@ -771,16 +764,23 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 		if (jRadioExamenCercana.isSelected())
 			lejano = false;
 		else if (jRadioExamenLejana.isSelected())
+
 			lejano = true;
 
 		if (jRadioBoxBinocular.isSelected()) {
 			if (!luzDerechaPrendida) {
-				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+				if (Util.connectToHard)
+					Util.thTrama
+							.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+
 				luzDerechaPrendida = true;
 			}
 
 			if (!luzIzquierdaPrendida) {
-				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+				if (Util.connectToHard)
+					Util.thTrama
+							.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+
 				luzIzquierdaPrendida = true;
 			}
 
@@ -795,12 +795,18 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 
 		} else if (jRadioBoxMonoDer.isSelected()) {
 			if (!luzDerechaPrendida) {
-				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+				if (Util.connectToHard)
+					Util.thTrama
+							.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+
 				luzDerechaPrendida = true;
 			}
 
 			if (luzIzquierdaPrendida) {
-				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+				if (Util.connectToHard)
+					Util.thTrama
+							.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+
 				luzIzquierdaPrendida = false;
 			}
 
@@ -815,12 +821,18 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 
 		} else if (jRadioBoxMonoIzq.isSelected()) {
 			if (luzDerechaPrendida) {
-				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+				if (Util.connectToHard)
+					Util.thTrama
+							.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);
+
 				luzDerechaPrendida = false;
 			}
 
 			if (!luzIzquierdaPrendida) {
-				Util.thTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+				if (Util.connectToHard)
+					Util.thTrama
+							.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
+
 				luzIzquierdaPrendida = true;
 			}
 
@@ -900,6 +912,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			ResultadoDetalleExamen resultadoDetalleExamen = new ResultadoDetalleExamen();
 			resultadoDetalleExamen.setExamenDetalle(exaDetalle);
 			resultadoDetalleExamen.setPersonaExamen(personaExamen);
+			
 			List lstResultados = resultadoDetalleExamenService
 					.getAll(resultadoDetalleExamen);
 
@@ -919,7 +932,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				setResultados.add(resultados.get(i));
 				detalleResultado = detalleResultado
 						+ resultados.get(i).getResEtapaDesc() + ": "
-						+ resultados.get(i).getResValor1().intValue() + ".<BR>";
+						+ resultados.get(i).getResValor1() + ".<BR>";
 			}
 
 			resultadoDetalleExamen.setRdeResultado(resultado);
@@ -947,7 +960,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar la línea correcta para binocular cercana. Valores entre 1 y 7.",
+							"Debe ingresar la línea correcta para binocular cercana. Valores entre 1 y 8.",
 							false);
 			return false;
 		}
@@ -957,7 +970,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar la línea correcta para monocular izquierda cercana. Valores entre 1 y 7.",
+							"Debe ingresar la línea correcta para monocular izquierda cercana. Valores entre 1 y 8.",
 							false);
 			return false;
 		}
@@ -967,7 +980,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar la línea correcta para monocular derecha cercana. Valores entre 1 y 7.",
+							"Debe ingresar la línea correcta para monocular derecha cercana. Valores entre 1 y 8.",
 							false);
 			return false;
 		}
@@ -977,7 +990,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar la línea correcta para binocular lejana. Valores entre 1 y 7.",
+							"Debe ingresar la línea correcta para binocular lejana. Valores entre 1 y 8.",
 							false);
 			return false;
 		}
@@ -987,7 +1000,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar la línea correcta para monocular izquierda lejana. Valores entre 1 y 7.",
+							"Debe ingresar la línea correcta para monocular izquierda lejana. Valores entre 1 y 8.",
 							false);
 			return false;
 		}
@@ -997,7 +1010,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			Util
 					.mostrarError(
 							lbError,
-							"Debe ingresar la línea correcta para monocular derecha lejana. Valores entre 1 y 7.",
+							"Debe ingresar la línea correcta para monocular derecha lejana. Valores entre 1 y 8.",
 							false);
 			return false;
 		}
@@ -1030,7 +1043,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 	public boolean isLineaValueValid(JFormattedTextField jFormattedLinea) {
 		try {
 			int value = Integer.valueOf(jFormattedLinea.getText());
-			if (value == 0 || value > 7)
+			if (value == 0 || value > 8)
 				return false;
 		} catch (NumberFormatException ex) {
 			return false;
@@ -1049,7 +1062,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			res.setResEtapa(0l);
 			res.setResEtapaDesc("Visión binocular");
 			res
-					.setResValor1(Double.valueOf(jFormattedLineaBinocular
+					.setResValor1(getValorClinico(jFormattedLineaBinocular
 							.getText()));
 			resultadosCercana.add(res);
 		}
@@ -1058,7 +1071,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			res = new Resultado();
 			res.setResEtapa(2l);
 			res.setResEtapaDesc("Visión monocular izquierdo");
-			res.setResValor1(Double.valueOf(jFormattedMonoIzq.getText()));
+			res.setResValor1(getValorClinico(jFormattedMonoIzq.getText()));
 			resultadosCercana.add(res);
 		}
 
@@ -1066,7 +1079,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			res = new Resultado();
 			res.setResEtapa(1l);
 			res.setResEtapaDesc("Visión monocular derecho");
-			res.setResValor1(Double.valueOf(jFormattedMonoDer.getText()));
+			res.setResValor1(getValorClinico(jFormattedMonoDer.getText()));
 			resultadosCercana.add(res);
 		}
 
@@ -1074,7 +1087,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			res = new Resultado();
 			res.setResEtapa(3l);
 			res.setResEtapaDesc("Visión binocular");
-			res.setResValor1(Double.valueOf(jFormattedLineaBinocularLe
+			res.setResValor1(getValorClinico(jFormattedLineaBinocularLe
 					.getText()));
 			resultadosLejana.add(res);
 		}
@@ -1083,7 +1096,7 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			res = new Resultado();
 			res.setResEtapa(5l);
 			res.setResEtapaDesc("Visión monocular izquierdo");
-			res.setResValor1(Double.valueOf(jFormattedLineaMonocularIzqLe
+			res.setResValor1(getValorClinico(jFormattedLineaMonocularIzqLe
 					.getText()));
 			resultadosLejana.add(res);
 		}
@@ -1092,9 +1105,38 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 			res = new Resultado();
 			res.setResEtapa(4l);
 			res.setResEtapaDesc("Visión monocular derecho");
-			res.setResValor1(Double.valueOf(jFormattedLineaMonocularDerLe
+			res.setResValor1(getValorClinico(jFormattedLineaMonocularDerLe
 					.getText()));
 			resultadosLejana.add(res);
+		}
+	}
+
+	public Double getValorClinico(String valorLinea) {
+		Integer valorClinico = Integer.valueOf(valorLinea);
+		/*Donde tenemos línea 6 debe decir 0.8 
+		Donde tenemos línea 5 debe decir 0.7 
+		Donde tenemos línea 4 debe decir 0.5 
+		Donde tenemos línea 3 debe decir 0.4 
+		Donde tenemos línea 2 debe decir 0.3 
+		Donde tenemos línea 1 debe decir 0.1*/
+
+		switch (valorClinico) {
+		case 1:
+			return 0.1;
+		case 2:
+			return 0.2;
+		case 3:
+			return 0.3;
+		case 4:
+			return 0.4;
+		case 5:
+			return 0.5;
+		case 6:
+			return 0.7;
+		case 7:
+			return 0.8;
+		default:
+			return 1.0;
 		}
 	}
 
@@ -1149,11 +1191,13 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 	}
 
 	public boolean isAprobed(int valor) {
-		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
+		if (this.personaExamen.getPexaTipoExamen().equals(
+				PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
 				&& valor < LINEA_PROFECIONAL)
 			return false;
 
-		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR)
+		if (this.personaExamen.getPexaTipoExamen().equals(
+				PersonaExamen.TIPO_EXAMEN_PARTICULAR)
 				&& valor < LINEA_PARTICULAR)
 			return false;
 

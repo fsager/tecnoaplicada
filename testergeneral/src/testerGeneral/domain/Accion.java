@@ -22,7 +22,7 @@ public class Accion {
 	{
 		try
 		{
-			//System.out.println("mtAccion: "+mtAccion.getName());
+			System.out.println("mtAccion: "+mtAccion.getName());
 			if(parameter2!=null)
 				return mtAccion.invoke(object,parameter1,parameter2);
 			else if(parameter1!=null)

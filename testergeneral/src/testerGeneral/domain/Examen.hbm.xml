@@ -18,7 +18,10 @@
         </property>
         <property name="exaOrden" type="java.lang.Integer">
             <column name="EXA_ORDEN" not-null="true" />
-        </property>        
+        </property>
+        <!--  property name="exaLicencedSn" type="java.lang.String">
+            <column name="EXA_LICENCED" length="1" not-null="true" />
+        </property-->      
         <set name="usuarioExamens" inverse="true">
             <key>
                 <column name="EXA_ID" not-null="true" />

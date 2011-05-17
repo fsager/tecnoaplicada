@@ -15,13 +15,13 @@ import java.awt.SplashScreen;
 
 import javax.swing.JFrame;
 
+import tecnologia.aplicada.licence.LicenceManager;
 import testerGeneral.business.ContextManager;
 import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Propiedad;
 import testerGeneral.domain.Usuario;
 import testerGeneral.service.PropiedadDefinition;
-import frontend.components.GlassPanel;
 import frontend.paneles.PanelMenuPrincipal;
 import frontend.utils.Util;
 
@@ -50,6 +50,7 @@ public class FrameContenedor extends javax.swing.JFrame {
 
 			Util.dp = dp;
 			Util.frameContenedor = this;
+
 
 			Util.abrirInicioSesion(PanelMenuPrincipal.class,new Usuario());
 

@@ -37,6 +37,9 @@
         <property name="rdeParametrosCorrecion" type="java.lang.String">
             <column name="RDE_PARAMETROS_CORRECCION" length="4000"/>
         </property>
+        <property name="rdeImagen" type="byte[]">
+            <column name="RDE_IMAGEN" />
+        </property>
         <set cascade="all-delete-orphan" name="resultados" inverse="true" lazy="false">
             <key>
                 <column name="RDE_ID" not-null="true" />

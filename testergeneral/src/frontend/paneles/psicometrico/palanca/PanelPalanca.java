@@ -147,7 +147,7 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 			try {
 
 				if (runExamen) {
-					int punto = thTrama.getTramaValida().getByte(8);
+					int punto = Util.thTrama.getTramaValida().getByte(8);
 
 					//System.out.println("punto: " + punto);
 
@@ -160,11 +160,11 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 
 						if (!puntosActivados.contains(punto)) {
 							puntosActivados.add(punto);
-							this.repaint();
 
 							int puntosSinActivar = puntos - this.puntosActivados.size();
 							//A partir de ahora en txtErrores se muestra los puntos sin activar, en lugar de los errores
 							txtErrores.setText("" + puntosSinActivar);
+							this.repaint();
 
 							if (punto == puntos) {
 								finOK = true;
@@ -345,16 +345,21 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 	}
 
 	public void inicializarThreads() {
+		if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaPsicologico))
+			Util.thTrama.desconnect();
 
-		try {
-			thTrama = new ThreadTrama(tramaPsicologico);
-			Util.thTrama = thTrama;
-			thTrama.setEjecucion(99999);
-			thTrama.start();
-			thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LAZER);
-		} catch (ExceptionIsNotHadware e) {
-			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
-					"Error", JOptionPane.ERROR_MESSAGE);
+		if (Util.thTrama == null) {
+
+			try {
+				ThreadTrama thTrama = new ThreadTrama(tramaPsicologico);
+				Util.thTrama = thTrama;
+				thTrama.setEjecucion(99999);
+				thTrama.start();
+				thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LAZER);
+			} catch (ExceptionIsNotHadware e) {
+				JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 
 	}
@@ -766,11 +771,13 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 	}
 
 	private void iniciarExamen() {
-		if (thTrama.getTramaValida().isPalancaInInicio()) {
+		if (Util.thTrama.getTramaValida().isPalancaInInicio()) {
 
 			Util.playSound(Constantes.SOUND_START, 100);
 			inicializar();
 
+			puntosActivados.add(1);
+			
 			btnCancelar.setEnabled(true);
 			btnAprendizaje.setEnabled(false);
 			btnExaminar.setEnabled(false);
@@ -829,9 +836,9 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 		if (task != null)
 			task.cancel(true);
 
-		if (thTrama != null) {
-			thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LAZER);
-			thTrama.desconnect();
+		if (Util.thTrama != null) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_LAZER);
+			//Util.thTrama.desconnect();
 		}
 
 	}
@@ -893,7 +900,7 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 	// End of variables declaration//GEN-END:variables
 
 	private ExamenDetalle exaDetalle;
-	private ThreadTrama thTrama;//Thread
+	//private ThreadTrama thTrama;//Thread
 
 	private List<Resultado> resultados = new ArrayList<Resultado>();
 	private PersonaExamen personaExamen;

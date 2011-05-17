@@ -495,7 +495,7 @@ public class PanelDominio extends javax.swing.JPanel {
 	//GEN-END:initComponents
 
 	private void txtCodigoFocusLost(java.awt.event.FocusEvent evt) {
-		txtCodigo.setText(txtCodigo.getText().toUpperCase());
+		//txtCodigo.setText(txtCodigo.getText().toUpperCase());
 	}
 
 	private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {

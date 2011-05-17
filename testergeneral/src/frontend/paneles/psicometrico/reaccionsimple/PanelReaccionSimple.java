@@ -55,8 +55,8 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		Finalisable {
 
 	/** Creates new form PanelPercepcionReaccion */
-	public PanelReaccionSimple(JToggleButton btn,PersonaExamen personaExamen) {
-		this.btn=btn;
+	public PanelReaccionSimple(JToggleButton btn, PersonaExamen personaExamen) {
+		this.btn = btn;
 		initComponents();
 
 		try {
@@ -74,7 +74,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 
 		this.personaExamen = personaExamen;
 
-		demo=(personaExamen.getPersona() == null);
+		demo = (personaExamen.getPersona() == null);
 		if (personaExamen.getPersona() == null) {
 			btnExaminar.setEnabled(false);
 			btnExaminarN.setEnabled(false);
@@ -89,8 +89,8 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 				try {
 					inicializarThreads();
 				} catch (ExceptionIsNotHadware e) {
-					JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPaneTesterGral.showInternalMessageDialog(e
+							.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -98,30 +98,29 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 
 	public void ciclo(int etapas) {
 
-		etapaActual=0;
+		etapaActual = 0;
 		resultados = new ArrayList<Resultado>();
 
 		mtAccionHardLst = new ArrayList<Accion>();
 		mtAccionSoftLst = new ArrayList<Accion>();
 
-		for(int i=0;i<etapas;i++)
+		for (int i = 0; i < etapas; i++)
 			agregarCiclo();
 
-		thTrama.setMtAccionHard(mtAccionHardLst);
-		thTrama.setMtAccionSoft(mtAccionSoftLst);
-		thTrama.setEjecucion(99999);
+		Util.thTrama.setMtAccionHard(mtAccionHardLst);
+		Util.thTrama.setMtAccionSoft(mtAccionSoftLst);
+		Util.thTrama.setEjecucion(99999);
 	}
-	
-	public void agregarCiclo(){
+
+	public void agregarCiclo() {
 		Resultado res = new Resultado();
 		res.setResEtapa(Long.valueOf(resultados.size()));
 		resultados.add(res);
-		
+
 		actionArrancarSemaforo();
 		actionValidarAceleracion();
 		actionFrenar();
 	}
-	
 
 	public void repaintPanelesAnimacion() {
 		if (panelReaccionSimpleAnimacion != null)
@@ -141,10 +140,10 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 			Util.frameSecundario.validate();
 		}
 
-		if (thTrama != null)
-			thTrama.desconnect();
+		/*if (Util.thTrama != null)
+			Util.thTrama.desconnect();*/
 
-		if(panelReaccionSimpleAnimacion != null)			
+		if (panelReaccionSimpleAnimacion != null)
 			panelReaccionSimpleAnimacion.setStop(true);
 		panelReaccionSimpleAnimacion = null;
 
@@ -172,24 +171,24 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	}
 
 	public void inicializarThreads() {
-		try
-		{
-			thTrama = new ThreadTrama(new TramaPsicologico());
-			Util.thTrama = thTrama;
-			thTrama.setEjecucion(99999);
-			thTrama.start();		
-		}
-		catch (ExceptionIsNotHadware e) {
-			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-		
+		if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaPsicologico))
+			Util.thTrama.desconnect();
 
+		if (Util.thTrama == null) {
+			try {
+				ThreadTrama thTrama = new ThreadTrama(new TramaPsicologico());
+				Util.thTrama = thTrama;
+				thTrama.setEjecucion(99999);
+				thTrama.start();
+			} catch (ExceptionIsNotHadware e) {
+				JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}		
+		}
 	}
-	
-	public ThreadTrama getThTrama()
-	{
-		return thTrama;
+
+	public ThreadTrama getThTrama() {
+		return Util.thTrama;
 	}
 
 	public void mostrarSecondMonitor() {
@@ -197,47 +196,50 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		panelReaccionSimpleAnimacion = new PanelReaccionSimpleAnimacion(this);
 
 		if (Util.frameSecundario != null) {
-			
+
 			int width = Integer.valueOf(ContextManager
 					.getProperty("EXAMEN.TAMAÑO.PANTALLA.SECUNDARIA.WIDTH"));
 			int heigth = Integer.valueOf(ContextManager
 					.getProperty("EXAMEN.TAMAÑO.PANTALLA.SECUNDARIA.HEIGHT"));
 
-			
 			panelReaccionSimpleUsuarioExaminado = new PanelReaccionSimpleUsuario(
 					panelReaccionSimpleAnimacion, false);
-			
-			panelReaccionSimpleUsuarioExaminado.setMinimumSize(new Dimension(width,heigth));
-			panelReaccionSimpleUsuarioExaminado.setSize(width,heigth);
-			panelReaccionSimpleUsuarioExaminado.setPreferredSize(new Dimension(width,heigth));
-			
+
+			panelReaccionSimpleUsuarioExaminado.setMinimumSize(new Dimension(
+					width, heigth));
+			panelReaccionSimpleUsuarioExaminado.setSize(width, heigth);
+			panelReaccionSimpleUsuarioExaminado.setPreferredSize(new Dimension(
+					width, heigth));
+
 			panelReaccionSimpleUsuarioExaminado.validate();
-			internalFrame=new JInternalFrameTesterGral();
+			internalFrame = new JInternalFrameTesterGral();
 			internalFrame.add(panelReaccionSimpleUsuarioExaminado);
 			internalFrame.setVisible(true);
-			
-			Util.agregarIframeMonSecundario(((FrameSecundario)Util.frameSecundario).getDp(),internalFrame);
+
+			Util.agregarIframeMonSecundario(
+					((FrameSecundario) Util.frameSecundario).getDp(),
+					internalFrame);
 
 		}
 
 		panelReaccionSimpleUsuarioExaminador = new PanelReaccionSimpleUsuario(
-				panelReaccionSimpleAnimacion,
-				(Util.frameSecundario != null));
+				panelReaccionSimpleAnimacion, (Util.frameSecundario != null));
 		this.panelUsuario.add(panelReaccionSimpleUsuarioExaminador);
 
 	}
-
-	
 
 	public void actionArrancarSemaforo() {
 		try {
 
 			if (panelReaccionSimpleAnimacion != null) {
-				Method mtAccionHard = TramaPsicologico.class.getMethod("isAceleradorPressed", null);
-				Method mtAccionSoft = PanelReaccionSimple.class.getMethod("arrancarSemaforo");
+				Method mtAccionHard = TramaPsicologico.class.getMethod(
+						"isAceleradorPressed", null);
+				Method mtAccionSoft = PanelReaccionSimple.class
+						.getMethod("arrancarSemaforo");
 
-				mtAccionHardLst.add(new Accion(mtAccionHard,thTrama.getTramaValida(),null, null));
-				mtAccionSoftLst.add(new Accion(mtAccionSoft,this,null, null));
+				mtAccionHardLst.add(new Accion(mtAccionHard, Util.thTrama
+						.getTramaValida(), null, null));
+				mtAccionSoftLst.add(new Accion(mtAccionSoft, this, null, null));
 			}
 
 		} catch (SecurityException e) {
@@ -246,16 +248,18 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public void actionValidarAceleracion() {
 		try {
 
 			if (panelReaccionSimpleAnimacion != null) {
-				Method mtAccionHard = PanelReaccionSimple.class.getMethod("isAceleretorNotPressedOrFrenoPressed", null);
-				Method mtAccionSoft = PanelReaccionSimple.class.getMethod("setError");
+				Method mtAccionHard = PanelReaccionSimple.class.getMethod(
+						"isAceleretorNotPressedOrFrenoPressed", null);
+				Method mtAccionSoft = PanelReaccionSimple.class
+						.getMethod("setError");
 
-				mtAccionHardLst.add(new Accion(mtAccionHard,this,null, null));
-				mtAccionSoftLst.add(new Accion(mtAccionSoft,this,null, null));
+				mtAccionHardLst.add(new Accion(mtAccionHard, this, null, null));
+				mtAccionSoftLst.add(new Accion(mtAccionSoft, this, null, null));
 			}
 
 		} catch (SecurityException e) {
@@ -264,16 +268,19 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public void actionFrenar() {
 		try {
 
 			if (panelReaccionSimpleAnimacion != null) {
-				Method mtAccionHard = TramaPsicologico.class.getMethod("isFrenoPressed", null);
-				Method mtAccionSoft = PanelReaccionSimple.class.getMethod("frenar");
+				Method mtAccionHard = TramaPsicologico.class.getMethod(
+						"isFrenoPressed", null);
+				Method mtAccionSoft = PanelReaccionSimple.class
+						.getMethod("frenar");
 
-				mtAccionHardLst.add(new Accion(mtAccionHard,thTrama.getTramaValida(),null, null));
-				mtAccionSoftLst.add(new Accion(mtAccionSoft,this,null, null));
+				mtAccionHardLst.add(new Accion(mtAccionHard, Util.thTrama
+						.getTramaValida(), null, null));
+				mtAccionSoftLst.add(new Accion(mtAccionSoft, this, null, null));
 			}
 
 		} catch (SecurityException e) {
@@ -282,166 +289,165 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public void arrancarSemaforo() {
 		setMensajes(null);
-		if(panelReaccionSimpleAnimacion.getEstado().equals(PanelReaccionSimpleAnimacion.ESTADO_INI)
-			|| panelReaccionSimpleAnimacion.getEstado().equals(PanelReaccionSimpleAnimacion.ESTADO_ROJO))
-		{
+		if (panelReaccionSimpleAnimacion.getEstado().equals(
+				PanelReaccionSimpleAnimacion.ESTADO_INI)
+				|| panelReaccionSimpleAnimacion.getEstado().equals(
+						PanelReaccionSimpleAnimacion.ESTADO_ROJO)) {
 			panelReaccionSimpleAnimacion.setRun(true);
-		}
-		else
-		{
-			thTrama.setEjecucion(thTrama.getEjecucion()-1);
+		} else {
+			Util.thTrama.setEjecucion(Util.thTrama.getEjecucion() - 1);
 		}
 	}
-	
-	public boolean isAceleretorNotPressedOrFrenoPressed()
-	{
-		if(!thTrama.getTramaValida().isAceleradorPressed() || thTrama.getTramaValida().isFrenoPressed())
+
+	public boolean isAceleretorNotPressedOrFrenoPressed() {
+		if (!Util.thTrama.getTramaValida().isAceleradorPressed()
+				|| Util.thTrama.getTramaValida().isFrenoPressed())
 			return true;
-		
+
 		return false;
 	}
-	
-	public void incrementarEjecucion()
-	{
-		thTrama.setEjecucion(thTrama.getEjecucion()+1);
+
+	public void incrementarEjecucion() {
+		Util.thTrama.setEjecucion(Util.thTrama.getEjecucion() + 1);
 	}
-	
+
 	public void frenar() throws InterruptedException {
-			long tiempoActual=System.currentTimeMillis();
-			long resEtapa=(tiempoActual - getInstanteSemaforoRojo())/10;
-			//log.debug("Tiempo de Frenado: "+(tiempoActual - getInstanteSemaforoRojo())+" current: "+System.currentTimeMillis());
-			
-			//TODO comentar descomentar para pruebas edgardo
-			//thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED3);
-			
-			setMensajes(continuarAnimacion);
-			Resultado res=resultados.get(etapaActual);
-			res.setResValor1((double)resEtapa);
-			if(res.getResValor2()==null)
-				res.setResValor2(new Double(0));
-			else
-				res.setResValor1(0.0);
-			
-			etapaActual++;
-			
-			if(erroresCometidos>=erroresPermitidos|| etapaActual==resultados.size())
-				finalizarExamen();
-		
-			panelReaccionSimpleAnimacion.init();		
+		long tiempoActual = System.currentTimeMillis();
+		double resEtapa = ((tiempoActual - getInstanteSemaforoRojo()) * 0.93) / 10;
+		//log.debug("Tiempo de Frenado: "+(tiempoActual - getInstanteSemaforoRojo())+" current: "+System.currentTimeMillis());
+
+		//TODO comentar descomentar para pruebas edgardo
+		//Util.thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED3);
+
+		setMensajes(continuarAnimacion);
+		Resultado res = resultados.get(etapaActual);
+		res.setResValor1((double) resEtapa);
+		if (res.getResValor2() == null)
+			res.setResValor2(new Double(0));
+		else
+			res.setResValor1(0.0);
+
+		etapaActual++;
+
+		if (erroresCometidos >= erroresPermitidos
+				|| etapaActual == resultados.size())
+		{
+			Util.thTrama.setEjecucion(99999);
+			finalizarExamen();
+		}
+
+		panelReaccionSimpleAnimacion.init();
 	}
-	
-	public void setError()throws InterruptedException
-	{
+
+	public void setError() throws InterruptedException {
 		panelReaccionSimpleAnimacion.setRun(false);
 		resultados.get(etapaActual).setResValor2(new Double(1));
 		erroresCometidos++;
-		
-		thTrama.setEjecutar(false);
+
+		Util.thTrama.setEjecutar(false);
 		panelReaccionSimpleAnimacion.interrupt();
 		panelReaccionSimpleAnimacion.setKo();
 		panelReaccionSimpleAnimacion.repaint();
-		Thread t1=new Thread()
-		{
+		Thread t1 = new Thread() {
 			public void run() {
-				try
-				{
+				try {
 					this.sleep(2000);
-					thTrama.setEjecutar(true);
+					Util.thTrama.setEjecutar(true);
 					panelReaccionSimpleAnimacion.setKoToNull();
 					panelReaccionSimpleAnimacion.repaint();
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 				}
 			}
 		};
 		t1.start();
-		Util.playSound(Constantes.SOUND_ERROR,100);		
+		Util.playSound(Constantes.SOUND_ERROR, 100);
 		frenar();
-		
-		thTrama.setEjecucion(thTrama.getEjecucion()+1);
-		
+
+		Util.thTrama.setEjecucion(Util.thTrama.getEjecucion() + 1);
+
 		agregarCiclo();
 	}
-	
-	public long getInstanteSemaforoRojo()
-	{
+
+	public long getInstanteSemaforoRojo() {
 		return this.instanteSemaforoRojo;
 	}
-	
-	public void setInstanteSemaforoRojo(long instanteSemaforoRojo)
-	{
+
+	public void setInstanteSemaforoRojo(long instanteSemaforoRojo) {
 		//log.debug("Semaforo en rojo: "+instanteSemaforoRojo);
-		this.instanteSemaforoRojo=instanteSemaforoRojo;
+		this.instanteSemaforoRojo = instanteSemaforoRojo;
 	}
-	
-	public void finalizarExamen()
-	{	
+
+	public void finalizarExamen() {
 		setMensajes(null);
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				btnGuardar.setEnabled((personaExamen.getPersona() != null) && !demo && true);
-				Util.playSound(Constantes.SOUND_START,0);
+				btnGuardar.setEnabled((personaExamen.getPersona() != null)
+						&& !demo && true);
+				Util.playSound(Constantes.SOUND_START, 0);
 				try {
 					Thread.sleep(Constantes.TIEMPO_ENTRE_RESULTADO);
 				} catch (InterruptedException e) {
 
 				}
-				String columns[]={"Etapa","Resultado"};				
-				promediar(resultados,3);
-				
-				panelReaccionSimpleUsuarioExaminador.getPanelContenido().removeAll();
-				PanelResultado panelResultado=new PanelResultado(resultados,TableModelResultado.ERRORES_Y_RESULTADO,exaDetalle);
-				panelReaccionSimpleUsuarioExaminador.getPanelContenido().add(panelResultado);
+				String columns[] = { "Etapa", "Resultado" };
+				promediar(resultados, 3);
+
+				panelReaccionSimpleUsuarioExaminador.getPanelContenido()
+						.removeAll();
+				PanelResultado panelResultado = new PanelResultado(resultados,
+						TableModelResultado.ERRORES_Y_RESULTADO, exaDetalle);
+				panelReaccionSimpleUsuarioExaminador.getPanelContenido().add(
+						panelResultado);
 				panelReaccionSimpleUsuarioExaminador.validate();
 				panelReaccionSimpleUsuarioExaminador.repaint();
-				
-				String examenResultadosExaminado=ContextManager.getProperty("EXAMEN.RESULTADOS.EXAMADO"); 
-				if(examenResultadosExaminado.equals("S"))
-				{
-					if (panelReaccionSimpleUsuarioExaminado != null)
-					{
-						panelReaccionSimpleUsuarioExaminado.getPanelContenido().removeAll();
-						panelResultado=new PanelResultado(resultados,TableModelResultado.ERRORES_Y_RESULTADO,exaDetalle);
-						panelReaccionSimpleUsuarioExaminado.getPanelContenido().add(panelResultado);
+
+				String examenResultadosExaminado = ContextManager
+						.getProperty("EXAMEN.RESULTADOS.EXAMADO");
+				if (examenResultadosExaminado.equals("S")) {
+					if (panelReaccionSimpleUsuarioExaminado != null) {
+						panelReaccionSimpleUsuarioExaminado.getPanelContenido()
+								.removeAll();
+						panelResultado = new PanelResultado(resultados,
+								TableModelResultado.ERRORES_Y_RESULTADO,
+								exaDetalle);
+						panelReaccionSimpleUsuarioExaminado.getPanelContenido()
+								.add(panelResultado);
 						panelReaccionSimpleUsuarioExaminado.validate();
-						panelReaccionSimpleUsuarioExaminado.repaint();						
+						panelReaccionSimpleUsuarioExaminado.repaint();
 					}
 				}
-				
+
 			}
 		});
-		
+
 		habilitarBotones();
 		this.validate();
 	}
-	
-	
-	public void initPanelesAnimacion()
-	{
+
+	public void initPanelesAnimacion() {
 		panelReaccionSimpleAnimacion.init();
-		if(panelReaccionSimpleUsuarioExaminado!=null)
+		if (panelReaccionSimpleUsuarioExaminado != null)
 			panelReaccionSimpleUsuarioExaminado.init();
-			
-		if(panelReaccionSimpleUsuarioExaminador!=null)
+
+		if (panelReaccionSimpleUsuarioExaminador != null)
 			panelReaccionSimpleUsuarioExaminador.init();
 	}
-	
-	public void habilitarBotones()
-	{	
+
+	public void habilitarBotones() {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				btnCancelar.setEnabled(false);
 				btnAprendizaje.setEnabled(true);
-				btnExaminar.setEnabled((personaExamen.getPersona() != null) && !btnExam);
-				btnExaminarN.setEnabled((personaExamen.getPersona() != null) &&  btnExam);
+				btnExaminar.setEnabled((personaExamen.getPersona() != null)
+						&& !btnExam);
+				btnExaminarN.setEnabled((personaExamen.getPersona() != null)
+						&& btnExam);
 			}
 		});
 	}
-
-	
 
 	/** This method is called from within the constructor to
 	 * initialize the form.
@@ -527,16 +533,24 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(btnCancelar)
-										.addContainerGap(12, Short.MAX_VALUE)));
-		panelAccionesLayout.setVerticalGroup(panelAccionesLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						panelAccionesLayout.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(btnAprendizaje).addComponent(
-										btnExaminar).addComponent(btnExaminarN)
-								.addComponent(btnGuardar).addComponent(
-										btnCancelar)));
+										.addContainerGap(44, Short.MAX_VALUE)));
+		panelAccionesLayout
+				.setVerticalGroup(panelAccionesLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								panelAccionesLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(btnAprendizaje)
+										.addComponent(btnExaminarN)
+										.addComponent(btnGuardar)
+										.addComponent(btnCancelar)
+										.addComponent(
+												btnExaminar,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												25,
+												javax.swing.GroupLayout.PREFERRED_SIZE)));
 
 		panelUsuario.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -544,7 +558,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				panelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 593,
+				panelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 625,
 				Short.MAX_VALUE).addComponent(panelAcciones,
 				javax.swing.GroupLayout.DEFAULT_SIZE,
 				javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
@@ -570,10 +584,10 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	//GEN-END:initComponents
 
 	private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
-		erroresCometidos=0;
+		erroresCometidos = 0;
 		setMensajes(null);
 		panelReaccionSimpleAnimacion.init();
-		thTrama.setEjecucion(9999);
+		Util.thTrama.setEjecucion(9999);
 		habilitarBotones();
 	}
 
@@ -613,20 +627,26 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 						resultadoDetalleExamen);
 				resultados.add(this.resultados.get(i));
 			}
-			
-			
-			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
-			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
+
+			Double pro[] = ExamenesUtils.calcularPromedio(resultados);
+			String resultado = ExamenesUtils.detalleExamenResultado(exaDetalle,
+					resultados);
 			resultadoDetalleExamen.setRdeNota(pro[0]);
 			resultadoDetalleExamen.setRdeNota2(pro[1]);
-			resultadoDetalleExamen.setRdeDetalleResultado("<HTML>Tiempo promedio: "+pro[0].intValue()+" Centésimas de segundos.<BR> Errores: "+pro[1].intValue()+".</HTML>");
-			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
+			resultadoDetalleExamen
+					.setRdeDetalleResultado("<HTML>Tiempo promedio: "
+							+ pro[0].intValue()
+							+ " Centésimas de segundos.<BR> Errores: "
+							+ pro[1].intValue() + ".</HTML>");
+			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
+					.getExadParametrosCorrecion());
 			resultadoDetalleExamen.setRdeResultado(resultado);
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
 			btn.setForeground(Color.BLACK);
-			Util.setIcon(btn,Constantes.IMG_ACEPTAR_SMALL);
-			JOptionPaneTesterGral.showInternalMessageDialog(Constantes.MENSAJE_GUARDADO,
+			Util.setIcon(btn, Constantes.IMG_ACEPTAR_SMALL);
+			JOptionPaneTesterGral.showInternalMessageDialog(
+					Constantes.MENSAJE_GUARDADO,
 					Constantes.MENSAJE_GUARDADO_TIT,
 					JOptionPane.INFORMATION_MESSAGE);
 
@@ -635,76 +655,73 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		}
 	}
 
-	public void promediar(Collection<Resultado> resultados, int last)
-	{
-		List<Resultado> lstResultados=(List)resultados;
-		List<Resultado> lstResultadosAux=new ArrayList();
+	public void promediar(Collection<Resultado> resultados, int last) {
+		List<Resultado> lstResultados = (List) resultados;
+		List<Resultado> lstResultadosAux = new ArrayList();
 
-		for(int i=lstResultados.size()-1;i>=0;i--)
-		{
-			Resultado res=lstResultados.get(i);
-			if(res.getResValor1()!=null && res.getResValor1().intValue()!=0)
-			{
+		for (int i = lstResultados.size() - 1; i >= 0; i--) {
+			Resultado res = lstResultados.get(i);
+			if (res.getResValor1() != null
+					&& res.getResValor1().intValue() != 0) {
 				lstResultadosAux.add(res);
 			}
 		}
-		
-		Comparator<Resultado> com=new Comparator(){
-			
+
+		Comparator<Resultado> com = new Comparator() {
+
 			@Override
 			public int compare(Object o1, Object o2) {
-				if(o1==null && o2==null)
+				if (o1 == null && o2 == null)
 					return 0;
-				else if(o1==null)
+				else if (o1 == null)
 					return -1;
-				else if(o2==null)
+				else if (o2 == null)
 					return 1;
-				else
-				{
-					Resultado res1=(Resultado)o1;
-					Resultado res2=(Resultado)o2;
-					
-					if(res1.getResValor1()== null || res2.getResValor1()==null)
+				else {
+					Resultado res1 = (Resultado) o1;
+					Resultado res2 = (Resultado) o2;
+
+					if (res1.getResValor1() == null
+							|| res2.getResValor1() == null)
 						return 0;
-					
+
 					return res1.getResValor1().compareTo(res2.getResValor1());
 				}
 			}
 		};
-		
-		if(lstResultadosAux.size()>0)
-		{
-			Resultado minRes=Collections.min(lstResultadosAux,com);
-			System.out.println("minRes.getResValor1(): "+minRes.getResValor1());
-			for(int i=0;i<last && i<lstResultadosAux.size();i++)
-			{
-				double procentaje=1d+((i+5)/100d);
-				Double newValue=minRes.getResValor1()*procentaje;
-				Resultado res=Collections.max(lstResultadosAux,com);
+
+		if (lstResultadosAux.size() > 0) {
+			Resultado minRes = Collections.min(lstResultadosAux, com);
+			System.out.println("minRes.getResValor1(): "
+					+ minRes.getResValor1());
+			for (int i = 0; i < last && i < lstResultadosAux.size(); i++) {
+				double procentaje = 1d + ((i + 5) / 100d);
+				Double newValue = minRes.getResValor1() * procentaje;
+				Resultado res = Collections.max(lstResultadosAux, com);
 				lstResultadosAux.remove(res);
 				res.setResValor1(newValue);
-				System.out.println("res.getResValor1(): "+res.getResValor1());
+				System.out.println("res.getResValor1(): " + res.getResValor1());
 			}
 		}
 	}
+
 	private void btnExaminarNActionPerformed(java.awt.event.ActionEvent evt) {
 		initPanelesAnimacion();
-		demo=false;
-		btnExam=true;
-		examinar((JToggleButton)evt.getSource(),true);
+		demo = false;
+		btnExam = true;
+		examinar((JToggleButton) evt.getSource(), true);
 	}
 
 	private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {
 		initPanelesAnimacion();
-		demo=false;
-		btnExam=true;
-		examinar((JToggleButton)evt.getSource(),true);
+		demo = false;
+		btnExam = true;
+		examinar((JToggleButton) evt.getSource(), true);
 	}
-	
-	public void examinar(JToggleButton btn,boolean examen)
-	{
-		Util.playSound(Constantes.SOUND_START,0);
-		erroresCometidos=0;
+
+	public void examinar(JToggleButton btn, boolean examen) {
+		Util.playSound(Constantes.SOUND_START, 0);
+		erroresCometidos = 0;
 		setMensajes(iniciarAnimacion);
 		unSelectButtons(btn);
 		btnCancelar.setEnabled(true);
@@ -712,36 +729,36 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		btnExaminar.setEnabled(false);
 		btnExaminarN.setEnabled(false);
 		btnGuardar.setEnabled(false);
-		
-		if(examen)
+
+		if (examen)
 			ciclo(ETAPAS_EXAMEN);
 		else
 			ciclo(ETAPAS);
-		
-		
+
 		panelReaccionSimpleAnimacion.repaint();
-		thTrama.setEjecucion(0);
+		Util.thTrama.setEjecucion(0);
 	}
 
 	private void btnAprendizajeActionPerformed(java.awt.event.ActionEvent evt) {
-		
+
 		initPanelesAnimacion();
-		demo=true;
-		examinar((JToggleButton)evt.getSource(),false);
+		demo = true;
+		examinar((JToggleButton) evt.getSource(), false);
 	}
-	
-	public void setMensajes(String mensaje)
-	{
-		if(panelReaccionSimpleUsuarioExaminado!=null)
-		{
-			panelReaccionSimpleUsuarioExaminado.getTxtMensajes().setVisible((mensaje!=null));
-			panelReaccionSimpleUsuarioExaminado.getTxtMensajes().setText(mensaje);
+
+	public void setMensajes(String mensaje) {
+		if (panelReaccionSimpleUsuarioExaminado != null) {
+			panelReaccionSimpleUsuarioExaminado.getTxtMensajes().setVisible(
+					(mensaje != null));
+			panelReaccionSimpleUsuarioExaminado.getTxtMensajes().setText(
+					mensaje);
 			panelReaccionSimpleUsuarioExaminado.validate();
 		}
-		if(panelReaccionSimpleUsuarioExaminador!=null)
-		{
-			panelReaccionSimpleUsuarioExaminador.getTxtMensajes().setVisible((mensaje!=null));
-			panelReaccionSimpleUsuarioExaminador.getTxtMensajes().setText(mensaje);
+		if (panelReaccionSimpleUsuarioExaminador != null) {
+			panelReaccionSimpleUsuarioExaminador.getTxtMensajes().setVisible(
+					(mensaje != null));
+			panelReaccionSimpleUsuarioExaminador.getTxtMensajes().setText(
+					mensaje);
 			panelReaccionSimpleUsuarioExaminador.validate();
 		}
 	}
@@ -761,7 +778,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	private PanelReaccionSimpleUsuario panelReaccionSimpleUsuarioExaminado;
 	private ExamenDetalle exaDetalle;
 	//private TramaPsicologico tramaPsicologico = new TramaPsicologico();
-	private ThreadTrama thTrama;//Thread
+	//private ThreadTrama thTrama;//Thread
 	//private ArrayList<ParametrosPercepcionReacion> parametros;
 
 	private List<Accion> mtAccionHardLst = new ArrayList<Accion>();
@@ -771,19 +788,24 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	private PersonaExamen personaExamen;
 
 	private static final Log log = LogFactory.getLog(PanelReaccionSimple.class);
-	private final int ETAPAS =Integer.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.ETAPAS.APRENDIZAJE"));
-	private final int ETAPAS_EXAMEN =Integer.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.ETAPAS.EXAMEN"));
-	
+	private final int ETAPAS = Integer.valueOf(ContextManager
+			.getProperty("EXAMEN.REACCION.SIMPLE.ETAPAS.APRENDIZAJE"));
+	private final int ETAPAS_EXAMEN = Integer.valueOf(ContextManager
+			.getProperty("EXAMEN.REACCION.SIMPLE.ETAPAS.EXAMEN"));
+
 	//private long tiempInicioEtapa = 0;
 	private boolean demo;
-	private boolean btnExam=false;
+	private boolean btnExam = false;
 	private JInternalFrameTesterGral internalFrame;
 	private JToggleButton btn;
-	private int etapaActual=0;
+	private int etapaActual = 0;
 	private long instanteSemaforoRojo;
-	private String iniciarAnimacion="Presionar Acelerador para iniciar".toUpperCase();
-	private String continuarAnimacion="Presionar Acelerador para continuar".toUpperCase();
-	private int erroresPermitidos=Integer.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.ERRORES.PERMITIDOS.HASTA"));
-	private int erroresCometidos=0;
-	
+	private String iniciarAnimacion = "Presionar Acelerador para iniciar"
+			.toUpperCase();
+	private String continuarAnimacion = "Presionar Acelerador para continuar"
+			.toUpperCase();
+	private int erroresPermitidos = Integer.valueOf(ContextManager
+			.getProperty("EXAMEN.REACCION.SIMPLE.ERRORES.PERMITIDOS.HASTA"));
+	private int erroresCometidos = 0;
+
 }

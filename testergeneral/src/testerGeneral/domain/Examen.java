@@ -11,7 +11,7 @@ public class Examen implements java.io.Serializable {
 
 	// Fields
 	public static final String RESULTADO_DENTRO="Dentro de los parametros";
-	public static final String RESULTADO_FUERA="Fuera de los parametro";
+	public static final String RESULTADO_FUERA="Fuera de los parametros";
 	public static final String RESULTADO_FUERA_DERIVACION="Fuera de los parametro, se sugiere derivación a profesional";
 	
 	public static final String ESTADO_INI="INICIADO";
@@ -26,6 +26,7 @@ public class Examen implements java.io.Serializable {
 	private String exaCodigo;
 	private String exaNombre;
 	private Integer exaOrden;
+	//private String exaLicencedSn;
 	private Set usuarioExamens = new HashSet(0);
 	private Set examenDetalles = new HashSet(0);
 
@@ -125,4 +126,12 @@ public class Examen implements java.io.Serializable {
 	public String toString() {
 		return exaNombre;
 	}
+	
+/*	public String getExaLicencedSn() {
+		return exaLicencedSn;
+	}
+	
+	public void setExaLicencedSn(String exaLicencedSn) {
+		this.exaLicencedSn = exaLicencedSn;
+	}*/
 }

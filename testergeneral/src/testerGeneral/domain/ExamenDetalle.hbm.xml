@@ -22,6 +22,9 @@
         <property name="exadOrden" type="java.lang.Integer">
             <column name="EXAD_ORDEN"/>
         </property>
+        <property name="exadLicencedSn" type="java.lang.String">
+            <column name="EXAD_LICENCED" length="1" not-null="true" />
+        </property>      
         <property name="exadParametrosCorrecion" type="java.lang.String">
             <column name="EXAD_PARAMETROS_CORRECCION" length="4000"/>
         </property>

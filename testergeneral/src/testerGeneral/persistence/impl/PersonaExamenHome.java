@@ -1,10 +1,12 @@
 package testerGeneral.persistence.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -101,6 +103,32 @@ public class PersonaExamenHome extends DAOObject implements PersonaExamenDao {
         }
         catch (RuntimeException re) {
         	//log.error("find by example failed", re);
+            throw re;
+        }
+    }
+    
+    public Long getCantidadExamenes(Date lastDate) throws Exception {
+        log.debug("finding PersonaExamen instance by getCantidadExamenes");
+        try {
+        	
+        	String sql="select count(*) from app.persona_examen";
+        	
+        	if(lastDate!=null)
+        	{
+        		sql+=" where pexa_fecha > ?";
+        	}
+        	
+            SQLQuery sqlQuery=getSession().createSQLQuery(sql);
+        	
+            if(lastDate!=null)
+        		sqlQuery.setDate(0,lastDate);
+
+            Integer cantidadExamenes=(Integer)sqlQuery.uniqueResult();
+            
+            return new Long(cantidadExamenes);
+        }
+        catch (RuntimeException re) {
+        	//log.error("find by getCantidadExamenes failed", re);
             throw re;
         }
     }

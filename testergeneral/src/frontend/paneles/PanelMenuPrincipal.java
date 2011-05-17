@@ -9,6 +9,7 @@ package frontend.paneles;
 import java.awt.Component;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -17,14 +18,19 @@ import javax.swing.JToolBar;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import tecnologia.aplicada.licence.LicenceManager;
 import testerGeneral.actualizaciones.GestorActualizaciones;
 import testerGeneral.business.ContextManager;
 import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Usuario;
+import testerGeneral.exceptions.ExceptionIsNotHadware;
+import testerGeneral.threads.ThreadTrama;
+import examenes.psicometrico.domain.TramaVision;
 import examenes.util.ExamenesUtils;
 import frontend.components.JOptionPaneTesterGral;
+import frontend.paneles.licence.PanelLicencia;
 import frontend.utils.Util;
 import frontend.ventanas.FramePrincipal;
 
@@ -410,6 +416,12 @@ public class PanelMenuPrincipal extends PanelMenu {
 				seleccionarConfigurarDB();
 			}
 		});
+		
+		btnConfigurarLicencia.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				seleccionarConfigurarLicencia();
+			}
+		});
 
 		btnCerrarSession.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -605,12 +617,58 @@ public class PanelMenuPrincipal extends PanelMenu {
 		doAfterLoadMenuContenido();
 	}
 
-	public void cargarSubMenuExamenes(javax.swing.JToggleButton button) {
+	public void cargarSubMenuExamenes(javax.swing.JToggleButton button,boolean examenVision) {
 		toolbarSubNivel.removeAll();
 		
 		button.setVisible(true);
 		toolbarSubNivel.add(button);
-
+		
+		if(examenVision)
+		{
+			javax.swing.JButton btnResincronizar= new JButton("Calibrar equipo visión");
+			toolbarSubNivel.add(btnResincronizar);
+		
+			btnResincronizar.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					try {
+						if (Util.connectToHard)
+						{
+							if (Util.thTrama != null
+									&& !(Util.thTrama.getTrama() instanceof TramaVision))
+								Util.thTrama.desconnect();
+		
+							if (Util.thTrama == null) {
+								ThreadTrama thTrama = new ThreadTrama(new TramaVision());
+								thTrama.setEjecutar(false);
+								Util.thTrama = thTrama;
+								thTrama.setEjecucion(99999);
+								thTrama.start();
+							}
+		
+							Util.thTrama.sendOrden(0x5000);
+							Thread.sleep(20);
+							new Thread() {
+								@Override
+								public void run() {
+									try {
+										Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST1);
+		
+									} catch (Exception e) {
+										//throw new RuntimeException(e);
+									}
+								}
+							}.start();
+						}
+	
+					} catch (ExceptionIsNotHadware e) {
+						JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
+								"Error", JOptionPane.ERROR_MESSAGE);
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
+			});
+		}
 		/*btnExamenVision.setVisible(true);
 		toolbarSubNivel.add(btnExamenVision);
 
@@ -680,6 +738,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 
 		btnConfigurarDB.setVisible(true);
 		toolbarSubNivel.add(btnConfigurarDB);
+		
+		btnConfigurarLicencia.setVisible(true);
+		toolbarSubNivel.add(btnConfigurarLicencia);
 
 		/*Refresco para que se visualice correctamente*/
 		doAfterLoadMenu();
@@ -750,6 +811,22 @@ public class PanelMenuPrincipal extends PanelMenu {
 		doAfterLoadMenuContenido();
 
 	}
+	
+	public void seleccionarConfigurarLicencia() {
+
+		unSelectButtons(toolbarSubNivel, btnConfigurarLicencia);
+		panelContenido.removeAll();
+
+		PanelLicencia panelLicencia = new PanelLicencia(null,false,true);
+		panelLicencia.validate();
+
+		panelLicencia.setVisible(true);
+		panelContenido.add(panelLicencia);
+
+		doAfterLoadMenuContenido();
+
+	}
+	
 
 	public void seleccionarCerrarSesion() {
 
@@ -860,12 +937,14 @@ public class PanelMenuPrincipal extends PanelMenu {
 			Constantes.MENU_SUB_LOG);
 	private javax.swing.JToggleButton btnConfigurarDB = new JToggleButton(
 			Constantes.MENU_SUB_PANEL_CONFIGURAR_DB);
+	private javax.swing.JToggleButton btnConfigurarLicencia = new JToggleButton(
+			Constantes.MENU_SUB_PANEL_CONFIGURAR_LICENCIA);
+
 
 	@Override
 	public void cargarPrimeraOpcion() {
 		this.cargarSubMenuPersona();
 		this.seleccionarPersona();
-
 	}
 
 }

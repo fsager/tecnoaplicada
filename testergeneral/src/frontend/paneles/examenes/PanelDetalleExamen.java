@@ -32,6 +32,7 @@ import frontend.paneles.vision.PanelForia;
 import frontend.paneles.vision.PanelFotocromatica;
 import frontend.paneles.vision.PanelProfundidadVisual;
 import frontend.paneles.vision.PanelRecEncandilamiento;
+import frontend.paneles.vision.PanelVisionIshihara;
 import frontend.paneles.vision.PanelVisionNocturna;
 
 /**
@@ -83,6 +84,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 		try {
 
 			ExamenDetalle detallesExamenen=new ExamenDetalle();
+			detallesExamenen.setExadLicencedSn("S");
 			detallesExamenen.setExamen(personaExamen.getExamen());
 			ExamenDetalleDefinition examenDetalleService =(ExamenDetalleDefinition)ContextManager.getBizObject("examenDetalleService");
 			
@@ -102,7 +104,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 					String detalle=de.getExadDetalle();
 					if(de.getExadCodigo().equals(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA))
 						detalle=detalle.replaceAll(" cercana","");
-						
+					
 					if(agregarExamen(de))
 					{
 						JToggleButton btnExamen = new JToggleButton(detalle);
@@ -111,8 +113,8 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 						
 						this.add(btnExamen);
 						btnExamen.addActionListener(action);
-						
-						
+					
+					
 						if(i==0)
 							btnExamenPrimero=btnExamen;
 					}
@@ -301,6 +303,10 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 		{
 			addTestFotoCromatica(btn);
 		}
+		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_ISHIHARA))
+		{
+			addTestFotoAshihara(btn);
+		}
 		else if(btn.getActionCommand().equals(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO))
 		{
 			addTestFotoReacEncandilamiento(btn);
@@ -390,6 +396,22 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_FOTOCROMATICA);
 			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
 			PanelFotocromatica ppr=new PanelFotocromatica(btn,personaExamen);
+			panelExamen.getPanelAnimacion().add(ppr);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void addTestFotoAshihara(JToggleButton btn)
+	{	
+		try {
+			
+			unSelectButtons(btn.getActionCommand());
+			ExamenDetalle exaDetalle=new ExamenDetalle(); 
+			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_ISHIHARA);
+			exaDetalle = (ExamenDetalle) examenDetalleService.getAll(exaDetalle).get(0);
+			PanelVisionIshihara ppr=new PanelVisionIshihara(btn,personaExamen);
 			panelExamen.getPanelAnimacion().add(ppr);
 			
 		} catch (Exception e) {

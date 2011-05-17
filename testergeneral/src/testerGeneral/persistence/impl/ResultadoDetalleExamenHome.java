@@ -26,6 +26,9 @@ public class ResultadoDetalleExamenHome extends DAOObject implements ResultadoDe
     public void insert(ResultadoDetalleExamen transientInstance) throws Exception {
         log.debug("persisting ResultadoDetalleExamen instance");
         try {
+        	if(transientInstance.getRdeImagen()==null)
+        		transientInstance.setRdeImagen(new byte[1]);
+        		
             saveObject(transientInstance);
             log.debug("persist successful");
         }
@@ -38,6 +41,9 @@ public class ResultadoDetalleExamenHome extends DAOObject implements ResultadoDe
     public void update(ResultadoDetalleExamen transientInstance) throws Exception {
         log.debug("persisting ResultadoDetalleExamen instance");
         try {
+        	if(transientInstance.getRdeImagen()==null)
+        		transientInstance.setRdeImagen(new byte[1]);
+        	
             updateObject(transientInstance);
             log.debug("persist successful");
         }
@@ -83,7 +89,7 @@ public class ResultadoDetalleExamenHome extends DAOObject implements ResultadoDe
         log.debug("finding ResultadoDetalleExamen instance by example");
         try {
             Criteria cri = getSession().createCriteria(ResultadoDetalleExamen.class);
-            
+            p_example.setRdeImagen(null);
             cri.add(Example.create(p_example).enableLike().ignoreCase());
             
             if(p_example.getPersonaExamen()!=null)

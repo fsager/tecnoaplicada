@@ -32,6 +32,7 @@ import testerGeneral.service.PersonaExamenDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
 import testerGeneral.threads.ThreadTrama;
 import examenes.psicometrico.domain.TramaPsicologico;
+import examenes.psicometrico.domain.TramaVision;
 import examenes.util.ExamenesUtils;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.paneles.examenes.Finalisable;
@@ -88,7 +89,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		}
 		
 		inicializarThreads();
-		mostrarSecondMonitor();;
+		mostrarSecondMonitor();
 		repaintPanelesAnimacion();					
 	}
 
@@ -163,17 +164,21 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 
 
 	public void inicializarThreads() {
+		if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaPsicologico))
+			Util.thTrama.desconnect();
 
-		try
-		{
-			thTrama = new ThreadTrama(new TramaPsicologico());
-			Util.thTrama = thTrama;
-			thTrama.setEjecucion(99999);
-			thTrama.start();
-		}
-		catch (ExceptionIsNotHadware e) {
-			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
+		if (Util.thTrama == null) {
+			try
+			{
+				ThreadTrama thTrama = new ThreadTrama(new TramaPsicologico());
+				Util.thTrama = thTrama;
+				thTrama.setEjecucion(99999);
+				thTrama.start();
+			}
+			catch (ExceptionIsNotHadware e) {
+				JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		
 	}
@@ -187,7 +192,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 					.getProperty("EXAMEN.TAMAÑO.PANTALLA.SECUNDARIA.HEIGHT"));
 
 			panelCoordinacionBimanualAnimacion = new PanelCoordinacionBimanualAnimacion(this,
-					new Dimension(width, heigth),thTrama,rutasAprendizaje,personaExamen);
+					new Dimension(width, heigth),Util.thTrama,rutasAprendizaje,personaExamen);
 
 			panelCoordinacionBimanualUsuarioExaminado = new PanelCoordinacionBimanualUsuario(
 					panelCoordinacionBimanualAnimacion, false);
@@ -203,7 +208,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		} else {
 
 			panelCoordinacionBimanualAnimacion = new PanelCoordinacionBimanualAnimacion(this,
-					new Dimension(813, 320),thTrama,rutasAprendizaje,personaExamen);
+					new Dimension(813, 320),Util.thTrama,rutasAprendizaje,personaExamen);
 		}
 
 		panelCoordinacionBimanualUsuarioExaminador = new PanelCoordinacionBimanualUsuario(
@@ -520,8 +525,8 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 			Util.frameSecundario.validate();
 		}
 
-		if (thTrama != null)
-			thTrama.desconnect();
+		/*if (thTrama != null)
+			thTrama.desconnect();*/
 
 		if (panelCoordinacionBimanualAnimacion != null) {
 			panelCoordinacionBimanualAnimacion.setRun(false);
@@ -554,7 +559,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 	private PanelCoordinacionBimanualUsuario panelCoordinacionBimanualUsuarioExaminador;//Thread
 	private PanelCoordinacionBimanualUsuario panelCoordinacionBimanualUsuarioExaminado;
 	private ExamenDetalle exaDetalle;
-	private ThreadTrama thTrama;//Thread
+	//private ThreadTrama thTrama;//Thread
 
 	private List<Resultado> resultados = new ArrayList<Resultado>();
 	private PersonaExamen personaExamen;

@@ -236,6 +236,7 @@ public class Constantes {
 	public static final String MENU_USUARIOS="Usuarios";
 	public static final String MENU_TAREAS_ADMISTATIVAS="Tareas Administrativas";
 	public static final String MENU_SUB_PANEL_CONFIGURAR_DB="Configurar Base De Datos";
+	public static final String MENU_SUB_PANEL_CONFIGURAR_LICENCIA="Configurar Licencia";
 	public static final String MENU_SALIR="Salir";
 	
 	/*Textos de Sub Menus Persona*/

@@ -74,17 +74,54 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		inicializarThreads();
+
+		if (Util.connectToHard)
+			inicializarThreads();
 	}
 
+	public void cargarDatosPruebas()
+	{
+		resultados.clear();
+
+		agregarResultadoPrueba(lbRespuesta40Izq, 140, "Oblicua 40° izquierda",false);
+		agregarResultadoPrueba(lbRespuesta85Izq, 130, "85° izquierda",false);
+		agregarResultadoPrueba(lbRespuesta70Izq, 115, "70° izquierda",true);
+		agregarResultadoPrueba(lbRespuesta55Izq, 110, "55° izquierda",false);
+
+		agregarResultadoPrueba(lbRespuesta40Der, 240, "Oblicua 40° derecha",false);
+		agregarResultadoPrueba(lbRespuesta85Der, 230, "85° derecha",true);
+		agregarResultadoPrueba(lbRespuesta70Der, 215, "70° derecha",true);
+		agregarResultadoPrueba(lbRespuesta55Der, 210, "55° derecha",false);
+
+		agregarResultadoPrueba(lbRespuestaNasalSup, 325, "Nasal superior",true);
+		agregarResultadoPrueba(lbRespuestaNasalInf, 320, "Nasal inferior",false);
+	}
+	
+	public void agregarResultadoPrueba(JLabel lb, long etapa, String desc,boolean si) {
+		if (si) {
+			Resultado res = new Resultado();
+			res.setResEtapa(etapa);
+			res.setResEtapaDesc(desc + ": Normal");
+			res.setResValor1(1d);
+			resultados.add(res);
+		} else{
+			Resultado res = new Resultado();
+			res.setResEtapa(etapa);
+			res.setResEtapaDesc(desc + ": Alteración");
+			res.setResValor1(0d);
+			resultados.add(res);
+		}
+	}
+
+	
 	public void inicializarThreads() {
 		try {
 
-			if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaVision))
+			if (Util.thTrama != null
+					&& !(Util.thTrama.getTrama() instanceof TramaVision))
 				Util.thTrama.desconnect();
-			
-			if (Util.thTrama == null)
-			{
+
+			if (Util.thTrama == null) {
 				ThreadTrama thTrama = new ThreadTrama(new TramaVision());
 				Util.thTrama.setEjecutar(false);
 				Util.thTrama = thTrama;
@@ -121,6 +158,8 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		lbRespuesta85Der = new javax.swing.JLabel();
 		lbRespuesta70Der = new javax.swing.JLabel();
 		lbRespuesta55Der = new javax.swing.JLabel();
+		lbRespuesta40Der = new javax.swing.JLabel();
+		jRadioDer40 = new javax.swing.JRadioButton();
 		jPanel4 = new javax.swing.JPanel();
 		jRadioIzq85 = new javax.swing.JRadioButton();
 		jRadioIzq70 = new javax.swing.JRadioButton();
@@ -128,6 +167,8 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		lbRespuesta85Izq = new javax.swing.JLabel();
 		lbRespuesta70Izq = new javax.swing.JLabel();
 		lbRespuesta55Izq = new javax.swing.JLabel();
+		lbRespuesta40Izq = new javax.swing.JLabel();
+		jRadioIzq40 = new javax.swing.JRadioButton();
 
 		setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -195,7 +236,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												24, Short.MAX_VALUE)
+												4, Short.MAX_VALUE)
 										.addComponent(jRadioNasalDer)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -231,13 +272,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																30,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(66, Short.MAX_VALUE)));
+										.addContainerGap(106, Short.MAX_VALUE)));
 
-		jPanel1.setBounds(220, 40, 180, 180);
+		jPanel1.setBounds(200, 40, 160, 220);
 		jLayeredPane1.add(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		jPanel2.setBorder(javax.swing.BorderFactory
-				.createTitledBorder("Ojo derecho"));
+				.createTitledBorder("Ojo izquierdo"));
 
 		jRadioDer85.setText("85\u00b0");
 		jRadioDer85.addActionListener(new java.awt.event.ActionListener() {
@@ -275,63 +316,23 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		lbRespuesta55Der.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
 
+		lbRespuesta40Der.setFont(new java.awt.Font("Segoe UI", 3, 18));
+		lbRespuesta40Der.setForeground(new java.awt.Color(0, 0, 255));
+		lbRespuesta40Der.setBorder(javax.swing.BorderFactory
+				.createTitledBorder(""));
+
+		jRadioDer40.setText("Oblicua 40\u00b0");
+		jRadioDer40.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jRadioDer40ActionPerformed(evt);
+			}
+		});
+
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
 				jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
 		jPanel2Layout
 				.setHorizontalGroup(jPanel2Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
-								jPanel2Layout
-										.createSequentialGroup()
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addGroup(
-												jPanel2Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
-														.addComponent(
-																lbRespuesta85Der,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																40,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addGroup(
-																jPanel2Layout
-																		.createSequentialGroup()
-																		.addComponent(
-																				lbRespuesta55Der,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				40,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addGroup(
-																				jPanel2Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addComponent(
-																								jRadioDer55)
-																						.addGroup(
-																								jPanel2Layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												lbRespuesta70Der,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												40,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																										.addComponent(
-																												jRadioDer70)))))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(jRadioDer85)
-										.addContainerGap()));
-		jPanel2Layout
-				.setVerticalGroup(jPanel2Layout
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
@@ -344,51 +345,133 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 																javax.swing.GroupLayout.Alignment.LEADING)
 														.addGroup(
 																jPanel2Layout
+																		.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING)
+																		.addGroup(
+																				javax.swing.GroupLayout.Alignment.TRAILING,
+																				jPanel2Layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addGroup(
+																								jPanel2Layout
+																										.createSequentialGroup()
+																										.addComponent(
+																												lbRespuesta85Der,
+																												javax.swing.GroupLayout.PREFERRED_SIZE,
+																												40,
+																												javax.swing.GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addComponent(
+																												jRadioDer85))
+																						.addGroup(
+																								jPanel2Layout
+																										.createSequentialGroup()
+																										.addComponent(
+																												lbRespuesta40Der,
+																												javax.swing.GroupLayout.PREFERRED_SIZE,
+																												40,
+																												javax.swing.GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addComponent(
+																												jRadioDer40)))
+																		.addGroup(
+																				javax.swing.GroupLayout.Alignment.TRAILING,
+																				jPanel2Layout
+																						.createSequentialGroup()
+																						.addComponent(
+																								lbRespuesta55Der,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								40,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addPreferredGap(
+																								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																						.addComponent(
+																								jRadioDer55)
+																						.addGap(
+																								44,
+																								44,
+																								44)))
+														.addGroup(
+																jPanel2Layout
 																		.createSequentialGroup()
-																		.addGroup(
-																				jPanel2Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING)
-																						.addComponent(
-																								jRadioDer85)
-																						.addComponent(
-																								lbRespuesta85Der,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								30,
-																								javax.swing.GroupLayout.PREFERRED_SIZE))
-																		.addGap(
-																				18,
-																				18,
-																				18)
-																		.addGroup(
-																				jPanel2Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING)
-																						.addComponent(
-																								jRadioDer70)
-																						.addComponent(
-																								lbRespuesta70Der,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								30,
-																								javax.swing.GroupLayout.PREFERRED_SIZE))
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				35,
-																				Short.MAX_VALUE)
 																		.addComponent(
-																				jRadioDer55))
+																				lbRespuesta70Der,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				40,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jRadioDer70)))
+										.addContainerGap(18, Short.MAX_VALUE)));
+		jPanel2Layout
+				.setVerticalGroup(jPanel2Layout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								jPanel2Layout
+										.createSequentialGroup()
+										.addGroup(
+												jPanel2Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																jRadioDer40)
+														.addComponent(
+																lbRespuesta40Der,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																30,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												jPanel2Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																jRadioDer85)
+														.addComponent(
+																lbRespuesta85Der,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																30,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addGap(18, 18, 18)
+										.addGroup(
+												jPanel2Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																jRadioDer70)
+														.addComponent(
+																lbRespuesta70Der,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																30,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+												15, Short.MAX_VALUE)
+										.addGroup(
+												jPanel2Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																jRadioDer55,
+																javax.swing.GroupLayout.Alignment.TRAILING)
 														.addComponent(
 																lbRespuesta55Der,
 																javax.swing.GroupLayout.Alignment.TRAILING,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																30,
-																javax.swing.GroupLayout.PREFERRED_SIZE))));
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addGap(31, 31, 31)));
 
-		jPanel2.setBounds(400, 40, 200, 180);
+		jPanel2.setBounds(370, 40, 170, 220);
 		jLayeredPane1.add(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		jPanel4.setBorder(javax.swing.BorderFactory
-				.createTitledBorder("Ojo izquierdo"));
+				.createTitledBorder("Ojo derecho"));
 
 		jRadioIzq85.setText("85\u00b0");
 		jRadioIzq85.addActionListener(new java.awt.event.ActionListener() {
@@ -426,6 +509,18 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 		lbRespuesta55Izq.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(""));
 
+		lbRespuesta40Izq.setFont(new java.awt.Font("Segoe UI", 3, 18));
+		lbRespuesta40Izq.setForeground(new java.awt.Color(0, 0, 255));
+		lbRespuesta40Izq.setBorder(javax.swing.BorderFactory
+				.createTitledBorder(""));
+
+		jRadioIzq40.setText("Oblicua 40\u00b0");
+		jRadioIzq40.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jRadioIzq40ActionPerformed(evt);
+			}
+		});
+
 		javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(
 				jPanel4);
 		jPanel4.setLayout(jPanel4Layout);
@@ -437,42 +532,49 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 								jPanel4Layout
 										.createSequentialGroup()
 										.addContainerGap()
-										.addComponent(jRadioIzq85)
+										.addGroup(
+												jPanel4Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																lbRespuesta70Izq,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																40,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																lbRespuesta85Izq,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																40,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																lbRespuesta55Izq,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																40,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																lbRespuesta40Izq,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																40,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												lbRespuesta85Izq,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												40,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(96, Short.MAX_VALUE))
-						.addGroup(
-								jPanel4Layout
-										.createSequentialGroup()
-										.addGap(58, 58, 58)
-										.addComponent(jRadioIzq70)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												lbRespuesta70Izq,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												40,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(46, Short.MAX_VALUE))
-						.addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
-								jPanel4Layout
-										.createSequentialGroup()
-										.addContainerGap(101, Short.MAX_VALUE)
-										.addComponent(jRadioIzq55)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												lbRespuesta55Izq,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												40,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(3, 3, 3)));
+										.addGroup(
+												jPanel4Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																jRadioIzq40)
+														.addGroup(
+																jPanel4Layout
+																		.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.TRAILING)
+																		.addComponent(
+																				jRadioIzq70)
+																		.addComponent(
+																				jRadioIzq85)
+																		.addComponent(
+																				jRadioIzq55)))
+										.addContainerGap(28, Short.MAX_VALUE)));
 		jPanel4Layout
 				.setVerticalGroup(jPanel4Layout
 						.createParallelGroup(
@@ -485,48 +587,65 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 												jPanel4Layout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.TRAILING)
-														.addGroup(
-																jPanel4Layout
-																		.createSequentialGroup()
-																		.addGroup(
-																				jPanel4Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING)
-																						.addComponent(
-																								jRadioIzq85)
-																						.addComponent(
-																								lbRespuesta85Izq,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								30,
-																								javax.swing.GroupLayout.PREFERRED_SIZE))
-																		.addGap(
-																				26,
-																				26,
-																				26)
-																		.addComponent(
-																				jRadioIzq70))
 														.addComponent(
-																lbRespuesta70Izq,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																30,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(27, 27, 27)
-										.addGroup(
-												jPanel4Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																lbRespuesta55Izq,
+																lbRespuesta40Izq,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																30,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																jRadioIzq55))
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+																jRadioIzq40))
+										.addGroup(
+												jPanel4Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																jPanel4Layout
+																		.createSequentialGroup()
+																		.addGap(
+																				18,
+																				18,
+																				18)
+																		.addComponent(
+																				jRadioIzq85)
+																		.addGap(
+																				12,
+																				12,
+																				12)
+																		.addComponent(
+																				jRadioIzq70)
+																		.addGap(
+																				18,
+																				18,
+																				18)
+																		.addComponent(
+																				jRadioIzq55))
+														.addGroup(
+																jPanel4Layout
+																		.createSequentialGroup()
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																		.addComponent(
+																				lbRespuesta85Izq,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				30,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				lbRespuesta70Izq,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				30,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				lbRespuesta55Izq,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				30,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap(25, Short.MAX_VALUE)));
 
-		jPanel4.setBounds(20, 40, 200, 180);
+		jPanel4.setBounds(20, 40, 180, 220);
 		jLayeredPane1.add(jPanel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -541,10 +660,8 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																false)
+																javax.swing.GroupLayout.Alignment.LEADING)
 														.addGroup(
-																javax.swing.GroupLayout.Alignment.LEADING,
 																layout
 																		.createSequentialGroup()
 																		.addComponent(
@@ -554,187 +671,255 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 																				javax.swing.GroupLayout.PREFERRED_SIZE)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				187,
 																				Short.MAX_VALUE)
 																		.addComponent(
 																				btnGuardar))
 														.addComponent(
 																jLayeredPane1,
-																javax.swing.GroupLayout.Alignment.LEADING,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																624,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																650,
+																Short.MAX_VALUE))
 										.addContainerGap()));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup().addComponent(jLayeredPane1,
-						javax.swing.GroupLayout.PREFERRED_SIZE, 234,
-						javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18,
-						18).addGroup(
-						layout.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(lbError,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										24,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnGuardar))
-						.addGap(147, 147, 147)));
+		layout
+				.setVerticalGroup(layout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								layout
+										.createSequentialGroup()
+										.addComponent(
+												jLayeredPane1,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												309,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																lbError,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																24,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																btnGuardar))
+										.addGap(147, 147, 147)));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
-	private void jRadioNasalDerActionPerformed(java.awt.event.ActionEvent evt) {
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
-		try {
-			Thread.sleep(tiempoEspera);
-		} catch (Exception exception) {
-		}
-
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
-
-		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
-		Thread timer = new Thread() {
-			public void run() {
-				Boolean ok = escuchar(lbRespuestaNasalInf, null);
-				Util.ocultarPanelOperacionesLargas();
+	private void jRadioDer40ActionPerformed(java.awt.event.ActionEvent evt) {
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
 			}
-		};
-		timer.start();
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_40_DER);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_IZQ);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuesta40Der, true);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
+	}
+
+	private void jRadioIzq40ActionPerformed(java.awt.event.ActionEvent evt) {
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
+			}
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_40_IZQ);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuesta40Izq, false);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
+	}
+
+	private void jRadioNasalDerActionPerformed(java.awt.event.ActionEvent evt) {
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
+			}
+
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuestaNasalInf, null);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
 	}
 
 	private void jRadioNasalIzqActionPerformed(java.awt.event.ActionEvent evt) {
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
-		try {
-			Thread.sleep(tiempoEspera);
-		} catch (Exception exception) {
-		}
-
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
-
-		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
-		Thread timer = new Thread() {
-			public void run() {
-				Boolean ok = escuchar(lbRespuestaNasalSup, null);
-				Util.ocultarPanelOperacionesLargas();
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
 			}
-		};
-		timer.start();
+
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_NASAL);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuestaNasalSup, null);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
 	}
 
 	private void jRadioDer55ActionPerformed(java.awt.event.ActionEvent evt) {
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
-		try {
-			Thread.sleep(tiempoEspera);
-		} catch (Exception exception) {
-		}
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
-		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_DER);
-
-		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
-		Thread timer = new Thread() {
-			public void run() {
-				Boolean ok = escuchar(lbRespuesta55Der, true);
-				Util.ocultarPanelOperacionesLargas();
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
 			}
-		};
-		timer.start();
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_DER);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuesta55Der, true);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
 	}
 
 	private void jRadioDer70ActionPerformed(java.awt.event.ActionEvent evt) {
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
-		try {
-			Thread.sleep(tiempoEspera);
-		} catch (Exception exception) {
-		}
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
-		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_DER);
-
-		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
-		Thread timer = new Thread() {
-			public void run() {
-				Boolean ok = escuchar(lbRespuesta70Der, true);
-				Util.ocultarPanelOperacionesLargas();
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
 			}
-		};
-		timer.start();
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_DER);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuesta70Der, true);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
 	}
 
 	private void jRadioDer85ActionPerformed(java.awt.event.ActionEvent evt) {
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
-		try {
-			Thread.sleep(tiempoEspera);
-		} catch (Exception exception) {
-		}
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
-		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_DER);
-
-		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
-		Thread timer = new Thread() {
-			public void run() {
-				Boolean ok = escuchar(lbRespuesta85Der, true);
-				Util.ocultarPanelOperacionesLargas();
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_DER);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
 			}
-		};
-		timer.start();
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_DER);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuesta85Der, true);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
 	}
 
 	private void jRadioIzq55ActionPerformed(java.awt.event.ActionEvent evt) {
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
-		try {
-			Thread.sleep(tiempoEspera);
-		} catch (Exception exception) {
-		}
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
-		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_IZQ);
-
-		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
-		Thread timer = new Thread() {
-			public void run() {
-				Boolean ok = escuchar(lbRespuesta55Izq, false);
-				Util.ocultarPanelOperacionesLargas();
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
 			}
-		};
-		timer.start();
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_55_IZQ);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuesta55Izq, false);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
 	}
 
 	private void jRadioIzq70ActionPerformed(java.awt.event.ActionEvent evt) {
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
-		try {
-			Thread.sleep(tiempoEspera);
-		} catch (Exception exception) {
-		}
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
-		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_IZQ);
-
-		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
-		Thread timer = new Thread() {
-			public void run() {
-				Boolean ok = escuchar(lbRespuesta70Izq, false);
-				Util.ocultarPanelOperacionesLargas();
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
 			}
-		};
-		timer.start();
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_70_IZQ);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuesta70Izq, false);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
 	}
 
 	private void jRadioIzq85ActionPerformed(java.awt.event.ActionEvent evt) {
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
-		try {
-			Thread.sleep(tiempoEspera);
-		} catch (Exception exception) {
-		}
-		Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
-		//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_IZQ);
-
-		Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
-		Thread timer = new Thread() {
-			public void run() {
-				Boolean ok = escuchar(lbRespuesta85Izq, false);
-				Util.ocultarPanelOperacionesLargas();
+		if (Util.connectToHard) {
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_IZQ);
+			try {
+				Thread.sleep(tiempoEspera);
+			} catch (Exception exception) {
 			}
-		};
-		timer.start();
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85);
+			//thTrama.sendOrden(ThreadTrama.ORDEN_ENCIENDE_PER_85_IZQ);
+
+			Util.mostrarPanelOperacionesLargas(operacionLargaMensaje);
+			Thread timer = new Thread() {
+				public void run() {
+					Boolean ok = escuchar(lbRespuesta85Izq, false);
+					Util.ocultarPanelOperacionesLargas();
+				}
+			};
+			timer.start();
+		}
 	}
 
-	public boolean escuchar(JLabel label, Boolean der) {
+	public boolean escuchar(JLabel label, Boolean izq) {
 		label.setIcon(null);
 
 		int tiempo = 0;
@@ -746,7 +931,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 				tiempo += sleep;
 
 				TramaVision tv = (TramaVision) Util.thTrama.getTramaValida();
-				if (der == null) {
+				if (izq == null) {
 					if (tv.isDerButtonPress() || tv.isIzqButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
@@ -754,7 +939,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return true;
 					}
-				} else if (der) {
+				} else if (izq) {
 					if (tv.isDerButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_ACEPTAR_SMALL);
 						label.setName("Si");
@@ -768,7 +953,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 								.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_PERIMETRIA);
 						return false;
 					}
-				} else if (!der) {
+				} else if (!izq) {
 					if (tv.isDerButtonPress()) {
 						Util.setIcon(label, Constantes.IMG_CANCEL_SMALL);
 						label.setName("No");
@@ -808,7 +993,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 
 		int cantDe70Gradados = 0;
 		for (Resultado res : resultados) {
-			if (res.getResEtapa() == 15) {
+			if (res.getResEtapa() == 115 || res.getResEtapa() == 215) {
 				cantDe70Gradados++;
 			}
 		}
@@ -825,39 +1010,46 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	public void cargarResultados() {
 		resultados.clear();
 
-		agregarResultado(lbRespuesta85Izq, 30, "Campimetría 85° izquierda");
-		agregarResultado(lbRespuesta70Izq, 15, "Campimetría 70° izquierda");
-		agregarResultado(lbRespuesta55Izq, 10, "Campimetría 55° izquierda");
+		agregarResultado(lbRespuesta40Izq, 140, "Oblicua 40° izquierda");
+		agregarResultado(lbRespuesta85Izq, 130, "85° izquierda");
+		agregarResultado(lbRespuesta70Izq, 115, "70° izquierda");
+		agregarResultado(lbRespuesta55Izq, 110, "55° izquierda");
 
-		agregarResultado(lbRespuesta85Der, 30, "Campimetría 85° derecha");
-		agregarResultado(lbRespuesta70Der, 15, "Campimetría 70° derecha");
-		agregarResultado(lbRespuesta55Der, 10, "Campimetría 55° derecha");
+		agregarResultado(lbRespuesta40Der, 240, "Oblicua 40° derecha");
+		agregarResultado(lbRespuesta85Der, 230, "85° derecha");
+		agregarResultado(lbRespuesta70Der, 215, "70° derecha");
+		agregarResultado(lbRespuesta55Der, 210, "55° derecha");
 
-		agregarResultado(lbRespuestaNasalSup, 25, "Campimetría nasal superior");
-		agregarResultado(lbRespuestaNasalInf, 20, "Campimetría nasal inferior");
+		agregarResultado(lbRespuestaNasalSup, 325, "Nasal superior");
+		agregarResultado(lbRespuestaNasalInf, 320, "Nasal inferior");
 	}
 
 	public void agregarResultado(JLabel lb, long etapa, String desc) {
 		if (lb.getName() != null && lb.getName().equals("Si")) {
 			Resultado res = new Resultado();
 			res.setResEtapa(etapa);
-			res.setResEtapaDesc(desc + ": Si");
+			res.setResEtapaDesc(desc + ": Normal");
 			res.setResValor1(1d);
 			resultados.add(res);
 		} else if (lb.getName() != null && lb.getName().equals("No")) {
 			Resultado res = new Resultado();
 			res.setResEtapa(etapa);
-			res.setResEtapaDesc(desc + ": No");
+			res.setResEtapaDesc(desc + ": Alteración");
 			res.setResValor1(0d);
 			resultados.add(res);
 		}
 	}
 
 	public String getResultado() {
+		int etapas[] = { 115, 110, 210, 115, 325, 320 };
 		for (Resultado res : resultados) {
-			if (res.getResEtapa() < 30) {
-				if (res.getResValor1().intValue() == 0)
-					return Examen.RESULTADO_FUERA_DERIVACION;
+
+			for (int i = 0; i < etapas.length; i++) {
+				if (res.getResEtapa() == etapas[i]) {
+					if (res.getResValor1().intValue() == 0)
+						return Examen.RESULTADO_FUERA_DERIVACION;
+				}
+
 			}
 		}
 
@@ -879,7 +1071,13 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 				personaExamenService.insert(personaExamen);
 			}
 
-			cargarResultados();
+			if (Util.connectToHard)
+				cargarResultados();
+			else
+			{
+				cargarDatosPruebas();
+			}
+			
 			if (isExamenValid()) {
 				ResultadoDetalleExamen resultadoDetalleExamen = new ResultadoDetalleExamen();
 				resultadoDetalleExamen.setExamenDetalle(exaDetalle);
@@ -895,7 +1093,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 							.get(0);
 				}
 
-				String detalleResultado = "<HTML>";
+				String detalleResultado = "<HTML><div width=\"200px\">";
 				Set setResultados = resultadoDetalleExamen.getResultados();
 				setResultados.clear();
 				for (int i = 0; i < this.resultados.size(); i++) {
@@ -904,15 +1102,16 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 					setResultados.add(this.resultados.get(i));
 					detalleResultado = detalleResultado
 							+ this.resultados.get(i).getResEtapaDesc()
-							+ ". <BR>";
+							+ ".   ";
 				}
 
 				String resultado = getResultado();
 
 				resultadoDetalleExamen.setRdeResultado(resultado);
 				resultadoDetalleExamen.setRdeDetalleResultado(detalleResultado
-						+ "</HTML>");
-				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
+						+ "</div></HTML>");
+				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
+						.getExadParametrosCorrecion());
 
 				resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
@@ -945,15 +1144,19 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanel2;
 	private javax.swing.JPanel jPanel4;
+	private javax.swing.JRadioButton jRadioDer40;
 	private javax.swing.JRadioButton jRadioDer55;
 	private javax.swing.JRadioButton jRadioDer70;
 	private javax.swing.JRadioButton jRadioDer85;
+	private javax.swing.JRadioButton jRadioIzq40;
 	private javax.swing.JRadioButton jRadioIzq55;
 	private javax.swing.JRadioButton jRadioIzq70;
 	private javax.swing.JRadioButton jRadioIzq85;
 	private javax.swing.JRadioButton jRadioNasalDer;
 	private javax.swing.JRadioButton jRadioNasalIzq;
 	private javax.swing.JLabel lbError;
+	private javax.swing.JLabel lbRespuesta40Der;
+	private javax.swing.JLabel lbRespuesta40Izq;
 	private javax.swing.JLabel lbRespuesta55Der;
 	private javax.swing.JLabel lbRespuesta55Izq;
 	private javax.swing.JLabel lbRespuesta70Der;

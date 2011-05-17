@@ -30,6 +30,8 @@ public class ExamenDetalle implements java.io.Serializable {
 	public static final String EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO="TEST_REC_ENCANDILAMIENTO";
 	public static final String EXAD_CODIGO_TEST_CAMPIMETRIA="TEST_CAMPIMETRIA";
 	public static final String EXAD_CODIGO_TEST_AUDIO="TEST_AUDIO";
+	public static final String EXAD_CODIGO_TEST_ISHIHARA="TEST_ISHIHARA";	
+	
 	
 	private Long exadId;
 	private Examen examen;
@@ -37,6 +39,7 @@ public class ExamenDetalle implements java.io.Serializable {
 	private String exadCodigo;
 	private Integer exadOrden;
 	private String exadParametrosCorrecion;
+	private String exadLicencedSn;
 	
 
 	// Constructors
@@ -100,5 +103,13 @@ public class ExamenDetalle implements java.io.Serializable {
 	
 	public String getExadParametrosCorrecion() {
 		return exadParametrosCorrecion;
+	}
+	
+	public String getExadLicencedSn() {
+		return exadLicencedSn;
+	}
+	
+	public void setExadLicencedSn(String exadLicencedSn) {
+		this.exadLicencedSn = exadLicencedSn;
 	}
 }

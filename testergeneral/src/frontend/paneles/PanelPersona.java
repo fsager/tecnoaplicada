@@ -15,14 +15,12 @@ import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -34,6 +32,7 @@ import javax.swing.table.TableColumn;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import tecnologia.aplicada.licence.LicenceManager;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
@@ -135,6 +134,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		tablePersona.getSelectionModel().addListSelectionListener(
 				new SharedListSelectionHandler());
+		
 	}
 
 	public void agregarEscuchas() {

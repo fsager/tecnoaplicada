@@ -1,4 +1,6 @@
 package testerGeneral.persistence;
+import java.util.Date;
+
 import testerGeneral.domain.PersonaExamen;
 
 /**
@@ -44,5 +46,7 @@ public interface PersonaExamenDao {
 	 * @param p_domain    p_domain
 	 */
 	public abstract void update(PersonaExamen p_domain) throws Exception;
+	
+	public abstract Long getCantidadExamenes(Date lastDate) throws Exception;
 
 }

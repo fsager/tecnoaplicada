@@ -39,5 +39,4 @@ public class PersonaBiz implements PersonaDefinition {
 	public void update(Persona p_domain) throws Exception {
 		dao.update(p_domain);
 	}
-
 }
