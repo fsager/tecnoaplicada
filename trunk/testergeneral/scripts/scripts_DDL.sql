@@ -31,7 +31,7 @@
        "EXA_ID" BIGINT not null generated  BY DEFAULT as identity,
        "EXA_CODIGO" VARCHAR(20) not null unique,
        "EXA_NOMBRE" VARCHAR(100) not null,
-       "EXA_ORDEN" BIGINT not null,
+       "EXA_ORDEN" BIGINT not null,       
         constraint "SQL100326234105961" primary key ("EXA_ID")
     );
 
@@ -46,7 +46,8 @@
        "EXAD_CODIGO" VARCHAR(200) not null unique,
        "EXA_ID" BIGINT not null,
        "EXAD_ORDEN" BIGINT not null,
-       "EXAD_PARAMETROS_CORRECCION" VARCHAR(4000),        
+       "EXAD_PARAMETROS_CORRECCION" VARCHAR(4000),       
+       "EXAD_LICENCED" VARCHAR(1) not null,
         constraint "SQL100327170410820" primary key ("EXAD_ID")
     );
 	
@@ -170,6 +171,7 @@
        "RDE_NOTA2" NUMERIC(14,3),
        "RDE_NOTA3" NUMERIC(14,3),
        "RDE_NOTA4" NUMERIC(14,3),
+       "RDE_IMAGEN" BLOB,
         constraint "SQL100414203432130" primary key ("RDE_ID")
     );
     

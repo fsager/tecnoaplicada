@@ -1,3 +1,12 @@
+--LICENCE PROPERTIES
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCED','N',null);
+INSERT INTO APP.PROPIEDAD VALUES ('PERIODO.PRUEBA.DURACION','45',null);
+INSERT INTO APP.PROPIEDAD VALUES ('PERIODO.PRUEBA.FECHA.INICIO','',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCE.LAST.DATE.ACTIVATED','',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCE.NRO','',null);
+
+--LICENCE PROPERTIES
+
 INSERT INTO APP.PROPIEDAD VALUES ('FORMATO.FECHA','dd-MM-yyyy',null);
 INSERT INTO APP.PROPIEDAD VALUES ('FORMATO.HORA','HH:mm:ss',null);
 INSERT INTO APP.PROPIEDAD VALUES ('FORMATO.FECHA.HORA','dd-MM-yyyy HH:mm:ss',null);
@@ -60,8 +69,8 @@ INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.ANTICIPACION.ETAPA6.SPEED','45',null);
 INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.PERCEPCION.REACCION.ERRORES.PERMITIDOS.HASTA','4',null);
 INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.PERCEPCION.REACCION.ETAPAS.EXAMEN','30',null);
 INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.PERCEPCION.REACCION.ETAPAS.APRENDIZAJE','12',null);
-INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.PERCEPCION.REACCION.TIEMPO.SLEEP','1000',null);
-INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.PERCEPCION.REACCION.TIEMPO.ENTRE.TIEMPO','650',null);
+INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.PERCEPCION.REACCION.TIEMPO.SLEEP','1100',null);
+INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.PERCEPCION.REACCION.TIEMPO.ENTRE.TIEMPO','700',null);
 
 INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.PERCEPCION.REACCION.TIEMPO.SLEEP.COND','2000',null);
 INSERT INTO APP.PROPIEDAD VALUES ('EXAMEN.PERCEPCION.REACCION.TIEMPO.ENTRE.TIEMPO.COND','1200',null);
@@ -139,6 +148,11 @@ INSERT INTO APP.PROPIEDAD (PROP_CLAVE,PROP_VALOR) VALUES ('EXAMEN.REC.ENCANDILAM
 --delete from APP.PROPIEDAD where prop_clave like 'EXAMEN.FOTOCRAMATICA.VISUAL.IMG%';
 INSERT INTO APP.PROPIEDAD (PROP_CLAVE,PROP_VALOR) VALUES ('EXAMEN.FOTOCRAMATICA.VISUAL.IMG','/images/vision/colores/colores.png');
 
+--delete from APP.PROPIEDAD where prop_clave like 'EXAMEN.VISION.ISHIHARA.IMG%';
+INSERT INTO APP.PROPIEDAD (PROP_CLAVE,PROP_VALOR) VALUES ('EXAMEN.VISION.ISHIHARA.IMG','/images/vision/isihara/IsiharaApplicacion.png');
+
+
+
 --delete from APP.PROPIEDAD where prop_clave like 'EXAMEN.FORIA.IMG%';
 INSERT INTO APP.PROPIEDAD (PROP_CLAVE,PROP_VALOR) VALUES ('EXAMEN.FORIA.IMG','/images/vision/foria/foria.png');
 
@@ -186,102 +200,110 @@ insert into "APP"."USUARIO_EXAMEN"("EXA_ID","USR_NOMBRE") values ((select exa_id
 insert into "APP"."USUARIO_EXAMEN"("EXA_ID","USR_NOMBRE") values ((select exa_id from APP.EXAMEN where EXA_CODIGO = 'EXA_PERSONALIDAD'),'Administrador Sistema');
 
 
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
- VALUES('Test de control temporo espacial','TEST_CTR_TEMPORO',3,1,'Metros promedio menor a ' ||(select prop_valor 
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de control temporo espacial','TEST_CTR_TEMPORO',3,1,'Metros promedio menor o igual a ' ||(select prop_valor 
 																								  from app.propiedad
-																								where prop_clave = 'EXAMEN.ANTICIPACION.METROS.PERMITIDOS.HASTA')||'.');
+																								where prop_clave = 'EXAMEN.ANTICIPACION.METROS.PERMITIDOS.HASTA')||'.','S');
 
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
  VALUES('Test de coordinación bimanual','TEST_COOR_BIMANUAL',3,2,'<ul>
-																	<li>Tiempo fuera del circuito menor a ' ||(select prop_valor 
+																	<li>Tiempo fuera del circuito menor o igual a ' ||(select prop_valor 
 																												  from app.propiedad
 																												where prop_clave = 'EXAMEN.COORDINACION.BIMANUAL.TIEMPO.FUERA.PERMITIDO')||'.</li>
-																	<li>Errores permitidos menor a '||(select prop_valor 
+																	<li>Errores permitidos menor o igual a '||(select prop_valor 
 																  from app.propiedad
 																where prop_clave = 'EXAMEN.COORDINACION.BIMANUAL.ERRORES.PERMITIDO')||'.</li>
-																</ul>');
+																</ul>','S');
 
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
  VALUES('Test de coordinación bimanual fina (Palanca)','TEST_COOR_BIMANUAL_FINA',3,3,'<ul>
-																						<li>Tiempo fuera del circuito menor a  ' ||(select char(prop_valor/10) 
+																						<li>Tiempo fuera del circuito menor o igual a  ' ||(select char(prop_valor/10) 
 																																	  from app.propiedad
 																																	where prop_clave = 'EXAMEN.PALANCA.ERRORES.TIEMPO')||' Centésimas de segundos.</li>
-																						<li>Punto sin activar menor a   '       ||(select prop_valor 
+																						<li>Puntos sin activar menor o igual a   '       ||(select prop_valor 
 																															  from app.propiedad
 																															where prop_clave = 'EXAMEN.PALANCA.ERRORES.PUNTOS.SIN.ACTIVAR.HASTA')||'.</li>
-																					</ul>');
+																					</ul>','S');
 																					
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
- VALUES('Test de percepción y reacción','TEST_PERC_REAC',3,5,'Errores permitidos menor a '||(select prop_valor 
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de percepción y reacción','TEST_PERC_REAC',3,5,'Errores permitidos menor o igual a '||(select prop_valor 
 																											  from app.propiedad
-																											where prop_clave = 'EXAMEN.PERCEPCION.REACCION.ERRORES.PERMITIDOS.HASTA')||'.');
+																											where prop_clave = 'EXAMEN.PERCEPCION.REACCION.ERRORES.PERMITIDOS.HASTA')||'.','S');
 																
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
  VALUES('Test de reacciones múltiples no condicionadas','TEST_REAC_MULT_NO_COND',3,6,  '<ul>
-																							<li>Errores permitidos menor a '  ||(select prop_valor 
+																							<li>Errores permitidos menor o igual a '  ||(select prop_valor 
 																														  from app.propiedad
 																														where prop_clave = 'EXAMEN.REACION.MULTIPLE.NOCOND.ERRORES.PERMITIDOS.HASTA')||'.</li>
-																							<li>Tiempo promedio menor a '  ||(select prop_valor 
+																							<li>Tiempo promedio menor o igual a '  ||(select prop_valor 
 																													  from app.propiedad
 																													where prop_clave = 'EXAMEN.REACION.MULTIPLE.NOCOND.TIEMPO.PERMITIDOS.HASTA')||'.</li>
-																						</ul>');
+																						</ul>','S');
 
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
  VALUES('Test de reacciones múltiples condicionada','TEST_REAC_MULTIPLES_COND',3,7,'<ul>
-																						<li>Errores permitidos menor a '  ||(select prop_valor 
+																						<li>Errores permitidos menor o igual a '  ||(select prop_valor 
 																												  from app.propiedad
 																												where prop_clave = 'EXAMEN.REACION.MULTIPLE.COND.ERRORES.PERMITIDOS.HASTA')||'.</li>
-																						<li>Tiempo promedio menor a '  ||(select prop_valor 
+																						<li>Tiempo promedio menor o igual a '  ||(select prop_valor 
 																												  from app.propiedad
 																												where prop_clave = 'EXAMEN.REACION.MULTIPLE.COND.TIEMPO.PERMITIDOS.HASTA')||'.</li>
-																					</ul>');
+																					</ul>','S');
 
- INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
+ INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
  VALUES('Test de reacción simple','TEST_REAC_SIMPLE',3,8, 'Tiempo promedio máximo '  ||(select char(prop_valor/10) 
 																						  from app.propiedad
-																						where prop_clave = 'EXAMEN.REACCION.SIMPLE.TIEMPO.PERMITIDOS.HASTA')||' Centésimas de segundos.');
+																						where prop_clave = 'EXAMEN.REACCION.SIMPLE.TIEMPO.PERMITIDOS.HASTA')||' Centésimas de segundos.','S');
 
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
- VALUES('Test de coordinación visomotora (Punteo)','TEST_COOR_VISOMOTORA',3,4,'Errores permitidos menor a '  ||(select prop_valor 
+
+
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de coordinación visomotora (Punteo)','TEST_COOR_VISOMOTORA',3,4,'Errores permitidos menor o igual a '  ||(select prop_valor 
 																												  from app.propiedad
-																												where prop_clave = 'EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA')||'.');
+																												where prop_clave = 'EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA')||'.','S');
  
  
+
  
- 
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
  VALUES('Test de agudeza visual cercana','TEST_AGUDEZA_VISUAL_CERCANA',1,1,'<ul>
-																				<li>Profesional: 20/30 como mínimo (línea 6).</li>
-																				<li>Particular: 20/40 como mínimo (línea 5).</li>
-																			</ul>');
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION) 
+																				<li>Profesional: 0.8 como mínimo (línea 6).</li>
+																				<li>Particular: 0.7 como mínimo (línea 5).</li>
+																			</ul>','S');
+																																						
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED) 
 	VALUES('Test de agudeza visual lejana','TEST_AGUDEZA_VISUAL_LEJANA',1,2,'<ul>
-																				<li>Profesional: 20/30 como mínimo (línea 6).</li>
-																				<li>Particular: 20/40 como mínimo (línea 5).</li>
-																			</ul>');
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
- VALUES('Test de visión fotocromática','TEST_FOTOCROMATICA',1,3,'100% de aciertos');
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
+																				<li>Profesional: 0.8 como mínimo (línea 6).</li>
+																				<li>Particular: 0.7 como mínimo (línea 5).</li>
+																			</ul>','S');
+
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de Ishihara','TEST_ISHIHARA',1,3,'100% de aciertos','S');
+ 
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
  VALUES('Test de profundidad','TEST_PROFUNDIDAD',1,4,'<ul>
 														<li>Profesional: 100%.</li>
 														<li>Particular: 66%.</li>
-													 </ul>');
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
- VALUES('Test de foria visual','TEST_FORIA',1,5, 'Vertical 4 al 10. Horizontal 1 a 3.');
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
- VALUES('Test de visión nocturna','TEST_VISION_NOCTURNA',1,6,'66% de las imágenes reconocidas.');
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
- VALUES('Test de encandilamiento','TEST_ENCANDILAMIENTO',1,7,'Ver la imagen.');
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
- VALUES('Test de recuperación al encandilamiento','TEST_REC_ENCANDILAMIENTO',1,8,'Ver imagen antes de los 5 segundos');
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION)
- VALUES('Test de campimetría','TEST_CAMPIMETRIA',1,9,'70° a cada lado.'); 
-INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION) 
-	VALUES('Test de audio','TEST_AUDIO',1,10,'<ul>
-												<li>Profesional: 50 Db.</li>
-												<li>Particular: 60 Db.</li>
+													 </ul>','S');
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de foria visual','TEST_FORIA',1,5, 'Vertical 4 al 10. Horizontal 1 a 3.','S');
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de visión nocturna','TEST_VISION_NOCTURNA',1,6,'80% de las imágenes reconocidas.','S');
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de encandilamiento','TEST_ENCANDILAMIENTO',1,7,'Ver la imagen.','S');
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de recuperación al encandilamiento','TEST_REC_ENCANDILAMIENTO',1,8,'Ver imagen antes de los 5 segundos','S');
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de visión fotocromática','TEST_FOTOCROMATICA',1,9,'100% de aciertos','S');
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED)
+ VALUES('Test de campimetría','TEST_CAMPIMETRIA',1,10,'70° a cada lado.','S');
+  
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED) 
+	VALUES('Test de audio','TEST_AUDIO',1,11,'<ul>
+												<li>Profesional:Como mínimo 50 Db.</li>
+												<li>Particular:Como mínimo 60 Db.</li>
 												<li>Diferencia entre DB subida y DB bajada no mayor a 10 Db.</li>
-											 </ul>');
+											 </ul>','S');
 
 
 
@@ -329,6 +351,7 @@ INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DES
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION) VALUES ('IMAGENES','EXTENCION_IMAGENES','gif','gif','gif');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION) VALUES ('IMAGENES','EXTENCION_IMAGENES','tif','tif','tif');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION) VALUES ('IMAGENES','EXTENCION_IMAGENES','tiff','tiff','tiff');
+
 
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION) VALUES ('EXAMEN','EXAMEN_ESTADO','Aprobado','Aprobado','Aprobado');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION) VALUES ('EXAMEN','EXAMEN_ESTADO','Reprobado','Reprobado','Reprobado');

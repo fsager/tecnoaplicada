@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportPersonaExamen" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="template.type" value="columnar"/>
-	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.zoom" value="0.9075000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="54"/>
+	<property name="ireport.y" value="364"/>
 	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -19,7 +19,16 @@
 	</parameter>
 	<parameter name="p_parametros_correccion" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select * from app.persona per,
+		<![CDATA[select per.*,perexa.*,exa.*,detalleRes.*,detalle.*,
+		  (select detalleResE.rde_imagen
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_AUDIO') as GRAFICO_AUDIO
+  from app.persona per,
               app.persona_examen perexa,
               app.examen exa,
               app.resultado_detalle_examen detalleRes,
@@ -29,7 +38,7 @@ where perexa.per_id = per.per_id
     and perexa.pexa_id= detalleRes.pexa_id
     and detalle.exad_id = detalleRes.exad_id
     and perexa.pexa_id = $P{p_pexa_id}
-order by detalle.exad_detalle]]>
+order by detalle.exad_orden,detalle.exad_id]]>
 	</queryString>
 	<field name="PER_ID" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -145,6 +154,7 @@ order by detalle.exad_detalle]]>
 	<field name="RDE_DETALLE_RESULTADO" class="java.lang.String"/>
 	<field name="RDE_PARAMETROS_CORRECCION" class="java.lang.String"/>
 	<field name="PEXA_TIPO_EXAMEN" class="java.lang.String"/>
+	<field name="GRAFICO_AUDIO" class="java.io.InputStream"/>
 	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="Page">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
@@ -397,7 +407,7 @@ order by detalle.exad_detalle]]>
 			<textField isBlankWhenNull="true">
 				<reportElement x="185" y="4" width="182" height="49"/>
 				<textElement verticalAlignment="Middle" markup="html">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{RDE_DETALLE_RESULTADO}]]></textFieldExpression>
 			</textField>
@@ -423,47 +433,47 @@ order by detalle.exad_detalle]]>
 		<band height="1" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="155" splitType="Stretch">
+		<band height="97" splitType="Stretch">
 			<elementGroup>
 				<staticText>
-					<reportElement x="16" y="118" width="65" height="17"/>
+					<reportElement x="16" y="54" width="65" height="17"/>
 					<textElement/>
 					<text><![CDATA[Firma Médico]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="4" y="101" width="100" height="17"/>
+					<reportElement x="4" y="37" width="100" height="17"/>
 					<textElement verticalAlignment="Top"/>
 					<text><![CDATA[...................................................]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="455" y="101" width="100" height="17"/>
+					<reportElement x="455" y="37" width="100" height="17"/>
 					<textElement verticalAlignment="Top"/>
 					<text><![CDATA[...................................................]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="461" y="118" width="84" height="17"/>
+					<reportElement x="461" y="54" width="84" height="17"/>
 					<textElement/>
 					<text><![CDATA[Firma Examinado]]></text>
 				</staticText>
 			</elementGroup>
 			<frame>
-				<reportElement mode="Opaque" x="2" y="139" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8"/>
+				<reportElement mode="Opaque" x="2" y="75" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="507" y="0" width="40" height="13" forecolor="#FFFFFF"/>
+					<reportElement style="Column header" x="507" y="-1" width="40" height="13" forecolor="#FFFFFF"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="421" y="0" width="80" height="13" forecolor="#FFFFFF"/>
+					<reportElement style="Column header" x="421" y="-1" width="80" height="13" forecolor="#FFFFFF"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement style="Column header" x="14" y="0" width="197" height="13" forecolor="#FFFFFF"/>
+					<reportElement style="Column header" x="14" y="-1" width="197" height="13" forecolor="#FFFFFF"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
@@ -471,28 +481,33 @@ order by detalle.exad_detalle]]>
 				</textField>
 			</frame>
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="138" width="555" height="1"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="74" width="555" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="217" splitType="Stretch">
 			<staticText>
-				<reportElement x="4" y="12" width="100" height="20"/>
+				<reportElement x="8" y="140" width="100" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Comentarios:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="113" y="12" width="329" height="69"/>
+				<reportElement x="117" y="140" width="329" height="69"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PEXA_OBS}]]></textFieldExpression>
 			</textField>
+			<image onErrorType="Blank">
+				<reportElement x="13" y="12" width="536" height="118" isRemoveLineWhenBlank="true"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{GRAFICO_AUDIO}]]></imageExpression>
+			</image>
 		</band>
-	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>
