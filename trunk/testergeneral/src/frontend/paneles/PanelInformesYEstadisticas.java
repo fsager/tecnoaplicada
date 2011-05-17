@@ -6,6 +6,7 @@
 
 package frontend.paneles;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,8 +14,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -60,6 +66,7 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 		buttonGroupAlcohol = new javax.swing.ButtonGroup();
 		buttonGroupPsicofarmacos = new javax.swing.ButtonGroup();
 		buttonGroupEstudios = new javax.swing.ButtonGroup();
+		buttonGroupTipoReporte = new javax.swing.ButtonGroup();
 		jPanelFiltros = new javax.swing.JPanel();
 		jTextFieldEdadInicio = new javax.swing.JTextField();
 		jLabelEdad2 = new javax.swing.JLabel();
@@ -79,6 +86,8 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 		jRadioButtonEstudiosSI = new javax.swing.JRadioButton();
 		jRadioButtonEstudiosNO = new javax.swing.JRadioButton();
 		jButton1 = new javax.swing.JButton();
+		jRadioResumida = new javax.swing.JRadioButton();
+		jRadioDetallada = new javax.swing.JRadioButton();
 
 		jPanelFiltros.setBorder(javax.swing.BorderFactory.createTitledBorder(
 				null, "Filtros",
@@ -221,6 +230,23 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 			}
 		});
 
+		buttonGroupTipoReporte.add(jRadioResumida);
+		jRadioResumida.setSelected(true);
+		jRadioResumida.setText("Informaci\u00f3n Resumida");
+		jRadioResumida.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jRadioResumidaActionPerformed(evt);
+			}
+		});
+
+		buttonGroupTipoReporte.add(jRadioDetallada);
+		jRadioDetallada.setText("Informaci\u00f3n Detallada");
+		jRadioDetallada.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jRadioDetalladaActionPerformed(evt);
+			}
+		});
+
 		javax.swing.GroupLayout jPanelFiltrosLayout = new javax.swing.GroupLayout(
 				jPanelFiltros);
 		jPanelFiltros.setLayout(jPanelFiltrosLayout);
@@ -235,8 +261,6 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 												jPanelFiltrosLayout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																jCheckBoxTomoHoyAlcohol)
 														.addGroup(
 																jPanelFiltrosLayout
 																		.createSequentialGroup()
@@ -279,6 +303,8 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
 																				jLabelEdad3))
+														.addComponent(
+																jCheckBoxTomoHoyAlcohol)
 														.addGroup(
 																jPanelFiltrosLayout
 																		.createSequentialGroup()
@@ -301,34 +327,12 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 																						.addGroup(
 																								jPanelFiltrosLayout
 																										.createSequentialGroup()
-																										.addGroup(
-																												jPanelFiltrosLayout
-																														.createParallelGroup(
-																																javax.swing.GroupLayout.Alignment.LEADING)
-																														.addGroup(
-																																jPanelFiltrosLayout
-																																		.createSequentialGroup()
-																																		.addComponent(
-																																				jRadioButtonTomoHoyPsicofarmacosSI)
-																																		.addPreferredGap(
-																																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																																		.addComponent(
-																																				jRadioButtonTomoHoyPsicofarmacosNO))
-																														.addGroup(
-																																jPanelFiltrosLayout
-																																		.createSequentialGroup()
-																																		.addComponent(
-																																				jRadioButtonEstudiosSI)
-																																		.addPreferredGap(
-																																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																																		.addComponent(
-																																				jRadioButtonEstudiosNO)))
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																												43,
-																												Short.MAX_VALUE)
 																										.addComponent(
-																												jButton1))
+																												jRadioButtonTomoHoyPsicofarmacosSI)
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addComponent(
+																												jRadioButtonTomoHoyPsicofarmacosNO))
 																						.addGroup(
 																								jPanelFiltrosLayout
 																										.createSequentialGroup()
@@ -337,8 +341,31 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 																										.addPreferredGap(
 																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																										.addComponent(
-																												jRadioButtonTomoHoyAlcoholNO)))))
-										.addContainerGap()));
+																												jRadioButtonTomoHoyAlcoholNO))
+																						.addGroup(
+																								jPanelFiltrosLayout
+																										.createSequentialGroup()
+																										.addComponent(
+																												jRadioButtonEstudiosSI)
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addComponent(
+																												jRadioButtonEstudiosNO)))
+																		.addGap(
+																				42,
+																				42,
+																				42)
+																		.addGroup(
+																				jPanelFiltrosLayout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addComponent(
+																								jRadioResumida)
+																						.addComponent(
+																								jRadioDetallada)
+																						.addComponent(
+																								jButton1))))
+										.addContainerGap(18, Short.MAX_VALUE)));
 		jPanelFiltrosLayout
 				.setVerticalGroup(jPanelFiltrosLayout
 						.createParallelGroup(
@@ -424,18 +451,23 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 														.addGroup(
 																jPanelFiltrosLayout
 																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addComponent(
+																				jRadioResumida)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jRadioDetallada)
 																		.addGap(
-																				54,
-																				54,
-																				54)
+																				18,
+																				18,
+																				18)
 																		.addComponent(
 																				jButton1,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				41,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+										.addContainerGap(22, Short.MAX_VALUE)));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
@@ -445,16 +477,24 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 						jPanelFiltros, javax.swing.GroupLayout.PREFERRED_SIZE,
 						javax.swing.GroupLayout.DEFAULT_SIZE,
 						javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(353, Short.MAX_VALUE)));
+						.addContainerGap(340, Short.MAX_VALUE)));
 		layout.setVerticalGroup(layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				layout.createSequentialGroup().addComponent(jPanelFiltros,
 						javax.swing.GroupLayout.PREFERRED_SIZE,
 						javax.swing.GroupLayout.DEFAULT_SIZE,
 						javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(243, Short.MAX_VALUE)));
+						.addContainerGap(230, Short.MAX_VALUE)));
 	}// </editor-fold>
 	//GEN-END:initComponents
+
+	private void jRadioDetalladaActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+	}
+
+	private void jRadioResumidaActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+	}
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 		generarReporte();
@@ -557,6 +597,8 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 			reportesGaussExamenes.clear();
 			List<Persona> personas = cargarPersonas();
 			Integer cantidadExamenes = 0;
+			String p_pexa_id="";
+			
 			for (Persona persona : personas) {
 				Examen examen = new Examen();
 				examen.setExaId(new Long(3));//TODO obtener id del examen del combo
@@ -568,49 +610,88 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 				List<PersonaExamen> perExamenes = personaExamenService
 						.getAll(perExamenExamenple);
 				cantidadExamenes += perExamenes.size();
-				for (PersonaExamen perExamen : perExamenes) {
 
-					Set<ResultadoDetalleExamen> resultadosDetalleExamen = perExamen
-							.getResultadoDetalleExamens();
-					for (ResultadoDetalleExamen resultadoDetalleExamen : resultadosDetalleExamen) {
-						agregarResultadoDetalleExamen(resultadoDetalleExamen);
+				if (jRadioResumida.isSelected()) {
+					for (PersonaExamen perExamen : perExamenes) {
+	
+						Set<ResultadoDetalleExamen> resultadosDetalleExamen = perExamen
+								.getResultadoDetalleExamens();
+	
+						for (ResultadoDetalleExamen resultadoDetalleExamen : resultadosDetalleExamen) {
+							agregarResultadoDetalleExamen(resultadoDetalleExamen);
+						}
 					}
+				}
+				else
+				{
+					for (PersonaExamen perExamen : perExamenes) {
+						p_pexa_id+=perExamen.getPexaId()+",";
+					}
+					
+										
 				}
 			}
 
-			HashMap parameterMap = new HashMap();
-
-			parameterMap.put("p_cantidad_examinados", personas.size() + "");
-			parameterMap.put("p_cantidad_examenes", cantidadExamenes + "");
-			parameterMap.put("SUBREPORT_DIR",new File("./reportes").getCanonicalPath()+File.separator);
-			
-
-			parameterMap.put("reportesGaussExamenes",reportesGaussExamenes);
-
-			ArrayList dummy=new ArrayList(1);
-			dummy.add(1);
-
-			/*for(ReporteGaussExamenes reporteGaussExamenes:reportesGaussExamenes)
+			if(p_pexa_id.equals(""))
+				p_pexa_id="(-1)";
+			else
 			{
-				if(reporteGaussExamenes.getSerie().equals("Test de reacción simple") && reporteGaussExamenes.getTipo().equals("C"))
-				{
-					System.out.println("Cat: "+reporteGaussExamenes.getCategoria());
-					System.out.println("Value: "+reporteGaussExamenes.getValue());
-				}
+				p_pexa_id=p_pexa_id.substring(0,p_pexa_id.length()-1);
+				p_pexa_id="("+p_pexa_id+")";
+			}
+			
+			final byte[] buf;
+			HashMap parameterMap = new HashMap();
+			String extencion="pdf";
+			if (jRadioResumida.isSelected()) {
 				
-			}*/
+				parameterMap.put("p_cantidad_examinados", personas.size() + "");
+				parameterMap.put("p_cantidad_examenes", cantidadExamenes + "");
+				parameterMap.put("SUBREPORT_DIR", new File("./reportes")
+						.getCanonicalPath()
+						+ File.separator);
 
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(
-					dummy);
-			final byte[] buf = JasperRunManager.runReportToPdf(
-					"reportes/estadisticaExamenes.jasper", parameterMap, ds);
+				parameterMap.put("reportesGaussExamenes", reportesGaussExamenes);
 
-			String file = System.getProperty("java.io.tmpdir")
-					+ System.currentTimeMillis() + ".pdf";
+				ArrayList dummy = new ArrayList(1);
+				dummy.add(1);
+				
+				JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(
+						dummy);
+				buf = JasperRunManager.runReportToPdf(
+						"reportes/estadisticaExamenes.jasper", parameterMap, ds);
+
+			}
+			else
+			{
+				parameterMap.put("p_cantidad_examinados", personas.size() + "");
+				parameterMap.put("p_cantidad_examenes", cantidadExamenes + "");
+				parameterMap.put("p_pexa_id", p_pexa_id);
+				parameterMap.put("SUBREPORT_DIR", new File("./reportes").getCanonicalPath()+ File.separator);
+
+				java.sql.Connection conn=ContextManager.getConnection();
+				JasperPrint jasperPrint=JasperFillManager.fillReport("reportes/estadisticaExamenesDetallado.jasper", parameterMap,conn);
+				ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+				
+				JRExporter exporter =new JRXlsExporter();
+
+				exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+				exporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, byteArray);
+				exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+				exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+				exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+				exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+				exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, Boolean.TRUE);
+				extencion="xls";
+				exporter.exportReport();
+				buf=byteArray.toByteArray();
+			}
+			
+			String file = System.getProperty("java.io.tmpdir")+ System.currentTimeMillis() + "."+extencion;
 			testerGeneral.persistence.impl.Util.toFile(file, buf);
 
-			Process p = Runtime.getRuntime().exec(
-					"rundll32 url.dll,FileProtocolHandler " + file);
+			Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file);
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -807,6 +888,7 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 	private javax.swing.ButtonGroup buttonGroupEstudios;
 	private javax.swing.ButtonGroup buttonGroupPsicofarmacos;
 	private javax.swing.ButtonGroup buttonGroupSexo;
+	private javax.swing.ButtonGroup buttonGroupTipoReporte;
 	private javax.swing.JButton jButton1;
 	private javax.swing.JCheckBox jCheckBoxEdad;
 	private javax.swing.JCheckBox jCheckBoxEstudios;
@@ -824,6 +906,8 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 	private javax.swing.JRadioButton jRadioButtonTomoHoyAlcoholSI;
 	private javax.swing.JRadioButton jRadioButtonTomoHoyPsicofarmacosNO;
 	private javax.swing.JRadioButton jRadioButtonTomoHoyPsicofarmacosSI;
+	private javax.swing.JRadioButton jRadioDetallada;
+	private javax.swing.JRadioButton jRadioResumida;
 	private javax.swing.JTextField jTextFieldEdadFin;
 	private javax.swing.JTextField jTextFieldEdadInicio;
 	// End of variables declaration//GEN-END:variables

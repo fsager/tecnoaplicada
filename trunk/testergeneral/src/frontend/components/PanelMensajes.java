@@ -36,7 +36,7 @@ public class PanelMensajes extends javax.swing.JPanel implements ClipboardOwner 
 	public PanelMensajes(JInternalFrameTesterGral internalframe, int buttons,
 			int icon, String message) {
 
-		init(internalframe, buttons, icon, message);
+		init(internalframe, buttons, icon, message,true);
 		panelDetalleError.setVisible(false);
 		Dimension dim = new Dimension(500, 120);
 		this.setMinimumSize(dim);
@@ -44,16 +44,26 @@ public class PanelMensajes extends javax.swing.JPanel implements ClipboardOwner 
 	}
 
 	public PanelMensajes(JInternalFrameTesterGral internalframe, int buttons,
+			int icon, String message,boolean truncMessage) {
+
+		init(internalframe, buttons, icon, message,truncMessage);
+		panelDetalleError.setVisible(false);
+		Dimension dim = new Dimension(500, 120);
+		this.setMinimumSize(dim);
+		this.setPreferredSize(dim);
+	}	
+	
+	public PanelMensajes(JInternalFrameTesterGral internalframe, int buttons,
 			int icon, String message, Throwable ex) {
-		init(internalframe, buttons, icon, message);
+		init(internalframe, buttons, icon, message,true);
 		if (ex != null) {
 			panelDetalleError.setVisible(true);
 			txtArea.setEditable(false);
-			
+
 			StringWriter sw = new StringWriter();
-		    PrintWriter pw = new PrintWriter(sw);
-		    ex.printStackTrace(pw);
-		    txtArea.append(sw.toString());
+			PrintWriter pw = new PrintWriter(sw);
+			ex.printStackTrace(pw);
+			txtArea.append(sw.toString());
 			/*ex.printStackTrace()
 			
 			
@@ -67,9 +77,9 @@ public class PanelMensajes extends javax.swing.JPanel implements ClipboardOwner 
 	}
 
 	public void init(JInternalFrameTesterGral internalframe, int buttons,
-			int icon, String message) {
-		if(message.length()>180)
-			message=message.substring(0,180);
+			int icon, String message,boolean truncMessage) {
+		if (message.length() > 180 && truncMessage)
+			message = message.substring(0, 180);
 		this.internalframe = internalframe;
 		initComponents();
 
@@ -295,12 +305,12 @@ public class PanelMensajes extends javax.swing.JPanel implements ClipboardOwner 
 														.addComponent(
 																lbIcon,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																74,
+																77,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(
 																lbMessage,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																65,
+																82,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED,

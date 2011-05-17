@@ -86,10 +86,11 @@ public class ExamenDetalleHome extends DAOObject implements ExamenDetalleDao {
             Criteria cri = getSession().createCriteria(ExamenDetalle.class);
             
             cri.add(Example.create(p_example).enableLike().ignoreCase());
+            //p_example.setExadLicencedSn("S");
             if(p_example.getExamen()!=null)
             	cri.createCriteria("examen").add(Restrictions.idEq(p_example.getExamen().getExaId()));
             
-            //cri.addOrder(Order.asc("exadOrden"));
+            cri.addOrder(Order.asc("exadOrden"));
             List results = cri.list();
             log.debug("find by example successful, result size: " + results.size());
             return results;

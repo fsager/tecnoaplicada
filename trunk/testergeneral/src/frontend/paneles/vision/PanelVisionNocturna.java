@@ -77,7 +77,9 @@ public class PanelVisionNocturna extends javax.swing.JPanel implements
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		inicializarThreads();
+		
+		if(Util.connectToHard)
+			inicializarThreads();
 	}
 
 	public void inicializarThreads() {

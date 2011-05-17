@@ -48,8 +48,8 @@ public class ThreadTrama extends Thread{
 	/*PERIMETRIA*/
 	
 	public static final int ORDEN_APAGAR_TEST_PERIMETRIA=0X20;//Dejo de generar el test ocular o de perimetrias
-	public static final int ORDEN_ENCIENDE_PER_SUP=0x21;//Enciendo la perimetria superior
-	public static final int ORDEN_ENCIENDE_PER_INF=0x22;//Enciendo la perimetria inferior
+	public static final int ORDEN_ENCIENDE_PER_40_DER=0x21;//Enciendo la perimetria superior
+	public static final int ORDEN_ENCIENDE_PER_40_IZQ=0x22;//Enciendo la perimetria inferior
 	public static final int ORDEN_ENCIENDE_PER_85=0x23;//Enciendo la perimetria de 85º
 	public static final int ORDEN_ENCIENDE_PER_70=0x24;//Enciendo la perimetria de 70º
 	public static final int ORDEN_ENCIENDE_PER_55=0x25;//Enciendo la perimetria de 55º
@@ -61,8 +61,8 @@ public class ThreadTrama extends Thread{
 	/*PERIMETRIA*/
 	
 	
-	public static final int ORDEN_CAMBIA_ESTADO_LUZ_DER=0x32;//Cambio de estado la luz del lado derecho
-	public static final int ORDEN_CAMBIA_ESTADO_LUZ_IZQ=0x31;//Cambio de estado la luz del lado izquierdo
+	public static final int ORDEN_CAMBIA_ESTADO_LUZ_DER=0x31;//Cambio de estado la luz del lado derecho
+	public static final int ORDEN_CAMBIA_ESTADO_LUZ_IZQ=0x32;//Cambio de estado la luz del lado izquierdo
 	public static final int ORDEN_RETROCEDER_TEST=0x33;//Retrocede un test el tambor rotatorio
 	public static final int ORDEN_AVANZAR_TEST=0x34;//Avanza un test el tambor rotatorio
 	public static final int ORDEN_IR_TEST1=0x41;//Ir al primer test
@@ -343,6 +343,18 @@ public class ThreadTrama extends Thread{
 	}
 	
 	public void setTramaValida(Trama tramaValida) {
+		
+		if(Util.logTrama)
+		{
+			String trama="";
+			Byte[] bytes=tramaValida.getTrama();
+			for(int i=0;i<bytes.length;i++)
+			{
+				trama+=Integer.toHexString((int)bytes[i])+"-";
+			}
+			log.fatal(trama.substring(0,trama.length()-1));		
+		}
+		
 		this.tramaValida.setTrama(tramaValida.getTrama());
 	}
 	

@@ -7,6 +7,10 @@
 package frontend.paneles.audio;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -32,13 +37,17 @@ import testerGeneral.domain.ExamenDetalle;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Resultado;
 import testerGeneral.domain.ResultadoDetalleExamen;
+import testerGeneral.domain.Usuario;
 import testerGeneral.exceptions.ExceptionIsNotHadware;
 import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
 import testerGeneral.threads.ThreadTrama;
+
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+
 import examenes.psicometrico.domain.TramaAudio;
-import examenes.psicometrico.domain.TramaVision;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.paneles.examenes.Finalisable;
 import frontend.paneles.examenes.PanelDetalleExamen;
@@ -94,11 +103,110 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 
 		Util.mostrarError(lbError, null, true);
 
-		inicializarThreads();
 		agragrGrafico();
 		agregarAlGrafico();
+
+		if (Util.connectToHard)
+			inicializarThreads();
+		else
+		{
+			agregarDatosPrueba();
+		}
 	}
 
+	public void agregarDatosPrueba() {
+			Resultado res = new Resultado();
+			res.setResEtapa(250l);
+			int subida=34;
+			int bajada=45;
+			res.setResValor1(new Double(subida));
+			res.setResValor2(new Double(bajada));
+			double promedio = (new Double(subida) + new Double(bajada)) / 2d;
+			promedio = Util.redondear(promedio);
+			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+			resultados.add(res);
+
+			res = new Resultado();
+			res.setResEtapa(500l);
+			subida=56;
+			bajada=45;
+			res.setResValor1(new Double(subida));
+			res.setResValor2(new Double(bajada));
+			promedio = (new Double(subida) + new Double(bajada)) / 2d;
+			promedio = Util.redondear(promedio);
+			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+			resultados.add(res);
+
+			res = new Resultado();
+			res.setResEtapa(1000l);
+			subida=30;
+			bajada=45;
+			res.setResValor1(new Double(subida));
+			res.setResValor2(new Double(bajada));
+			promedio = (new Double(subida) + new Double(bajada)) / 2d;
+			promedio = Util.redondear(promedio);
+			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+			resultados.add(res);
+
+			res = new Resultado();
+			res.setResEtapa(2000l);
+			subida=10;
+			bajada=70;
+			res.setResValor1(new Double(subida));
+			res.setResValor2(new Double(bajada));
+			promedio = (new Double(subida) + new Double(bajada)) / 2d;
+			promedio = Util.redondear(promedio);
+			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+			resultados.add(res);
+
+			res = new Resultado();
+			res.setResEtapa(3000l);
+			subida=40;
+			bajada=75;
+			res.setResValor1(new Double(subida));
+			res.setResValor2(new Double(bajada));
+			promedio = (new Double(subida) + new Double(bajada)) / 2d;
+			promedio = Util.redondear(promedio);
+			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+			resultados.add(res);
+
+			res = new Resultado();
+			res.setResEtapa(4000l);
+			subida=40;
+			bajada=55;
+			res.setResValor1(new Double(subida));
+			res.setResValor2(new Double(bajada));
+			promedio = (new Double(subida) + new Double(bajada)) / 2d;
+			promedio = Util.redondear(promedio);
+			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+			resultados.add(res);
+
+			res = new Resultado();
+			res.setResEtapa(6000l);
+			subida=40;
+			bajada=75;
+			res.setResValor1(new Double(subida));
+			res.setResValor2(new Double(bajada));
+			promedio = (new Double(subida) + new Double(bajada)) / 2d;
+			promedio = Util.redondear(promedio);
+			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+			resultados.add(res);
+
+			res = new Resultado();
+			res.setResEtapa(8000l);
+			subida=40;
+			bajada=75;
+			res.setResValor1(new Double(subida));
+			res.setResValor2(new Double(bajada));
+			promedio = (new Double(subida) + new Double(bajada)) / 2d;
+			promedio = Util.redondear(promedio);
+			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+			resultados.add(res);
+			
+
+			agregarAlGrafico();
+	}
+	
 	public void agregarAlGrafico() {
 		dataset.clear();
 		for (int i = 0; i < resultados.size(); i++) {
@@ -143,6 +251,8 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		panelGrafico.add(chartPanel);
+		
+		
 	}
 
 	public void agregarResultado(int etapa, int subida, int bajada) {
@@ -197,32 +307,35 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 
 	public void inicializarThreads() {
 
-		try {
+		
 			
-			if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaAudio))
-				Util.thTrama.desconnect();
-			
-			if (Util.thTrama == null)
-			{
-				ThreadTrama thTrama = new ThreadTrama(new TramaAudio());
-				thTrama.setEjecutar(false);
-				Util.thTrama = thTrama;
-				thTrama.setEjecucion(99999);
-				thTrama.start();
-			}
-			
+			Util.mostrarPanelOperacionesLargas();
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaAudio))
+							Util.thTrama.desconnect();
+						
+						if (Util.thTrama == null)
+						{
+							ThreadTrama thTrama = new ThreadTrama(new TramaAudio());
+							thTrama.setEjecutar(false);
+							Util.thTrama = thTrama;
+							thTrama.setEjecucion(99999);
+							thTrama.start();
+						}
+						/*thTrama.sendOrden(ThreadTrama.ORDEN_START_AUTOMATICO_STEREO);
+						Thread.sleep(50);
+						thTrama.sendOrden(ThreadTrama.ORDEN_STOP_AUTOMATICO);*/
 
-
-			/*thTrama.sendOrden(ThreadTrama.ORDEN_START_AUTOMATICO_STEREO);
-			Thread.sleep(50);
-			thTrama.sendOrden(ThreadTrama.ORDEN_STOP_AUTOMATICO);*/
-
-		} catch (ExceptionIsNotHadware e) {
-			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
-					"Error", JOptionPane.ERROR_MESSAGE);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+					} catch (ExceptionIsNotHadware e) {
+						JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
+								"Error", JOptionPane.ERROR_MESSAGE);
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+						Util.ocultarPanelOperacionesLargas();
+				}});
 
 	}
 
@@ -1978,12 +2091,21 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 				}
 
 				String resultado = getResultado();
+				
+				if(resultado==null)
+					return;
 
 				resultadoDetalleExamen.setRdeResultado(resultado);
 				resultadoDetalleExamen.setRdeDetalleResultado(detalleResultado
 						+ "</HTML>");
 				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
 						.getExadParametrosCorrecion());
+				
+				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
+						.getExadParametrosCorrecion());
+
+				resultadoDetalleExamen.setRdeImagen(chartToImageAsByteArray());
+				
 
 				resultadoDetalleExamenService.update(resultadoDetalleExamen);
 
@@ -1997,28 +2119,77 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public byte[] chartToImageAsByteArray()
+	{
+		int width=600;
+		int height=160;
+		BufferedImage img = new BufferedImage(width ,height ,BufferedImage.TYPE_INT_RGB); 
+		Graphics2D g2 = img.createGraphics(); 
+		chart.draw(g2, new Rectangle2D.Double(0, 0, width, height)); 
+		g2.dispose();  
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(os);
+		try {
+			encoder.encode(img);
+			return os.toByteArray();
+		} catch (Exception e) {
+
+			throw new RuntimeException(e);
+		}
+	}
 
 	public String getResultado() {
+		String etapasFueraDePromedio="";
+		String resultado="";
+		
 		for (Resultado res : resultados) {
 
 			double diferencia = Math.abs(res.getResValor1()
 					- res.getResValor2());
+			
 			if (diferencia > 10)
-				return Examen.RESULTADO_FUERA;
-
+			{
+				etapasFueraDePromedio+=res.getResEtapa()+" Hz, ";
+			}
+			
 			double promedio = (res.getResValor1() + res.getResValor2()) / 2d;
 			promedio = Util.redondear(promedio);
 
 			if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
 					&& promedio > 50)
-				return Examen.RESULTADO_FUERA;
+				resultado=Examen.RESULTADO_FUERA;
 			else if (this.personaExamen.getPexaTipoExamen()
 					.equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR)
 					&& promedio > 60)
-				return Examen.RESULTADO_FUERA;
+				resultado=Examen.RESULTADO_FUERA;
 		}
+		
+		if(!etapasFueraDePromedio.equals(""))
+		{
+			etapasFueraDePromedio=etapasFueraDePromedio.substring(0,etapasFueraDePromedio.length()-2);
+			int op = JOptionPaneTesterGral.showInternal(
+					"<HTML>Existe una diferencia entre DB subida y DB bajada mayor a 10 en la/s etapa/s:<BR>"+etapasFueraDePromedio+".<BR>Para guardar el examen presione Aceptar sino Calcelar para volver al mismo.</HTML>",
+					Examen.RESULTADO_FUERA,
+					JOptionPane.QUESTION_MESSAGE,false);
 
-		return Examen.RESULTADO_DENTRO;
+			if (op == JOptionPane.YES_OPTION) {
+				return Examen.RESULTADO_FUERA;
+			}
+			else
+			{	
+				return null;
+			}
+		}
+		else if(resultado.equals(""))
+		{
+			return Examen.RESULTADO_DENTRO;	
+		}
+		else
+		{
+			return Examen.RESULTADO_FUERA;
+		}		
 	}
 
 	@Override

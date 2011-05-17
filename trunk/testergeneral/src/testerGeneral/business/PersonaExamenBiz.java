@@ -1,5 +1,6 @@
 package testerGeneral.business;
 
+import java.util.Date;
 import java.util.List;
 
 import testerGeneral.domain.PersonaExamen;
@@ -33,5 +34,8 @@ public class PersonaExamenBiz implements PersonaExamenDefinition {
 	public void update(PersonaExamen p_domain) throws Exception {
 		dao.update(p_domain);
 	}
-
+	
+	public Long getCantidadExamenes(Date lastDate) throws Exception {
+		return dao.getCantidadExamenes(lastDate);
+	}
 }

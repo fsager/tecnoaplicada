@@ -284,9 +284,23 @@ public class ExamenesUtils {
 			if(!conPermiso)
 				usrHasNotExamenPermition=false;
 			
-			boolean hasNotLicence=false;
-			if(hasNotLicence || usrHasNotExamenPermition)
-					examenes.remove(i);
+			Set<ExamenDetalle> examenDetalles=examen.getExamenDetalles();
+			boolean hasLicence=false;
+			if(conLicencia)
+			{
+				for(ExamenDetalle examenDetalle:examenDetalles)
+				{
+					hasLicence=examenDetalle.getExadLicencedSn().equals("S");
+					if(hasLicence)
+						break;
+				}				
+			}
+			else
+				hasLicence=true;
+				
+			
+			if(!hasLicence || usrHasNotExamenPermition)
+				examenes.remove(i);
 		}
 		
 		

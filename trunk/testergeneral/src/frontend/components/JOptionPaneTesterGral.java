@@ -23,6 +23,19 @@ public class JOptionPaneTesterGral extends javax.swing.JInternalFrame {
 		return panelM.getSelOpt();		
 	}
 	
+	public static int showInternal(String message,String titulo,int optionType,boolean truncMessage)
+	{
+		final JInternalFrameTesterGral internalframe = new JInternalFrameTesterGral(titulo, false, false, false, false);
+		PanelMensajes panelM=new PanelMensajes(internalframe,JOptionPane.YES_NO_OPTION,optionType,message,truncMessage);
+		internalframe.add(panelM);
+		internalframe.pack();
+		
+		Util.centrarIframes(internalframe);
+		internalframe.doModal(Util.framePrincipal.getRootPane());
+		internalframe.setVisible(true);
+
+		return panelM.getSelOpt();		
+	}
 	
 	public static int showInternal(JPanel parent,String message,String titulo,int optionType)
 	{

@@ -6,7 +6,6 @@
 
 package frontend.ventanas;
 
-import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,10 +19,10 @@ import javax.swing.JOptionPane;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import org.pushingpixels.substance.api.skin.SkinInfo;
 
-import actualizaciones.GestorActualizacionesUtil;
-
+import tecnologia.aplicada.licence.LicenceManager;
 import testerGeneral.actualizaciones.GestorActualizaciones;
 import testerGeneral.domain.Constantes;
+import actualizaciones.GestorActualizacionesUtil;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.paneles.PanelMenu;
 import frontend.paneles.examenes.PanelContenido;
@@ -36,7 +35,7 @@ import frontend.utils.Util;
 public class FramePrincipal extends JInternalFrameTesterGral {
 
 	/** Creates new form FramePrincipal */
-	public FramePrincipal(PanelMenu panelMenu) {
+	public FramePrincipal(PanelMenu panelMenu) throws Exception{
 
 		super(Constantes.VTN_TITLE_FRM_PRINCIPAL, false, false, false, true);
 
@@ -56,6 +55,18 @@ public class FramePrincipal extends JInternalFrameTesterGral {
 		panelMenu.cargarPrimeraOpcion();
 
 		this.pack();
+		
+		/*if(LicenceManager.isLicencedProduct())
+		{
+			if(LicenceManager.hayQueActualizarLicencia())
+				LicenceManager.actualizarLicencia((String)null,null);			
+		}
+		else
+		{
+			//Si es la primera vez que ingresa muestra el panel de licencia. Periodo de prueba o Licenciado
+			//Si está en periodo de prueba muestro los dias restantes del periodo de prueba
+			LicenceManager.showLicencePanel();
+		}*/
 	}
 
 	public boolean hayActualizaciones() {

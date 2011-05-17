@@ -16,7 +16,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="lbIcon" min="-2" pref="76" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="lbMessage" pref="728" max="32767" attributes="0"/>
           </Group>
           <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
@@ -27,8 +27,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbIcon" alignment="3" min="-2" pref="74" max="-2" attributes="0"/>
-                  <Component id="lbMessage" alignment="3" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="lbIcon" alignment="3" min="-2" pref="77" max="-2" attributes="0"/>
+                  <Component id="lbMessage" alignment="3" min="-2" pref="82" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="panelDetalleError" min="-2" max="-2" attributes="0"/>

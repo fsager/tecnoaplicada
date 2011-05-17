@@ -1,5 +1,6 @@
 package testerGeneral.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import testerGeneral.domain.PersonaExamen;
@@ -41,5 +42,9 @@ public class PersonaExamenService implements PersonaExamenDefinition {
 
 	public void update(PersonaExamen p_domain) throws Exception {
 		biz.update(p_domain);
+	}
+	
+	public Long getCantidadExamenes(Date lastDate) throws Exception {
+		return biz.getCantidadExamenes(lastDate);
 	}
 }

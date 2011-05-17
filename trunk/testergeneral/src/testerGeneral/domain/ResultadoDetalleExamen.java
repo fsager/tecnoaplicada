@@ -21,6 +21,7 @@ public class ResultadoDetalleExamen implements java.io.Serializable {
 	private Double rdeNota3;
 	private Double rdeNota4;
 	private String rdeParametrosCorrecion;
+	private byte rdeImagen[] = new byte[1];
 	private Set resultados = new HashSet(0);
 
 	// Constructors
@@ -135,5 +136,13 @@ public class ResultadoDetalleExamen implements java.io.Serializable {
 	
 	public void setRdeParametrosCorrecion(String rdeParametrosCorrecion) {
 		this.rdeParametrosCorrecion = rdeParametrosCorrecion;
+	}
+	
+	public byte[] getRdeImagen() {
+		return rdeImagen;
+	}
+	
+	public void setRdeImagen(byte[] rdeImagen) {
+		this.rdeImagen = rdeImagen;
 	}
 }

@@ -1,4 +1,6 @@
 package testerGeneral.service;
+import java.util.Date;
+
 import testerGeneral.domain.PersonaExamen;
 
 /**
@@ -44,5 +46,7 @@ public interface PersonaExamenDefinition {
 	 * @param p_domain    p_domain
 	 */
 	public abstract void update(PersonaExamen p_domain) throws Exception;
+	
+	public Long getCantidadExamenes(Date lastDate) throws Exception;
 
 }

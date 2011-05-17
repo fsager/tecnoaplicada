@@ -74,7 +74,9 @@ public class PanelFotocromatica extends javax.swing.JPanel implements
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		inicializarThreads();
+		
+		if(Util.connectToHard)
+			inicializarThreads();
 	}
 
 	public void inicializarThreads() {
@@ -93,7 +95,7 @@ public class PanelFotocromatica extends javax.swing.JPanel implements
 				Util.thTrama.start();
 			}
 			
-			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST2);
+			Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST8);
 			
 		} catch (ExceptionIsNotHadware e) {
 			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
@@ -1565,7 +1567,14 @@ public class PanelFotocromatica extends javax.swing.JPanel implements
 				String resultado = getResultado();
 
 				resultadoDetalleExamen.setRdeResultado(resultado);
-				resultadoDetalleExamen.setRdeDetalleResultado("Porcentaje: "+ getPorcentaje());
+				
+				String rde_detalle="Normal";
+				if(getPorcentaje()<100)
+				{
+					rde_detalle="Presenta alteraciones";
+				}
+					
+				resultadoDetalleExamen.setRdeDetalleResultado(rde_detalle);
 				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 				resultadoDetalleExamenService.update(resultadoDetalleExamen);
 

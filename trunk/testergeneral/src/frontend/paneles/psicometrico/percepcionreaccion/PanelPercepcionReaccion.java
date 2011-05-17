@@ -10,8 +10,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -26,10 +24,7 @@ import javax.swing.JToggleButton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jfree.chart.plot.ThermometerPlot;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Accion;
 import testerGeneral.domain.Constantes;
@@ -39,7 +34,6 @@ import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Resultado;
 import testerGeneral.domain.ResultadoDetalleExamen;
 import testerGeneral.exceptions.ExceptionIsNotHadware;
-import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
 import testerGeneral.threads.ThreadTrama;
@@ -247,8 +241,8 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 			Util.frameSecundario.validate();
 		}
 
-		if (thTrama != null)
-			thTrama.desconnect();
+		/*if (thTrama != null)
+			thTrama.desconnect();*/
 
 		if(panelPercepcionReaccionAnimacion != null)			
 			panelPercepcionReaccionAnimacion.setStop(true);
@@ -278,18 +272,36 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 	}
 
 	public void inicializarThreads() {
-		try
+		if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaPsicologico))
+			Util.thTrama.desconnect();
+
+		if (Util.thTrama == null) {
+			try
+			{
+				thTrama = new ThreadTrama(new TramaPsicologico());
+				Util.thTrama = thTrama;
+				thTrama.setEjecucion(99999);
+				thTrama.start();		
+				panelPercepcionReaccionAnimacion.setThTrama(thTrama);
+			}
+			catch (NullPointerException e) {
+				
+			}
+			catch (ExceptionIsNotHadware e) {
+				JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		else
 		{
-			thTrama = new ThreadTrama(new TramaPsicologico());
-			Util.thTrama = thTrama;
-			thTrama.setEjecucion(99999);
-			thTrama.start();		
+			this.thTrama = Util.thTrama;
+			/*this.thTrama.setEjecutar(false);
+			this.thTrama.setEjecucion(99999);
+			this.thTrama.setMtAccionHard(null);
+			this.thTrama.setMtAccionSoft(null);*/
 			panelPercepcionReaccionAnimacion.setThTrama(thTrama);
 		}
-		catch (ExceptionIsNotHadware e) {
-			JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		
 	}
 
 	public void mostrarSecondMonitor() {
@@ -934,6 +946,7 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 	
 	public void examinar(JToggleButton btn,boolean examen)
 	{
+		
 		Util.playSound(Constantes.SOUND_START,0);
 		try
 		{

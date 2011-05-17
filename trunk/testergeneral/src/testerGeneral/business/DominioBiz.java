@@ -2,7 +2,11 @@ package testerGeneral.business;
 
 import java.util.List;
 
+import frontend.utils.Util;
+
+import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
+import testerGeneral.domain.Persona;
 import testerGeneral.persistence.DominioDao;
 import testerGeneral.service.DominioDefinition;
 
@@ -33,5 +37,4 @@ public class DominioBiz implements DominioDefinition {
 	public void update(Dominio p_domain) throws Exception {
 		dao.update(p_domain);
 	}
-
 }
