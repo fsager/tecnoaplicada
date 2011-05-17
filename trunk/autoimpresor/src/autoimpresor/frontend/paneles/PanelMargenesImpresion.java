@@ -205,7 +205,7 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 			fis.close();
 			String template = new String(byt);
 
-			Double pixel = 3.3;
+			Double pixel = 1.3;
 
 			Integer margenIzq = (int) (Integer.valueOf(txtMargenIzq.getText()) * pixel);
 			//Integer margenDer = (int) (Integer.valueOf(txtMargenDer.getText()) * pixel);

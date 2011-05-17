@@ -2,6 +2,7 @@ package autoimpresor.service.impl;
 
 import java.util.List;
 
+import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaRestricion;
 import testerGeneral.service.PersonaRestricionDefinition;
 
@@ -41,5 +42,11 @@ public class PersonaRestricionService implements PersonaRestricionDefinition {
 
 	public void update(PersonaRestricion p_domain) throws Exception {
 		biz.update(p_domain);
+	}
+
+	@Override
+	public String getOtrasAflicciones(Persona p_domain) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

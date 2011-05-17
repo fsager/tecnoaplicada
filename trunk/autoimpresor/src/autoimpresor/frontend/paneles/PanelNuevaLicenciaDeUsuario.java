@@ -1703,7 +1703,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 					{
 						Licencia licAux=list.get(j);
 						int anos=Util. calcularEdad(licAux.getLicFechaOtorgada());
-						if(anos>=1)
+						if(clase.equalsIgnoreCase(licAux.getLicClase()) || anos>=1)
 						{
 							return true;
 						}
