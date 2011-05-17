@@ -868,10 +868,10 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 									carss.setMncEscudo(new byte[1]);
 
 								carss.setCliFechaImport(new Date());
-								carnetLicenciasService.insert(carss);
-
-								dominioService.insert(dom);
+								carnetLicenciasService.insert(carss);								
 							}
+							
+							dominioService.insert(dom);
 						} else {
 							JOptionPaneTesterGral.showInternalMessageDialog(
 									"Las licencias ya fueron importadas",
