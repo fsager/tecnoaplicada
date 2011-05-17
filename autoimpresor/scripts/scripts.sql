@@ -1,3 +1,5 @@
+
+
 select max(lic_Numero) from app.licencia where lic_Numero > 1000 and lic_Numero < 2000;
 
 select * from app.licencia where lic_Numero >= 0 and lic_Numero <= 200000;
