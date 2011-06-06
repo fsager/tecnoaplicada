@@ -64,6 +64,8 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 
 	/** Creates new form Eeddd */
 	public PanelAgudezaVisual(JToggleButton btn, PersonaExamen personaExamen) {
+		System.out.println("PanelAgudezaVisual");
+		
 		this.btn = btn;
 		this.personaExamen = personaExamen;
 		initComponents();

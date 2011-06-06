@@ -18,7 +18,6 @@ import javax.swing.JToolBar;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tecnologia.aplicada.licence.LicenceManager;
 import testerGeneral.actualizaciones.GestorActualizaciones;
 import testerGeneral.business.ContextManager;
 import testerGeneral.db.ConexionManagerTesterGeneral;
@@ -30,6 +29,8 @@ import testerGeneral.threads.ThreadTrama;
 import examenes.psicometrico.domain.TramaVision;
 import examenes.util.ExamenesUtils;
 import frontend.components.JOptionPaneTesterGral;
+import frontend.paneles.examenes.PanelDetalleExamen;
+import frontend.paneles.examenes.PanelExamenes;
 import frontend.paneles.licence.PanelLicencia;
 import frontend.utils.Util;
 import frontend.ventanas.FramePrincipal;
@@ -651,7 +652,23 @@ public class PanelMenuPrincipal extends PanelMenu {
 								@Override
 								public void run() {
 									try {
-										Util.thTrama.sendOrden(ThreadTrama.ORDEN_IR_TEST1);
+										Util.thTrama.sendOrden(ThreadTrama.ORDEN_APAGAR_TEST_LAMINAS);
+										PanelExamenes panelExamenes=(PanelExamenes)panelContenido.getComponent(0);
+										PanelDetalleExamen panelDetalleExamen=panelExamenes.getPanelDetalleExamen();
+										Component botones[]=panelDetalleExamen.getComponents();
+										
+										for(Component comp:botones)
+										{
+											if(comp instanceof JToggleButton)
+											{
+												JToggleButton boton=(JToggleButton)comp;
+												if(boton.isSelected())
+												{
+													panelDetalleExamen.seleccionarExamen(boton);
+													return;
+												}
+											}
+										}
 		
 									} catch (Exception e) {
 										//throw new RuntimeException(e);
@@ -659,7 +676,23 @@ public class PanelMenuPrincipal extends PanelMenu {
 								}
 							}.start();
 						}
-	
+						
+						PanelExamenes panelExamenes=(PanelExamenes)panelContenido.getComponent(0);
+						PanelDetalleExamen panelDetalleExamen=panelExamenes.getPanelDetalleExamen();
+						Component botones[]=panelDetalleExamen.getComponents();
+						
+						for(Component comp:botones)
+						{
+							if(comp instanceof JToggleButton)
+							{
+								JToggleButton boton=(JToggleButton)comp;
+								if(boton.isSelected())
+								{
+									panelDetalleExamen.seleccionarExamen(boton);
+									return;
+								}
+							}
+						}
 					} catch (ExceptionIsNotHadware e) {
 						JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
 								"Error", JOptionPane.ERROR_MESSAGE);

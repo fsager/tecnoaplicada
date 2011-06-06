@@ -2,6 +2,7 @@ package tecnologia.aplicada.licence;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
+import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
@@ -18,6 +19,7 @@ import testerGeneral.service.ExamenDefinition;
 import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
 import ar.com.tecnologiaaplicada.Encriptadora;
+import ar.com.tecnologiaaplicada.LicenseException;
 import ar.com.tecnologiaaplicada.domain.DetalleLicencia;
 import ar.com.tecnologiaaplicada.domain.Licencia;
 import frontend.components.JOptionPaneTesterGral;
@@ -32,11 +34,11 @@ public class LicenceManager {
 	private static ExamenDetalleDefinition examenDetalleServiceLocal=(ExamenDetalleDefinition)ContextManager.getBizObject("examenDetalleService"); 
 	private static ExamenDefinition examenServiceLocal=(ExamenDefinition)ContextManager.getBizObject("examenService");
 
-	public static void showLicencePanel() throws Exception {
+	public static void showLicencePanel(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				final JInternalFrameTesterGral internalframe = new JInternalFrameTesterGral(
-						"Datos de licencia", false, false, false, false);
+						"Datos de licencia", false, true, false, true);
 				PanelLicencia panelLicencia = null;
 
 				if (!isLicencedProduct()) {
@@ -66,19 +68,64 @@ public class LicenceManager {
 					internalframe.pack();
 					Util.centrarIframes(internalframe);
 					internalframe.doModal(Util.framePrincipal.getRootPane());
+					internalframe.addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+						public void internalFrameActivated(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+
+						public void internalFrameClosed(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+
+						public void internalFrameClosing(
+								javax.swing.event.InternalFrameEvent evt) {
+							System.exit(0);
+						}
+
+						public void internalFrameDeactivated(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+
+						public void internalFrameDeiconified(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+
+						public void internalFrameIconified(
+								javax.swing.event.InternalFrameEvent evt) {
+							Util.minimizar(internalframe);
+						}
+
+						public void internalFrameOpened(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+					});
 					internalframe.setVisible(true);
 				}
 			}
 		});
 	}
 
+	public static void showLicencePanelActivacion(){
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				final JInternalFrameTesterGral internalframe = new JInternalFrameTesterGral(
+						"Datos de licencia", false, false, false, false);
+				PanelLicencia panelLicencia = new PanelLicencia(internalframe, false,false);
+				internalframe.add(panelLicencia);
+				internalframe.pack();
+				Util.centrarIframes(internalframe);
+				internalframe.doModal(Util.framePrincipal.getRootPane());
+				internalframe.setVisible(true);
+			}
+		});
+	}
+	
 	public static Date getLastDateActivation()
 	{
 		try
 		{
 			String lastDateActivated = ContextManager.getProperty("LICENCE.LAST.DATE.ACTIVATED");
 	
-			String lastMonthActivated = "";
 			if (!lastDateActivated.equals("")) {
 				return sdf.parse(lastDateActivated);
 			}
@@ -89,7 +136,26 @@ public class LicenceManager {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
+	public static Date getfechaUltimoIntentoActivation()
+	{
+		try
+		{
+			String date = ContextManager.getProperty("LICENCIA.FECHA.ULTIMO.INTENTO");
+			if (!date.equals("")) {
+				return sdf.parse(date);
+			}
+			else 
+				return null;
+		}catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	}	
+	
 	public static boolean hayQueActualizarLicencia() {
+		
 		if (isLicencedProduct()) {
 			Calendar hoy = Calendar.getInstance();
 			String actualMonth = hoy.get(Calendar.MONTH) + "";
@@ -139,6 +205,7 @@ public class LicenceManager {
 					.getCantidadExamenes(dateActualizacion);
 
 			String codigo = formatCodigo.format(new Date()) + cantidad;
+			codigo=codigo+getDigitoVerificador(codigo);			
 			Long condigoInHexa = Long.valueOf(codigo);
 			codigo = Long.toHexString(condigoInHexa);
 
@@ -147,10 +214,34 @@ public class LicenceManager {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static String getDigitoVerificador(String codigoActivacion)
+	{
+		int[] secuencia={1,3,5,7,9,3,5,7,9,3,5,7,9,3,5,7,9,3,5,7,9,3,5,7,9,3,5,7,9,3,5,7,9,3,5,7,9,3,5,7,9};//,3,5
+		int prod=0;
+		
+		for(int i=0;i<secuencia.length && i<codigoActivacion.length();i++)
+		{
+			
+			int res=secuencia[i]*Integer.valueOf(""+codigoActivacion.charAt(i));
+			prod+=res;
+		}
+		
+		int result=prod/2;
+		
+		String unidad=String.valueOf(result);
+		
+		return unidad.substring(unidad.length()-1);
+	}
 
-	public static void actualizarLicencia(String nroLicencia,
-			String codigoActivacion) {
+	public static void actualizarLicencia(String nroLicencia,String codigoActivacion) throws LicenseException {
+		final Integer cantidadIntentosPermitidos=Integer.valueOf(ContextManager.getProperty("LICENCIA.CANTIDAD.INTENTOS.PERMITIDOS"));
+		Integer cantidadIntentos=Integer.valueOf(ContextManager.getProperty("LICENCIA.CANTIDAD.INTENTOS"));
+		Date fechaUltimoIntentoActivacion=LicenceManager.getfechaUltimoIntentoActivation();
+		int todayDayOfYear=Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+		
 		try {
+			
 			String producto = ContextManager
 					.getProperty("SISTEMA.NOMBRE.PROGRAMA");
 			if (nroLicencia == null)
@@ -166,55 +257,68 @@ public class LicenceManager {
 							codigoActivacion);
 
 			actualizarLicencia(licencia,nroLicencia);
-			/*
-			Licencia licenciaObjecto=getLicenciaFromBytes(licencia,nroLicencia);
-			if(getLastDateActivation()!=null && !licenciaObjecto.getLicFechaActualizacion().after(getLastDateActivation()))
-				throw new RuntimeException("La licencia ya ha sido utilizada, por favor solicite una nueva.");
-			
-			Collection<DetalleLicencia> detalleLicencias=licenciaObjecto.getDetalleLicencias();
-			for(DetalleLicencia detalleLicencia:detalleLicencias)
+		} catch (org.springframework.remoting.RemoteAccessException e) {
+
+			Calendar calendarUltimoIntentoActivacion=Calendar.getInstance();
+			Integer intentoDayOfYear=null;
+			if(fechaUltimoIntentoActivacion!=null)
 			{
-				//System.out.println("DetalleExamen: "+detalleLicencia.getExamenDetalle().getExadCodigo()+" Activo: "+detalleLicencia.getDlicActivaSn());
-				
-				//Actualizar la informaicon de licencia
-				ExamenDetalle examenDetalle=new ExamenDetalle();
-				examenDetalle.setExadCodigo(detalleLicencia.getExamenDetalle().getExadCodigo());
-				
-				List<ExamenDetalle> detalleExamenes=examenDetalleServiceLocal.getAll(examenDetalle);
-				if(detalleExamenes.size()==1)
-				{
-					examenDetalle=detalleExamenes.get(0);
-					examenDetalle.setExadLicencedSn(detalleLicencia.getDlicActivaSn());
-					examenDetalleServiceLocal.update(examenDetalle);
-				}
-				else if(detalleExamenes.size()>1)
-					throw new RuntimeException("Código de examen duplicado: "+detalleLicencia.getExamenDetalle().getExadCodigo());
-				
-				
+				calendarUltimoIntentoActivacion.setTime(fechaUltimoIntentoActivacion);
+				intentoDayOfYear=calendarUltimoIntentoActivacion.get(Calendar.DAY_OF_YEAR);;
 			}
 			
-			Propiedad propiedad = new Propiedad();
-			propiedad.setPropClave("LICENCED");
-			propiedad.setPropValor("S");
-			ContextManager.updatePropiedad(propiedad);
-
-			propiedad = new Propiedad();
-			propiedad.setPropClave("LICENCE.NRO");
-			propiedad.setPropValor(nroLicencia);
-			ContextManager.updatePropiedad(propiedad);
-
-			propiedad = new Propiedad();
-			propiedad.setPropClave("LICENCE.LAST.DATE.ACTIVATED");
-			propiedad.setPropValor(sdf.format(licenciaObjecto.getLicFechaActualizacion()));
-			ContextManager.updatePropiedad(propiedad);*/
-
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+			if(intentoDayOfYear==null || todayDayOfYear!=intentoDayOfYear){
+				
+				Propiedad propiedad = new Propiedad();
+				propiedad.setPropClave("LICENCIA.CANTIDAD.INTENTOS");
+				propiedad.setPropValor(""+(++cantidadIntentos));
+				ContextManager.updatePropiedad(propiedad);
+				
+				propiedad = new Propiedad();
+				propiedad.setPropClave("LICENCIA.FECHA.ULTIMO.INTENTO");
+				propiedad.setPropValor(sdf.format(new Date()));
+				ContextManager.updatePropiedad(propiedad);
+			}
+			
+			if(cantidadIntentos>=cantidadIntentosPermitidos)
+			{
+				java.awt.EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						JOptionPaneTesterGral.showInternal(
+								"<HTML>No dispone de más intentos para activar el producto, debe activarlo para continuar.</HTML>",
+								"Activación del producto",
+								JOptionPane.INFORMATION_MESSAGE,false);
+						showLicencePanelActivacion();
+					}});
+				
+			}
+			else
+			{
+				final int cantidadIntentosMostrar=cantidadIntentos;
+				//Informo que no se pudo realizar la actualizacion y que le quedan X intentos
+				java.awt.EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						JOptionPaneTesterGral.showInternal(
+								"<HTML>No se pudo realizar la activación requerida del producto.<BR>Controle su conexión a Internet. Restan "+(cantidadIntentosPermitidos-cantidadIntentosMostrar)+" intento/s.</HTML>",
+								"Activación del producto",
+								JOptionPane.INFORMATION_MESSAGE,false);					
+					}});
+			}
+		
+			
+		} 
+		 catch (Exception e) {
+			 if(e instanceof LicenseException)
+			 {
+				 throw (LicenseException)e; 
+			 }
+			 else
+				throw new RuntimeException(e);
 		}
 
 	}
 	
-	public static void actualizarLicencia(byte[] licencia,String nroLicencia) {
+	public static void actualizarLicencia(byte[] licencia,String nroLicencia)throws GeneralSecurityException {
 		try {
 
 			Licencia licenciaObjecto=getLicenciaFromBytes(licencia,nroLicencia);
@@ -262,22 +366,58 @@ public class LicenceManager {
 			propiedad.setPropValor(licFechaActualizacion);
 			ContextManager.updatePropiedad(propiedad);
 
-		} catch (Exception e) {
+			//Licencia Vitalicia, no hay que validarla más.
+			String vitalicia="N";
+			if(licenciaObjecto.getLicTipo()==1)
+				vitalicia="S";
+
+			propiedad = new Propiedad();
+			propiedad.setPropClave("LICENCIA_VITALICIA");
+			propiedad.setPropValor(vitalicia);
+			ContextManager.updatePropiedad(propiedad);	
+			
+			propiedad = new Propiedad();
+			propiedad.setPropClave("LICENCIA.CANTIDAD.INTENTOS");
+			propiedad.setPropValor("0");
+			ContextManager.updatePropiedad(propiedad);
+			
+			propiedad = new Propiedad();
+			propiedad.setPropClave("LICENCIA.FECHA.ULTIMO.INTENTO");
+			propiedad.setPropValor("");
+			ContextManager.updatePropiedad(propiedad);
+
+		}
+		catch(GeneralSecurityException e)
+		{
+			throw e;
+		}
+		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
 	}
 
-	public static Licencia getLicenciaFromBytes(byte[] licencia, String nroLicencia) {
+	public static Licencia getLicenciaFromBytes(byte[] licencia, String nroLicencia) throws GeneralSecurityException{
 		String clave = nroLicencia;
 		// completo la longitud de la clave
 		while (clave.length() < 16) {
 			clave += 1;
 		}
+
+		SecretKeySpec clavePrivada =null;
+		Encriptadora encriptador=null;
+		byte[] bytes =null;
 		
-		SecretKeySpec clavePrivada = new SecretKeySpec(clave.getBytes(), "AES");
-		Encriptadora encriptador = new Encriptadora("AES", clavePrivada);
-		byte[] bytes = encriptador.desencriptar(licencia);
+		try
+		{
+			clavePrivada = new SecretKeySpec(clave.getBytes(), "AES");
+			encriptador = new Encriptadora("AES", clavePrivada);
+			bytes = encriptador.desencriptar(licencia);
+		}
+		catch(Exception e)
+		{
+			throw new GeneralSecurityException(e);
+		}
 
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		try {
@@ -311,7 +451,7 @@ public class LicenceManager {
 						.valueOf(testDuration));
 
 				Long daysBetween = daysBetween(new Date(), fechaFin.getTime());
-
+				
 				return daysBetween;
 			}
 		} catch (Exception e) {

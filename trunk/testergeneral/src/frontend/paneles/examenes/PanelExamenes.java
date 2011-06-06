@@ -166,6 +166,10 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 	private PanelPersonaExamen panelPersonaExamen;
 	private PanelDetalleExamen panelDetalleExamen;
 
+	public PanelDetalleExamen getPanelDetalleExamen() {
+		return panelDetalleExamen;
+	}
+	
 	@Override
 	public void finalizar() {
 		if (panelAnimacion.getComponent(0) instanceof Finalisable) {
