@@ -1,12 +1,9 @@
 package testerGeneral;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
@@ -26,10 +23,7 @@ import testerGeneral.exceptions.MyExceptionHandler;
 import testerGeneral.persistence.backup.GestorDBBackup;
 import testerGeneral.service.AuditoriaDefinition;
 import testerGeneral.threads.ThreadTrama;
-import ar.com.tecnologiaaplicada.domain.ExamenDetalle;
-import ar.com.tecnologiaaplicada.service.ExamenDetalleDefinition;
 import examenes.psicometrico.domain.TramaPsicologico;
-import frontend.paneles.PanelConfiguracionDB;
 import frontend.utils.Util;
 import frontend.ventanas.FrameContenedor;
 import frontend.ventanas.VtnConfigurarDb;
@@ -40,10 +34,7 @@ public class Main {
 
 	public static void main(String[] args)
 			throws UnsupportedLookAndFeelException, InterruptedException,Exception {
-
 		init();
-		//probarLuces();
-		//potenciometros();
 	}
 	
 	public static void getLicenciInformation() throws Exception
@@ -79,7 +70,6 @@ public class Main {
 		
 		for(int i=0;i<20;i++)
 		{
-			System.out.println("aslkdlaskdl: "+i);
 			
 			thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED1);
 			Thread.sleep(350);

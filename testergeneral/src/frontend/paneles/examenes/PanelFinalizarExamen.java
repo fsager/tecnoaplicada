@@ -47,6 +47,8 @@ public class PanelFinalizarExamen extends javax.swing.JPanel {
 
 	/** Creates new form PanelFinalizarExamen */
 	public PanelFinalizarExamen(PersonaExamen perExamen) {
+		System.out.println("PanelFinalizarExamen");
+		
 		this.perExamen = perExamen;
 		initComponents();
 		txtObservaciones.setLineWrap(true);

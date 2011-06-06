@@ -9,6 +9,8 @@ package frontend.ventanas;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -21,8 +23,10 @@ import org.pushingpixels.substance.api.skin.SkinInfo;
 
 import tecnologia.aplicada.licence.LicenceManager;
 import testerGeneral.actualizaciones.GestorActualizaciones;
+import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
 import actualizaciones.GestorActualizacionesUtil;
+import ar.com.tecnologiaaplicada.LicenseException;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.paneles.PanelMenu;
 import frontend.paneles.examenes.PanelContenido;
@@ -56,17 +60,43 @@ public class FramePrincipal extends JInternalFrameTesterGral {
 
 		this.pack();
 		
-		/*if(LicenceManager.isLicencedProduct())
+		validadLicencia();
+		
+	}
+
+	private void validadLicencia() throws Exception
+	{
+		if(ContextManager.getProperty("VALIDAR_LICENCIA").equals("S") && ContextManager.getProperty("LICENCIA_VITALICIA").equals("N"))
 		{
-			if(LicenceManager.hayQueActualizarLicencia())
-				LicenceManager.actualizarLicencia((String)null,null);			
+			if(LicenceManager.isLicencedProduct())
+			{
+				if(LicenceManager.hayQueActualizarLicencia())
+				{
+					try
+					{
+						LicenceManager.actualizarLicencia((String)null,null);
+					}				
+					catch (final Exception e) {
+						java.awt.EventQueue.invokeLater(new Runnable() {
+							public void run() {
+
+							JOptionPaneTesterGral.showInternalMessageDialog(FramePrincipal.this,
+									"<HTML>"+e.getMessage()+"</HTML>",
+									"Activación del producto",
+									JOptionPane.INFORMATION_MESSAGE);
+							System.exit(0);
+							}});
+					}
+				}
+			}
+			else
+			{
+				//Si es la primera vez que ingresa muestra el panel de licencia. Periodo de prueba o Licenciado
+				//Si está en periodo de prueba muestro los dias restantes del periodo de prueba
+				LicenceManager.showLicencePanel();
+			}
+			
 		}
-		else
-		{
-			//Si es la primera vez que ingresa muestra el panel de licencia. Periodo de prueba o Licenciado
-			//Si está en periodo de prueba muestro los dias restantes del periodo de prueba
-			LicenceManager.showLicencePanel();
-		}*/
 	}
 
 	public boolean hayActualizaciones() {
