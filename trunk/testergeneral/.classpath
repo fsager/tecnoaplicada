@@ -126,7 +126,7 @@
 	<classpathentry kind="lib" path="lib/truexml.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/tecnologiaApplicada.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="lib/tecnologiaApplicada.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
