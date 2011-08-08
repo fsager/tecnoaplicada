@@ -133,35 +133,35 @@
 		</band>
 		<band height="150">
 			<textField>
-				<reportElement x="0" y="72" width="222" height="12"/>
+				<reportElement x="0" y="#!OBSERVACIONES_Y!#" width="222" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perObservaciones}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="40" width="221" height="12"/>
+				<reportElement x="0" y="#!RESTRICCIONES_Y!#" width="221" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perRestricciones}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="56" width="98" height="12"/>
+				<reportElement x="0" y="#!ALERGIAS_Y!#" width="98" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perAlergia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="24" width="34" height="12"/>
+				<reportElement x="0" y="#!GRUPO_SANGINEO_Y!#" width="34" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perGrupoSanguineo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="110" y="24" width="112" height="12"/>
+				<reportElement x="110" y="#!TELEFONO_Y!#" width="112" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
@@ -175,42 +175,42 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{licClaseDesc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="8" width="221" height="12"/>
+				<reportElement x="0" y="#!DOMICILIO_Y!#" width="221" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perDomicilio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="61" y="24" width="28" height="12"/>
+				<reportElement x="61" y="#!DONANTE_Y!#" width="28" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perDonante}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="109" y="55" width="113" height="12"/>
+				<reportElement x="109" y="#!MEDICACION_Y!#" width="113" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perMedicacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="126" width="65" height="10"/>
+				<reportElement x="155" y="#!CARGO_Y!#" width="65" height="10"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="5" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{usrCargo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="120" width="65" height="10"/>
+				<reportElement x="155" y="#!NOMBRE_Y!#" width="65" height="10"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="5" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{usrNombre}]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
-				<reportElement x="157" y="92" width="63" height="30"/>
+				<reportElement x="157" y="#!FIRMA_Y!#" width="63" height="30"/>
 				<imageExpression class="java.awt.Image"><![CDATA[((byte[])$F{usrFirma}).length > 1 ? JRImageLoader.loadImage((byte[])$F{usrFirma}) : null]]></imageExpression>
 			</image>
 		</band>

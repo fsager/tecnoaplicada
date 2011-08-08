@@ -1,3 +1,12 @@
+select * from app.CARNET_LICENCIAS
+ order by CLI_FECHA_IMPRESION desc;
+
+select PER_NUMERO_DOC,CLI_FECHA_IMPORT,CLI_FECHA_IMPRESION from app.CARNET_LICENCIAS
+  where PER_NUMERO_DOC like '%28958136%'                              
+ order by CLI_FECHA_IMPORT desc;
+ 
+10811825
+28958136
 
 
 select max(lic_Numero) from app.licencia where lic_Numero > 1000 and lic_Numero < 2000;
