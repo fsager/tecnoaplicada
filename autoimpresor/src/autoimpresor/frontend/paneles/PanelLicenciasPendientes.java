@@ -616,10 +616,14 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 	}
 
 	public void sendMail(List<CarnetLicencias> carnetLicencias) {
-		try {
-
+		try {			
+			File dirDestino=new File(System.getProperty("user.home")+File.separator+"Mis documentos"+File.separator+"Correos enviados licencia conducir"); 
+			dirDestino.mkdirs();
+			
 			String fileName = getNombreArchivo();
-			byte adjunto[] = toFile(carnetLicencias, fileName, true);
+			String fullFileName=dirDestino.getAbsolutePath()+File.separator+fileName;
+			
+			byte adjunto[] = toFile(carnetLicencias,fullFileName,false);
 
 			UeMail mail = new UeMail();
 			mail.setUserFrom(ContextManager
