@@ -14,6 +14,9 @@ public class Constantes {
 	public static final String DOMINIO_CLAVE_ESTADO_CIVIL="Estado Civil";
 	public static final String DOMINIO_CLAVE_TIPO_EXAMEN="TIPO_EXAMEN";
 	
+	public static final String DOMINIO_TIPO_MP_CATEGORIA_EXAMEN="GRAL";
+	public static final String DOMINIO_CLAVE_MP_CATEGORIA_EXAMEN="Categoría Exámen";
+	
 	public static final String DOMINIO_TIPO_NACIONALIDAD="GRAL";
 	public static final String DOMINIO_CLAVE_NACIONALIDAD="Nacionalidad";
 	
@@ -57,6 +60,7 @@ public class Constantes {
 	public static final String IMG_TEST_REACCION_SIMPLE_SEM_VERDE="/images/testReaccionSimple/semaforoVerde.png";
 	public static final String IMG_TEST_REACCION_SIMPLE_SEM="/images/testReaccionSimple/semaforo.png";
 	
+	public static final String IMG_FONDO_REACION_SIMPLE_COMPLETO="/images/testReaccionSimple/semaforo.png";
 	
 	public static final String IMG_BTN_EXAMINAR="/images/agregar.png";
 	public static final String IMG_BTN_ACEPTAR="/images/aceptar.png";
@@ -84,9 +88,16 @@ public class Constantes {
 	public static final String IMG_ICON_AUTOIMPRESOR="/images/autoimpresor.png";
 	public static final String IMG_ICON_SMALL_AUTOIMPRESOR="/images/autoimpresor_small.png";
 
+	//TODO CAMBIAR IMAGEN
+	public static final String IMG_ICON_MC="/images/opcionesMultiples.png";
+	public static final String IMG_ICON_SMALL_MC="/images/opcionesMultiples_small.png";
+
+	public static final String IMG_FONDO_BIMANUAL_COMPLETO="/images/anticipacion.png";
+	
 	
 	public static final String IMG_FONDO="/images/fondo.png";
 	public static final String IMG_FONDO_CIUDAD="/images/fondoCiudad.jpg";
+	public static final String IMG_FONDO_COMPLETO="/images/anticipacion.png";
 	public static final String IMG_AUTO_DERECHO="/images/autoDerecho.png";
 	public static final String IMG_AUTO_IZQUIERDO="/images/autoIzquierdo.png";
 	public static final String IMG_PARED="/images/pared.jpg";

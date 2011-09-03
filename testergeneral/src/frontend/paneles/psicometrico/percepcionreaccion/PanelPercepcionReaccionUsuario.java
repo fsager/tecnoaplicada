@@ -8,7 +8,9 @@ package frontend.paneles.psicometrico.percepcionreaccion;
 
 import java.awt.Dimension;
 
-import frontend.paneles.examenes.PanelCaptura;
+import javax.swing.JLabel;
+
+import frontend.utils.Util;
 
 /**
  *
@@ -17,7 +19,8 @@ import frontend.paneles.examenes.PanelCaptura;
 public class PanelPercepcionReaccionUsuario extends javax.swing.JPanel {
 
 	/** Creates new form PanelPercepcionReaccionUsuario */
-	public PanelPercepcionReaccionUsuario(PanelPercepcionReaccionAnimacion panelPercepcionReaccionAnimacion,boolean src) {
+	public PanelPercepcionReaccionUsuario(PanelPercepcionReaccionAnimacion panelPercepcionReaccionAnimacion,boolean src,String imgSrc) {
+		this.imgSrc=imgSrc;
 		Dimension dim=new Dimension(630,367);//1000/581
 		this.src = src;
 		this.panelPercepcionReaccionAnimacion = panelPercepcionReaccionAnimacion;
@@ -26,9 +29,11 @@ public class PanelPercepcionReaccionUsuario extends javax.swing.JPanel {
 
 		if (src) {
 			jTextArea1.setFont(new java.awt.Font("Monospaced", 3, 12));
-			
-			panelCaptura = new PanelCaptura(panelPercepcionReaccionAnimacion,dim);
-			panelContenido.add(panelCaptura);
+			JLabel img=new JLabel();
+			Util.setIcon(img,imgSrc,dim);
+			panelContenido.add(img);
+			//panelCaptura = new PanelCaptura(panelPercepcionReaccionAnimacion,dim);
+			//panelContenido.add(panelCaptura);
 		} else {
 			jTextArea1.setFont(new java.awt.Font("Monospaced", 3, 16));
 			
@@ -41,9 +46,17 @@ public class PanelPercepcionReaccionUsuario extends javax.swing.JPanel {
 	public void init() {
 		panelContenido.removeAll();
 		if (src)
-			panelContenido.add(panelCaptura);
+		{
+			//panelContenido.add(panelCaptura);
+			JLabel img=new JLabel();
+			Dimension dim1=new Dimension(634,370);
+			Util.setIcon(img,imgSrc,dim1);
+			panelContenido.add(img);
+		}
 		else
 			panelContenido.add(panelPercepcionReaccionAnimacion);
+		
+		this.repaint();
 	}
 
 
@@ -168,14 +181,14 @@ public class PanelPercepcionReaccionUsuario extends javax.swing.JPanel {
 
 	public boolean isRun() {
 		boolean isRun=false;
-		if(panelCaptura!=null)
-			isRun=panelCaptura.isRun();
+		/*if(panelCaptura!=null)
+			isRun=panelCaptura.isRun();*/
 		return isRun;
 	}
 
 	public void setRun(boolean run) {
-		if(panelCaptura!=null)
-			panelCaptura.setRun(run);
+		/*if(panelCaptura!=null)
+			panelCaptura.setRun(run);*/
 	}
 
 	//GEN-BEGIN:variables
@@ -187,5 +200,6 @@ public class PanelPercepcionReaccionUsuario extends javax.swing.JPanel {
 
 	private PanelPercepcionReaccionAnimacion panelPercepcionReaccionAnimacion;
 	private boolean src;
-	private PanelCaptura panelCaptura;
+	private String imgSrc;
+	//private PanelCaptura panelCaptura;
 }

@@ -216,7 +216,8 @@
     create index "SQL100326234107820" on "APP"."USUARIO_EXAMEN"("USR_NOMBRE");
     create index "SQL100326234107970" on "APP"."USUARIO_EXAMEN"("EXA_ID");
     
-
+    
+    
 	alter table "APP"."EXAMEN_DETALLE" add constraint "FK_00006" foreign key ("EXA_ID") references "APP"."EXAMEN"("EXA_ID");
 	
 	alter table "APP"."PERSONA_EXAMEN"  add constraint "FK_00008" foreign key ("EXA_ID") references "APP"."EXAMEN"("EXA_ID");

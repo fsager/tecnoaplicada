@@ -86,6 +86,40 @@ public class PanelDominio extends javax.swing.JPanel {
 		habilitar(false);
 		cargarDominios();
 	}
+	
+	public PanelDominio(Dominio dom) {
+		initComponents();
+		this.dom = dom;
+		
+
+		jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
+				Constantes.PANEL_DATOS_DOMINIO + dom.getDomClave(),
+				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+				javax.swing.border.TitledBorder.DEFAULT_POSITION,
+				new java.awt.Font("Segoe UI", 3, 12)));
+
+		setTableModel(new ArrayList());
+		Util.ocultarSinResultados(lbSinResultados, true);
+		Util.mostrarError(lbError, null, true);
+
+		Vector<Component> order = new Vector<Component>();
+		order.add(tableDominios);
+		order.add(txtCodigo);
+		order.add(txtDescripcion);
+		order.add(btnNuevo);
+		order.add(btnModificar);
+		order.add(btnEliminar);
+		order.add(btnGuardar);
+		order.add(btnCancelar);
+		MyOwnFocusTraversalPolicy newPolicy = new MyOwnFocusTraversalPolicy(
+				order);
+
+		btnSalir.setVisible(false);
+		lbClave.setText(dom.getDomClave()+":");
+		this.setFocusTraversalPolicy(newPolicy);
+		habilitar(false);
+		cargarDominios();
+	}
 
 	public void setTableModel(List lst) {
 		TableModelDominio tableModel = new TableModelDominio();

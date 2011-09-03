@@ -98,6 +98,8 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 				}
 			}
 		});
+		
+		btnCancelar.setVisible(false);
 	}
 
 	public void definicionAprendizaje()
@@ -326,7 +328,7 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 
 			
 			panelPercepcionReaccionUsuarioExaminado = new PanelPercepcionReaccionUsuario(
-					panelPercepcionReaccionAnimacion, false);
+					panelPercepcionReaccionAnimacion, false,img);
 			
 			panelPercepcionReaccionUsuarioExaminado.setMinimumSize(new Dimension(width,heigth));
 			panelPercepcionReaccionUsuarioExaminado.setSize(width,heigth);
@@ -337,11 +339,11 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 			internalFrame.add(panelPercepcionReaccionUsuarioExaminado);
 			internalFrame.setVisible(true);
 			
-			Util.agregarIframeMonSecundario(((FrameSecundario)Util.frameSecundario).getDp(),internalFrame);
+			Util.agregarIframeMonSecundario(((FrameSecundario)Util.frameSecundario).getDp(),internalFrame,btnCancelar.getActionListeners());
 
 		}
 
-		panelPercepcionReaccionUsuarioExaminador = new PanelPercepcionReaccionUsuario(panelPercepcionReaccionAnimacion,	(Util.frameSecundario != null));
+		panelPercepcionReaccionUsuarioExaminador = new PanelPercepcionReaccionUsuario(panelPercepcionReaccionAnimacion,	(Util.frameSecundario != null),img);
 		this.panelUsuario.add(panelPercepcionReaccionUsuarioExaminador);
 
 	}
@@ -703,7 +705,7 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 						panelPercepcionReaccionUsuarioExaminado.repaint();						
 					}
 				}
-				
+				Util.frameSecundario.setVisible(false);	
 			}
 		});
 		
@@ -861,6 +863,8 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 	//GEN-END:initComponents
 
 	private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+		Util.frameSecundario.setVisible(false);
+		
 		panelPercepcionReaccionAnimacion.init();
 		thTrama.setEjecucion(9999);
 		habilitarBotones();
@@ -924,24 +928,64 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 		}
 	}
 
-	private void btnExaminarNActionPerformed(java.awt.event.ActionEvent evt) {
+	
+	private void btnExaminarNActionPerformed(final java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);
+		Util.frameSecundario.setVisible(true);
 		panelPercepcionReaccionAnimacion.setTiempoSleep(TIEMPO_SLEEP);
 		definicionExamen();
 		initPanelesAnimacion();
 		demo=false;
 		btnExam=true;
-		examinar((JToggleButton)evt.getSource(),true);
-		panelPercepcionReaccionAnimacion.setRun(true);
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try
+				{
+					Thread.currentThread().sleep(1000);
+					examinar((JToggleButton)evt.getSource(),true);
+					panelPercepcionReaccionAnimacion.setRun(true);
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		});
+		
+		repaint();
+		validate();
 	}
 
-	private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {
+	private void btnExaminarActionPerformed(final java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);
+		Util.frameSecundario.setVisible(true);
 		panelPercepcionReaccionAnimacion.setTiempoSleep(TIEMPO_SLEEP);
 		definicionExamen();
 		initPanelesAnimacion();
 		demo=false;
 		btnExam=true;
-		examinar((JToggleButton)evt.getSource(),true);
-		panelPercepcionReaccionAnimacion.setRun(true);
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try
+				{
+					Thread.currentThread().sleep(1000);
+					examinar((JToggleButton)evt.getSource(),true);
+					panelPercepcionReaccionAnimacion.setRun(true);
+					repaint();
+					validate();
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		});
+		
+		repaint();
+		validate();
+
 	}
 	
 	public void examinar(JToggleButton btn,boolean examen)
@@ -975,12 +1019,31 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 		tiempInicioEtapa = System.currentTimeMillis();
 	}
 
-	private void btnAprendizajeActionPerformed(java.awt.event.ActionEvent evt) {
+	private void btnAprendizajeActionPerformed(final java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);
+		Util.frameSecundario.setVisible(true);
+		
 		panelPercepcionReaccionAnimacion.setRun(false);
 		definicionAprendizaje();
 		initPanelesAnimacion();
 		demo=true;
-		examinar((JToggleButton)evt.getSource(),false);
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try
+				{
+					Thread.currentThread().sleep(1000);
+					examinar((JToggleButton)evt.getSource(),false);
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		});
+		
+		repaint();
+		validate();
 	}
 
 	//GEN-BEGIN:variables

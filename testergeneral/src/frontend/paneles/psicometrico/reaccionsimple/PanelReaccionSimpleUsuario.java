@@ -6,7 +6,11 @@
 
 package frontend.paneles.psicometrico.reaccionsimple;
 
+import javax.swing.JLabel;
+
+import testerGeneral.domain.Constantes;
 import frontend.paneles.examenes.PanelCaptura;
+import frontend.utils.Util;
 
 /**
  *
@@ -27,8 +31,12 @@ public class PanelReaccionSimpleUsuario extends javax.swing.JPanel {
 		if (src) {
 			jTextArea1.setFont(new java.awt.Font("Monospaced", 3, 12));
 			txtMensajes.setFont(new java.awt.Font("Monospaced", 3, 12));
-			panelCaptura = new PanelCaptura(panelReaccionSimpleAnimacion);
-			panelContenido.add(panelCaptura);
+			//panelCaptura = new PanelCaptura(panelReaccionSimpleAnimacion);
+			//panelContenido.add(panelCaptura);
+			JLabel img=new JLabel();
+			Util.setIcon(img,Constantes.IMG_FONDO_REACION_SIMPLE_COMPLETO);
+			panelContenido.add(img);
+
 		} else {
 			jTextArea1.setFont(new java.awt.Font("Monospaced", 3, 16));
 			txtMensajes.setFont(new java.awt.Font("Monospaced", 3, 16));
@@ -49,8 +57,13 @@ public class PanelReaccionSimpleUsuario extends javax.swing.JPanel {
 	public void init() {
 		panelContenido.removeAll();
 		if (src)
-			panelContenido.add(panelCaptura);
-		else
+		{
+			//panelContenido.add(panelCaptura);
+			JLabel img=new JLabel();
+			Util.setIcon(img,Constantes.IMG_FONDO_REACION_SIMPLE_COMPLETO);
+			panelContenido.add(img);
+		}
+		else			
 			panelContenido.add(panelReaccionSimpleAnimacion);
 	}
 
@@ -199,14 +212,14 @@ public class PanelReaccionSimpleUsuario extends javax.swing.JPanel {
 
 	public boolean isRun() {
 		boolean isRun = false;
-		if (panelCaptura != null)
-			isRun = panelCaptura.isRun();
+		/*if (panelCaptura != null)
+			isRun = panelCaptura.isRun();*/
 		return isRun;
 	}
 
 	public void setRun(boolean run) {
-		if (panelCaptura != null)
-			panelCaptura.setRun(run);
+		/*if (panelCaptura != null)
+			panelCaptura.setRun(run);*/
 	}
 
 	//GEN-BEGIN:variables
@@ -220,5 +233,5 @@ public class PanelReaccionSimpleUsuario extends javax.swing.JPanel {
 
 	private PanelReaccionSimpleAnimacion panelReaccionSimpleAnimacion;
 	private boolean src;
-	private PanelCaptura panelCaptura;
+	//private PanelCaptura panelCaptura;
 }

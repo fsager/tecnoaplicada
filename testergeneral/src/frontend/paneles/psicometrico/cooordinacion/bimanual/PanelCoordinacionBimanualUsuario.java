@@ -6,7 +6,11 @@
 
 package frontend.paneles.psicometrico.cooordinacion.bimanual;
 
+import javax.swing.JLabel;
+
+import testerGeneral.domain.Constantes;
 import frontend.paneles.examenes.PanelCaptura;
+import frontend.utils.Util;
 
 /**
  *
@@ -26,9 +30,17 @@ public class PanelCoordinacionBimanualUsuario extends javax.swing.JPanel {
 
 		this.panelCoordinacionBimanualAnimacion = panelCoordinacionBimanualAnimacion;
 		if (src) {
-			jTextArea1.setFont(new java.awt.Font("Monospaced", 3, 12));
-			panelCaptura = new PanelCaptura(panelCoordinacionBimanualAnimacion);
-			panelContenido.add(panelCaptura);
+			/*jTextArea1.setFont(new java.awt.Font("Monospaced", 3, 12));
+			//panelCaptura = new PanelCaptura(panelCoordinacionBimanualAnimacion);
+			//panelContenido.add(panelCaptura);			
+			JLabel img=new JLabel();
+			Util.setIcon(img,Constantes.IMG_FONDO_BIMANUAL_COMPLETO);
+			panelContenido.add(img);*/
+			
+			jTextArea1.setFont(new java.awt.Font("Monospaced", 3, 16));
+			panelContenido.add(panelCoordinacionBimanualAnimacion);
+
+			
 		} else {
 			jTextArea1.setFont(new java.awt.Font("Monospaced", 3, 16));
 			panelContenido.add(panelCoordinacionBimanualAnimacion);
@@ -39,10 +51,13 @@ public class PanelCoordinacionBimanualUsuario extends javax.swing.JPanel {
 
 	public void init() {
 		panelContenido.removeAll();
+		panelContenido.add(panelCoordinacionBimanualAnimacion);/*
 		if (src)
-			panelContenido.add(panelCaptura);
-		else
+		{
 			panelContenido.add(panelCoordinacionBimanualAnimacion);
+		}
+		else
+			panelContenido.add(panelCoordinacionBimanualAnimacion);*/
 	}
 
 	/** This method is called from within the constructor to
@@ -135,14 +150,14 @@ public class PanelCoordinacionBimanualUsuario extends javax.swing.JPanel {
 
 	public boolean isRun() {
 		boolean isRun = false;
-		if (panelCaptura != null)
-			isRun = panelCaptura.isRun();
+		/*if (panelCaptura != null)
+			isRun = panelCaptura.isRun();*/
 		return isRun;
 	}
 
 	public void setRun(boolean run) {
-		if (panelCaptura != null)
-			panelCaptura.setRun(run);
+		/*if (panelCaptura != null)
+			panelCaptura.setRun(run);*/
 	}
 
 	
@@ -187,13 +202,13 @@ public class PanelCoordinacionBimanualUsuario extends javax.swing.JPanel {
 		this.src = src;
 	}
 
-	public PanelCaptura getPanelCaptura() {
+	/*public PanelCaptura getPanelCaptura() {
 		return panelCaptura;
 	}
 
 	public void setPanelCaptura(PanelCaptura panelCaptura) {
 		this.panelCaptura = panelCaptura;
-	}
+	}*/
 
 
 	//GEN-BEGIN:variables
@@ -204,5 +219,5 @@ public class PanelCoordinacionBimanualUsuario extends javax.swing.JPanel {
 	// End of variables declaration//GEN-END:variables
 	private PanelCoordinacionBimanualAnimacion panelCoordinacionBimanualAnimacion;
 	private boolean src;
-	private PanelCaptura panelCaptura;
+	//private PanelCaptura panelCaptura;
 }

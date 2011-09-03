@@ -113,6 +113,7 @@ public class ThreadTrama extends Thread{
 	
 	public ThreadTrama(Trama trama)
 	{
+		this.setName("ThreadTrama: "+trama.getClass());
 		if(Util.thTrama!=null)
 			Util.thTrama.desconnect();
 

@@ -35,7 +35,9 @@ import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.derby.tools.sysinfo;
 import org.jfree.chart.plot.ThermometerPlot;
+import org.python.modules.synchronize;
 
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -67,9 +69,10 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	private ThreadTrama thTrama;
 	private int xAutoDer;
 	private int xAutoIzq;
-	private ImageReader reader;
+	//private ImageReader reader;
 	private int extraHeigth=1000;
 	private int width;
+	private int heightReader;
 	private int heightPantalla;
 	private int widthAuto=20;
 	private int heightAuto=20;
@@ -87,7 +90,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	private static final Log log = LogFactory.getLog(PanelCoordinacionBimanualAnimacion.class);
 	private PanelCoordinacionBimanual panelCoordinacionBimanual;
 	private PersonaExamen personaExamen;
-	//private String img;
+	private String img;
 	
 	/** Creates new form PanelAnticipacionAnimacion */
 	public PanelCoordinacionBimanualAnimacion(PanelCoordinacionBimanual panelCoordinacionBimanual ,Dimension imgDimension,ThreadTrama thTrama,String img,PersonaExamen personaExamen){
@@ -95,6 +98,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 		this.personaExamen=personaExamen;		
 		this.thTrama=thTrama;
 		this.imgDimension=imgDimension;
+		this.setName("PanelCoordinacionBimanualAnimacion");
 		setMinimumSize(imgDimension);
 		setSize(imgDimension);
 		setPreferredSize(imgDimension);
@@ -105,6 +109,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 		
 		thThis.setPriority(Thread.MAX_PRIORITY);
 		thThis.start();
+		thThis.setName("PanelCoordinacionBimanualAnimacion");
 		initValores();
 	}
 	
@@ -124,11 +129,44 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 		return point;	
 	}
 	
-	public void setbackImagen(String img)
+	public void inicializarBuffuer()
+	{
+		/*try
+		{
+			if(reader!=null)
+			{
+				if(reader.getInput()!=null)
+					((ImageInputStream)reader.getInput()).close();
+
+				reader.dispose();
+			}		
+		}
+		catch(Exception e)
+		{}
+		finally
+		{
+			System.gc();
+		}*/
+	}
+	
+	public String getImg()
+	{
+		return img;
+	}
+	
+	public void setImg(String img)
+	{
+		this.img=img;
+	}
+
+	
+	public synchronized void  setbackImagen(String img)
 	{
 		try {
+			//inicializarBuffuer();
+			setImg(img);
 			Iterator readers = ImageIO.getImageReadersByFormatName("jpg");
-		    reader = (ImageReader)readers.next();
+			ImageReader reader= (ImageReader)readers.next();
 		    
 			//File f=new File(Util.class.getResource(img).getFile());
 		    File f=new File(img).getAbsoluteFile();
@@ -136,8 +174,11 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 		    ImageInputStream iis= ImageIO.createImageInputStream(f);
 			reader.setInput(iis, true);
 			
-		    initPosicion();
 			width=reader.getWidth(0);
+			heightReader=reader.getHeight(0);
+			
+		    initPosicion();
+			
 			heightPantalla=imgDimension.height;
 			ImageReadParam param = reader.getDefaultReadParam();
 
@@ -151,6 +192,11 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 		    param.setSourceRegion(rect);
 		    
 		    biSecond = reader.read(0, param);
+		    
+		    //nuevo
+		    iis.close();
+		    reader.dispose();
+		    
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -338,16 +384,27 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 									{	public void run() {
 											try
 											{
+												Iterator readers = ImageIO.getImageReadersByFormatName("jpg");
+												ImageReader reader= (ImageReader)readers.next();
+											    File f=new File(img).getAbsoluteFile();
+												
+											    ImageInputStream iis= ImageIO.createImageInputStream(f);
+												reader.setInput(iis, true);
+												
 												ImageReadParam param = reader.getDefaultReadParam();
 											    Rectangle rect = new Rectangle(0,yRun,width,hRun); 
 											    param.setSourceRegion(rect);
 										    	biSecond = reader.read(0,param);	
 											    
+										    	iis.close();
+										    	reader.dispose();
+										    	
 											} catch (Exception ex) {
 												throw new RuntimeException(ex);
 											}	
 										}
 									};
+							t.setName("Read biSecond buffer");			
 							t.start();
 
 						    yDesde=bi.getHeight()-heightPantalla;
@@ -387,7 +444,7 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	{
 		try
 		{
-			this.yDesdeInit=(int)(reader.getHeight(0)-imgDimension.getHeight());
+			this.yDesdeInit=(int)(heightReader-imgDimension.getHeight());
 		}
 		catch(Exception e)
 		{
@@ -522,14 +579,18 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 	{
 		try
 		{
+			stop=true;
+			run=false;
 			graphicsCaptura.dispose();
 			graphicsCaptura=null;
 			imgTodo=null;
 			imgCaptura=null;
+			bi.flush();
 			bi=null;
+			biSecond.flush();
 			biSecond=null;
 			imgDimension=null;
-			((ImageInputStream)reader.getInput()).close();
+			System.gc();
 		}
 		catch(Exception e)
 		{}
@@ -621,13 +682,13 @@ public class PanelCoordinacionBimanualAnimacion extends JPanel  implements Runna
 		xAutoIzq = autoIzq;
 	}
 
-	public ImageReader getReader() {
+	/*public ImageReader getReader() {
 		return reader;
 	}
 
 	public void setReader(ImageReader reader) {
 		this.reader = reader;
-	}
+	}*/
 
 	public int getExtraHeigth() {
 		return extraHeigth;

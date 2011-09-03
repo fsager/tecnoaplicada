@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.Rectangle;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,22 +32,37 @@ public class FrameSecundario extends javax.swing.JFrame {
 		Util.setIcon(this, Constantes.IMG_ICON);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		
 		initComponents();
+		btnCancelar.setSize(150, 20);
+		btnCancelar.setLocation(20,20);
+
+		/*btnExaminarNuevamente.setSize(150, 20);
+		btnExaminarNuevamente.setLocation(20,50);
+
+		btnGuardar.setSize(150, 20);
+		btnGuardar.setLocation(20,80);*/
+
 		dp.setOpaque(false);
+		dp.add(btnCancelar);
+/*		dp.add(btnExaminarNuevamente);
+		dp.add(btnGuardar);*/		
+
+		this.setAlwaysOnTop(true);
 		Rectangle bounds = gc.getBounds();
 		this.setSize(bounds.width, bounds.height);
-		Util.dpSecundario=dp;
-		
-		JLabel lb=new JLabel();
-		Util.lbSecundario=lb;
-		Propiedad prop=ContextManager.getPropertyObj("SISTEMA.IMAGEN.SECUNDARIA");
-		VentanasUtilTesterGral.setFondo(this, dp, lb,prop);
-		
-		prop=ContextManager.getPropertyObj("SISTEMA.IMAGEN.PRIMARIA");
-		
-		this.getContentPane().setBackground(new Color(Integer.valueOf(prop.getPropValor())));
-		
+		Util.dpSecundario = dp;
+
+		JLabel lb = new JLabel();
+		Util.lbSecundario = lb;
+		Propiedad prop = ContextManager
+				.getPropertyObj("SISTEMA.IMAGEN.SECUNDARIA");
+		VentanasUtilTesterGral.setFondo(this, dp, lb, prop);
+
+		prop = ContextManager.getPropertyObj("SISTEMA.IMAGEN.PRIMARIA");
+
+		this.getContentPane().setBackground(
+				new Color(Integer.valueOf(prop.getPropValor())));
+
 		setVisible(true);
 	}
 
@@ -117,8 +133,6 @@ public class FrameSecundario extends javax.swing.JFrame {
 	private void formWindowDeiconified(java.awt.event.WindowEvent evt) {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
-	
-	
 
 	public javax.swing.JDesktopPane getDp() {
 		return dp;
@@ -127,13 +141,36 @@ public class FrameSecundario extends javax.swing.JFrame {
 	public void setDp(javax.swing.JDesktopPane dp) {
 		this.dp = dp;
 	}
-
-
+	
+	public javax.swing.JToggleButton getBtnCancelar() {
+		return btnCancelar;
+	}
+	
+	public void clearActioListener()
+	{
+		ActionListener actionListeners[]=btnCancelar.getActionListeners();
+		for(ActionListener actionListener:actionListeners)
+		{
+			btnCancelar.removeActionListener(actionListener);
+		}
+	}
+	
+/*	public javax.swing.JToggleButton getBtnExaminarNuevamente() {
+		return btnExaminarNuevamente;
+	}
+	
+	public javax.swing.JToggleButton getBtnGuardar() {
+		return btnGuardar;
+	}*/
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
 	private javax.swing.JDesktopPane dp;
 	// End of variables declaration//GEN-END:variables
 	private javax.swing.JLabel lbFondo = new javax.swing.JLabel();
+	private javax.swing.JToggleButton btnCancelar= new javax.swing.JToggleButton("Volver");
+//	private javax.swing.JPanel botones=new javax.swing.JPanel();;
+/*	private javax.swing.JToggleButton btnGuardar= new javax.swing.JToggleButton("Guardar Resultados");
+	private javax.swing.JToggleButton btnExaminarNuevamente= new javax.swing.JToggleButton("Examinar Nuevamente");*/
 
 }

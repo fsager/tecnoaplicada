@@ -7,7 +7,9 @@ import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,7 +50,6 @@ import testerGeneral.threads.ThreadTrama;
 import actualizaciones.GestorActualizacionesUtil;
 import frontend.components.GlassPanel;
 import frontend.components.JOptionPaneTesterGral;
-import frontend.paneles.PanelConfiguracionDB;
 import frontend.paneles.PanelMenu;
 import frontend.paneles.PanelOperacionesLargas;
 import frontend.ventanas.FramePrincipal;
@@ -106,10 +107,12 @@ public class Util {
 		{
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] gs = ge.getScreenDevices();
-			GraphicsDevice gd = gs[1];
+			GraphicsDevice gd = gs[0];
+			//GraphicsDevice gd = gs[1];
 			gc = gd.getConfigurations()[0];
 			
 			frameSecundario = new FrameSecundario(gd.getDefaultConfiguration());
+			frameSecundario.setVisible(false);
 			
 		}
 		catch(java.lang.ArrayIndexOutOfBoundsException e){}
@@ -133,14 +136,39 @@ public class Util {
 		frameContenedor.update(frameContenedor.getGraphics());
 	}
 	
-	public static void agregarIframeMonSecundario(JDesktopPane dp,JInternalFrame iframe)
+	public static void agregarIframeMonSecundario(JDesktopPane dp,JInternalFrame iframe,ActionListener[] actionListenersCancelar)
 	{			
+		
+		((FrameSecundario)frameSecundario).clearActioListener();
+		for(ActionListener actionListener:actionListenersCancelar)
+		{
+			((FrameSecundario)frameSecundario).getBtnCancelar().addActionListener(actionListener);
+		}
+		
 		dp.add(iframe,javax.swing.JLayeredPane.DEFAULT_LAYER);
+		
+				
 		iframe.pack();
 		iframe.validate();
 		
 		iframe.setLocation((int)(gc.getBounds().getWidth() - iframe.getWidth()) / 2,(int)(gc.getBounds().getHeight() - iframe.getHeight()) / 2);
+
+
 	}
+	
+	/*public static void agregarIframeMonSecundario(JDesktopPane dp,JInternalFrame iframe)
+	{			
+		((FrameSecundario)frameSecundario).clearActioListener();
+		
+		dp.add(iframe,javax.swing.JLayeredPane.DEFAULT_LAYER);
+		
+		
+				
+		iframe.pack();
+		iframe.validate();
+		
+		iframe.setLocation((int)(gc.getBounds().getWidth() - iframe.getWidth()) / 2,(int)(gc.getBounds().getHeight() - iframe.getHeight()) / 2);
+	}*/
 	
 	public static void setIcon(javax.swing.JFrame frame,String ubicacion)
 	{
@@ -150,6 +178,13 @@ public class Util {
 	public static void setIcon(JLabel label,String ubicacion)
 	{
 		label.setIcon(new ImageIcon(Util.class.getResource(ubicacion)));		
+	}
+	
+	public static void setIcon(JLabel label,String ubicacion,Dimension newSize)
+	{
+		ImageIcon imageIcon=new ImageIcon(Util.class.getResource(ubicacion));
+		Image scaledImage=imageIcon.getImage().getScaledInstance(newSize.width, newSize.height,Image.SCALE_AREA_AVERAGING);
+		label.setIcon(new ImageIcon(scaledImage));		
 	}
 	
 	public static void setIcon(JLabel label,byte[] img)
@@ -626,6 +661,7 @@ public class Util {
 							}	
 						}
 					};
+					t.setName("Sound: "+sound+" Sleep:"+sleep);
 					t.setPriority(Thread.MAX_PRIORITY);
 					t.start();
 					
@@ -636,7 +672,26 @@ public class Util {
 		}
 	}
 	
+	public static void mostrarSegundaMonitor()
+	{
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				Util.frameSecundario.setVisible(true);
+			}
+		});
 
+		
+
+		
+		/*try
+		{
+			Thread.sleep(3000);
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}*/
+	}
 	
 
 }

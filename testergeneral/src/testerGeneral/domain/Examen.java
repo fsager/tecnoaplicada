@@ -22,6 +22,10 @@ public class Examen implements java.io.Serializable {
 	public static final String EXA_CODIGO_PSICOMETRICO="EXA_PSICOMETRICO";
 	public static final String EXA_CODIGO_PERSONALIDAD="EXA_PERSONALIDAD";
 	
+	public static final String EXA_CODIGO_MP="EXA_MP";
+	
+	
+	
 	private Long exaId;
 	private String exaCodigo;
 	private String exaNombre;

@@ -53,6 +53,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		initComponents();
 		setColor();
 		cargarValoresDePropiedades();
+		jCheckBoxMostrarResultadosAExaminado.setVisible(false);
 	}
 
 	private void cargarValoresDePropiedades() {
