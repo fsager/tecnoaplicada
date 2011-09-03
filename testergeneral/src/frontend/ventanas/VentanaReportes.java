@@ -106,10 +106,10 @@ public class VentanaReportes extends JInternalFrameTesterGral {
 			JRViewer viewer = new JRViewer(jasperPrint);
 			
 			
-			JRSaveContributor[] jRSaveContributor=viewer.getSaveContributors();
+			/*JRSaveContributor[] jRSaveContributor=viewer.getSaveContributors();
 			JRSaveContributor[] jRSaveContributorDes=new JRSaveContributor[1];
 			System.arraycopy(jRSaveContributor,1,jRSaveContributorDes,0,1);
-			viewer.setSaveContributors(jRSaveContributorDes);
+			viewer.setSaveContributors(jRSaveContributorDes);*/
 			
 			
 			agregarEscucha(internalframe,viewer);
@@ -131,11 +131,11 @@ public class VentanaReportes extends JInternalFrameTesterGral {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(ubicacion, parameterMap,ds); 
 			JRViewer viewer = new JRViewer(jasperPrint);
 			
-			 
+			 /*
 			JRSaveContributor[] jRSaveContributor=viewer.getSaveContributors();
 			JRSaveContributor[] jRSaveContributorDes=new JRSaveContributor[1];
 			System.arraycopy(jRSaveContributor,1,jRSaveContributorDes,0,1);
-			viewer.setSaveContributors(jRSaveContributorDes);
+			viewer.setSaveContributors(jRSaveContributorDes);*/
 			
 			agregarEscucha(internalframe,viewer);
 		}
@@ -187,10 +187,10 @@ public class VentanaReportes extends JInternalFrameTesterGral {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameterMap,ContextManager.getCurrentConnection()); 
 			JRViewer viewer = new JRViewer(jasperPrint);
 			
-			JRSaveContributor[] jRSaveContributor=viewer.getSaveContributors();
+			/*JRSaveContributor[] jRSaveContributor=viewer.getSaveContributors();
 			JRSaveContributor[] jRSaveContributorDes=new JRSaveContributor[1];
 			System.arraycopy(jRSaveContributor,1,jRSaveContributorDes,0,1);
-			viewer.setSaveContributors(jRSaveContributorDes);
+			viewer.setSaveContributors(jRSaveContributorDes);*/
 			
 			
 			internalframe.add(viewer);
