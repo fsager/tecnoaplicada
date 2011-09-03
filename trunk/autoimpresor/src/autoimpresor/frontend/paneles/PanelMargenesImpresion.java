@@ -339,11 +339,11 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 						}
 					});
 
-			JRSaveContributor[] jRSaveContributor = viewer
+			/*JRSaveContributor[] jRSaveContributor = viewer
 					.getSaveContributors();
 			JRSaveContributor[] jRSaveContributorDes = new JRSaveContributor[1];
 			System.arraycopy(jRSaveContributor, 1, jRSaveContributorDes, 0, 1);
-			viewer.setSaveContributors(jRSaveContributorDes);
+			viewer.setSaveContributors(jRSaveContributorDes);*/
 
 			internalframe.add(viewer);
 			internalframe.pack();
@@ -407,11 +407,11 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 						}
 					});
 
-			JRSaveContributor[] jRSaveContributor = viewer
+			/*JRSaveContributor[] jRSaveContributor = viewer
 					.getSaveContributors();
 			JRSaveContributor[] jRSaveContributorDes = new JRSaveContributor[1];
 			System.arraycopy(jRSaveContributor, 1, jRSaveContributorDes, 0, 1);
-			viewer.setSaveContributors(jRSaveContributorDes);
+			viewer.setSaveContributors(jRSaveContributorDes);*/
 
 			internalframe.add(viewer);
 			internalframe.pack();
