@@ -61,7 +61,7 @@ public class Util {
 			+ Constantes.MENU_SUB_LOG;
 	public static final String ACTION_MENU_PANEL_ADMIN_MUNICIPIO = "Ingresó al Menú "
 			+ Constantes.MENU_SUB_PANEL_ADM_MINICIPIO;
-
+	
 	private static PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
 			.getBizObject("propiedadService");
 	private static AuditoriaDefinition auditoriaService = (AuditoriaDefinition) ContextManager

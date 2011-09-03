@@ -94,6 +94,8 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 				}
 			}
 		});
+		
+		btnCancelar.setVisible(false);
 	}
 
 	public void ciclo(int etapas) {
@@ -216,9 +218,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 			internalFrame.add(panelReaccionSimpleUsuarioExaminado);
 			internalFrame.setVisible(true);
 
-			Util.agregarIframeMonSecundario(
-					((FrameSecundario) Util.frameSecundario).getDp(),
-					internalFrame);
+			Util.agregarIframeMonSecundario(((FrameSecundario)Util.frameSecundario).getDp(),internalFrame,btnCancelar.getActionListeners());
 
 		}
 
@@ -419,7 +419,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 						panelReaccionSimpleUsuarioExaminado.repaint();
 					}
 				}
-
+				Util.frameSecundario.setVisible(false);
 			}
 		});
 
@@ -584,6 +584,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	//GEN-END:initComponents
 
 	private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+		Util.frameSecundario.setVisible(false);
 		erroresCometidos = 0;
 		setMensajes(null);
 		panelReaccionSimpleAnimacion.init();
@@ -705,18 +706,51 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		}
 	}
 
-	private void btnExaminarNActionPerformed(java.awt.event.ActionEvent evt) {
+	private void btnExaminarNActionPerformed(final java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);
+		Util.frameSecundario.setVisible(true);
 		initPanelesAnimacion();
 		demo = false;
 		btnExam = true;
-		examinar((JToggleButton) evt.getSource(), true);
+		
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try
+				{
+					Thread.currentThread().sleep(1000);
+					examinar((JToggleButton) evt.getSource(), true);
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		});
+		
 	}
 
-	private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {
+	private void btnExaminarActionPerformed(final java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);
+		Util.frameSecundario.setVisible(true);
 		initPanelesAnimacion();
 		demo = false;
 		btnExam = true;
-		examinar((JToggleButton) evt.getSource(), true);
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try
+				{
+					Thread.currentThread().sleep(1000);
+					examinar((JToggleButton) evt.getSource(), true);
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		});
+		
 	}
 
 	public void examinar(JToggleButton btn, boolean examen) {
@@ -739,11 +773,27 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		Util.thTrama.setEjecucion(0);
 	}
 
-	private void btnAprendizajeActionPerformed(java.awt.event.ActionEvent evt) {
-
+	private void btnAprendizajeActionPerformed(final java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);
+		Util.frameSecundario.setVisible(true);
+		
 		initPanelesAnimacion();
 		demo = true;
-		examinar((JToggleButton) evt.getSource(), false);
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try
+				{
+					Thread.currentThread().sleep(1000);
+					examinar((JToggleButton) evt.getSource(), false);
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		});
+		
 	}
 
 	public void setMensajes(String mensaje) {

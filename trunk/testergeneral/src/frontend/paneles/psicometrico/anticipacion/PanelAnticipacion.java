@@ -17,9 +17,11 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
+import javax.swing.UIManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pushingpixels.substance.api.skin.SubstanceCremeLookAndFeel;
 
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Accion;
@@ -43,6 +45,7 @@ import frontend.tablemodel.TableModelResultado;
 import frontend.utils.Util;
 import frontend.ventanas.FrameSecundario;
 import frontend.ventanas.JInternalFrameTesterGral;
+import frontend.ventanas.VtnConfigurarDb;
 
 /**
  *
@@ -78,6 +81,8 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 			btnGuardar.setEnabled(false);
 		}
 
+		btnCancelar.setVisible(false);
+		
 		this.validate();
 		inicializarThreads();
 		mostrarSecondMonitor();
@@ -132,6 +137,8 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 						panelAnticipacionUsuarioExaminado.repaint();						
 					}
 				}
+				
+				Util.frameSecundario.setVisible(false);
 			}
 		});
 		
@@ -439,15 +446,16 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 			internalFrame.add(panelAnticipacionUsuarioExaminado);
 			internalFrame.setVisible(true);
 			
-			Util.agregarIframeMonSecundario(((FrameSecundario)Util.frameSecundario).getDp(),internalFrame);
+			
+			Util.agregarIframeMonSecundario(((FrameSecundario)Util.frameSecundario).getDp(),internalFrame,btnCancelar.getActionListeners());
 			
 
 
-		} else {
+		} /*else {
 
 			panelAnticipacionAnimacion = new PanelAnticipacionAnimacion(this,
 					new Dimension(813, 320),Util.thTrama);
-		}
+		}*/
 
 		panelAnticipacionUsuarioExaminador = new PanelAnticipacionUsuario(
 				panelAnticipacionAnimacion, (Util.frameSecundario != null));
@@ -592,6 +600,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 		
 		Util.thTrama.setEjecucion(9999);
 		habilitarBotones();
+		Util.frameSecundario.setVisible(false);
 	}
 
 	public JToggleButton getBtn() {
@@ -660,22 +669,54 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 	}
 
 	private void btnExaminarNActionPerformed(java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);
 		initPanelesAnimacion();
 		btnExam=true;
 		demo=false;
 		unSelectButtons(btnExaminarN);
-		examinar();
+		Util.frameSecundario.setVisible(true);
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try
+				{
+					Thread.currentThread().sleep(1000);
+					examinar();
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		});
 	}
 
 	private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);
 		initPanelesAnimacion();
 		unSelectButtons(btnExaminar);
 		demo=false;
 		btnExam=true;
-		examinar();
+		Util.frameSecundario.setVisible(true);
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try
+				{
+					Thread.currentThread().sleep(1000);
+					examinar();
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		});
+		
+		
 	}
 
-	public void examinar() {
+	public void examinar(){
 		
 		btnGuardar.setEnabled(false);
 		cicloExamen();
@@ -683,6 +724,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 				.getProperty("EXAMEN.ANTICIPACION.ETAPA1.SPEED"));
 		
 		iniciarExamen(-1 * speed, false, false, false, resultados.get(0));
+		
 	}
 
 	public void etapaDos() {
@@ -754,15 +796,43 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 			panelAnticipacionUsuarioExaminado.init();
 	}
 	
+
+	
 	private void btnAprendizajeActionPerformed(java.awt.event.ActionEvent evt) {
-		initPanelesAnimacion();
-		
+		btnCancelarActionPerformed(null);
+		initPanelesAnimacion();				
 		demo=true;
 		unSelectButtons(btnAprendizaje);
 		cicloAprendizaje();
-		int speed = Integer.valueOf(ContextManager
-				.getProperty("EXAMEN.ANTICIPACION.APRENDIZAJE.SPEED"));
-		iniciarExamen(-1 * speed, false, true, false, resultados.get(0));
+		Util.frameSecundario.setVisible(true);
+		
+		
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				btnAprendizajeAction();
+			}
+		});
+
+	}
+	
+	public void btnAprendizajeAction()
+	{
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try
+				{
+					Thread.currentThread().sleep(1000);
+					int speed = Integer.valueOf(ContextManager
+							.getProperty("EXAMEN.ANTICIPACION.APRENDIZAJE.SPEED"));
+					iniciarExamen(-1 * speed, false, true, false, resultados.get(0));
+
+				}
+				catch(Exception e)
+				{
+					throw new RuntimeException(e);
+				}
+			}
+		});
 	}
 
 	public void iniciarExamen(int speed, boolean izq, boolean demo,

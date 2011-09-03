@@ -90,7 +90,9 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		
 		inicializarThreads();
 		mostrarSecondMonitor();
-		repaintPanelesAnimacion();					
+		repaintPanelesAnimacion();	
+		
+		btnCancelar.setVisible(false);
 	}
 
 	public void unSelectButtons(JToggleButton btnSource) {
@@ -156,6 +158,8 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 						panelCoordinacionBimanualUsuarioExaminado.repaint();						
 					}
 				}
+
+				Util.frameSecundario.setVisible(false);
 			}
 		});
 		
@@ -201,18 +205,20 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 			internalFrame.add(panelCoordinacionBimanualUsuarioExaminado);
 			internalFrame.setVisible(true);
 			
-			Util.agregarIframeMonSecundario(((FrameSecundario)Util.frameSecundario).getDp(),internalFrame);
-			
+			Util.agregarIframeMonSecundario(((FrameSecundario)Util.frameSecundario).getDp(),internalFrame,btnCancelar.getActionListeners());
 
 
-		} else {
+		} /*else {
 
 			panelCoordinacionBimanualAnimacion = new PanelCoordinacionBimanualAnimacion(this,
 					new Dimension(813, 320),Util.thTrama,rutasAprendizaje,personaExamen);
-		}
+		}*/
+
+		panelCoordinacionBimanualAnimacionExaminador = new PanelCoordinacionBimanualAnimacion(this,
+				new Dimension(813, 320),Util.thTrama,rutasAprendizaje,personaExamen);
 
 		panelCoordinacionBimanualUsuarioExaminador = new PanelCoordinacionBimanualUsuario(
-				panelCoordinacionBimanualAnimacion, (Util.frameSecundario != null));
+				panelCoordinacionBimanualAnimacionExaminador, (Util.frameSecundario != null));
 		this.panelUsuario.add(panelCoordinacionBimanualUsuarioExaminador);
 
 	}
@@ -348,11 +354,15 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 	
 	private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
 		initPanelesAnimacion();
+		//mostrarSecondMonitor();
+		repaintPanelesAnimacion();
 		panelCoordinacionBimanualAnimacion.initPosicion();
 		panelCoordinacionBimanualAnimacion.initValores();
 		panelCoordinacionBimanualAnimacion.setbackImagen(rutasAprendizaje);
 		panelCoordinacionBimanualAnimacion.setRun(false);		
 		habilitarBotones();
+		
+		Util.frameSecundario.setVisible(false);
 	}
 
 	public JToggleButton getBtn() {
@@ -422,14 +432,19 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		}
 	}
 
+
 	private void btnExaminarNActionPerformed(java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);
 		unSelectButtons(btnExaminarN);
-		examinar();
+		btnExam=true;
+		examinar();	
 	}
 
 	private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {
+		btnCancelarActionPerformed(null);		
 		unSelectButtons(btnExaminar);
-		examinar();
+		btnExam=true;
+		examinar();	
 	}
 
 	public void examinar() {
@@ -446,14 +461,24 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 	public void initPanelesAnimacion()
 	{
 		if(panelCoordinacionBimanualUsuarioExaminador!=null)
+		{
+			//panelCoordinacionBimanualAnimacionExaminador.setRun(true);
+			//panelCoordinacionBimanualAnimacionExaminador.setStop(false);
 			panelCoordinacionBimanualUsuarioExaminador.init();
+			panelCoordinacionBimanualUsuarioExaminador.repaint();
+		}
 			
 		if(panelCoordinacionBimanualUsuarioExaminado!=null)
+		{
 			panelCoordinacionBimanualUsuarioExaminado.init();
+			panelCoordinacionBimanualUsuarioExaminado.repaint();
+		}
 	}
 	
 	private void btnAprendizajeActionPerformed(java.awt.event.ActionEvent evt) {
 
+		btnCancelarActionPerformed(null);		
+		
 		initPanelesAnimacion();
 		panelCoordinacionBimanualAnimacion.setVelocidad(velocidadAprendizaje);
 		panelCoordinacionBimanualAnimacion.setbackImagen(rutasAprendizaje);
@@ -461,8 +486,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		
 		demo=true;
 		unSelectButtons(btnAprendizaje);
-		iniciarExamen();
-
+		iniciarExamen();		
 	}
 
 	public void iniciarExamen() {
@@ -470,18 +494,40 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		resultados.clear();
 		if(isInInitPosition())
 		{
-			Util.playSound(Constantes.SOUND_START,0);
-			panelCoordinacionBimanualAnimacion.initPosicion();
-			panelCoordinacionBimanualAnimacion.initValores();
-			btnCancelar.setEnabled(true);
-			btnAprendizaje.setEnabled(false);
-			btnExaminar.setEnabled(false);
-			btnExaminarN.setEnabled(false);
-			btnGuardar.setEnabled(false);
+			Util.frameSecundario.setVisible(true);
 			
-			panelCoordinacionBimanualAnimacion.setRun(true);
-			repaintPanelesAnimacion();
-			this.validate();
+			java.awt.EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try
+					{
+						
+						Thread.currentThread().sleep(1000);
+						
+						Util.playSound(Constantes.SOUND_START,0);
+						panelCoordinacionBimanualAnimacion.initPosicion();
+						panelCoordinacionBimanualAnimacion.initValores();
+						btnCancelar.setEnabled(true);
+						btnAprendizaje.setEnabled(false);
+						btnExaminar.setEnabled(false);
+						btnExaminarN.setEnabled(false);
+						btnGuardar.setEnabled(false);
+						
+						panelCoordinacionBimanualAnimacion.setRun(true);
+						
+						//panelCoordinacionBimanualAnimacionExaminador.setRun(false);
+						//panelCoordinacionBimanualAnimacionExaminador.setStop(true);
+
+						repaintPanelesAnimacion();
+						PanelCoordinacionBimanual.this.validate();
+					}
+					catch(Exception e)
+					{
+						throw new RuntimeException(e);
+					}
+				}
+			});	
+			
+
 		}
 		else {
 			JOptionPaneTesterGral.showInternalMessageDialog(
@@ -533,6 +579,14 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 			panelCoordinacionBimanualAnimacion.setStop(true);
 			panelCoordinacionBimanualAnimacion.finalizar();
 		}
+		
+		if (panelCoordinacionBimanualAnimacionExaminador != null) {
+			panelCoordinacionBimanualAnimacionExaminador.setRun(false);
+			panelCoordinacionBimanualAnimacionExaminador.setStop(true);
+			panelCoordinacionBimanualAnimacionExaminador.finalizar();
+		}
+		
+		panelCoordinacionBimanualAnimacionExaminador= null;
 		panelCoordinacionBimanualAnimacion = null;
 
 		if (panelCoordinacionBimanualUsuarioExaminador != null)
@@ -542,6 +596,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 		if (panelCoordinacionBimanualUsuarioExaminado != null)
 			panelCoordinacionBimanualUsuarioExaminado.setRun(false);
 		panelCoordinacionBimanualUsuarioExaminado = null;
+		
 
 	}
 
@@ -577,5 +632,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 	//Se defini en funcion de si es profecional o particular
 	private int velocidadExamen=-1;//Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.VELOCIDAD.EXAMEN"));
 	private int velocidadAprendizaje=Integer.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.BIMANUAL.VELOCIDAD.APRENDIZAJE"));
+	
+	private PanelCoordinacionBimanualAnimacion panelCoordinacionBimanualAnimacionExaminador;
 	
 }

@@ -60,8 +60,10 @@ public class FramePrincipal extends JInternalFrameTesterGral {
 
 		this.pack();
 		
-		validadLicencia();
-		
+		if(!panelMenu.getClass().getName().equals("autoimpresor.frontend.paneles.PanelMenuPrincipal"))
+		{
+			validadLicencia();	
+		}		
 	}
 
 	private void validadLicencia() throws Exception
