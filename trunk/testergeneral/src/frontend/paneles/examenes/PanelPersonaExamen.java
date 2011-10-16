@@ -127,20 +127,22 @@ public class PanelPersonaExamen extends javax.swing.JPanel {
 																		.createSequentialGroup()
 																		.addComponent(
 																				txtNroDoc,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				259,
-																				Short.MAX_VALUE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				159,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addGap(
+																				33,
+																				33,
+																				33)
 																		.addComponent(
 																				jLabel3)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
 																				txtTipoExamen,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				108,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				180,
+																				Short.MAX_VALUE))
 														.addComponent(
 																txtNombre,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -199,14 +201,14 @@ public class PanelPersonaExamen extends javax.swing.JPanel {
 																														.addComponent(
 																																jLabel5)
 																														.addComponent(
-																																txtTipoExamen,
+																																txtNroDoc,
 																																javax.swing.GroupLayout.PREFERRED_SIZE,
 																																javax.swing.GroupLayout.DEFAULT_SIZE,
 																																javax.swing.GroupLayout.PREFERRED_SIZE)
 																														.addComponent(
 																																jLabel3)
 																														.addComponent(
-																																txtNroDoc,
+																																txtTipoExamen,
 																																javax.swing.GroupLayout.PREFERRED_SIZE,
 																																javax.swing.GroupLayout.DEFAULT_SIZE,
 																																javax.swing.GroupLayout.PREFERRED_SIZE)))))

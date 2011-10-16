@@ -14,10 +14,11 @@ import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Examen;
 import testerGeneral.domain.ExamenDetalle;
 import testerGeneral.domain.PersonaExamen;
+import testerGeneral.domain.PreguntaInterfaz;
 import testerGeneral.domain.Resultado;
 import testerGeneral.domain.Usuario;
 import testerGeneral.service.ExamenDefinition;
-import frontend.paneles.audio.PanelAudio;
+import frontend.paneles.examenes.PanelExamen;
 import frontend.paneles.examenes.PanelExamenes;
 import frontend.paneles.psicometrico.anticipacion.PanelAnticipacion;
 import frontend.paneles.vision.PanelAgudezaVisual;
@@ -332,9 +333,7 @@ public class ExamenesUtils {
 				panelExamen = new PanelExamenes(newPersonaExamen,new PanelAnticipacion(null,newPersonaExamen));
 			else if(newPersonaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_VISION))
 				panelExamen = new PanelExamenes(newPersonaExamen,new PanelAgudezaVisual(null,newPersonaExamen));
-			/*else if(newPersonaExamen.getExamen().getExaCodigo().equals(Examen.EXA_CODIGO_AUDICION))
-				panelExamen = new PanelExamenes(newPersonaExamen,new PanelAudio(null,newPersonaExamen));*/			
-			
+
 			panelContenido.add(panelExamen);
 			
 			if(panelExamen.getPanelAnimacion().getComponentCount()>0)
@@ -347,5 +346,28 @@ public class ExamenesUtils {
 		log.debug("fin mostrarPanelExamen");
 	}
 	
+	
+	public static void mostrarPanelExamen(PersonaExamen personaExamen,JPanel panelContenido,PanelExamen panelExamenMultipleChoise,List<PreguntaInterfaz> preguntas) 
+	{
+		log.debug("ini mostrarPanelExamen");
+		try
+		{
+			PersonaExamen newPersonaExamen=new PersonaExamen();
+			
+			newPersonaExamen.setPexaTipoExamen(personaExamen.getPexaTipoExamen());
+			newPersonaExamen.setPersona(personaExamen.getPersona());
+			newPersonaExamen.setExamen(personaExamen.getExamen());	
+			
+			panelContenido.removeAll();
+			
+			PanelExamenes panelExamen=new PanelExamenes(newPersonaExamen,panelExamenMultipleChoise,preguntas);
+			panelContenido.add(panelExamen);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
+		log.debug("fin mostrarPanelExamen");
+	}
 
 }
