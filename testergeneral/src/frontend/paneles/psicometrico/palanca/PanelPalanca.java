@@ -355,13 +355,14 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 				Util.thTrama = thTrama;
 				thTrama.setEjecucion(99999);
 				thTrama.start();
-				thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LAZER);
+				
 			} catch (ExceptionIsNotHadware e) {
 				JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
 						"Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-
+		
+		Util.thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LAZER);
 	}
 
 	/** This method is called from within the constructor to

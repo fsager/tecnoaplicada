@@ -32,12 +32,12 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="txtNroDoc" pref="259" max="32767" attributes="1"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="txtNroDoc" min="-2" pref="159" max="-2" attributes="1"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtTipoExamen" min="-2" pref="108" max="-2" attributes="1"/>
+                      <Component id="txtTipoExamen" pref="180" max="32767" attributes="1"/>
                   </Group>
                   <Component id="txtNombre" alignment="0" pref="448" max="32767" attributes="1"/>
               </Group>
@@ -61,9 +61,9 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="txtTipoDoc" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtTipoExamen" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtNroDoc" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtTipoExamen" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>

@@ -6,11 +6,13 @@
 
 package frontend.paneles.examenes;
 
+import java.util.List;
+
 import javax.swing.JPanel;
 
-import frontend.utils.Util;
-
 import testerGeneral.domain.PersonaExamen;
+import testerGeneral.domain.PreguntaInterfaz;
+import frontend.utils.Util;
 
 /**
  * 
@@ -31,6 +33,40 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 			panelAnimacion.setBtn(panelDetalleExamen.getBtnExamenPrimero());
 
 			panelDetalle.add(panelDetalleExamen);
+			panelDetalle.setViewportView(panelDetalleExamen);
+
+			if (personaExamen.getPersona() == null) {
+				panelExaminado.setVisible(false);
+				lbDemo.setVisible(true);
+			} else {
+				panelPersonaExamen = new PanelPersonaExamen(personaExamen);
+				panelExaminado.add(panelPersonaExamen);
+
+				panelExaminado.setVisible(true);
+				lbDemo.setVisible(false);
+			}
+
+			this.panelAnimacion.add((JPanel) panelAnimacion);
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public PanelExamenes(PersonaExamen personaExamen,
+			PanelExamen panelAnimacion, List<PreguntaInterfaz> preguntas) {
+		try {
+			initComponents();
+
+			this.personaExamen = personaExamen;
+
+			panelDetalleExamen = new PanelDetalleExamen(personaExamen, this,
+					preguntas);
+
+			panelAnimacion.setBtn(panelDetalleExamen.getBtnExamenPrimero());
+
+			panelDetalle.add(panelDetalleExamen);
+			panelDetalle.setViewportView(panelDetalleExamen);
 
 			if (personaExamen.getPersona() == null) {
 				panelExaminado.setVisible(false);
@@ -60,9 +96,9 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 	private void initComponents() {
 
 		panelExaminado = new javax.swing.JPanel();
-		panelDetalle = new javax.swing.JPanel();
 		panelAnimacion = new PanelContenido();
 		lbDemo = new javax.swing.JLabel();
+		panelDetalle = new javax.swing.JScrollPane();
 
 		setForeground(new java.awt.Color(255, 0, 0));
 		setFont(new java.awt.Font("Segoe UI", 3, 36));
@@ -75,18 +111,14 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 				new java.awt.Font("Segoe UI", 3, 12)));
 		panelExaminado.setLayout(new java.awt.GridLayout(1, 0));
 
-		panelDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder(
-				null, "Detalle Examen",
-				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-				javax.swing.border.TitledBorder.DEFAULT_POSITION,
-				new java.awt.Font("Segoe UI", 3, 12)));
-		panelDetalle.setLayout(new java.awt.GridLayout(1, 0));
-
 		panelAnimacion.setLayout(new java.awt.GridLayout(1, 0));
 
 		lbDemo.setFont(new java.awt.Font("Segoe UI", 3, 48));
 		lbDemo.setForeground(new java.awt.Color(255, 0, 0));
 		lbDemo.setText("DEMOSTRACION");
+
+		panelDetalle.setBorder(javax.swing.BorderFactory
+				.createTitledBorder("Detalle Examen"));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
@@ -100,10 +132,10 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 										.addComponent(
 												panelDetalle,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
-												286,
+												281,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 										.addGroup(
 												layout
 														.createParallelGroup(
@@ -111,47 +143,55 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 														.addComponent(
 																panelAnimacion,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																784,
+																562,
 																Short.MAX_VALUE)
 														.addComponent(
 																panelExaminado,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																784,
+																562,
 																Short.MAX_VALUE)
 														.addComponent(
 																lbDemo,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																784,
+																562,
 																Short.MAX_VALUE))
 										.addContainerGap()));
 		layout
 				.setVerticalGroup(layout
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
-						.addComponent(panelDetalle,
-								javax.swing.GroupLayout.DEFAULT_SIZE, 671,
-								Short.MAX_VALUE)
 						.addGroup(
 								layout
 										.createSequentialGroup()
-										.addComponent(
-												panelExaminado,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												92,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(lbDemo)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												panelAnimacion,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												488,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+										.addGroup(
+												layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				panelExaminado,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				92,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				lbDemo)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				panelAnimacion,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				488,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addComponent(
+																panelDetalle,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																658,
+																Short.MAX_VALUE))
+										.addContainerGap()));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
@@ -159,7 +199,7 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 	// Variables declaration - do not modify
 	private javax.swing.JLabel lbDemo;
 	private javax.swing.JPanel panelAnimacion;
-	private javax.swing.JPanel panelDetalle;
+	private javax.swing.JScrollPane panelDetalle;
 	private javax.swing.JPanel panelExaminado;
 	// End of variables declaration//GEN-END:variables
 
@@ -169,13 +209,13 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 	public PanelDetalleExamen getPanelDetalleExamen() {
 		return panelDetalleExamen;
 	}
-	
+
 	@Override
 	public void finalizar() {
 		if (panelAnimacion.getComponent(0) instanceof Finalisable) {
 			Finalisable f = (Finalisable) panelAnimacion.getComponent(0);
 			f.finalizar();
-			if(Util.thTrama!=null)
+			if (Util.thTrama != null)
 				Util.thTrama.desconnect();
 		}
 	}
