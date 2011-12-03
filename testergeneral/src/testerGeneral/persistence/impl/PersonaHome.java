@@ -108,6 +108,7 @@ public class PersonaHome extends DAOObject implements PersonaDao {
 
 			cri.addOrder(Order.asc("perApellido"));
 			cri.addOrder(Order.asc("perNombre"));
+			cri.setMaxResults(100);
 			List results = cri.list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -156,7 +157,6 @@ public class PersonaHome extends DAOObject implements PersonaDao {
 			}
 
 			cri.addOrder(Order.asc("perFechaNacimiento"));
-
 			List results = cri.list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

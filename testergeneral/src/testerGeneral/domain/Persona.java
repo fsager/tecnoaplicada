@@ -36,7 +36,7 @@ public class Persona implements java.io.Serializable {
 	private String perTomoHoyAlcohol;
 	private byte perFoto[] = new byte[1];
 	private byte perFirma[] = new byte[1];
-	private Set personaRestricions = new HashSet(0);
+	//private Set personaRestricions = new HashSet(0);
 
 	// Constructors
 
@@ -59,7 +59,7 @@ public class Persona implements java.io.Serializable {
 			String perNumeroDoc, String perSexo, Date perFechaNacimiento,
 			String perEstadoCivil, String perGrupoSanguineo,
 			String perTelefono, String perCelular, String perCorreo,
-			String perEstudios, String perObservaciones, Set personaRestricions) {
+			String perEstudios, String perObservaciones) {
 		this.perApellido = perApellido;
 		this.perNombre = perNombre;
 		this.perTipoDoc = perTipoDoc;
@@ -73,7 +73,6 @@ public class Persona implements java.io.Serializable {
 		this.perCorreo = perCorreo;
 		this.perEstudios = perEstudios;
 		this.perObservaciones = perObservaciones;
-		this.personaRestricions = personaRestricions;
 	}
 
 	/** full constructor */
@@ -82,7 +81,7 @@ public class Persona implements java.io.Serializable {
 			String perEstadoCivil, String perGrupoSanguineo,
 			String perTelefono, String perCelular, String perCorreo,
 			String perEstudios, String perObservaciones,
-			Set personaRestricions, String perLicenciaDeConducir,
+			String perLicenciaDeConducir,
 			String perTiempoQueLlevaConduciendo,
 			String perTomaMedicamentosRegularmenteSN,
 			String perTomoHoyPsicofarmacosSN, String perTomoHoyAlcohol) {
@@ -99,7 +98,6 @@ public class Persona implements java.io.Serializable {
 		this.perCorreo = perCorreo;
 		this.perEstudios = perEstudios;
 		this.perObservaciones = perObservaciones;
-		this.personaRestricions = personaRestricions;
 		this.perLicenciaDeConducir = perLicenciaDeConducir;
 		this.perTiempoQueLlevaConduciendo = perTiempoQueLlevaConduciendo;
 		this.perTomaMedicamentosRegularmenteSN = perTomaMedicamentosRegularmenteSN;
@@ -221,13 +219,13 @@ public class Persona implements java.io.Serializable {
 		this.perObservaciones = perObservaciones;
 	}
 
-	public Set getPersonaRestricions() {
+	/*public Set getPersonaRestricions() {
 		return this.personaRestricions;
 	}
 
 	public void setPersonaRestricions(Set personaRestricions) {
 		this.personaRestricions = personaRestricions;
-	}
+	}*/
 
 	public String getPerNombreCompleto() {
 		return this.perApellido + ", " + perNombre;

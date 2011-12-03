@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
 
 import testerGeneral.domain.PersonaRestricion;
 import testerGeneral.persistence.DAOObject;
@@ -83,6 +84,11 @@ public class PersonaRestricionHome extends DAOObject implements PersonaRestricio
             Criteria cri = getSession().createCriteria(PersonaRestricion.class);
             
             cri.add(Example.create(p_example).enableLike().ignoreCase());
+            if(p_example.getPersona()!=null)
+            {
+            	cri.createCriteria("persona").add(Restrictions.idEq(p_example.getPersona().getPerId()));
+            }
+            
             List results = cri.list();
             log.debug("find by example successful, result size: " + results.size());
             return results;

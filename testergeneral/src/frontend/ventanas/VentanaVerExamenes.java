@@ -257,6 +257,7 @@ public class VentanaVerExamenes extends JInternalFrameTesterGral {
 		{
 			PersonaRestricionDefinition personaRestriccionService=(PersonaRestricionDefinition)ContextManager.getBizObject("personaRestricionService");
 			
+			//long timeIni=System.currentTimeMillis();
 			HashMap parameterMap = new HashMap();
 			PersonaExamen perExa = getPersonaExamenFromTable();
 			parameterMap.put("p_pexa_id", perExa.getPexaId());
@@ -271,6 +272,8 @@ public class VentanaVerExamenes extends JInternalFrameTesterGral {
 			Process p = Runtime.getRuntime().exec(
 					"rundll32 url.dll,FileProtocolHandler "
 							+ file);
+			
+			//System.out.println("Tiempo 5: "+(System.currentTimeMillis()-timeIni));
 		
 		}
 		catch (Exception e) {
