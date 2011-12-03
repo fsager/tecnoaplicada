@@ -17,12 +17,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
@@ -2599,29 +2601,35 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 				}
 			}
 
-			Dominio dom = (Dominio) cbBusquedaGrupoSanguineo.getSelectedItem();
-			per.setPerGrupoSanguineo(dom.getDomCodigo());
-
-			List<Persona> personas = personaService.getAll(per);
-
-			menu.getBtnRealizarExamenPersona().setEnabled(false);
-			menu.getBtnVerExamenPersona().setEnabled(false);
-
-			btnGuardar.setEnabled(false);
-			btnCancelar.setEnabled(false);
-
-			menu.getBtnEliminarPersona().setEnabled(false);
-			menu.getBtnModificarPersona().setEnabled(false);
-
-			if (personas.size() <= 0) {
-				menu.getBtnNuevaPersona().setEnabled(
-						true && usr.hasAmPersonaPermition());
-			} else {
-				menu.getBtnNuevaPersona().setEnabled(false);
-			}
-
 			if (!error)
+			{
+				
+				Dominio dom = (Dominio) cbBusquedaGrupoSanguineo.getSelectedItem();
+				per.setPerGrupoSanguineo(dom.getDomCodigo());
+	
+				List<Persona> personas = personaService.getAll(per);
+	
+				menu.getBtnRealizarExamenPersona().setEnabled(false);
+				menu.getBtnVerExamenPersona().setEnabled(false);
+	
+				btnGuardar.setEnabled(false);
+				btnCancelar.setEnabled(false);
+	
+				menu.getBtnEliminarPersona().setEnabled(false);
+				menu.getBtnModificarPersona().setEnabled(false);
+	
+				if (personas.size() <= 0) {
+					menu.getBtnNuevaPersona().setEnabled(
+							true && usr.hasAmPersonaPermition());
+				} else {
+					menu.getBtnNuevaPersona().setEnabled(false);
+				}
+				
 				setTableModel(personas);
+			}
+			/*else			
+				setTableModel(new ArrayList());*/
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -2763,8 +2771,10 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void mostrarPersona(Persona persona) {
 		this.persona = persona;
+		
 		inicializar();
 
 		txtApellido.setText(persona.getPerApellido());

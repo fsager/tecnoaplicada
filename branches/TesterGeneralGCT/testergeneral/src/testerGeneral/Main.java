@@ -2,12 +2,17 @@ package testerGeneral;
 
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import net.sf.jasperreports.engine.JasperRunManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,15 +24,19 @@ import testerGeneral.business.ContextManager;
 import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Auditoria;
 import testerGeneral.domain.Constantes;
+import testerGeneral.domain.PersonaExamen;
 import testerGeneral.exceptions.MyExceptionHandler;
 import testerGeneral.persistence.backup.GestorDBBackup;
 import testerGeneral.service.AuditoriaDefinition;
+import testerGeneral.service.PersonaExamenDefinition;
+import testerGeneral.service.PersonaRestricionDefinition;
 import testerGeneral.threads.ThreadTrama;
 import ar.com.tecnologiaaplicada.domain.ExamenDetalle;
 import ar.com.tecnologiaaplicada.service.ExamenDetalleDefinition;
 import examenes.psicometrico.domain.TramaPsicologico;
 import frontend.utils.Util;
 import frontend.ventanas.FrameContenedor;
+import frontend.ventanas.VentanaReportes;
 import frontend.ventanas.VtnConfigurarDb;
 
 public class Main {
@@ -40,6 +49,79 @@ public class Main {
 		init();
 		//probarLuces();
 		//potenciometros();
+		//imprimirResultado();
+	}
+	
+	public static void imprimirResultado() throws Exception{
+		JFrame frame=new JFrame();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setLayout(null);
+		
+		JPanel panel=new JPanel();
+		panel.setBounds(0,0,800,600);
+		frame.add(panel);
+		
+		frame.setVisible(true);
+		
+		
+		PersonaExamenDefinition personaExamenService=(PersonaExamenDefinition)ContextManager.getBizObject("personaExamenService");
+		PersonaRestricionDefinition personaRestriccionService=(PersonaRestricionDefinition)ContextManager.getBizObject("personaRestricionService");
+		
+		List<PersonaExamen> personaExamenes=personaExamenService.getAll(new PersonaExamen());
+		int i=0;
+		for(PersonaExamen personaExamen:personaExamenes)
+		{
+			i++;
+			String otrasAflicciones=personaRestriccionService.getOtrasAflicciones(personaExamen.getPersona());
+			
+			System.out.println("personaExamen.getPexaId(): "+personaExamen.getPexaId()+", otrasAflicciones: "+otrasAflicciones+".");
+			HashMap parameterMap = new HashMap();
+			parameterMap.put("p_pexa_id", personaExamen.getPexaId());
+			
+			parameterMap.put("otrasAflicciones",otrasAflicciones);
+			
+			parameterMap.put("SUBREPORT_DIR",new File("./reportes").getCanonicalPath()+File.separator);	
+			
+			/*if(personaExamen.getPexaId().equals(7149) || personaExamen.getPexaId()==7149)
+			{*/
+				
+				final byte[] buf = JasperRunManager.runReportToPdf(Constantes.RPT_PERSONA_EXAMEN, parameterMap, ContextManager.getCurrentConnection());
+				
+				String file=System.getProperty("java.io.tmpdir")+System.currentTimeMillis()+".pdf";
+				testerGeneral.persistence.impl.Util.toFile(file,buf);
+				
+				Process p = Runtime.getRuntime().exec(
+						"rundll32 url.dll,FileProtocolHandler "
+								+ file);
+
+			//}
+			
+			if(i==2000)
+				break;			
+		}
+		
+		/*PersonaExamen personaExamen=personaExamenService.get(new Long(7149));//7150  7149
+		String otrasAflicciones=personaRestriccionService.getOtrasAflicciones(personaExamen.getPersona());
+		
+		System.out.println("personaExamen.getPexaId(): "+personaExamen.getPexaId()+", otrasAflicciones: "+otrasAflicciones+".");
+		HashMap parameterMap = new HashMap();
+		parameterMap.put("p_pexa_id", personaExamen.getPexaId());
+		
+		parameterMap.put("otrasAflicciones",otrasAflicciones);
+		
+		parameterMap.put("SUBREPORT_DIR",new File("./reportes").getCanonicalPath()+File.separator);	
+		
+			
+			final byte[] buf = JasperRunManager.runReportToPdf(Constantes.RPT_PERSONA_EXAMEN, parameterMap, ContextManager.getCurrentConnection());
+			
+			String file=System.getProperty("java.io.tmpdir")+System.currentTimeMillis()+".pdf";
+			testerGeneral.persistence.impl.Util.toFile(file,buf);
+			
+			Process p = Runtime.getRuntime().exec(
+					"rundll32 url.dll,FileProtocolHandler "
+							+ file);*/		
+		
+
 	}
 	
 	public static void getLicenciInformation() throws Exception
