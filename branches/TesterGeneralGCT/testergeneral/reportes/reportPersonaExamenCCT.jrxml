@@ -3,7 +3,7 @@
 	<property name="template.type" value="columnar"/>
 	<property name="ireport.zoom" value="1.2396694214876036"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="28"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -14,17 +14,6 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<subDataset name="restriccionesVisuales">
-		<parameter name="per_id" class="java.math.BigDecimal"/>
-		<queryString>
-			<![CDATA[select * from app.persona p, app.persona_restricion pr,app.dominio d
-where p.per_id =pr.per_id
-  and d.dom_id=pr.dom_id
-  and d.dom_clave = 'Restricción Visual'
-  and p.per_id = $P{per_id}]]>
-		</queryString>
-		<field name="DOM_VALOR_MOSTRAR" class="java.lang.String"/>
-	</subDataset>
 	<parameter name="p_pexa_id" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[10]]></defaultValueExpression>
 	</parameter>
@@ -33,7 +22,7 @@ where p.per_id =pr.per_id
 	</parameter>
 	<parameter name="otrasAflicciones" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select per.*,perexa.*,exa.*,detalleRes.*,detalle.*,
+		<![CDATA[select per.PER_ID,per.PER_NUMERO_DOC,per.PER_APELLIDO,per.PER_NOMBRE,perexa.PEXA_FECHA,perexa.PEXA_OBS,
 		(select distinct 'SI' from app.persona p, app.persona_restricion pr,app.dominio d
 		where p.per_id =pr.per_id
 		  and d.dom_id=pr.dom_id
@@ -93,56 +82,11 @@ where perexa.per_id = per.per_id
 order by detalle.exad_detalle]]>
 	</queryString>
 	<field name="PER_ID" class="java.lang.Long"/>
+	<field name="PER_NUMERO_DOC" class="java.lang.String"/>
 	<field name="PER_APELLIDO" class="java.lang.String"/>
 	<field name="PER_NOMBRE" class="java.lang.String"/>
-	<field name="PER_TIPO_DOC" class="java.lang.String"/>
-	<field name="PER_NUMERO_DOC" class="java.lang.String"/>
-	<field name="PER_SEXO" class="java.lang.String"/>
-	<field name="PER_FECHA_NACIMIENTO" class="java.sql.Timestamp"/>
-	<field name="PER_ESTADO_CIVIL" class="java.lang.String"/>
-	<field name="PER_GRUPO_SANGUINEO" class="java.lang.String"/>
-	<field name="PER_TELEFONO" class="java.lang.String"/>
-	<field name="PER_CELULAR" class="java.lang.String"/>
-	<field name="PER_CORREO" class="java.lang.String"/>
-	<field name="PER_ESTUDIOS" class="java.lang.String"/>
-	<field name="PER_DOMICILIO" class="java.lang.String"/>
-	<field name="PER_OBSERVACIONES" class="java.lang.String"/>
-	<field name="PER_FOTO" class="java.sql.Blob"/>
-	<field name="PER_FIRMA" class="java.sql.Blob"/>
-	<field name="PER_LOCALIDAD" class="java.lang.String"/>
-	<field name="PER_EDUCACION" class="java.lang.String"/>
-	<field name="PER_LICENCIA_DE_CONDUCIR" class="java.lang.String"/>
-	<field name="PER_TIEMPO_QUE_LLEVA_CONDUCIENDO" class="java.lang.String"/>
-	<field name="PER_TOMA_MEDICAMENTOS_REGULARMENTE_SN" class="java.lang.String"/>
-	<field name="PER_TOMO_HOY_PSICOFARMACOS" class="java.lang.String"/>
-	<field name="PER_TOMO_HOY_ALCOHOL" class="java.lang.String"/>
-	<field name="PEXA_ID" class="java.lang.Long"/>
-	<field name="EXA_ID" class="java.lang.Long"/>
 	<field name="PEXA_FECHA" class="java.sql.Timestamp"/>
-	<field name="PEXA_RESULTADO" class="java.lang.String"/>
-	<field name="PEXA_ESTADO" class="java.lang.String"/>
-	<field name="PEXA_NOTA" class="java.math.BigDecimal"/>
 	<field name="PEXA_OBS" class="java.lang.String"/>
-	<field name="PEXA_ADJ" class="java.sql.Blob"/>
-	<field name="PEXA_RESULTADO_MEDICO" class="java.lang.String"/>
-	<field name="PEXA_NOMBRE_ADJUNTO" class="java.lang.String"/>
-	<field name="PEXA_TIPO_EXAMEN" class="java.lang.String"/>
-	<field name="EXA_CODIGO" class="java.lang.String"/>
-	<field name="EXA_NOMBRE" class="java.lang.String"/>
-	<field name="EXA_ORDEN" class="java.lang.Long"/>
-	<field name="RDE_ID" class="java.lang.Long"/>
-	<field name="EXAD_ID" class="java.lang.Long"/>
-	<field name="RDE_RESULTADO" class="java.lang.String"/>
-	<field name="RDE_DETALLE_RESULTADO" class="java.lang.String"/>
-	<field name="RDE_PARAMETROS_CORRECCION" class="java.lang.String"/>
-	<field name="RDE_NOTA" class="java.math.BigDecimal"/>
-	<field name="RDE_NOTA2" class="java.math.BigDecimal"/>
-	<field name="RDE_NOTA3" class="java.math.BigDecimal"/>
-	<field name="RDE_NOTA4" class="java.math.BigDecimal"/>
-	<field name="EXAD_DETALLE" class="java.lang.String"/>
-	<field name="EXAD_CODIGO" class="java.lang.String"/>
-	<field name="EXAD_ORDEN" class="java.lang.Long"/>
-	<field name="EXAD_PARAMETROS_CORRECCION" class="java.lang.String"/>
 	<field name="UTILIZA_CORRECION" class="java.lang.String"/>
 	<field name="VISION_CREPUSCULAR" class="java.lang.String"/>
 	<field name="DESLUMBRAMIENTO" class="java.lang.String"/>
