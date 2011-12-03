@@ -35,8 +35,9 @@ public class VentanaReportes extends JInternalFrameTesterGral {
 		try
 		{
 			final JInternalFrameTesterGral internalframe = new JInternalFrameTesterGral("Reporte", false, true, false, false);
-			initReport(parameterMap,reporte,internalframe);			
-			internalframe.doModal(parent.getRootPane());			
+			
+			initReport(parameterMap,reporte,internalframe);
+			internalframe.doModal(parent.getRootPane());
 			internalframe.setVisible(true);
 		}
 		catch (Exception e) {
@@ -102,7 +103,8 @@ public class VentanaReportes extends JInternalFrameTesterGral {
 		{
 			String ubicacion=new File(reporte).getAbsolutePath();
 			
-			JasperPrint jasperPrint = JasperFillManager.fillReport(ubicacion, parameterMap,ContextManager.getCurrentConnection()); 
+			JasperPrint jasperPrint = JasperFillManager.fillReport(ubicacion, parameterMap,ContextManager.getCurrentConnection());
+			
 			JRViewer viewer = new JRViewer(jasperPrint);
 			
 			
@@ -113,6 +115,8 @@ public class VentanaReportes extends JInternalFrameTesterGral {
 			
 			
 			agregarEscucha(internalframe,viewer);
+			
+			
 			
 
 		}
