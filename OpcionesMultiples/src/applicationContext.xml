@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="dataSource" class="opcionesmultiples.db.ConexionManagerOpcionesMultiples"
+		scope="singleton">
+		<property name="suppressClose" value="true" />
+	</bean>
+
+	<bean id="context" class="testerGeneral.business.ContextManager"
+		scope="singleton" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml">
+		</property>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+
+	<bean id="baseTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_SUPPORTS, readOnly
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+
+    <!-- Add SECURITY DAOs here -->
+    <bean id="detalleExamenMultipleChoiceDao" class="opcionesmultiples.persistence.impl.DetalleExamenMultipleChoiceHome">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="preguntaDao" class="opcionesmultiples.persistence.impl.PreguntaHome">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="respuestaDao" class="opcionesmultiples.persistence.impl.RespuestaHome">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- Add SECURITY Business here -->
+    <bean id="detalleExamenMultipleChoiceBusiness" class="opcionesmultiples.business.DetalleExamenMultipleChoiceBiz">
+        <property name="dao" ref="detalleExamenMultipleChoiceDao"/>
+    </bean>
+    <bean id="detalleExamenMultipleChoiceBiz" parent="baseTransactionProxy">
+         <property name="target">
+             <ref bean="detalleExamenMultipleChoiceBusiness"/> 
+        </property> 
+    </bean>
+    <bean id="preguntaBusiness" class="opcionesmultiples.business.PreguntaBiz">
+        <property name="dao" ref="preguntaDao"/>
+    </bean>
+    <bean id="preguntaBiz" parent="baseTransactionProxy">
+         <property name="target">
+             <ref bean="preguntaBusiness"/> 
+        </property> 
+    </bean>
+    <bean id="respuestaBusiness" class="opcionesmultiples.business.RespuestaBiz">
+        <property name="dao" ref="respuestaDao"/>
+    </bean>
+    <bean id="respuestaBiz" parent="baseTransactionProxy">
+         <property name="target">
+             <ref bean="respuestaBusiness"/> 
+        </property> 
+    </bean>
+
+    <!-- Add SECURITY Service here -->
+    <bean id="detalleExamenMultipleChoiceService" class="opcionesmultiples.service.impl.DetalleExamenMultipleChoiceService" scope="singleton" >
+        <property name="businessObject" ref="detalleExamenMultipleChoiceBiz"/>
+    </bean>
+    <bean id="preguntaService" class="opcionesmultiples.service.impl.PreguntaService" scope="singleton" >
+        <property name="businessObject" ref="preguntaBiz"/>
+    </bean>
+    <bean id="respuestaService" class="opcionesmultiples.service.impl.RespuestaService" scope="singleton" >
+        <property name="businessObject" ref="respuestaBiz"/>
+    </bean>
+
+
+
+	<!-- Add SECURITY DAOs here -->
+	<bean id="usuarioDao" class="testerGeneral.persistence.impl.UsuarioHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Add SECURITY Business here -->
+	<bean id="usuarioBusiness" class="testerGeneral.business.UsuarioBiz">
+		<property name="dao" ref="usuarioDao" />
+	</bean>
+	<bean id="usuarioBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="usuarioBusiness" />
+		</property>
+	</bean>
+
+	<!-- Add SECURITY Service here -->
+	<bean id="usuarioService" class="testerGeneral.service.impl.UsuarioService"
+		scope="singleton">
+		<property name="businessObject" ref="usuarioBiz" />
+	</bean>
+
+	<!-- Add SECURITY DAOs here -->
+	<bean id="auditoriaDao" class="testerGeneral.persistence.impl.AuditoriaHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Add SECURITY Business here -->
+	<bean id="auditoriaBusiness" class="testerGeneral.business.AuditoriaBiz">
+		<property name="dao" ref="auditoriaDao" />
+	</bean>
+	<bean id="auditoriaBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="auditoriaBusiness" />
+		</property>
+	</bean>
+
+	<!-- Add SECURITY Service here -->
+	<bean id="auditoriaService" class="testerGeneral.service.impl.AuditoriaService"
+		scope="singleton">
+		<property name="businessObject" ref="auditoriaBiz" />
+	</bean>
+	<!-- Add SECURITY DAOs here -->
+	<bean id="permisoDao" class="testerGeneral.persistence.impl.PermisoHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="usuarioPermisoDao" class="testerGeneral.persistence.impl.UsuarioPermisoHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Add SECURITY Business here -->
+	<bean id="permisoBusiness" class="testerGeneral.business.PermisoBiz">
+		<property name="dao" ref="permisoDao" />
+	</bean>
+	<bean id="permisoBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="permisoBusiness" />
+		</property>
+	</bean>
+	<bean id="usuarioPermisoBusiness" class="testerGeneral.business.UsuarioPermisoBiz">
+		<property name="dao" ref="usuarioPermisoDao" />
+	</bean>
+	<bean id="usuarioPermisoBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="usuarioPermisoBusiness" />
+		</property>
+	</bean>
+
+	<!-- Add SECURITY Service here -->
+	<bean id="permisoService" class="testerGeneral.service.impl.PermisoService"
+		scope="singleton">
+		<property name="businessObject" ref="permisoBiz" />
+	</bean>
+	<bean id="usuarioPermisoService" class="testerGeneral.service.impl.UsuarioPermisoService"
+		scope="singleton">
+		<property name="businessObject" ref="usuarioPermisoBiz" />
+	</bean>
+	<!-- Add SECURITY DAOs here -->
+	<bean id="examenDao" class="testerGeneral.persistence.impl.ExamenHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="usuarioExamenDao" class="testerGeneral.persistence.impl.UsuarioExamenHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Add SECURITY Business here -->
+	<bean id="examenBusiness" class="testerGeneral.business.ExamenBiz">
+		<property name="dao" ref="examenDao" />
+	</bean>
+	<bean id="examenBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="examenBusiness" />
+		</property>
+	</bean>
+	<bean id="usuarioExamenBusiness" class="testerGeneral.business.UsuarioExamenBiz">
+		<property name="dao" ref="usuarioExamenDao" />
+	</bean>
+	<bean id="usuarioExamenBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="usuarioExamenBusiness" />
+		</property>
+	</bean>
+
+	<!-- Add SECURITY Service here -->
+	<bean id="examenService" class="testerGeneral.service.impl.ExamenService"
+		scope="singleton">
+		<property name="businessObject" ref="examenBiz" />
+	</bean>
+	<bean id="usuarioExamenService" class="testerGeneral.service.impl.UsuarioExamenService"
+		scope="singleton">
+		<property name="businessObject" ref="usuarioExamenBiz" />
+	</bean>
+	<!-- Add SECURITY DAOs here -->
+	<bean id="dominioDao" class="testerGeneral.persistence.impl.DominioHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="personaRestricionDao" class="testerGeneral.persistence.impl.PersonaRestricionHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="propiedadDao" class="testerGeneral.persistence.impl.PropiedadHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Add SECURITY Business here -->
+	<bean id="dominioBusiness" class="testerGeneral.business.DominioBiz">
+		<property name="dao" ref="dominioDao" />
+	</bean>
+	<bean id="dominioBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="dominioBusiness" />
+		</property>
+	</bean>
+
+	<bean id="personaRestricionBusiness" class="testerGeneral.business.PersonaRestricionBiz">
+		<property name="dao" ref="personaRestricionDao" />
+	</bean>
+	<bean id="personaRestricionBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="personaRestricionBusiness" />
+		</property>
+	</bean>
+	<bean id="propiedadBusiness" class="testerGeneral.business.PropiedadBiz">
+		<property name="dao" ref="propiedadDao" />
+	</bean>
+	<bean id="propiedadBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="propiedadBusiness" />
+		</property>
+	</bean>
+
+	<!-- Add SECURITY Service here -->
+	<bean id="dominioService" class="testerGeneral.service.impl.DominioService"
+		scope="singleton">
+		<property name="businessObject" ref="dominioBiz" />
+	</bean>
+
+	<bean id="personaDao" class="testerGeneral.persistence.impl.PersonaHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="personaBusiness" class="testerGeneral.business.PersonaBiz">
+		<property name="dao" ref="personaDao" />
+	</bean>
+	<bean id="personaBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="personaBusiness" />
+		</property>
+	</bean>
+	<bean id="personaService" class="testerGeneral.service.impl.PersonaService"
+		scope="singleton">
+		<property name="businessObject" ref="personaBiz" />
+	</bean>
+	<bean id="personaRestricionService" class="testerGeneral.service.impl.PersonaRestricionService"
+		scope="singleton">
+		<property name="businessObject" ref="personaRestricionBiz" />
+	</bean>
+	<bean id="propiedadService" class="testerGeneral.service.impl.PropiedadService"
+		scope="singleton">
+		<property name="businessObject" ref="propiedadBiz" />
+	</bean>
+
+	<!-- Add SECURITY DAOs here -->
+	<bean id="examenDetalleDao" class="testerGeneral.persistence.impl.ExamenDetalleHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Add SECURITY Business here -->
+	<bean id="examenDetalleBusiness" class="testerGeneral.business.ExamenDetalleBiz">
+		<property name="dao" ref="examenDetalleDao" />
+	</bean>
+	<bean id="examenDetalleBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="examenDetalleBusiness" />
+		</property>
+	</bean>
+
+	<!-- Add SECURITY Service here -->
+	<bean id="examenDetalleService" class="testerGeneral.service.impl.ExamenDetalleService">
+		<property name="businessObject" ref="examenDetalleBiz" />
+	</bean>
+
+
+	<!-- Add SECURITY DAOs here -->
+	<bean id="personaExamenDao" class="testerGeneral.persistence.impl.PersonaExamenHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="resultadoDetalleExamenDao"
+		class="testerGeneral.persistence.impl.ResultadoDetalleExamenHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="resultadoDao" class="testerGeneral.persistence.impl.ResultadoHome">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Add SECURITY Business here -->
+	<bean id="personaExamenBusiness" class="testerGeneral.business.PersonaExamenBiz">
+		<property name="dao" ref="personaExamenDao" />
+	</bean>
+	<bean id="personaExamenBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="personaExamenBusiness" />
+		</property>
+	</bean>
+	<bean id="resultadoDetalleExamenBusiness" class="testerGeneral.business.ResultadoDetalleExamenBiz">
+		<property name="dao" ref="resultadoDetalleExamenDao" />
+	</bean>
+	<bean id="resultadoDetalleExamenBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="resultadoDetalleExamenBusiness" />
+		</property>
+	</bean>
+	<bean id="resultadoBusiness" class="testerGeneral.business.ResultadoBiz">
+		<property name="dao" ref="resultadoDao" />
+	</bean>
+	<bean id="resultadoBiz" parent="baseTransactionProxy">
+		<property name="target">
+			<ref bean="resultadoBusiness" />
+		</property>
+	</bean>
+
+	<!-- Add SECURITY Service here -->
+	<bean id="personaExamenService" class="testerGeneral.service.impl.PersonaExamenService"
+		scope="singleton">
+		<property name="businessObject" ref="personaExamenBiz" />
+	</bean>
+	<bean id="resultadoDetalleExamenService"
+		class="testerGeneral.service.impl.ResultadoDetalleExamenService"
+		scope="singleton">
+		<property name="businessObject" ref="resultadoDetalleExamenBiz" />
+	</bean>
+	<bean id="resultadoService" class="testerGeneral.service.impl.ResultadoService"
+		scope="singleton">
+		<property name="businessObject" ref="resultadoBiz" />
+	</bean>
+
+	<!-- bean id="licenseWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean" lazy-init="true">
+		<property name="serviceInterface" value="ar.com.tecnologiaaplicada.service.impl.LicenseServiceEndpointPort"/>		
+		<property name="wsdlDocumentUrl" value="http://localhost:8080/tecnologiaAplicada/ws/LicenseService?wsdl" />
+		<property name="namespaceUri" value="http://impl.service.tecnologiaaplicada.com.ar/" />
+		<property name="serviceName" value="LicenseService" />
+		<property name="portName" value="LicenseServiceEndpointImpPort"/>
+	</bean>-->	
+	
+	<bean id="licenseRemoteService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean" lazy-init="true">
+		<!--property name="serviceUrl" value="http://localhost:8080/tecnologiaAplicada/remoting/LicenseService"/-->
+		<property name="serviceUrl" value="http://app.jttecnologiaaplicada.com/tecnologiaAplicada/remoting/LicenseService"/>
+		<property name="serviceInterface" value="ar.com.tecnologiaaplicada.service.ExamenDetalleDefinition"/>
+	</bean>
+
+</beans>
