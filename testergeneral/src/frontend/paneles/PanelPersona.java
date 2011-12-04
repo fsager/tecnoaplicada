@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -32,7 +31,6 @@ import javax.swing.table.TableColumn;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import tecnologia.aplicada.licence.LicenceManager;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
@@ -41,6 +39,7 @@ import testerGeneral.domain.PersonaRestricion;
 import testerGeneral.domain.Usuario;
 import testerGeneral.focus.MyOwnFocusTraversalPolicy;
 import testerGeneral.service.PersonaDefinition;
+import testerGeneral.service.PersonaRestricionDefinition;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -71,6 +70,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private static final Log log = LogFactory.getLog(PanelPersona.class);
 	private PersonaDefinition personaService = (PersonaDefinition) ContextManager
 			.getBizObject("personaService");
+	private PersonaRestricionDefinition personaRestricionService = (PersonaRestricionDefinition) ContextManager.getBizObject("personaRestricionService");
 
 	/** Creates new form PanelPersona */
 	public PanelPersona(PanelMenuPrincipal menu) {
@@ -2515,7 +2515,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 				persona.setPerFirma(bytes);
 			}
 
-			Set personaRestricciones = persona.getPersonaRestricions();
+			/*Set personaRestricciones = persona.getPersonaRestricions();
 			personaRestricciones.clear();
 			for (int i = 0; i < panelObsFisica.getSeleccionados().size(); i++) {
 				personaRestricciones.add(panelObsFisica.getSeleccionados().get(
@@ -2528,7 +2528,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			for (int i = 0; i < panelObsAuditiva.getSeleccionados().size(); i++) {
 				personaRestricciones.add(panelObsAuditiva.getSeleccionados()
 						.get(i));
-			}
+			}*/
 
 			try {
 
@@ -2541,6 +2541,32 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 									+ " - " + persona.getPerNombreCompleto());
 				} else {
 					personaService.insert(persona);
+				}
+				
+				List<PersonaRestricion> restricciones=(List)Util.getPersonaRestriciones(persona);
+				
+				//Borro todas las restricciones y las inserto nuevamente con lo que seleccionó
+				for(PersonaRestricion personaRestricion:restricciones)
+				{
+					PersonaRestricionDefinition personaRestricionService = (PersonaRestricionDefinition) ContextManager.getBizObject("personaRestricionService");
+					personaRestricionService.delete(personaRestricion);
+				}
+				
+				for (int i = 0; i < panelObsOcular.getSeleccionados().size(); i++) {
+					PersonaRestricion personaRestricionSel=(PersonaRestricion)panelObsOcular.getSeleccionados().get(i);
+					personaRestricionService.insert(personaRestricionSel);
+					
+				}
+				
+				
+				for (int i = 0; i < panelObsFisica.getSeleccionados().size(); i++) {
+					PersonaRestricion personaRestricionSel=(PersonaRestricion)panelObsFisica.getSeleccionados().get(i);
+					personaRestricionService.insert(personaRestricionSel);
+				}
+
+				for (int i = 0; i < panelObsAuditiva.getSeleccionados().size(); i++) {
+					PersonaRestricion personaRestricionSel=(PersonaRestricion)panelObsAuditiva.getSeleccionados().get(i);
+					personaRestricionService.insert(personaRestricionSel);
 				}
 
 				// afterButton();
@@ -2722,28 +2748,32 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 				}
 			}
 
-			Dominio dom = (Dominio) cbBusquedaGrupoSanguineo.getSelectedItem();
-			per.setPerGrupoSanguineo(dom.getDomCodigo());
-
-			List<Persona> personas = personaService.getAll(per);
-
-			menu.getBtnRealizarExamenPersona().setEnabled(false);
-			menu.getBtnVerExamenPersona().setEnabled(false);
-
-			btnGuardar.setEnabled(false);
-			btnCancelar.setEnabled(false);
-
-			menu.getBtnEliminarPersona().setEnabled(false);
-			menu.getBtnModificarPersona().setEnabled(false);
-
-			if (personas.size() <= 0) {
-				menu.getBtnNuevaPersona().setEnabled(true && usr.hasAmPersonaPermition());
-			} else {
-				menu.getBtnNuevaPersona().setEnabled(false);
-			}
-
 			if (!error)
-				setTableModel(personas);
+			{
+				Dominio dom = (Dominio) cbBusquedaGrupoSanguineo.getSelectedItem();
+				per.setPerGrupoSanguineo(dom.getDomCodigo());
+	
+				List<Persona> personas = personaService.getAll(per);
+	
+				menu.getBtnRealizarExamenPersona().setEnabled(false);
+				menu.getBtnVerExamenPersona().setEnabled(false);
+	
+				btnGuardar.setEnabled(false);
+				btnCancelar.setEnabled(false);
+	
+				menu.getBtnEliminarPersona().setEnabled(false);
+				menu.getBtnModificarPersona().setEnabled(false);
+	
+				if (personas.size() <= 0) {
+					menu.getBtnNuevaPersona().setEnabled(true && usr.hasAmPersonaPermition());
+				} else {
+					menu.getBtnNuevaPersona().setEnabled(false);
+				}
+	
+				
+					setTableModel(personas);
+			}
+			
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -2972,9 +3002,11 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		}
 		cargarPaneles();
 
-		panelObsFisica.setSeleccionados(persona.getPersonaRestricions());
-		panelObsOcular.setSeleccionados(persona.getPersonaRestricions());
-		panelObsAuditiva.setSeleccionados(persona.getPersonaRestricions());
+		List personaRestriciones=(List)Util.getPersonaRestriciones(persona);
+		
+		panelObsFisica.setSeleccionados(personaRestriciones);
+		panelObsOcular.setSeleccionados(personaRestriciones);
+		panelObsAuditiva.setSeleccionados(personaRestriciones);
 
 		calcularEdad();
 

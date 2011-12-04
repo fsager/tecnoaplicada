@@ -3,6 +3,8 @@ package testerGeneral.business;
 import java.util.List;
 import java.util.Set;
 
+import frontend.utils.Util;
+
 import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaRestricion;
 import testerGeneral.persistence.PersonaRestricionDao;
@@ -38,7 +40,7 @@ public class PersonaRestricionBiz implements PersonaRestricionDefinition {
 
 	public String getOtrasAflicciones(Persona p_domain) throws Exception {
 		String otrasAflicciones=new String();
-		Set<PersonaRestricion> restricciones=p_domain.getPersonaRestricions();
+		List<PersonaRestricion> restricciones=(List)Util.getPersonaRestriciones(p_domain);
 		
 		String[] restriccionesADescartar={"Usa Lentes de Contacto","Lentes de Contacto","Usa Anteojos","Anteojos"};
 
