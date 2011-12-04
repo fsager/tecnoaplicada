@@ -10,10 +10,10 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JCheckBox;
@@ -224,7 +224,7 @@ public class PanelScroll extends javax.swing.JPanel {
 		return datosSeleccionados;
 	}
 
-	public void setSeleccionados(Set hashset) {
+	public void setSeleccionados(Collection hashset) {
 
 		for (int i = 0; i < jlist.getModel().getSize(); i++) {
 			Object object = (Object) jlist.getModel().getElementAt(i);

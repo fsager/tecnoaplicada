@@ -79,11 +79,11 @@
         <property name="perFirma" type="byte[]">
             <column name="PER_FIRMA" />
         </property>
-        <set cascade="all-delete-orphan" name="personaRestricions" inverse="true" lazy="false">
+        <!--  set cascade="all-delete-orphan" name="personaRestricions" inverse="true" lazy="false">
             <key>
                 <column name="PER_ID" not-null="true" />
             </key>
             <one-to-many class="testerGeneral.domain.PersonaRestricion" />
-        </set>
+        </set-->
     </class>
 </hibernate-mapping>

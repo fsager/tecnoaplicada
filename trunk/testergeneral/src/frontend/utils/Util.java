@@ -20,6 +20,7 @@ import java.net.InetAddress;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -44,8 +45,11 @@ import sun.audio.AudioStream;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
+import testerGeneral.domain.Persona;
+import testerGeneral.domain.PersonaRestricion;
 import testerGeneral.domain.UsuarioCommon;
 import testerGeneral.service.DominioDefinition;
+import testerGeneral.service.PersonaRestricionDefinition;
 import testerGeneral.threads.ThreadTrama;
 import actualizaciones.GestorActualizacionesUtil;
 import frontend.components.GlassPanel;
@@ -693,5 +697,23 @@ public class Util {
 		}*/
 	}
 	
+	public static Collection getPersonaRestriciones(Persona persona)
+	{
+		try
+		{
+			PersonaRestricionDefinition personaRestricionService = (PersonaRestricionDefinition) ContextManager.getBizObject("personaRestricionService");
+			
+			PersonaRestricion personaRestricion=new PersonaRestricion();
+			personaRestricion.setPersona(persona);
+			List personaRestriciones=personaRestricionService.getAll(personaRestricion);
+			
+			return personaRestriciones;
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+		
+	}
 
 }
