@@ -1,0 +1,1 @@
+-splash:images/images/splash.jpg  -Xms32m -Xmx64m -Djava.library.path=C:\programacion\Workspaces3\TesterGeneral\lib -Dcom.sun.management.jmxremote -Duser.timezone=America/Cordoba

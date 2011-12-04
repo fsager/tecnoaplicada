@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/derby.jar"/>
+	<classpathentry kind="lib" path="lib/derbyclient.jar"/>
+	<classpathentry kind="lib" path="lib/derbynet.jar"/>
+	<classpathentry kind="lib" path="lib/derbyrun.jar"/>
+	<classpathentry kind="lib" path="lib/derbytools.jar"/>
+	<classpathentry kind="lib" path="lib/GestorActualizacionesLib.jar"/>
+	<classpathentry kind="lib" path="lib/jpen-2-2-64.dll"/>
+	<classpathentry kind="lib" path="lib/jpen-2-2.dll"/>
+	<classpathentry kind="lib" path="lib/jpen-2.jar"/>
+	<classpathentry kind="lib" path="lib/mediaplayer.jar"/>
+	<classpathentry kind="lib" path="lib/multiplayer.jar"/>
+	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
+	<classpathentry kind="lib" path="lib/rxtxParallel.dll"/>
+	<classpathentry kind="lib" path="lib/rxtxSerial.dll"/>
+	<classpathentry kind="lib" path="lib/smtp.jar"/>
+	<classpathentry kind="lib" path="lib/sound.jar"/>
+	<classpathentry kind="lib" path="lib/substance.jar"/>
+	<classpathentry kind="lib" path="lib/tecnologiaApplicada.jar"/>
+	<classpathentry kind="lib" path="lib/trident.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TesterGeneral"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
