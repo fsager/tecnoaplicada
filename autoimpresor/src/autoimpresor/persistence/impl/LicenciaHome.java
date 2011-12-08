@@ -152,7 +152,7 @@ public class LicenciaHome extends DAOObject implements LicenciaDao {
             cri.addOrder(Order.desc("licFechaOtorgada"));
             cri.addOrder(Order.asc("licId"));
             
-            cri.setMaxResults(1000);
+            //cri.setMaxResults(1000);
             
             List results = cri.list();
             log.debug("find by example successful, result size: " + results.size());

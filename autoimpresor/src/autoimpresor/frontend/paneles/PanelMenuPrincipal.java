@@ -37,6 +37,7 @@ import frontend.paneles.PanelCambiarClave;
 import frontend.paneles.PanelConfiguracionDB;
 import frontend.paneles.PanelLogEventos;
 import frontend.paneles.PanelMenu;
+import frontend.paneles.licence.PanelLicencia;
 import frontend.utils.Util;
 import frontend.ventanas.FramePrincipal;
 
@@ -457,6 +458,11 @@ public class PanelMenuPrincipal extends PanelMenu {
 			}
 		});
 
+		btnConfigurarLicencia.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				seleccionarConfigurarLicencia();
+			}
+		});
 		
 		btnCerrarSession.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -708,10 +714,29 @@ public class PanelMenuPrincipal extends PanelMenu {
 		btnConfigurarDB.setVisible(true);
 		toolbarSubNivel.add(btnConfigurarDB);
 		
+		btnConfigurarLicencia.setVisible(true);
+		toolbarSubNivel.add(btnConfigurarLicencia);
+
+		
 		/*Refresco para que se visualice correctamente*/
 		doAfterLoadMenu();
 	}
 
+	public void seleccionarConfigurarLicencia() {
+
+		unSelectButtons(toolbarSubNivel, btnConfigurarLicencia);
+		panelContenido.removeAll();
+
+		PanelLicencia panelLicencia = new PanelLicencia(null,false,true);
+		panelLicencia.validate();
+
+		panelLicencia.setVisible(true);
+		panelContenido.add(panelLicencia);
+
+		doAfterLoadMenuContenido();
+
+	}
+	
 	public void seleccionarPanelControl() {
 
 		testerGeneral.persistence.impl.Util.insertAudit(
@@ -959,6 +984,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 	private javax.swing.JToggleButton btnConfigurarDB = new JToggleButton(
 			Constantes.MENU_SUB_PANEL_CONFIGURAR_DB);
 
+	private javax.swing.JToggleButton btnConfigurarLicencia = new JToggleButton(
+			Constantes.MENU_SUB_PANEL_CONFIGURAR_LICENCIA);
+	
 	private int enPendiente;
 	private int enHistorico;
 	private int importadas;

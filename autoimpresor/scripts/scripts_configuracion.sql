@@ -1,3 +1,22 @@
+--select * from APP.Licencia;
+
+
+--LICENCE PROPERTIES
+--SUBIR AL UPDATE más el jar de tecnologíapplicada.jar!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+INSERT INTO APP.PROPIEDAD VALUES ('VALIDAR_LICENCIA','S',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA_VITALICIA','N',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA.CANTIDAD.INTENTOS.PERMITIDOS','4',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA.FECHA.ULTIMO.INTENTO','',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA.CANTIDAD.INTENTOS','0',null);
+
+INSERT INTO APP.PROPIEDAD VALUES ('PERIODO.PRUEBA.FECHA.INICIO','',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCE.LAST.DATE.ACTIVATED','',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCE.NRO','',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCED','N',null);
+INSERT INTO APP.PROPIEDAD VALUES ('PERIODO.PRUEBA.DURACION','45',null);
+--LICENCE PROPERTIES
+
+
 insert into APP.CLASE_LICENCIA (CLL_ID,CLL_NOMBRE_CLASE,CLL_VIGENCIA_PREDETERMINADA,CLL_EDAD_MINIMA,CLL_EDAD_MAXIMA,CLL_DESCRIPCION_CORTA,CLL_DESCRIPCION,CLL_IMPORTEX6MESES,CLL_IMPORTEX12MESES,CLL_IMPORTEX24MESES,CLL_IMPORTEX36MESES,CLL_IMPORTEX48MESES,CLL_IMPORTEX60MESES)  values (1,'A-1',36,16,99,'Ciclomotores cuya cilindrada no supere los cin','Ciclomotores cuya cilindrada no supere los cincuenta cc. (50 cc.).',0,0,0,0,0,0);
 insert into APP.CLASE_LICENCIA (CLL_ID,CLL_NOMBRE_CLASE,CLL_VIGENCIA_PREDETERMINADA,CLL_EDAD_MINIMA,CLL_EDAD_MAXIMA,CLL_DESCRIPCION_CORTA,CLL_DESCRIPCION,CLL_IMPORTEX6MESES,CLL_IMPORTEX12MESES,CLL_IMPORTEX24MESES,CLL_IMPORTEX36MESES,CLL_IMPORTEX48MESES,CLL_IMPORTEX60MESES)  values (2,'A-2',36,18,99,'Motocicletas y triciclos cuya cilindrada super','Motocicletas y triciclos cuya cilindrada supere los 50 cc y no exceda los 150 cc. Los vehiculos autorizados por A-1.',0,0,0,0,0,0);
 insert into APP.CLASE_LICENCIA (CLL_ID,CLL_NOMBRE_CLASE,CLL_VIGENCIA_PREDETERMINADA,CLL_EDAD_MINIMA,CLL_EDAD_MAXIMA,CLL_DESCRIPCION_CORTA,CLL_DESCRIPCION,CLL_IMPORTEX6MESES,CLL_IMPORTEX12MESES,CLL_IMPORTEX24MESES,CLL_IMPORTEX36MESES,CLL_IMPORTEX48MESES,CLL_IMPORTEX60MESES)  values (3,'A-3',36,18,99,'Motocicletas de más de 150 cc, además de los a','Motocicletas de más de 150 cc, además de los autorizados en la clase A-2.',0,0,0,0,0,0);
