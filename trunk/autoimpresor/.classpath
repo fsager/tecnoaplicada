@@ -63,7 +63,6 @@
 	<classpathentry kind="lib" path="libs/mailapi.jar"/>
 	<classpathentry kind="lib" path="libs/mediaplayer.jar"/>
 	<classpathentry kind="lib" path="libs/multiplayer.jar"/>
-	<classpathentry kind="lib" path="libs/poi-3.2-FINAL-20081019.jar"/>
 	<classpathentry kind="lib" path="libs/poi-3.5-FINAL-20090928.jar"/>
 	<classpathentry kind="lib" path="libs/RXTXcomm.jar"/>
 	<classpathentry kind="lib" path="libs/rxtxParallel.dll"/>
