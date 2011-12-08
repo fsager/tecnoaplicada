@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import ar.com.tecnologiaaplicada.domain.Activacion;
 import ar.com.tecnologiaaplicada.persistence.ActivacionDao;
@@ -84,7 +85,12 @@ public class ActivacionHome extends DAOObject implements ActivacionDao {
             Criteria cri = getSession().createCriteria(Activacion.class);
             
             cri.add(Example.create(p_example).enableLike().ignoreCase());
+            
+            if(p_example.getLicencia()!=null)
+            	cri.createCriteria("licencia").add(Restrictions.idEq(p_example.getLicencia().getLicId()));
+            
             cri.addOrder(Order.desc("actId"));
+            
             List results = cri.list();
             log.debug("find by example successful, result size: " + results.size());
             return results;

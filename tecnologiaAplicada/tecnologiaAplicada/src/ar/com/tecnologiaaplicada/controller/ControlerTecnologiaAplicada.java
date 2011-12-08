@@ -13,6 +13,7 @@ import ar.com.tecnologiaaplicada.business.ContextManager;
 import ar.com.tecnologiaaplicada.domain.Cliente;
 import ar.com.tecnologiaaplicada.domain.Dominio;
 import ar.com.tecnologiaaplicada.domain.Usuario;
+import ar.com.tecnologiaaplicada.service.ActivacionDefinition;
 import ar.com.tecnologiaaplicada.service.ClienteDefinition;
 import ar.com.tecnologiaaplicada.service.DetalleLicenciaDefinition;
 import ar.com.tecnologiaaplicada.service.DominioDefinition;
@@ -32,7 +33,7 @@ public class ControlerTecnologiaAplicada extends GenericForwardComposer{
 	protected ExamenDefinition  examenService= (ExamenDefinition) ContextManager.getBizObject("examenService");
 	protected ExamenDetalleDefinition  examenDetalleService= (ExamenDetalleDefinition) ContextManager.getBizObject("examenDetalleService");
 	protected DetalleLicenciaDefinition  detalleLicenciaService= (DetalleLicenciaDefinition) ContextManager.getBizObject("detalleLicenciaService");
-	
+	protected ActivacionDefinition  activacionService= (ActivacionDefinition) ContextManager.getBizObject("activacionService");
 	
 	
 	

@@ -54,11 +54,19 @@ public class ControllerLicenciaForm extends ControlerTecnologiaAplicada{
 			objUpdated.setLicActivaSn("S");
 			objUpdated.setLicFechaGeneracion(new Date());
 			objUpdated.setLicNro(generarNroLicencia());
+			
+			cargarClientes(lbCliente,false,null);
+			cargarDominio(lbTipoLicencia,"TIPO_LICENCIA", false,null);
+			cargarDominio(lbProducto,"PRODUCTO", false,null);
+			
 			isUpd=false;
 		}
 		else
 		{
 			objUpdated=licenciaService.get(objUpdated.getLicId());	
+			cargarClientes(lbCliente,false,objUpdated.getCliente());
+			cargarDominio(lbTipoLicencia,"TIPO_LICENCIA", false,String.valueOf(objUpdated.getLicTipo()));
+			cargarDominio(lbProducto,"PRODUCTO", false,String.valueOf(objUpdated.getLicProducto()));
 		}
 		
 		if(objUpdated.getLicId()!=null)
@@ -68,9 +76,7 @@ public class ControllerLicenciaForm extends ControlerTecnologiaAplicada{
 			detallesLicencia=detalleLicenciaService.getAll(detalleLicencia);			
 		}
 		
-		cargarClientes(lbCliente,false,objUpdated.getCliente());
-		cargarDominio(lbTipoLicencia,"TIPO_LICENCIA", false,String.valueOf(objUpdated.getLicTipo()));
-		cargarDominio(lbProducto,"PRODUCTO", false,String.valueOf(objUpdated.getLicProducto()));
+
 		cargarArbol();
 		binder.loadAll();
 	}
@@ -265,9 +271,8 @@ public class ControllerLicenciaForm extends ControlerTecnologiaAplicada{
 		Long tipoLic=Long.valueOf(dom.getDomCodigo());
 		
 		dom=(Dominio)lbProducto.getSelectedItem().getValue();
-		Long producto=Long.valueOf(dom.getDomCodigo());
 		
-		objUpdated.setLicProducto(producto);
+		objUpdated.setLicProducto(dom.getDomCodigo());
 		objUpdated.setLicTipo(tipoLic);
 		objUpdated.setCliente((Cliente)lbCliente.getSelectedItem().getValue());
 		

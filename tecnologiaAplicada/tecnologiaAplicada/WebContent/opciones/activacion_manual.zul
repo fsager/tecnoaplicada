@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./wndActivacionManualForm" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd "
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:a="http://www.zkoss.org/2005/zk/annotation">
+	<window id="wndActivacionManualForm" border="normal" closable="true" title="Activación manual de productos"
+		apply="ar.com.tecnologiaaplicada.controller.ControllerActivacionManulForm">
+		<groupbox mold="default" closable="false">
+			<grid>
+				<rows>
+					<row>
+						<h:b>Producto:</h:b>
+						<listbox id="lbProducto" mold="select" />
+					</row>
+					<row>
+						<h:b>Nro. Licencia:</h:b>
+						<textbox id="txtLicencia"/>
+					</row>
+					<row>
+						<h:b>Código de Activación:</h:b>
+						<textbox id="txtCodigo"/>
+					</row>
+				</rows>
+			</grid>
+			<h:center>
+				<button id="btnEnviar" label="Obtener archivo de licencia" width="100px;" />
+			</h:center>
+		</groupbox>
+	</window>
+</zk>

@@ -36,7 +36,10 @@ public class DomainConverter implements TypeConverter {
 			String domain=(String)comp.getAttribute("domain");
 			Dominio domExample=new Dominio();
 			domExample.setDomClave(domain);
-			domExample.setDomCodigo(String.valueOf((Long)val));
+			if(val instanceof Number)
+				domExample.setDomCodigo(String.valueOf((Long)val));
+			else
+				domExample.setDomCodigo(String.valueOf(val));
 			
 			domExample=(Dominio)dominioService.getAll(domExample).get(0);
 			return domExample.getDomValorMostrar();

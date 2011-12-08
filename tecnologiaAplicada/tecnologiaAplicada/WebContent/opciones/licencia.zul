@@ -33,6 +33,7 @@
 			<listheader label="Producto" 	sort="auto(licProducto)"/>
 			<listheader label="Fecha de generación" sort="auto(licFechaGeneracion)"/>
 			<listheader label="Activa" 	sort="auto(licActivaSn)"/>
+			<listheader label="Activaciones"/>
 		</listhead>
 		<listitem self="@{each='itemList'}" value="@{itemList}">
 			<listcell label="@{itemList.cliente.cliRazonSocial}" />
@@ -51,11 +52,21 @@
 			<listcell>
 					<checkbox checked="@{itemList.licActivaSn, converter='ar.com.tecnologiaaplicada.presentation.converters.BooleanConverter'}">
 						<attribute name="onCheck">
-							System.out.println("self.parent.parent.licActivaSn: "+self.parent.parent.value.licActivaSn);
 							licenciaService.update(self.parent.parent.value);
 						</attribute>
 					</checkbox>
 			</listcell>
-		</listitem>
+ 			<listcell>
+					<button label="Detalle">
+						<attribute name="onClick">
+							java.util.Properties params=new java.util.Properties ();
+							params.put("p_licencia",self.getParent().getParent().getValue());
+							Window win = (Window) Executions.createComponents("/opciones/activacion.zul",wnd_licencia, params);
+							win.setWidth ("800px");
+							win.doModal();
+						</attribute>
+					</button>
+			</listcell>
+		</listitem> 
 	</listbox>
 </window></zk>

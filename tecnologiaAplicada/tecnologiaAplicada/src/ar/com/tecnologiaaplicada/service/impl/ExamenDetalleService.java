@@ -44,7 +44,7 @@ public class ExamenDetalleService implements ExamenDetalleDefinition {
 		biz.update(p_domain);
 	}
 	
-	public List<ExamenDetalle> getDetalleLicenciaPorCliente(String licNro) throws Exception {
-		return biz.getDetalleLicenciaPorCliente(licNro);
+	public byte[] getDetalleLicenciaPorCliente(String licNro,String producto,String codigoActivacion) throws Exception{
+		return biz.getDetalleLicenciaPorCliente(licNro,producto,codigoActivacion);
 	}
 }
