@@ -1,3 +1,12 @@
+--alter table `jttecnol_lic`.`ACTIVACION` drop `ACT_CODIGO_SEGURIDAD`;
+--alter table `jttecnol_lic`.`LICENCIA` add `LIC_DATOS_ADICIONALES` VARCHAR(700);
+--alter table `jttecnol_lic`.`LICENCIA` drop `LIC_PRODUCTO`;
+--alter table `jttecnol_lic`.`LICENCIA` add `LIC_PRODUCTO` VARCHAR(300) not null default 'TesterGeneral';
+
+
+
+
+
 drop table `jttecnol_lic`.`USUARIO`;
 drop table `jttecnol_lic`.`PROPIEDAD`;
 drop table `jttecnol_lic`.`DOMINIO`;
@@ -82,10 +91,11 @@ CREATE  TABLE jttecnol_lic.USUARIO (
        `LIC_ID` BIGINT not null AUTO_INCREMENT,
 	   `LIC_NRO` VARCHAR(200) not null,
 	   `LIC_TIPO` BIGINT not null,
-	   `LIC_PRODUCTO` BIGINT not null,
+	   `LIC_PRODUCTO` VARCHAR(300) not null,
 	   `LIC_ACTIVA_SN` VARCHAR(1) not null,
 	   `LIC_FECHA_GENERACION` DATETIME not null,
 	   `CLI_ID` BIGINT not null,
+	   `LIC_DATOS_ADICIONALES` VARCHAR(700),	   
         PRIMARY KEY (`LIC_ID`) ,
 		UNIQUE INDEX `LIC_ID_UNIQUE` (`LIC_ID` ASC),
 		UNIQUE INDEX `LIC_NRO_UNIQUE` (`LIC_NRO` ASC)
@@ -106,7 +116,6 @@ CREATE  TABLE jttecnol_lic.USUARIO (
         `ACT_ID` BIGINT not null AUTO_INCREMENT,
 	    `ACT_FECHA` DATETIME not null,
 	    `ACT_CODIGO` VARCHAR(200) not null,
-	    `ACT_CODIGO_SEGURIDAD` VARCHAR(200) not null,
 	    `ACT_VERSION_APP` VARCHAR(200),
 	    `LIC_ID` BIGINT not null,
         PRIMARY KEY (`ACT_ID`) ,

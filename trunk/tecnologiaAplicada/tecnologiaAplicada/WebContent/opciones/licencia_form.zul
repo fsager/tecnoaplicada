@@ -23,6 +23,10 @@
 						<h:b>Producto:</h:b>
 						<listbox id="lbProducto" mold="select" />
 					</row>
+					<row>
+						<h:b>Datos adicionales:</h:b>
+						<textbox id="txtDatosAdicionales" value="@{controller.objUpdated.licDatosAdicionales}" maxlength="500" rows="6" width="400px;"/>
+					</row>
 				</rows>
 			</grid>
 			<tree id="treeExamenes" checkmark="true" multiple="true" rows="15" height="300px" width="100%">

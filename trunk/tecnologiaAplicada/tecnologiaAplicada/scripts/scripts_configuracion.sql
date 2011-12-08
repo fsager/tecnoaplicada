@@ -1,16 +1,24 @@
+delete from USUARIO;
+delete from PROPIEDAD;
+delete from EXAMEN_DETALLE;
+delete from EXAMEN;
+delete from DOMINIO;
 
+select * from jttecnol_lic.DOMINIO;
 
+select * from jttecnol_lic.activacion;
+
+select * from jttecnol_lic.licencia
 
 delete from jttecnol_lic.detalle_licencia
 
 delete from jttecnol_lic.licencia
 
 select * from jttecnol_lic.licencia
-      8 FW40-G84U        3            1 S             2011-01-22 15:35:45.0      5
 
 select * from jttecnol_lic.detalle_licencia;
 
-insert into jttecnol_lic.usuario (USR_ID,USR_NOMBRE,USR_CLAVE,USR_ULTIMO_ACCESO,USR_HABILITADO_SN,DELETED_SN) values(-1,'Administrador','1',null,'S','N');
+insert into jttecnol_lic.USUARIO (USR_ID,USR_NOMBRE,USR_CLAVE,USR_ULTIMO_ACCESO,USR_HABILITADO_SN,DELETED_SN) values(-1,'Administrador','1',null,'S','N');
 
 INSERT INTO jttecnol_lic.PROPIEDAD VALUES ('FORMATO.FECHA','dd-MM-yyyy',null);
 INSERT INTO jttecnol_lic.PROPIEDAD VALUES ('FORMATO.HORA','HH:mm:ss',null);
@@ -138,9 +146,10 @@ INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRA
 INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION) VALUES ('EXAMEN','TIPO_EXAMEN','Profesional','Profesional','Profesional');
 INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION) VALUES ('EXAMEN','TIPO_EXAMEN','Particular','Particular','Particular');   
 
-INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','TIPO_LICENCIA','1','Vitalicia','Vitalicia');
+INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','TIPO_LICENCIA','1','Vitalicia','Vitalicia');//NO modificar este valor.
 INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','TIPO_LICENCIA','2','Renovación mensual','Renovación mensual');
 INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','TIPO_LICENCIA','3','Por cantidad','Renovación por cantidad');
 
-INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','PRODUCTO','1','Testergeneral','Testergeneral');
+INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','PRODUCTO','TesterGeneral','TesterGeneral','TesterGeneral');
+INSERT INTO jttecnol_lic.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','PRODUCTO','Autoimpresor','Autoimpresor','Autoimpresor');
 

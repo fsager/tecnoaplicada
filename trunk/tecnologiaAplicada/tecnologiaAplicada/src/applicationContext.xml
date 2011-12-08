@@ -35,6 +35,12 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
     </bean>
     
+    <!-- bean id="dataSource"  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url" value="jdbc:mysql://localhost:3306/jttecnol_licencia"/>
+		<property name="username" value="jttecnol_lic"/>
+		<property name="password" value="lic"/>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    </bean-->
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
         <property name="dataSource"> 
@@ -57,6 +63,7 @@
                 <prop key="insert*">PROPAGATION_REQUIRED</prop>
                 <prop key="update*">PROPAGATION_REQUIRED</prop>
                 <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="getDetalleLicenciaPorCliente*">PROPAGATION_REQUIRED</prop>                
                 <prop key="*">PROPAGATION_SUPPORTS, readOnly</prop>
 			</props>
 		</property>
@@ -100,6 +107,7 @@
         <property name="dao" ref="examenDetalleDao"/>
         <property name="licenciaDao" ref="licenciaDao"/>
         <property name="detalleLicenciaDao" ref="detalleLicenciaDao"/>
+        <property name="activacionDao" ref="activacionDao"/>
     </bean>
     <bean id="examenDetalleBiz" parent="baseTransactionProxy">
          <property name="target">
@@ -197,12 +205,8 @@
         <property name="businessObject" ref="usuarioBiz"/>
     </bean>
 
-	<!-- bean id="accountWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-		<property name="serviceInterface" value="example.AccountService"/>
-		<property name="wsdlDocumentUrl" value="http://localhost:8888/AccountServiceEndpoint?WSDL"/>
-		<property name="namespaceUri" value="http://example/"/>
-		<property name="serviceName" value="AccountService"/>
-		<property name="portName" value="AccountServiceEndpointPort"/>
-	</bean -->
-
+	<bean name="licenseExporter" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="examenDetalleService"/>
+		<property name="serviceInterface" value="ar.com.tecnologiaaplicada.service.ExamenDetalleDefinition"/>
+	</bean>
 </beans>

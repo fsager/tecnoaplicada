@@ -47,6 +47,6 @@ public interface ExamenDetalleDefinition {
 	 */
 	public abstract void update(ExamenDetalle p_domain) throws Exception;
 	
-	public abstract List<ExamenDetalle> getDetalleLicenciaPorCliente(String licNro) throws Exception;
+	public abstract byte[] getDetalleLicenciaPorCliente(String licNro,String producto,String codigoActivacion) throws Exception;
 
 }
