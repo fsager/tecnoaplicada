@@ -333,6 +333,9 @@
 		<property name="portName" value="LicenseServiceEndpointImpPort"/>
 	</bean>-->	
 	
+	<bean id="codigoActivacionImp" class="tecnologia.aplicada.licence.CodigoActivacionImp" lazy-init="true"/>
+	
+	
 	<bean id="licenseRemoteService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean" lazy-init="true">
 		<!--property name="serviceUrl" value="http://localhost:8080/tecnologiaAplicada/remoting/LicenseService"/-->
 		<property name="serviceUrl" value="http://app.jttecnologiaaplicada.com/tecnologiaAplicada/remoting/LicenseService"/>

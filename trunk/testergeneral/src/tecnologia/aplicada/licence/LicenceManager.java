@@ -31,8 +31,6 @@ public class LicenceManager {
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat(ContextManager.getProperty("FORMATO.FECHA.HORA"));
 	private static final long ONE_HOUR = 60 * 60 * 1000L;
-	private static ExamenDetalleDefinition examenDetalleServiceLocal=(ExamenDetalleDefinition)ContextManager.getBizObject("examenDetalleService"); 
-	private static ExamenDefinition examenServiceLocal=(ExamenDefinition)ContextManager.getBizObject("examenService");
 
 	public static void showLicencePanel(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
@@ -199,10 +197,8 @@ public class LicenceManager {
 				dateActualizacion = fechaActualizacion.getTime();
 			}
 
-			PersonaExamenDefinition personaExamenService = (PersonaExamenDefinition) ContextManager
-					.getBizObject("personaExamenService");
-			Long cantidad = personaExamenService
-					.getCantidadExamenes(dateActualizacion);
+			CodigoActivacionDefinition codigoActivacionService=(CodigoActivacionDefinition)ContextManager.getBizObject("codigoActivacionImp");
+			String cantidad=codigoActivacionService.getCodigoActivacionInfo(dateActualizacion);
 
 			String codigo = formatCodigo.format(new Date()) + cantidad;
 			codigo=codigo+getDigitoVerificador(codigo);			
@@ -255,7 +251,7 @@ public class LicenceManager {
 			byte[] licencia = examenDetalleService
 					.getDetalleLicenciaPorCliente(nroLicencia, producto,
 							codigoActivacion);
-
+			
 			actualizarLicencia(licencia,nroLicencia);
 		} catch (org.springframework.remoting.RemoteAccessException e) {
 
@@ -329,27 +325,12 @@ public class LicenceManager {
 			if(getLastDateActivation()!=null && !licFechaActualizacionDate.after(getLastDateActivation()))
 				throw new RuntimeException("La licencia ya ha sido utilizada, por favor solicite una nueva.");
 			
-			Collection<DetalleLicencia> detalleLicencias=licenciaObjecto.getDetalleLicencias();
-			for(DetalleLicencia detalleLicencia:detalleLicencias)
-			{
-				//System.out.println("DetalleExamen: "+detalleLicencia.getExamenDetalle().getExadCodigo()+" Activo: "+detalleLicencia.getDlicActivaSn());
-				
-				//Actualizar la informaicon de licencia
-				ExamenDetalle examenDetalle=new ExamenDetalle();
-				examenDetalle.setExadCodigo(detalleLicencia.getExamenDetalle().getExadCodigo());
-				
-				List<ExamenDetalle> detalleExamenes=examenDetalleServiceLocal.getAll(examenDetalle);
-				if(detalleExamenes.size()==1)
-				{
-					examenDetalle=detalleExamenes.get(0);
-					examenDetalle.setExadLicencedSn(detalleLicencia.getDlicActivaSn());
-					examenDetalleServiceLocal.update(examenDetalle);
-				}
-				else if(detalleExamenes.size()>1)
-					throw new RuntimeException("Código de examen duplicado: "+detalleLicencia.getExamenDetalle().getExadCodigo());
-				
-				
-			}
+			
+			String producto = ContextManager.getProperty("SISTEMA.NOMBRE.PROGRAMA");
+			if(producto.equals("TesterGeneral"))
+				actualizarLicenciaDeExamenes(licenciaObjecto);
+			
+
 			
 			Propiedad propiedad = new Propiedad();
 			propiedad.setPropClave("LICENCED");
@@ -395,6 +376,32 @@ public class LicenceManager {
 			throw new RuntimeException(e);
 		}
 
+	}
+	
+	public static void actualizarLicenciaDeExamenes(Licencia licenciaObjecto) throws Exception
+	{
+		Collection<DetalleLicencia> detalleLicencias=licenciaObjecto.getDetalleLicencias();
+		ExamenDetalleDefinition examenDetalleServiceLocal=(ExamenDetalleDefinition)ContextManager.getBizObject("examenDetalleService");
+		for(DetalleLicencia detalleLicencia:detalleLicencias)
+		{
+			//System.out.println("DetalleExamen: "+detalleLicencia.getExamenDetalle().getExadCodigo()+" Activo: "+detalleLicencia.getDlicActivaSn());
+			
+			//Actualizar la informaicon de licencia
+			ExamenDetalle examenDetalle=new ExamenDetalle();
+			examenDetalle.setExadCodigo(detalleLicencia.getExamenDetalle().getExadCodigo());
+			
+			List<ExamenDetalle> detalleExamenes=examenDetalleServiceLocal.getAll(examenDetalle);
+			if(detalleExamenes.size()==1)
+			{
+				examenDetalle=detalleExamenes.get(0);
+				examenDetalle.setExadLicencedSn(detalleLicencia.getDlicActivaSn());
+				examenDetalleServiceLocal.update(examenDetalle);
+			}
+			else if(detalleExamenes.size()>1)
+				throw new RuntimeException("Código de examen duplicado: "+detalleLicencia.getExamenDetalle().getExadCodigo());
+			
+			
+		}
 	}
 
 	public static Licencia getLicenciaFromBytes(byte[] licencia, String nroLicencia) throws GeneralSecurityException{
