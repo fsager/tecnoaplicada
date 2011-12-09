@@ -18,7 +18,11 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel1" alignment="0" max="32767" attributes="1"/>
-                  <Component id="btnMoverPendiente" alignment="1" min="-2" max="-2" attributes="1"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="btnReimprimir" min="-2" max="-2" attributes="1"/>
+                      <EmptySpace pref="277" max="32767" attributes="0"/>
+                      <Component id="btnMoverPendiente" min="-2" max="-2" attributes="1"/>
+                  </Group>
                   <Component id="jPanel3" alignment="0" min="-2" max="-2" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -32,7 +36,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="1"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnMoverPendiente" min="-2" pref="20" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnMoverPendiente" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="btnReimprimir" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -328,5 +335,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnReimprimir">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Imprimir licencias seleccionadas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReimprimirActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -19,15 +20,19 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableRowSorter;
 
+import net.sf.jasperreports.engine.JasperReport;
+
 import testerGeneral.comparetors.DateComparator;
 import testerGeneral.domain.Constantes;
 import autoimpresor.business.ContextManager;
+import autoimpresor.domain.CarnetLicencias;
 import autoimpresor.domain.Licencia;
 import autoimpresor.domain.Persona;
 import autoimpresor.frontend.tablemodels.TableModelLicenciaFull;
 import autoimpresor.service.LicenciaDefinition;
 import frontend.buttons.ButtonBuscar;
 import frontend.utils.Util;
+import frontend.ventanas.JInternalFrameTesterGral;
 
 /**
  *
@@ -46,6 +51,16 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 		valorPorDefectoFecha = txtOtorgadaDesde.getText();
 		setTableModelLicencias(new ArrayList());
 		Util.personaSinResultados(lbSinResultados, true);
+		
+		if (ContextManager.getProperty("SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S"))
+		{
+			btnReimprimir.setVisible(true);
+		}
+		else
+		{
+			btnReimprimir.setVisible(false);
+		}
+		
 	}
 
 	//GEN-BEGIN:initComponents
@@ -70,6 +85,7 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 		jScrollPane1 = new javax.swing.JScrollPane();
 		tableLicencias = new javax.swing.JTable();
 		lbSinResultados = new javax.swing.JLabel();
+		btnReimprimir = new javax.swing.JButton();
 
 		btnMoverPendiente.setText("Mover a pendiente licencias seleccionadas");
 		btnMoverPendiente.setEnabled(false);
@@ -401,6 +417,13 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 												24,
 												javax.swing.GroupLayout.PREFERRED_SIZE)));
 
+		btnReimprimir.setText("Imprimir licencias seleccionadas");
+		btnReimprimir.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btnReimprimirActionPerformed(evt);
+			}
+		});
+
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout
@@ -420,9 +443,18 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
-														.addComponent(
-																btnMoverPendiente,
-																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				btnReimprimir)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																				277,
+																				Short.MAX_VALUE)
+																		.addComponent(
+																				btnMoverPendiente))
 														.addComponent(
 																jPanel3,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
@@ -450,16 +482,89 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												btnMoverPendiente,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												20,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addGroup(
+												layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																btnMoverPendiente,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																20,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																btnReimprimir,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																20,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addContainerGap(
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)));
 	}// </editor-fold>
 	//GEN-END:initComponents
+
+	private void btnReimprimirActionPerformed(java.awt.event.ActionEvent evt) {
+		try {
+			String nombreMunicipio = ContextManager.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
+			String codigoMunicipio = ContextManager.getProperty("SISTEMA.CODIGO.MUNICIPIO");
+			byte[] escudoMunicipio = ContextManager.getPropertyObj("SISTEMA.FOTO.MUNICIPIO").getPropBlob();
+			
+			List<CarnetLicencias> carnets = new ArrayList<CarnetLicencias>();
+			int[] rows = tableLicencias.getSelectedRows();
+			for (int i = 0; i < rows.length; i++) {
+				int sel = tableLicencias.convertRowIndexToModel(rows[i]);
+				Licencia lic=((TableModelLicenciaFull) tableLicencias.getModel()).getValueAt(sel);
+						
+				CarnetLicencias carnet = new CarnetLicencias(lic,nombreMunicipio, codigoMunicipio, escudoMunicipio);
+				carnets.add(carnet);
+			}
+			
+			final JInternalFrameTesterGral internalframe = new JInternalFrameTesterGral(
+					"Imprimir", false, true, false, false);
+			PanelMargenesImpresion panel = new PanelMargenesImpresion(carnets);
+			internalframe.add(panel);
+			internalframe.pack();
+
+			Util.centrarIframes(internalframe);
+
+			internalframe
+					.addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+						public void internalFrameActivated(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+
+						public void internalFrameClosed(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+
+						public void internalFrameClosing(
+								javax.swing.event.InternalFrameEvent evt) {
+							internalframe.close();
+						}
+
+						public void internalFrameDeactivated(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+
+						public void internalFrameDeiconified(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+
+						public void internalFrameIconified(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+
+						public void internalFrameOpened(
+								javax.swing.event.InternalFrameEvent evt) {
+						}
+					});
+
+			internalframe.doModal(Util.framePrincipal.getRootPane());
+			internalframe.setVisible(true);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	private void txtBusquedaDniActionPerformed(java.awt.event.ActionEvent evt) {
 		buscarLicencias();
@@ -526,8 +631,8 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 	public void buscarLicencias() {
 		LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager
 				.getBizObject("licenciaService");
-		Date fechaDesde=null;
-		Date fechaHasta=null;
+		Date fechaDesde = null;
+		Date fechaHasta = null;
 		boolean error = false;
 		setTableModelLicencias(new ArrayList());
 		try {
@@ -552,24 +657,22 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 
 			if (valorPorDefectoFecha.compareTo(txtOtorgadaDesde.getText()) != 0) {
 				fechaDesde = validarFecha(txtOtorgadaDesde);
-				if(fechaDesde!=null)
+				if (fechaDesde != null)
 					fechaHasta = validarFecha(txtOtorgadaHasta);
 
-				if (fechaHasta==null)
+				if (fechaHasta == null)
 					error = true;
 
 			}
-			
+
 			List<Licencia> liciencias = null;
 			if (!error) {
-				if (fechaDesde != null && fechaHasta != null)
-				{
+				if (fechaDesde != null && fechaHasta != null) {
 					Util.redondearFecha(fechaDesde);
 					Util.redondearFecha(fechaHasta);
 					liciencias = licenciaService.getAll(lic, fechaDesde,
 							fechaHasta);
-				}
-				else
+				} else
 					liciencias = licenciaService.getAll(lic);
 			}
 
@@ -595,15 +698,14 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 		jPanel1.repaint();
 
 	}
-	
+
 	public Date validarFecha(JFormattedTextField txtDate) {
 		AbstractFormatter formatter = txtDate.getFormatter();
 		if (formatter != null) {
 			String text = txtDate.getText();
 			try {
 				formatter.stringToValue(text);
-				SimpleDateFormat sdf = new SimpleDateFormat(
-						Util.formatoFecha);
+				SimpleDateFormat sdf = new SimpleDateFormat(Util.formatoFecha);
 				sdf.setLenient(false);
 				//lic.setLicFechaOtorgada(sdf.parse(txtDate.getText()));
 				return sdf.parse(txtDate.getText());
@@ -621,6 +723,7 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 	// Variables declaration - do not modify
 	private javax.swing.JButton btnBuscar;
 	private javax.swing.JButton btnMoverPendiente;
+	private javax.swing.JButton btnReimprimir;
 	private javax.swing.JLabel jLabel19;
 	private javax.swing.JLabel jLabel20;
 	private javax.swing.JLabel jLabel3;

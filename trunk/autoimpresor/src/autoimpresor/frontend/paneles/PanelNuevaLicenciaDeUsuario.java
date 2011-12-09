@@ -9,6 +9,8 @@ package autoimpresor.frontend.paneles;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,8 +28,10 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.text.MaskFormatter;
 
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
@@ -1356,6 +1360,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 	
 	public static void imprimirPlantillaConformida(Licencia licencia)
 	{
+		
 		try {
 			
 			String nombreMunicipio = ContextManager.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
@@ -1414,7 +1419,13 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 		licencia.setLicTramite(jComboBoxTipoTramite.getSelectedItem().toString());
 		licencia.setLicFechaOtorgada(getFechaOtorgamiento());
 		licencia.setLicFechaVencimiento(calcularFechaVencimiento());
-		licencia.setLicEstado("P");
+		if (ContextManager.getProperty("SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S"))
+		{
+			licencia.setLicEstado("H");
+		}
+		else
+			licencia.setLicEstado("P");
+		
 		Usuario usuarioSeleccionado = (Usuario) jComboBoxResponsableFirmanteDeLicencia.getSelectedItem();
 		licencia.setUsuarioByUsrNombreFirma(usuarioSeleccionado);
 		licencia.setLicExamenTeorico(jComboBoxExamenTeorico.getSelectedItem()
@@ -1511,6 +1522,21 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 				guardarLicRqsIncompletos.doModal(this.getRootPane().getRootPane());
 				guardarLicRqsIncompletos.setVisible(true);
 	
+			}
+			
+			if (ContextManager.getProperty("SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S"))
+			{
+				String nombreMunicipio = ContextManager.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
+				String codigoMunicipio = ContextManager.getProperty("SISTEMA.CODIGO.MUNICIPIO");
+				byte[] escudoMunicipio = ContextManager.getPropertyObj("SISTEMA.FOTO.MUNICIPIO").getPropBlob();
+				
+				CarnetLicencias carnet = new CarnetLicencias(licenciaService.get(licencia.getLicId()),
+						nombreMunicipio, codigoMunicipio, escudoMunicipio);
+				List<CarnetLicencias> carnets = new ArrayList<CarnetLicencias>();
+				carnets.add(carnet);
+				
+
+				autoimpresor.util.Util.printReportCarnet(new HashMap(), carnets);
 			}
 			
 		} catch (Exception ex) {
