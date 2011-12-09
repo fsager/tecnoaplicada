@@ -398,6 +398,12 @@ public class PanelMenuPrincipal extends PanelMenu {
 				seleccionarLicPendientes();
 			}
 		});
+		
+		btnConfigurarMargenes.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				seleccionarMargenes();
+			}
+		});
 
 		btnLicHistotorial
 				.addActionListener(new java.awt.event.ActionListener() {
@@ -716,6 +722,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 		
 		btnConfigurarLicencia.setVisible(true);
 		toolbarSubNivel.add(btnConfigurarLicencia);
+		
+		btnConfigurarMargenes.setVisible(true);
+		toolbarSubNivel.add(btnConfigurarMargenes);
 
 		
 		/*Refresco para que se visualice correctamente*/
@@ -736,6 +745,26 @@ public class PanelMenuPrincipal extends PanelMenu {
 		doAfterLoadMenuContenido();
 
 	}
+	
+	public void seleccionarMargenes() {
+
+		unSelectButtons(toolbarSubNivel, btnConfigurarMargenes);
+		panelContenido.removeAll();
+
+		PanelMargenesImpresion panelMargenesImpresion = new PanelMargenesImpresion();
+		panelMargenesImpresion.validate();
+
+		panelMargenesImpresion.setSize(100,100);
+		//panelMargenesImpresion.
+		panelMargenesImpresion.setVisible(true);
+		
+		
+		panelContenido.add(panelMargenesImpresion);
+
+		doAfterLoadMenuContenido();
+
+	}
+
 	
 	public void seleccionarPanelControl() {
 
@@ -986,6 +1015,8 @@ public class PanelMenuPrincipal extends PanelMenu {
 
 	private javax.swing.JToggleButton btnConfigurarLicencia = new JToggleButton(
 			Constantes.MENU_SUB_PANEL_CONFIGURAR_LICENCIA);
+	
+	private javax.swing.JToggleButton btnConfigurarMargenes = new JToggleButton("Configurar Márgenes");
 	
 	private int enPendiente;
 	private int enHistorico;

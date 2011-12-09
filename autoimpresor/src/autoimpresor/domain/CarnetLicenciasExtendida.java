@@ -108,5 +108,5 @@ public class CarnetLicenciasExtendida extends  CarnetLicencias implements java.i
 
 	public void setLicFechaVencimientoTxt(String licFechaVencimientoTxt) {
 		this.licFechaVencimientoTxt = licFechaVencimientoTxt;
-	}    
+	}
 }
