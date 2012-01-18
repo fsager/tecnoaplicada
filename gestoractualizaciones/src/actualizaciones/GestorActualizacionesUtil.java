@@ -10,15 +10,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.LinkedList;
 
 import javax.crypto.spec.SecretKeySpec;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import seguridad.Encriptadora;
 
@@ -748,8 +745,78 @@ public class GestorActualizacionesUtil {
 		 * del servidor por los archivos nuevos.
 		 */
 		renombrarArchivosTemporales(directorioDestinoRaiz);
+		agregarNuevasLibreriasAlPath(directorioDestinoRaiz);
 
 		return true;// se terminó el proceso sin excepciones.
+	}
+	
+	public static void agregarNuevasLibreriasAlPath(File directorioDestinoRaiz)
+	{
+		try {
+			File libDir=new File(directorioDestinoRaiz.getAbsolutePath()+File.separator+"lib");
+			File appIni=new File(directorioDestinoRaiz.getAbsolutePath()+File.separator+nombreAplicacion+".ini");
+			String libsInpath=null;
+			String libsToAdd="";
+			
+			//Busco que librerias existen en el PATH
+			if(appIni.exists())
+			{
+				FileInputStream fin=new FileInputStream(appIni);
+				BufferedReader br = new BufferedReader(new InputStreamReader(fin));
+				try
+				{
+					String strLine=null;
+					while ((strLine = br.readLine()) != null){
+						  if(strLine.trim().startsWith("Class Path="))
+						  {
+							  libsInpath=strLine;
+							  break;
+						  }
+					}
+				}
+				finally
+				{
+					if(br!=null)
+						br.close();
+					if(fin!=null)
+						fin.close();
+				}
+			}
+			
+			//Reviso que librerias hay que agregar al path
+			if(libDir.exists() && libsInpath!=null)
+			{
+				File[] librerias=libDir.listFiles();
+				for(File libreria:librerias)
+				{
+					
+					if(libreria.isFile() && !libsInpath.toLowerCase().contains(libreria.getName().toLowerCase()+";") && libreria.getName().endsWith(".jar"))
+					{
+						libsToAdd+="."+File.separator+"lib"+File.separator+libreria.getName()+";";
+					}
+				}
+			}
+			
+			//Agrego los librerias al path
+			if(appIni.exists() && libsToAdd!=null)
+			{
+				FileWriter fw=null;
+				try
+				{
+					fw = new FileWriter(appIni,true);
+					fw.append(libsToAdd);
+					
+				}
+				finally
+				{
+					if(fw!=null)
+						fw.close();
+				}
+			}
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
