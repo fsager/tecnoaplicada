@@ -5,13 +5,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.security.MessageDigest;
 import java.util.LinkedList;
 
@@ -757,11 +757,33 @@ public class GestorActualizacionesUtil {
 			File appIni=new File(directorioDestinoRaiz.getAbsolutePath()+File.separator+nombreAplicacion+".ini");
 			String libsInpath=null;
 			String libsToAdd="";
+			long filePointer=-1;
 			
 			//Busco que librerias existen en el PATH
 			if(appIni.exists())
 			{
-				FileInputStream fin=new FileInputStream(appIni);
+				RandomAccessFile randomAccessFile=new RandomAccessFile(appIni,"rw");
+				try
+				{
+					String strLine=null;
+					while ((strLine = randomAccessFile.readLine()) != null){
+						  if(strLine.trim().startsWith("Class Path="))
+						  {
+							  libsInpath=strLine;
+							  filePointer+=strLine.trim().getBytes().length;
+							  break;
+						  }
+						  else
+							  filePointer=randomAccessFile.getFilePointer();
+					}
+				}
+				finally
+				{
+					if(randomAccessFile!=null)
+						randomAccessFile.close();
+				}
+				
+				/*FileInputStream fin=new FileInputStream(appIni);
 				BufferedReader br = new BufferedReader(new InputStreamReader(fin));
 				try
 				{
@@ -780,7 +802,7 @@ public class GestorActualizacionesUtil {
 						br.close();
 					if(fin!=null)
 						fin.close();
-				}
+				}*/
 			}
 			
 			//Reviso que librerias hay que agregar al path
@@ -797,21 +819,39 @@ public class GestorActualizacionesUtil {
 				}
 			}
 			
+			
+			
 			//Agrego los librerias al path
-			if(appIni.exists() && libsToAdd!=null)
+			if(appIni.exists() && libsToAdd!=null && filePointer!=-1)
 			{
-				FileWriter fw=null;
+				RandomAccessFile randomAccessFile=null;
+				try
+				{
+					randomAccessFile=new RandomAccessFile(appIni,"rw");
+					randomAccessFile.seek(filePointer);
+					randomAccessFile.write(libsToAdd.getBytes());
+				}
+				finally
+				{
+					if(randomAccessFile!=null)
+						randomAccessFile.close();
+				}
+				
+
+				
+				/*FileWriter fw=null;
 				try
 				{
 					fw = new FileWriter(appIni,true);
 					fw.append(libsToAdd);
+					fw.
 					
 				}
 				finally
 				{
 					if(fw!=null)
 						fw.close();
-				}
+				}*/
 			}
 			
 		} catch (Exception e) {
