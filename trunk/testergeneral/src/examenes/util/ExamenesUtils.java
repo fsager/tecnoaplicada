@@ -18,6 +18,7 @@ import testerGeneral.domain.PreguntaInterfaz;
 import testerGeneral.domain.Resultado;
 import testerGeneral.domain.Usuario;
 import testerGeneral.service.ExamenDefinition;
+import frontend.paneles.examenes.PanelDetalleExamen;
 import frontend.paneles.examenes.PanelExamen;
 import frontend.paneles.examenes.PanelExamenes;
 import frontend.paneles.psicometrico.anticipacion.PanelAnticipacion;
@@ -352,16 +353,19 @@ public class ExamenesUtils {
 		log.debug("ini mostrarPanelExamen");
 		try
 		{
-			PersonaExamen newPersonaExamen=new PersonaExamen();
+			/*PersonaExamen newPersonaExamen=new PersonaExamen();
 			
 			newPersonaExamen.setPexaTipoExamen(personaExamen.getPexaTipoExamen());
 			newPersonaExamen.setPersona(personaExamen.getPersona());
-			newPersonaExamen.setExamen(personaExamen.getExamen());	
+			newPersonaExamen.setExamen(personaExamen.getExamen());*/	
 			
 			panelContenido.removeAll();
 			
-			PanelExamenes panelExamen=new PanelExamenes(newPersonaExamen,panelExamenMultipleChoise,preguntas);
+			PanelExamenes panelExamen=new PanelExamenes(personaExamen,panelExamenMultipleChoise,preguntas);
 			panelContenido.add(panelExamen);
+			
+			PanelDetalleExamen panelDetalleExamen=panelExamen.getPanelDetalleExamen();
+			panelDetalleExamen.seleccionarPregunta(panelDetalleExamen.getBtnExamenPrimero());
 			
 		} catch (Exception e) {
 			throw new RuntimeException(e);

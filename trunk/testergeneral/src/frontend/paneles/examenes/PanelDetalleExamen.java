@@ -110,6 +110,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 			
 			btnExamen.setPreferredSize(new Dimension(100, 30));//x,y
 			btnExamen.setActionCommand("" + pregunta.getId());
+			btnExamen.setName("MULTIPLECHOISE");
 			btnExamen.setForeground(Color.red);
 			this.add(btnExamen);
 			btnExamen.addActionListener(action);
@@ -321,7 +322,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 		PanelExamenMultipleChoise panelExamenMultipleChoise = (PanelExamenMultipleChoise) panelExamen
 				.getPanelAnimacion().getComponent(0);
 		panelExamenMultipleChoise.mostrarPregunta(btn.getActionCommand());
-
+		panelExamenMultipleChoise.setBtn(btn);
 		panelExamen.getPanelAnimacion().repaint();
 		panelExamen.repaint();
 
@@ -332,6 +333,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 
 	public void seleccionarExamen(JToggleButton btn) {
 		unSelectButtons(btn);
+		
 		panelExamen.getPanelAnimacion().removeAll();
 
 		if (btn.getActionCommand().equals(
@@ -393,6 +395,7 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 		} else if (btn.getActionCommand().equals("finalizar")) {
 			agregarPanelFinalizar(btn);
 		}
+		
 
 		panelExamen.getPanelAnimacion().repaint();
 		panelExamen.repaint();
@@ -417,7 +420,18 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 
 		if (nuevaPos < this.getComponentCount()) {
 			JToggleButton btn = (JToggleButton) this.getComponent(nuevaPos);
-			seleccionarExamen(btn);
+			if(btn.getName()!=null && btn.getName().equals("MULTIPLECHOISE"))
+			{
+				try {
+					seleccionarPregunta(btn);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}	
+			}
+			else
+			{
+				seleccionarExamen(btn);	
+			}	
 		}
 	}
 

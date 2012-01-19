@@ -28,12 +28,4 @@ public interface PreguntaInterfaz {
 	public byte[] getPreImagen();
 	
 	public void setPreImagen(byte[] preImagen);
-	
-	public Set getDetalleExamenMultipleChoices();
-
-	public void setDetalleExamenMultipleChoices(Set detalleExamenMultipleChoices);
-
-	public Set getRespuestas();
-
-	public void setRespuestas(Set respuestas);	
 }

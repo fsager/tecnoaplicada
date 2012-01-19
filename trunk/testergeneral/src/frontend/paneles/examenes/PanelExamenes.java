@@ -53,15 +53,13 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 		}
 	}
 
-	public PanelExamenes(PersonaExamen personaExamen,
-			PanelExamen panelAnimacion, List<PreguntaInterfaz> preguntas) {
+	public PanelExamenes(PersonaExamen personaExamen,PanelExamen panelAnimacion, List<PreguntaInterfaz> preguntas) {
 		try {
 			initComponents();
 
 			this.personaExamen = personaExamen;
 
-			panelDetalleExamen = new PanelDetalleExamen(personaExamen, this,
-					preguntas);
+			panelDetalleExamen = new PanelDetalleExamen(personaExamen, this,preguntas);
 
 			panelAnimacion.setBtn(panelDetalleExamen.getBtnExamenPrimero());
 
@@ -78,7 +76,7 @@ public class PanelExamenes extends javax.swing.JPanel implements Finalisable {
 				panelExaminado.setVisible(true);
 				lbDemo.setVisible(false);
 			}
-
+			
 			this.panelAnimacion.add((JPanel) panelAnimacion);
 
 		} catch (Exception e) {

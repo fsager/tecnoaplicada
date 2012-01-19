@@ -6,6 +6,7 @@
 
 package frontend.paneles.audio;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -37,7 +38,6 @@ import testerGeneral.domain.ExamenDetalle;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Resultado;
 import testerGeneral.domain.ResultadoDetalleExamen;
-import testerGeneral.domain.Usuario;
 import testerGeneral.exceptions.ExceptionIsNotHadware;
 import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PersonaExamenDefinition;
@@ -79,6 +79,12 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 		this.personaExamen = personaExamen;
 		initComponents();
 
+		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL))
+			OBJETIVO=50;
+		else if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR))
+			OBJETIVO=60;
+		
+		
 		try {
 			ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
 					.getBizObject("examenDetalleService");
@@ -102,6 +108,8 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 		});
 
 		Util.mostrarError(lbError, null, true);
+		
+		
 
 		agragrGrafico();
 		agregarAlGrafico();
@@ -209,6 +217,16 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 	
 	public void agregarAlGrafico() {
 		dataset.clear();
+		
+		dataset.addValue(OBJETIVO,seriesObjetivo,""+250);//Serie Objetivo		
+		dataset.addValue(OBJETIVO,seriesObjetivo,""+500);//Serie Objetivo
+		dataset.addValue(OBJETIVO,seriesObjetivo,""+1000);//Serie Objetivo
+		dataset.addValue(OBJETIVO,seriesObjetivo,""+2000);//Serie Objetivo
+		dataset.addValue(OBJETIVO,seriesObjetivo,""+3000);//Serie Objetivo
+		dataset.addValue(OBJETIVO,seriesObjetivo,""+4000);//Serie Objetivo
+		dataset.addValue(OBJETIVO,seriesObjetivo,""+6000);//Serie Objetivo
+		dataset.addValue(OBJETIVO,seriesObjetivo,""+8000);//Serie Objetivo
+		
 		for (int i = 0; i < resultados.size(); i++) {
 			Resultado resultado = resultados.get(i);
 			if (resultado.getResValor1() != null) {
@@ -224,6 +242,7 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 			}
 
 		}
+		
 		chart.fireChartChanged();
 	}
 
@@ -241,17 +260,26 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 		plot.setBackgroundPaint(Color.lightGray);
 		plot.setDomainGridlinePaint(Color.white);
 		plot.setRangeGridlinePaint(Color.white);
+		
 
 		LineAndShapeRenderer renderer = new LineAndShapeRenderer();
 		renderer.setSeriesLinesVisible(0, true);
-		renderer.setSeriesShapesVisible(0, true);
+		renderer.setSeriesShapesVisible(0, false);
 		renderer.setSeriesLinesVisible(1, true);
 		renderer.setSeriesShapesVisible(1, true);
+		renderer.setSeriesLinesVisible(2, true);
+		renderer.setSeriesShapesVisible(2, true);
+
 		plot.setRenderer(renderer);
 
+		BasicStroke basicStroke=new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,2.0f, new float[] {8.0f, 8.0f}, 0.0f);
+		renderer.setSeriesStroke(0,basicStroke);
+		plot.getRenderer().setSeriesPaint(0, Color.GREEN.darker().darker());
+		plot.getRenderer().setSeriesPaint(1, jProgress250S.getForeground());
+		plot.getRenderer().setSeriesPaint(2, jProgress250B.getForeground());
+		
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		panelGrafico.add(chartPanel);
-		
 		
 	}
 
@@ -2146,27 +2174,29 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 		
 		for (Resultado res : resultados) {
 
-			double diferencia = Math.abs(res.getResValor1()
+			/*double diferencia = Math.abs(res.getResValor1()
 					- res.getResValor2());
 			
 			if (diferencia > 10)
 			{
 				etapasFueraDePromedio+=res.getResEtapa()+" Hz, ";
-			}
+			}*/
 			
-			double promedio = (res.getResValor1() + res.getResValor2()) / 2d;
+			/*double promedio = (res.getResValor1() + res.getResValor2()) / 2d;
 			promedio = Util.redondear(promedio);
 
-			if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
-					&& promedio > 50)
-				resultado=Examen.RESULTADO_FUERA;
-			else if (this.personaExamen.getPexaTipoExamen()
+			if (promedio > OBJETIVO)
+				resultado=Examen.RESULTADO_FUERA;*/
+			/*else if (this.personaExamen.getPexaTipoExamen()
 					.equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR)
 					&& promedio > 60)
+				resultado=Examen.RESULTADO_FUERA;*/
+			
+			if (res.getResValor1() > OBJETIVO || res.getResValor2() > OBJETIVO)
 				resultado=Examen.RESULTADO_FUERA;
 		}
 		
-		if(!etapasFueraDePromedio.equals(""))
+		/*if(!etapasFueraDePromedio.equals(""))
 		{
 			etapasFueraDePromedio=etapasFueraDePromedio.substring(0,etapasFueraDePromedio.length()-2);
 			int op = JOptionPaneTesterGral.showInternal(
@@ -2182,7 +2212,7 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 				return null;
 			}
 		}
-		else if(resultado.equals(""))
+		else*/ if(resultado.equals(""))
 		{
 			return Examen.RESULTADO_DENTRO;	
 		}
@@ -2270,7 +2300,9 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 	private List<Resultado> resultados = new ArrayList();
 	private String seriesSubida = "Subida";
 	private String seriesBajada = "Bajada";
+	private String seriesObjetivo = "Objetivo";
 	private JFreeChart chart;
+	private int OBJETIVO = -1;
 	private DefaultCategoryDataset dataset;
 
 }
