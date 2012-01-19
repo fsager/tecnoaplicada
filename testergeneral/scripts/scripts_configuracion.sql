@@ -313,7 +313,6 @@ INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_
 	VALUES('Test de audio','TEST_AUDIO',1,11,'<ul>
 												<li>Profesional:Como mínimo 50 Db.</li>
 												<li>Particular:Como mínimo 60 Db.</li>
-												<li>Diferencia entre DB subida y DB bajada no mayor a 10 Db.</li>
 											 </ul>','S');
 
 
