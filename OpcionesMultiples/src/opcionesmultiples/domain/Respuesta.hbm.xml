@@ -19,11 +19,5 @@
         <property name="resCorrecta" type="java.lang.String">
             <column name="RES_CORRECTA" length="1" not-null="true" />
         </property>
-        <set name="detalleExamenMultipleChoices" inverse="true">
-            <key>
-                <column name="RES_ID" not-null="true" />
-            </key>
-            <one-to-many class="opcionesmultiples.domain.DetalleExamenMultipleChoice" />
-        </set>
     </class>
 </hibernate-mapping>

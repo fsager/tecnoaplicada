@@ -3,19 +3,21 @@ package opcionesmultiples.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import testerGeneral.domain.PreguntaInterfaz;
+import testerGeneral.domain.RespuestaInterfaz;
+
 /**
  * Respuesta entity. @author MyEclipse Persistence Tools
  */
 
-public class Respuesta implements java.io.Serializable {
+public class Respuesta implements java.io.Serializable,RespuestaInterfaz {
 
 	// Fields
 
 	private Long id;
-	private Pregunta pregunta;
+	private PreguntaInterfaz pregunta;
 	private String resDetalle;
 	private String resCorrecta;
-	private Set detalleExamenMultipleChoices = new HashSet(0);
 
 	// Constructors
 
@@ -23,26 +25,6 @@ public class Respuesta implements java.io.Serializable {
 	public Respuesta() {
 	}
 
-	/** minimal constructor */
-	public Respuesta(Long id, Pregunta pregunta, String resDetalle,
-			String resCorrecta) {
-		this.id = id;
-		this.pregunta = pregunta;
-		this.resDetalle = resDetalle;
-		this.resCorrecta = resCorrecta;
-	}
-
-	/** full constructor */
-	public Respuesta(Long id, Pregunta pregunta, String resDetalle,
-			String resCorrecta, Set detalleExamenMultipleChoices) {
-		this.id = id;
-		this.pregunta = pregunta;
-		this.resDetalle = resDetalle;
-		this.resCorrecta = resCorrecta;
-		this.detalleExamenMultipleChoices = detalleExamenMultipleChoices;
-	}
-
-	// Property accessors
 
 	public Long getId() {
 		return this.id;
@@ -52,11 +34,11 @@ public class Respuesta implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Pregunta getPregunta() {
+	public PreguntaInterfaz getPregunta() {
 		return this.pregunta;
 	}
 
-	public void setPregunta(Pregunta pregunta) {
+	public void setPregunta(PreguntaInterfaz pregunta) {
 		this.pregunta = pregunta;
 	}
 
@@ -75,13 +57,4 @@ public class Respuesta implements java.io.Serializable {
 	public void setResCorrecta(String resCorrecta) {
 		this.resCorrecta = resCorrecta;
 	}
-
-	public Set getDetalleExamenMultipleChoices() {
-		return this.detalleExamenMultipleChoices;
-	}
-
-	public void setDetalleExamenMultipleChoices(Set detalleExamenMultipleChoices) {
-		this.detalleExamenMultipleChoices = detalleExamenMultipleChoices;
-	}
-
 }

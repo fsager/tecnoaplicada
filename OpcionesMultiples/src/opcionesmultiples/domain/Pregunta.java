@@ -19,8 +19,6 @@ public class Pregunta implements java.io.Serializable,PreguntaInterfaz {
 	private Long preValoracion;
 	private Long preOrden;
 	private byte preImagen[]=new byte[1];
-	private Set detalleExamenMultipleChoices = new HashSet(0);
-	private Set respuestas = new HashSet(0);
 
 	// Constructors
 
@@ -75,21 +73,4 @@ public class Pregunta implements java.io.Serializable,PreguntaInterfaz {
 	public void setPreImagen(byte[] preImagen) {
 		this.preImagen = preImagen;
 	}
-	
-	public Set getDetalleExamenMultipleChoices() {
-		return this.detalleExamenMultipleChoices;
-	}
-
-	public void setDetalleExamenMultipleChoices(Set detalleExamenMultipleChoices) {
-		this.detalleExamenMultipleChoices = detalleExamenMultipleChoices;
-	}
-
-	public Set getRespuestas() {
-		return this.respuestas;
-	}
-
-	public void setRespuestas(Set respuestas) {
-		this.respuestas = respuestas;
-	}
-
 }

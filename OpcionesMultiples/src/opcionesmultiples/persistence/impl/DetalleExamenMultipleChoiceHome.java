@@ -7,7 +7,9 @@ import opcionesmultiples.persistence.DetalleExamenMultipleChoiceDao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
 
 import testerGeneral.persistence.DAOObject;
 
@@ -80,12 +82,25 @@ public class DetalleExamenMultipleChoiceHome extends DAOObject implements Detall
     public List getAll(DetalleExamenMultipleChoice p_example) throws Exception {
         log.debug("finding DetalleExamenMultipleChoice instance by example");
         try {
-            List results = getSession()
+             Criteria cri= getSession()
                     .createCriteria(DetalleExamenMultipleChoice.class)
                     .add(Example.create(p_example)
                     			.enableLike()
-                    			.ignoreCase())
-            .list();
+                    			.ignoreCase());
+             
+             if(p_example.getPersonaExamen()!=null && p_example.getPersonaExamen().getPexaId()!=null)
+             {
+            	 cri.createCriteria("personaExamen").add(Restrictions.idEq(p_example.getPersonaExamen().getPexaId()));
+             }
+             
+             if(p_example.getPregunta()!=null && p_example.getPregunta().getId()!=null)
+             {
+            	 cri.createCriteria("pregunta").add(Restrictions.idEq(p_example.getPregunta().getId()));
+             }
+
+            	 
+            
+             List results=cri.list();
             log.debug("find by example successful, result size: " + results.size());
             return results;
         }

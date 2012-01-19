@@ -6,6 +6,7 @@
 
 package opcionesmultiples.paneles;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -43,8 +44,6 @@ import frontend.buttons.ButtonGuardar;
 import frontend.buttons.ButtonModificar;
 import frontend.buttons.ButtonNuevo;
 import frontend.components.JOptionPaneTesterGral;
-import frontend.paneles.PanelDominio;
-import frontend.tablemodel.TableModelPersona;
 import frontend.utils.Util;
 import frontend.ventanas.JInternalFrameTesterGral;
 import frontend.ventanas.VentanaSeleccionImagen;
@@ -1229,7 +1228,7 @@ public class PanelPreguntas extends javax.swing.JPanel {
 
 	public void buscarImagen(final JLabel label) {
 
-		final VentanaSeleccionImagen internalframe = new VentanaSeleccionImagen();
+		final VentanaSeleccionImagen internalframe = new VentanaSeleccionImagen(new Dimension(300,300),true);
 		internalframe.pack();
 		Util.agregarIframe(internalframe);
 

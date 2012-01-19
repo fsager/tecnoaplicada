@@ -1,19 +1,24 @@
 package opcionesmultiples.domain;
 
+import testerGeneral.domain.DetalleExamenMultipleChoiceInterfaz;
+import testerGeneral.domain.PreguntaInterfaz;
+import testerGeneral.domain.RespuestaInterfaz;
+import testerGeneral.domain.PersonaExamen;
+
 
 
 /**
  * DetalleExamenMultipleChoice entity. @author MyEclipse Persistence Tools
  */
 
-public class DetalleExamenMultipleChoice implements java.io.Serializable {
+public class DetalleExamenMultipleChoice implements java.io.Serializable,DetalleExamenMultipleChoiceInterfaz {
 
 	// Fields
 
 	private Long id;
 	private PersonaExamen personaExamen;
-	private Respuesta respuesta;
-	private Pregunta pregunta;
+	private RespuestaInterfaz respuesta;
+	private PreguntaInterfaz pregunta;
 	private String preDetalle;
 	private String resDetalle;
 	private String resCorrecta;
@@ -55,19 +60,19 @@ public class DetalleExamenMultipleChoice implements java.io.Serializable {
 		this.personaExamen = personaExamen;
 	}
 
-	public Respuesta getRespuesta() {
+	public RespuestaInterfaz getRespuesta() {
 		return this.respuesta;
 	}
 
-	public void setRespuesta(Respuesta respuesta) {
+	public void setRespuesta(RespuestaInterfaz respuesta) {
 		this.respuesta = respuesta;
 	}
 
-	public Pregunta getPregunta() {
+	public PreguntaInterfaz getPregunta() {
 		return this.pregunta;
 	}
 
-	public void setPregunta(Pregunta pregunta) {
+	public void setPregunta(PreguntaInterfaz pregunta) {
 		this.pregunta = pregunta;
 	}
 
