@@ -5,7 +5,7 @@
 --SUBIR AL UPDATE más el jar de tecnologíapplicada.jar!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 INSERT INTO APP.PROPIEDAD VALUES ('VALIDAR_LICENCIA','S',null);
 INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA_VITALICIA','N',null);
-INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA.CANTIDAD.INTENTOS.PERMITIDOS','4',null);
+INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA.CANTIDAD.INTENTOS.PERMITIDOS','5',null);
 INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA.FECHA.ULTIMO.INTENTO','',null);
 INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA.CANTIDAD.INTENTOS','0',null);
 
