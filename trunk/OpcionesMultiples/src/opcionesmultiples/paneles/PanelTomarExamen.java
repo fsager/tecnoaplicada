@@ -6,7 +6,7 @@
 
 package opcionesmultiples.paneles;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -20,6 +20,7 @@ import testerGeneral.domain.Examen;
 import testerGeneral.domain.Persona;
 import testerGeneral.domain.PreguntaInterfaz;
 import testerGeneral.service.ExamenDefinition;
+import testerGeneral.service.PersonaExamenDefinition;
 import frontend.buttons.ButtonCancelarConTexto;
 import frontend.buttons.ButtonGuardar;
 import frontend.utils.Util;
@@ -36,11 +37,17 @@ public class PanelTomarExamen extends javax.swing.JPanel {
 		this.per=per;
 		this.panelMenu=panelMenu;
 		this.jif = jif;
+		String preguntas=ContextManager.getProperty("PREGUNTAS_X_EXAMEN");
+		String tiempo=ContextManager.getProperty("TIEMPO_X_EXAMEN");
+		
 		initComponents();
 		btnGuardar.setText("Iniciar");
 		Util.cargarDominios(cbExamen,
 				Constantes.DOMINIO_CLAVE_MP_CATEGORIA_EXAMEN, false);
 		Util.mostrarError(lbError, null, true);
+		txtPregunta.setText(preguntas);
+		txtTiempo.setText(tiempo);
+		
 	}
 
 	/** This method is called from within the constructor to
@@ -292,9 +299,11 @@ public class PanelTomarExamen extends javax.swing.JPanel {
 			personaExamen.setExamen(exa);
 			personaExamen.setPexaCantidadPreguntas(preguntas);
 			personaExamen.setPexaTiempo(tiempoMinutos);
+			personaExamen.setPexaEstado("INICIADO");
+			personaExamen.setPexaFecha(new Date());
 			
-			//PersonaExamenDefinition personaExamenService = (PersonaExamenDefinition) ContextManager.getBizObject("personaExamenService");
-			//personaExamenService.insert(personaExamen);
+			PersonaExamenDefinition personaExamenService = (PersonaExamenDefinition) ContextManager.getBizObject("personaExamenService");
+			personaExamenService.insert(personaExamen);
 			
 			panelMenu.cargarSubMenuExamenes(new javax.swing.JToggleButton (cbExamen.getSelectedItem().toString()));
 			panelMenu.cargarExamenMultiplesChoice(personaExamen,generarListadoPreguntas(personaExamen));

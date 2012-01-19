@@ -71,7 +71,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 		panelContenido.removeAll();
 		
 		
-		PanelExamenMultipleChoise  panelExamenMultipleChoise=new PanelExamenMultipleChoise(preguntas);
+		PanelExamenMultipleChoise  panelExamenMultipleChoise=new PanelExamenMultipleChoise(personaExamen,preguntas);
 		panelExamenMultipleChoise.setPreguntasBiz(new PreguntaBizImpl());
 		ExamenesUtils.mostrarPanelExamen(personaExamen, panelContenido,panelExamenMultipleChoise, preguntas);
 		doAfterLoadMenuContenido();
