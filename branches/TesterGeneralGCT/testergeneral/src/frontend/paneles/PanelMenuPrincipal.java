@@ -46,8 +46,8 @@ public class PanelMenuPrincipal extends PanelMenu {
 	public PanelMenuPrincipal() {
 		initComponents();
 		if (!((Usuario) Util.usuarioCommon).hasAccesoTareasAdmPermition()) {
-			btnAdmGral.setVisible(false);
-			jSeparator4.setVisible(false);
+			btnAdmGral.setEnabled(false);
+			//jSeparator4.setVisible(false);
 		}
 		agregarEscuchas();
 
