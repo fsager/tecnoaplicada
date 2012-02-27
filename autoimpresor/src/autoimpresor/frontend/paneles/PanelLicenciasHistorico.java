@@ -18,6 +18,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
 import net.sf.jasperreports.engine.JasperReport;
@@ -612,6 +613,33 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 		tableLicencias
 				.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tableLicencias.setRowSorter(null);
+		
+		TableColumn column = tableLicencias.getColumnModel().getColumn(1);
+		column.setPreferredWidth(90);
+		column.setWidth(90);
+		column.setMinWidth(90);
+		
+		column = tableLicencias.getColumnModel().getColumn(4);
+		column.setPreferredWidth(55);
+		column.setWidth(55);
+		column.setMinWidth(55);
+		
+		column = tableLicencias.getColumnModel().getColumn(5);
+		column.setPreferredWidth(60);
+		column.setWidth(60);
+		column.setMinWidth(60);
+		
+		column = tableLicencias.getColumnModel().getColumn(6);
+		column.setPreferredWidth(35);
+		column.setWidth(35);
+		column.setMinWidth(35);
+		
+		column = tableLicencias.getColumnModel().getColumn(7);
+		column.setPreferredWidth(35);
+		column.setWidth(35);
+		column.setMinWidth(35);
+
+		
 		//tableLicencias.setAutoCreateRowSorter(false);
 
 		if (lst.size() > 0) {

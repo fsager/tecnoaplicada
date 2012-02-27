@@ -1,3 +1,35 @@
+select per_sexo,count(*) from app.persona
+group by per_sexo;
+
+select * from app.persona p,app.licencia l
+where l.PER_ID_TITULAR=p.per_id;
+
+select per_sexo,count(distinct per_id) from app.persona p,app.licencia l
+where l.PER_ID_TITULAR=p.per_id
+and per_id = 21
+group by per_sexo;
+
+H	1293
+M	228
+
+
+
+select * from app.clase_licencia;
+
+
+
+
+select PER_SEXO,PER_GRUPO_SANGUINEO from app.persona;
+
+select PER_SEXO,count(*) from app.persona group by per_sexo;
+
+
+select PER_SEXO,PER_GRUPO_SANGUINEO,count(*) from app.persona group by per_sexo,PER_GRUPO_SANGUINEO;
+
+
+update app.persona set per_sexo = 'M' where PER_ID > 1300;
+
+
 select * from app.CARNET_LICENCIAS
  order by CLI_FECHA_IMPRESION desc;
 

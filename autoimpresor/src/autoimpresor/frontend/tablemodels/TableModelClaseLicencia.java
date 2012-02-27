@@ -12,7 +12,8 @@ import autoimpresor.domain.Persona;
 
 public class TableModelClaseLicencia extends AbstractTableModel {
 	
-    private String[] columnNames = {"Clase","Descripción corta","Descripción","Vigencia predeterminada", "Edad mínima", "Edad máxima"};  
+    private String[] columnNames = 
+    {"Clase","Descripción corta","Descripción","Vigencia predeterminada", "Edad mínima", "Edad máxima","6 m","12 m","24 m","36 m","48 m","60 m"};
 
     private List<ClaseLicencia> lst;
 
@@ -48,6 +49,18 @@ public class TableModelClaseLicencia extends AbstractTableModel {
     		return  claseLic.getCllEdadMinima();
     	if(col==5)
     		return  claseLic.getCllEdadMaxima();
+    	if(col==6)
+    		return  claseLic.getCllImportex6meses()!=null ? "$ "+claseLic.getCllImportex6meses().toString() : "";
+    	if(col==7)
+    		return claseLic.getCllImportex12meses()!=null ? "$ "+claseLic.getCllImportex12meses().toString() : "";
+    	if(col==8)
+    		return claseLic.getCllImportex24meses()!=null ? "$ "+claseLic.getCllImportex24meses().toString() : "";
+    	if(col==9)
+    		return  claseLic.getCllImportex36meses()!=null ? "$ "+claseLic.getCllImportex36meses().toString() : "";
+    	if(col==10)
+    		return  claseLic.getCllImportex48meses()!=null ? "$ "+claseLic.getCllImportex48meses().toString() : "";
+    	if(col==11)
+    		return claseLic.getCllImportex60meses()!=null ? "$ "+claseLic.getCllImportex60meses().toString() : "";	
     	
     	return new String();
     }

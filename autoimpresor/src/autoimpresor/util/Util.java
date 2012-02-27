@@ -18,9 +18,14 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
+
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+
 import testerGeneral.business.ContextManager;
 
 public class Util {
+	
+	
 	public static JasperReport compileReport() throws Exception
 	{
 		String margenIzqVal=ContextManager.getProperty("LIC_MARGEN_IZQ");

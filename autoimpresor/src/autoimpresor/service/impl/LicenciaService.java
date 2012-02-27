@@ -51,4 +51,8 @@ public class LicenciaService implements LicenciaDefinition {
 	public List getAll(Licencia p_example,Date desde, Date hasta) throws Exception {
 		return biz.getAll(p_example,desde,hasta);
 	}
+	
+    public List<Object[]> getAllEstadisticas(Licencia p_example,Date desdeOtor, Date hastaOtor,Date desdeEdad, Date hastaEdad,String agrupador) throws Exception {
+    	return biz.getAllEstadisticas(p_example,desdeOtor,hastaOtor,desdeEdad,hastaEdad,agrupador);
+    }
 }

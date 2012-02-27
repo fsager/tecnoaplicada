@@ -39,6 +39,7 @@ import org.apache.commons.logging.LogFactory;
 import testerGeneral.comparetors.DateComparator;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
+import testerGeneral.domain.Propiedad;
 import testerGeneral.focus.MyOwnFocusTraversalPolicy;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.Licencia;
@@ -1919,7 +1920,25 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 					lic
 							.setLicTramite(Constantes.DOMINIO_TIPO_TRAMITE_RENOVACION);
 					lic.setLicEstado("P");
-
+					
+					String utilizarCaja = ContextManager.getProperty("UTILIZAR_CAJA_SN");
+					if(utilizarCaja.equals("S"))
+					{
+						String cajaImporteDuplicado = ContextManager.getProperty("CAJA_IMPORTE_DUPLICADO");
+						if(!cajaImporteDuplicado.equals(""))
+						{
+							cajaImporteDuplicado=cajaImporteDuplicado.replace(".","#");
+							cajaImporteDuplicado=cajaImporteDuplicado.replace(",",".");
+							cajaImporteDuplicado=cajaImporteDuplicado.replace("#",",");
+							lic.setLicImporte(Double.valueOf(cajaImporteDuplicado));							
+						}
+						else
+							JOptionPaneTesterGral
+							.showInternal(
+									"No se encuentra definido el importe para el duplicado de los carnets.",
+									"Emitir Duplicado",
+									JOptionPane.INFORMATION_MESSAGE);
+					}
 					LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager
 							.getBizObject("licenciaService");
 
@@ -2142,6 +2161,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			ImageIcon imgIcon = new ImageIcon(internalframe.getImg());
 			lbFirma.setIcon(imgIcon);
 		}
+		System.gc();
 	}
 
 	private void btnExaminarFotoActionPerformed(java.awt.event.ActionEvent evt) {
@@ -2163,6 +2183,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			if (internalframe.getArchivoSeleccionado() != null)
 				internalframe.getArchivoSeleccionado().delete();
 		}
+		
+		System.gc();
 
 	}
 

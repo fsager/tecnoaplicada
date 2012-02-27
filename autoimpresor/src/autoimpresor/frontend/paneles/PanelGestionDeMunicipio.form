@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupCentroImpresorSiNo">
     </Component>
@@ -319,7 +319,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPaneClasesDeLicencia" alignment="0" pref="804" max="32767" attributes="0"/>
@@ -327,7 +327,14 @@
                           <Component id="jButtonNuevaClaseLicencia" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButtonEditarClaseLicencia" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButtonEliminarCL" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="294" max="32767" attributes="0"/>
+                          <Component id="jLabelCodigoMunicipio1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jFormattedTextFieldEdadMinima" min="-2" pref="60" max="-2" attributes="1"/>
                       </Group>
+                      <Component id="checkHabilitarCaja" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -336,12 +343,16 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
+                  <Component id="checkHabilitarCaja" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPaneClasesDeLicencia" pref="196" max="32767" attributes="0"/>
+                  <Component id="jScrollPaneClasesDeLicencia" pref="199" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonNuevaClaseLicencia" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonEditarClaseLicencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jFormattedTextFieldEdadMinima" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelCodigoMunicipio1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonEliminarCL" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -389,6 +400,36 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEditarClaseLicenciaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="checkHabilitarCaja">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" value="Habilitar caja"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelCodigoMunicipio1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Importe de los duplicado:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldEdadMinima">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+              <Format format="#0.00" subtype="-1" type="0"/>
+            </Property>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[86, 22]"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonEliminarCL">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Eliminar clase"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEliminarCLActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

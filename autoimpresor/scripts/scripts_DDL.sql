@@ -151,6 +151,8 @@
        "LIC_EXAMEN_MEDICO" VARCHAR(34) not null,
        "LIC_EXAMEN_OFTALMOLOGICO" VARCHAR(34) not null,
        "LIC_EXAMEN_PSICOFISICO" VARCHAR(34) not null,
+       "LIC_IMPORTE" NUMERIC(15,2),
+	   "LIC_RECIBO" BIGINT,       
         constraint "SQL100613164854421" primary key ("LIC_ID")
     );
 
