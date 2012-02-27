@@ -248,6 +248,7 @@ public class Constantes {
 	public static final String MENU_TAREAS_ADMISTATIVAS="Tareas Administrativas";
 	public static final String MENU_SUB_PANEL_CONFIGURAR_DB="Configurar Base De Datos";
 	public static final String MENU_SUB_PANEL_CONFIGURAR_LICENCIA="Configurar Licencia";
+	public static final String MENU_SUB_PANEL_CAJA="Caja";
 	public static final String MENU_SALIR="Salir";
 	
 	/*Textos de Sub Menus Persona*/
@@ -267,7 +268,7 @@ public class Constantes {
 	/*Textos de Sub Menus Tareas Administrativas*/
 	public static final String MENU_SUB_PANEL_CONTROL="Panel Control";
 	public static final String MENU_SUB_BACKUPS="Backups";	
-	public static final String MENU_SUB_INFORMES="Informes y Estadísticas";
+	public static final String MENU_SUB_INFORMES="Estadísticas";
 	public static final String MENU_SUB_LOG="Log de Eventos";
 	public static final String MENU_SUB_PANEL_ADM_MINICIPIO="Administración de Municipio";
 	
