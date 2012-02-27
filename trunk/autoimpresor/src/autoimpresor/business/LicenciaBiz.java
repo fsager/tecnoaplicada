@@ -61,4 +61,8 @@ public class LicenciaBiz implements LicenciaDefinition {
 	public Long getMaxNumeroLicencia() throws Exception {
 		return dao.getMaxNumeroLicencia();
 	}
+	
+    public List<Object[]> getAllEstadisticas(Licencia p_example,Date desdeOtor, Date hastaOtor,Date desdeEdad, Date hastaEdad,String agrupador) throws Exception {
+    	return dao.getAllEstadisticas(p_example,desdeOtor,hastaOtor,desdeEdad,hastaEdad,agrupador);
+    }
 }

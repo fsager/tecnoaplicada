@@ -6,13 +6,13 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import testerGeneral.business.ContextManager;
+import testerGeneral.domain.UsuarioCommon;
 import autoimpresor.domain.Licencia;
 import autoimpresor.domain.Persona;
 
 public class TableModelLicenciaFull extends AbstractTableModel {
 	SimpleDateFormat sdf=new SimpleDateFormat(ContextManager.getProperty("FORMATO.FECHA"));
-    private String[] columnNames = {"Nombre Completo","Documento","Nro de autorización","Trámite","Otorgada","Vencimiento","Clase"};  
-
+    private String[] columnNames = {"Nombre Completo","Documento","Nro de autorización","Trámite","Otorgada","Vencimiento","Clase","Importe","Observaciones","Confeccionó","Responsable"};
     private List<Licencia> lst;
 
     public int getColumnCount() {
@@ -50,8 +50,15 @@ public class TableModelLicenciaFull extends AbstractTableModel {
     		return  sdf.format(lic.getLicFechaVencimiento());
     	if(col==6)
     		return lic.getLicClase();
+    	if(col==7)
+    		return lic.getLicImporte()!=null ? lic.getLicImporte() : null;
+    	if(col==8)
+    		return lic.getLicObservaciones()!=null ? lic.getLicObservaciones() : "";
+    	if(col==9)
+    		return lic.getUsuarioByUsrConfeccionoLicencia().getUsrNombre();
+    	if(col==10)
+    		return lic.getUsuarioByUsrNombreResponsable().getUsrNombre();
     	
-    	    	
     	return new String();
     }
 

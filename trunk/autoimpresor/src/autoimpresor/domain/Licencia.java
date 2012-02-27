@@ -35,6 +35,9 @@ public class Licencia implements java.io.Serializable {
 	private String licExamenMedico;
 	private String licExamenOftalmologico;
 	private String licExamenPsicofisico;
+	private Double licImporte;
+	private Long licRecibo;
+	
 	private Set cajas = new HashSet(0);
 	private Set cajas_1 = new HashSet(0);
 
@@ -228,6 +231,22 @@ public class Licencia implements java.io.Serializable {
 		this.licExamenPsicofisico = licExamenPsicofisico;
 	}
 
+	public Double getLicImporte() {
+		return licImporte;
+	}
+	
+	public void setLicImporte(Double licImporte) {
+		this.licImporte = licImporte;
+	}
+	
+	public Long getLicRecibo() {
+		return licRecibo;
+	}
+	
+	public void setLicRecibo(Long licRecibo) {
+		this.licRecibo = licRecibo;
+	}
+	
 	public Set getCajas() {
 		return this.cajas;
 	}
@@ -243,5 +262,7 @@ public class Licencia implements java.io.Serializable {
 	public void setCajas_1(Set cajas_1) {
 		this.cajas_1 = cajas_1;
 	}
+	
+	
 
 }

@@ -1,8 +1,18 @@
---select * from APP.Licencia;
+--SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+alter table app.licencia add "LIC_IMPORTE" NUMERIC(15,2);
+alter table app.licencia add "LIC_RECIBO" BIGINT;
 
 
+INSERT INTO APP.PROPIEDAD VALUES ('UTILIZAR_CAJA_SN','S',null);
+INSERT INTO APP.PROPIEDAD VALUES ('CAJA_IMPORTE_DUPLICADO','',null);
+
+--SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+	private Double licImporte;
+	private Long licRecibo;
+	
 --LICENCE PROPERTIES
---SUBIR AL UPDATE más el jar de tecnologíapplicada.jar!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SUBIR AL UPDATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 INSERT INTO APP.PROPIEDAD VALUES ('VALIDAR_LICENCIA','S',null);
 INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA_VITALICIA','N',null);
 INSERT INTO APP.PROPIEDAD VALUES ('LICENCIA.CANTIDAD.INTENTOS.PERMITIDOS','5',null);

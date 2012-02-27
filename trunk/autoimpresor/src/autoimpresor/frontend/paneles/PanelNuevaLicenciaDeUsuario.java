@@ -91,7 +91,12 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 	/** Creates new form PanelNuevaClaseLicencia */
 	public PanelNuevaLicenciaDeUsuario(Persona persona, Licencia lic,
 			JInternalFrameTesterGral parent) {
-
+		String utilizarCaja = ContextManager.getProperty("UTILIZAR_CAJA_SN");
+		if(utilizarCaja.equals("S"))
+			isCajaEnable=true;
+		else
+			isCajaEnable=false;
+		
 		this.persona = persona;
 		this.parent = parent;
 		this.licenciaRecibida = lic;
@@ -108,6 +113,15 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 		jFormattedFieldFechaOtorgamiento.setText(sdf.format(new Date()));
 		fechaOtorgamiento = getFechaOtorgamiento();
 		calcularFechaVencimiento();
+		
+		if(isCajaEnable)
+			setImporteSegunDuracionyClase();
+		else
+		{
+			jLabeImporte.setVisible(false);
+			jftfImporte.setVisible(false);
+		}
+			
 		// Util.mostrarError(jLabelError, null, true);
 
 		if (licenciaRecibida != null) {// La ventana sólo muestra datos de la
@@ -147,6 +161,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 		jFormattedFieldFechaOtorgamiento.setEnabled(false);
 		jComboBoxPeriodoDeVigencia.setEnabled(false);
 		jTextAreaObservaciones.setEnabled(false);
+		jftfImporte.setEnabled(false);
 		jComboBoxExamenTeorico.setEnabled(false);
 		jComboBoxExamenPractico.setEnabled(false);
 		jComboBoxExamenMedico.setEnabled(false);
@@ -200,6 +215,10 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 				jCheckBoxNoRegistraDeuda.setSelected(true);
 			}
 
+			if(isCajaEnable)
+				jftfImporte.setValue(licencia.getLicImporte());
+			
+			
 			Usuario usu = new Usuario();
 			usu.setUsrNombre(licencia.getUsuarioByUsrNombreFirma()
 					.getUsrNombre());
@@ -248,6 +267,30 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 			}
 		}
 
+	}
+
+	public void setImporteSegunDuracionyClase() {
+		Dominio dom = (Dominio) jComboBoxPeriodoDeVigencia.getSelectedItem();
+		ClaseLicencia clase = (ClaseLicencia) jComboBoxClaseLicencia
+				.getSelectedItem();
+		Double importe = getImporteSegunDuracionyClase(dom, clase);
+		jftfImporte.setValue(importe);
+	}
+
+	public Double getImporteSegunDuracionyClase(Dominio dom, ClaseLicencia clase) {
+		if (dom.getDomCodigo().equals("06")) {
+			return clase.getCllImportex6meses();
+		} else if (dom.getDomCodigo().equals("12")) {
+			return clase.getCllImportex12meses();
+		} else if (dom.getDomCodigo().equals("24")) {
+			return clase.getCllImportex24meses();
+		} else if (dom.getDomCodigo().equals("36")) {
+			return clase.getCllImportex36meses();
+		} else if (dom.getDomCodigo().equals("48")) {
+			return clase.getCllImportex48meses();
+		} else {
+			return clase.getCllImportex60meses();
+		}
 	}
 
 	private void llenarComboBoxClasesLicencia() {
@@ -340,8 +383,8 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 
 	private void llenarComboBoxFirmanteDeLicencia() {
 		try {
-			
-			String usr=ContextManager.getProperty("SISTEMA.ULTIMO.FIRMANTE");
+
+			String usr = ContextManager.getProperty("SISTEMA.ULTIMO.FIRMANTE");
 			List<Usuario> listaDeUsuarios = usuarioService
 					.getAll(new Usuario());
 			jComboBoxResponsableFirmanteDeLicencia.removeAllItems();
@@ -357,8 +400,9 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 								.equalsIgnoreCase("S")) {
 					jComboBoxResponsableFirmanteDeLicencia
 							.addItem(usuarioInsercion);
-					if(usr.compareTo(usuarioInsercion.getUsrNombre())==0)
-						jComboBoxResponsableFirmanteDeLicencia.setSelectedItem(usuarioInsercion);
+					if (usr.compareTo(usuarioInsercion.getUsrNombre()) == 0)
+						jComboBoxResponsableFirmanteDeLicencia
+								.setSelectedItem(usuarioInsercion);
 				}
 
 			}
@@ -474,6 +518,8 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 		jTextAreaObservaciones = new javax.swing.JTextArea();
 		jFormattedFieldFechaOtorgamiento = setFecha();
 		lbFechaEjemplo2 = new javax.swing.JLabel();
+		jLabeImporte = new javax.swing.JLabel();
+		jftfImporte = new javax.swing.JFormattedTextField();
 		jPanelRequisitosPrevios = new javax.swing.JPanel();
 		jLabelTeorico = new javax.swing.JLabel();
 		jLabelExamenPractico = new javax.swing.JLabel();
@@ -572,6 +618,10 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 		lbFechaEjemplo2.setFont(new java.awt.Font("Segoe UI", 0, 11));
 		lbFechaEjemplo2.setText("DD-MM-AAAA");
 
+		jLabeImporte.setText("Importe:");
+
+		jftfImporte.setMaximumSize(new java.awt.Dimension(86, 22));
+
 		javax.swing.GroupLayout jPanelLicenciaLayout = new javax.swing.GroupLayout(
 				jPanelLicencia);
 		jPanelLicencia.setLayout(jPanelLicenciaLayout);
@@ -580,7 +630,6 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
 								jPanelLicenciaLayout
 										.createSequentialGroup()
 										.addContainerGap()
@@ -596,6 +645,8 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 																jLabelTipoTramite)
 														.addComponent(
 																jLabelPeriodoDeVigencia)
+														.addComponent(
+																jLabeImporte)
 														.addComponent(
 																jLabelObservaciones))
 										.addPreferredGap(
@@ -649,7 +700,12 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 																				lbFechaEjemplo2,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				77,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)))
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addComponent(
+																jftfImporte,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																60,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addContainerGap()));
 		jPanelLicenciaLayout
 				.setVerticalGroup(jPanelLicenciaLayout
@@ -715,7 +771,21 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 														.addComponent(
 																jLabelPeriodoDeVigencia2))
 										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												jPanelLicenciaLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																jftfImporte,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jLabeImporte))
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+												14, Short.MAX_VALUE)
 										.addGroup(
 												jPanelLicenciaLayout
 														.createParallelGroup(
@@ -726,7 +796,8 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 																jScrollPaneObservaciones,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																39,
-																javax.swing.GroupLayout.PREFERRED_SIZE))));
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addContainerGap()));
 
 		jPanelRequisitosPrevios.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(null, "Requisitos previos",
@@ -1349,7 +1420,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 	//GEN-END:initComponents
 
 	private void jButtonGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {
-		
+
 		if (validarLicencia()) {
 			if (calcularFechaVencimiento() != null) {
 				uiToLicencia();
@@ -1357,16 +1428,18 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 			}
 		}
 	}
-	
-	public static void imprimirPlantillaConformida(Licencia licencia)
-	{
-		
+
+	public static void imprimirPlantillaConformida(Licencia licencia) {
+
 		try {
-			
-			String nombreMunicipio = ContextManager.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
-			String codigoMunicipio = ContextManager.getProperty("SISTEMA.CODIGO.MUNICIPIO");
-			byte[] escudoMunicipio = ContextManager.getPropertyObj("SISTEMA.FOTO.MUNICIPIO").getPropBlob();
-			
+
+			String nombreMunicipio = ContextManager
+					.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
+			String codigoMunicipio = ContextManager
+					.getProperty("SISTEMA.CODIGO.MUNICIPIO");
+			byte[] escudoMunicipio = ContextManager.getPropertyObj(
+					"SISTEMA.FOTO.MUNICIPIO").getPropBlob();
+
 			CarnetLicencias carnet = new CarnetLicencias(licencia,
 					nombreMunicipio, codigoMunicipio, escudoMunicipio);
 			List<CarnetLicencias> carnets = new ArrayList();
@@ -1377,27 +1450,34 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 
 			HashMap parameterMap = new HashMap();
 
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(carnets);
-			
-			JasperPrint print = JasperFillManager.fillReport(f.getAbsolutePath(), parameterMap, ds);
+			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(
+					carnets);
+
+			JasperPrint print = JasperFillManager.fillReport(f
+					.getAbsolutePath(), parameterMap, ds);
 			PrinterJob job = PrinterJob.getPrinterJob();
 			/*PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
 			printRequestAttributeSet.add(new PageRanges(1,2));*/
-			
+
 			JRPrintServiceExporter exporter;
 			exporter = new JRPrintServiceExporter();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);				
-			exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE,job.getPrintService());
-			exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, job.getPrintService().getAttributes());
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+			exporter.setParameter(
+					JRPrintServiceExporterParameter.PRINT_SERVICE, job
+							.getPrintService());
+			exporter
+					.setParameter(
+							JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET,
+							job.getPrintService().getAttributes());
 			//JRPrintServiceExporterParameter.
 			//exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET, printRequestAttributeSet);
-			exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
-			exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+			exporter.setParameter(
+					JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG,
+					Boolean.FALSE);
+			exporter.setParameter(
+					JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG,
+					Boolean.TRUE);
 			exporter.exportReport();
-			
-	
-			
-		
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -1412,21 +1492,24 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 		}
 	}
 
-	public void uiToLicencia()
-	{
+	public void uiToLicencia() {
 		licencia.setLicObservaciones(jTextAreaObservaciones.getText());
 		licencia.setLicClase(claseLicenciaSeleccionada.getCllNombreClase());
-		licencia.setLicTramite(jComboBoxTipoTramite.getSelectedItem().toString());
+		licencia.setLicTramite(jComboBoxTipoTramite.getSelectedItem()
+				.toString());
+		if(isCajaEnable)
+			licencia.setLicImporte(((Number)jftfImporte.getValue()).doubleValue());
+			
 		licencia.setLicFechaOtorgada(getFechaOtorgamiento());
 		licencia.setLicFechaVencimiento(calcularFechaVencimiento());
-		if (ContextManager.getProperty("SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S"))
-		{
+		if (ContextManager.getProperty(
+				"SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S")) {
 			licencia.setLicEstado("H");
-		}
-		else
+		} else
 			licencia.setLicEstado("P");
-		
-		Usuario usuarioSeleccionado = (Usuario) jComboBoxResponsableFirmanteDeLicencia.getSelectedItem();
+
+		Usuario usuarioSeleccionado = (Usuario) jComboBoxResponsableFirmanteDeLicencia
+				.getSelectedItem();
 		licencia.setUsuarioByUsrNombreFirma(usuarioSeleccionado);
 		licencia.setLicExamenTeorico(jComboBoxExamenTeorico.getSelectedItem()
 				.toString());
@@ -1443,7 +1526,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 		licencia.setUsuarioByUsrNombreResponsable(usuarioSeleccionado);
 		licencia.setLicFechaReal(new Date());
 		licencia.setLicRequisitosSn("S");
-		
+
 		licencia.setUsuarioByUsrConfeccionoLicencia(usuarioSeleccionado);
 		licencia.setPersona(persona);
 		licencia.setLicExamenMedico(jComboBoxExamenMedico.getSelectedItem()
@@ -1452,9 +1535,9 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 				.getSelectedItem().toString());
 		licencia.setLicExamenPsicofisico(jComboBoxExamenPsicofisico
 				.getSelectedItem().toString());
-		
+
 	}
-	
+
 	private void guardarLicencia() {
 		String listaRequerimientosIncompletos = "";
 
@@ -1482,32 +1565,37 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 			}
 
 			licencia.setLicNumero(numLicenciaActual);
-			Propiedad propiedadCodigoMunicipio = propiedadService.get("SISTEMA.CODIGO.MUNICIPIO");
-			String valorPropiedadCodigoMunicipio = propiedadCodigoMunicipio.getPropValor();
-			licencia.setLicCodLicencia(valorPropiedadCodigoMunicipio+" - "+licencia.getLicNumero().toString());
+			Propiedad propiedadCodigoMunicipio = propiedadService
+					.get("SISTEMA.CODIGO.MUNICIPIO");
+			String valorPropiedadCodigoMunicipio = propiedadCodigoMunicipio
+					.getPropValor();
+			licencia.setLicCodLicencia(valorPropiedadCodigoMunicipio + " - "
+					+ licencia.getLicNumero().toString());
 
 			if (listaRequerimientosIncompletos.isEmpty()) {
 				/*Si no hay requerimientos incompletos, se procede a guardar la licencia.*/
 				try {
 					licenciaService.insert(licencia);
-					Propiedad pro=ContextManager.getPropertyObj("SISTEMA.ULTIMO.FIRMANTE");
-					pro.setPropValor(licencia.getUsuarioByUsrNombreFirma().getUsrNombre());
+					Propiedad pro = ContextManager
+							.getPropertyObj("SISTEMA.ULTIMO.FIRMANTE");
+					pro.setPropValor(licencia.getUsuarioByUsrNombreFirma()
+							.getUsrNombre());
 					pro.setPropBlob(new byte[1]);
 					propiedadService.update(pro);
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
-				
-				if(!numLicenciaActual.equals(hasta)) {
+
+				if (!numLicenciaActual.equals(hasta)) {
 					Long diff = hasta - numLicenciaActual - 1;
 					if (diff <= faltan) {
-						JOptionPaneTesterGral.showInternalMessageDialog("Quedan "
-								+ diff + " números de licencias",
+						JOptionPaneTesterGral.showInternalMessageDialog(
+								"Quedan " + diff + " números de licencias",
 								"Número de Licencias",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
-				
+
 				JOptionPaneTesterGral.showInternalMessageDialog(
 						"Los cambios se guardaron correctamente",
 						Constantes.MENSAJE_GUARDADO_TIT,
@@ -1519,26 +1607,31 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 						listaRequerimientosIncompletos, licencia,
 						(JInternalFrameTesterGral) parent);
 				Util.agregarIframe(guardarLicRqsIncompletos);
-				guardarLicRqsIncompletos.doModal(this.getRootPane().getRootPane());
+				guardarLicRqsIncompletos.doModal(this.getRootPane()
+						.getRootPane());
 				guardarLicRqsIncompletos.setVisible(true);
-	
+
 			}
-			
-			if (ContextManager.getProperty("SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S"))
-			{
-				String nombreMunicipio = ContextManager.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
-				String codigoMunicipio = ContextManager.getProperty("SISTEMA.CODIGO.MUNICIPIO");
-				byte[] escudoMunicipio = ContextManager.getPropertyObj("SISTEMA.FOTO.MUNICIPIO").getPropBlob();
-				
-				CarnetLicencias carnet = new CarnetLicencias(licenciaService.get(licencia.getLicId()),
-						nombreMunicipio, codigoMunicipio, escudoMunicipio);
+
+			if (ContextManager.getProperty(
+					"SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S")) {
+				String nombreMunicipio = ContextManager
+						.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
+				String codigoMunicipio = ContextManager
+						.getProperty("SISTEMA.CODIGO.MUNICIPIO");
+				byte[] escudoMunicipio = ContextManager.getPropertyObj(
+						"SISTEMA.FOTO.MUNICIPIO").getPropBlob();
+
+				CarnetLicencias carnet = new CarnetLicencias(licenciaService
+						.get(licencia.getLicId()), nombreMunicipio,
+						codigoMunicipio, escudoMunicipio);
 				List<CarnetLicencias> carnets = new ArrayList<CarnetLicencias>();
 				carnets.add(carnet);
-				
 
-				autoimpresor.util.Util.printReportCarnet(new HashMap(), carnets);
+				autoimpresor.util.Util
+						.printReportCarnet(new HashMap(), carnets);
 			}
-			
+
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
@@ -1568,6 +1661,28 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 
 		if (getFechaOtorgamiento() == null) {
 			return false;
+		}
+		
+		if(isCajaEnable)
+		{
+			if(jftfImporte.getValue()==null)
+			{
+				Util.mostrarError(jLabelError,
+						"Debe indicar un importe.", false);
+				return false;
+			}
+			
+			Dominio dom = (Dominio) jComboBoxPeriodoDeVigencia.getSelectedItem();
+			ClaseLicencia clase = (ClaseLicencia) jComboBoxClaseLicencia.getSelectedItem();
+			Double importeCorrespondiente=getImporteSegunDuracionyClase(dom, clase);
+			Double importeActual=((Number)jftfImporte.getValue()).doubleValue();
+			
+			if(importeCorrespondiente.compareTo(importeActual)!=0 && jTextAreaObservaciones.getText().equals(""))
+			{
+				Util.mostrarError(jLabelError,
+						"Se ha modificado el importe. Explique el motivo en las observaciones.", false);
+				return false;
+			}
 		}
 
 		if (proValidar.equals("S")) {
@@ -1650,97 +1765,91 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 			return false;
 		}
 	}
-	
+
 	private boolean validarClasesLicenciaAprendizaje() {
-		String[] clasePermitidas={"A-1","A-2","A-3","B-1","F"};
-		String clase=claseLicenciaSeleccionada.getCllNombreClase();
-		for(int i=0;i<clasePermitidas.length;i++)
-		{
-			if(clase.equals(clasePermitidas[i]))
+		String[] clasePermitidas = { "A-1", "A-2", "A-3", "B-1", "F" };
+		String clase = claseLicenciaSeleccionada.getCllNombreClase();
+		for (int i = 0; i < clasePermitidas.length; i++) {
+			if (clase.equals(clasePermitidas[i]))
 				return true;
-		}		
+		}
 		return false;
 	}
-	
+
 	private boolean validarClasesB1() {
-		String clase=claseLicenciaSeleccionada.getCllNombreClase();
-		if(clase.equals("B-1"))
-		{
-			long numeroPeriodoVigenciaSeleccionado = Long.valueOf(jComboBoxPeriodoDeVigencia.getSelectedItem().toString());
-			if (numeroPeriodoVigenciaSeleccionado > 12) 
+		String clase = claseLicenciaSeleccionada.getCllNombreClase();
+		if (clase.equals("B-1")) {
+			long numeroPeriodoVigenciaSeleccionado = Long
+					.valueOf(jComboBoxPeriodoDeVigencia.getSelectedItem()
+							.toString());
+			if (numeroPeriodoVigenciaSeleccionado > 12)
 				return false;
 		}
 
 		return true;
 	}
-	
+
 	private boolean tieneLicencia() {
-		
-		try
-		{
-			Licencia lic=new Licencia();
+
+		try {
+			Licencia lic = new Licencia();
 			//String clase=claseLicenciaSeleccionada.getCllNombreClase();
 			lic.setPersona(persona);
 			//lic.setLicClase(clase);
-			List list=licenciaService.getAll(lic);
-			
-			if(list.size()>0)
+			List list = licenciaService.getAll(lic);
+
+			if (list.size() > 0)
 				return true;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		return false;
 	}
-	
+
 	private boolean validarClasesDependientesE1() {
-		String[] claseDependientesE1={"B-2","C","D-1","D-2","D-3","E-1","E-2","G"};
-		String clase=claseLicenciaSeleccionada.getCllNombreClase();
-		for(int i=0;i<claseDependientesE1.length;i++)
-		{
-			if(clase.equals(claseDependientesE1[i]))
-			{
-				if(!tieneLicenciaE1PorUnAño())
+		String[] claseDependientesE1 = { "B-2", "C", "D-1", "D-2", "D-3",
+				"E-1", "E-2", "G" };
+		String clase = claseLicenciaSeleccionada.getCllNombreClase();
+		for (int i = 0; i < claseDependientesE1.length; i++) {
+			if (clase.equals(claseDependientesE1[i])) {
+				if (!tieneLicenciaE1PorUnAño())
 					return false;
 				else
 					return true;
 			}
-		}		
-		
+		}
+
 		return true;
 	}
-	
+
 	private boolean tieneLicenciaE1PorUnAño() {
-		try
-		{
-			String[] claseDependientesE1={"B-1","B-2","C","D-1","D-2","D-3","E-1","E-2","G"};
-			String clase=claseLicenciaSeleccionada.getCllNombreClase();
-			for(int i=0;i<claseDependientesE1.length;i++)
-			{
-				Licencia lic=new Licencia();
+		try {
+			String[] claseDependientesE1 = { "B-1", "B-2", "C", "D-1", "D-2",
+					"D-3", "E-1", "E-2", "G" };
+			String clase = claseLicenciaSeleccionada.getCllNombreClase();
+			for (int i = 0; i < claseDependientesE1.length; i++) {
+				Licencia lic = new Licencia();
 				lic.setLicClase(claseDependientesE1[i]);
 				lic.setPersona(persona);
-				List<Licencia> list=licenciaService.getAll(lic);
-				
-				if(list.size()>0)
-				{
-					for(int j=0;j<list.size();j++)
-					{
-						Licencia licAux=list.get(j);
-						int anos=Util. calcularEdad(licAux.getLicFechaOtorgada());
-						if(clase.equalsIgnoreCase(licAux.getLicClase()) || anos>=1)
-						{
+				List<Licencia> list = licenciaService.getAll(lic);
+
+				if (list.size() > 0) {
+					for (int j = 0; j < list.size(); j++) {
+						Licencia licAux = list.get(j);
+						int anos = Util.calcularEdad(licAux
+								.getLicFechaOtorgada());
+						if (clase.equalsIgnoreCase(licAux.getLicClase())
+								|| anos >= 1) {
 							return true;
 						}
 					}
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		return false;
 	}
 
@@ -1809,7 +1918,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 			listaRequerimientosIncompletos = listaRequerimientosIncompletos
 					.concat("- Antecedentes no permitidos.\n");
 		}
-		
+
 		if (!validarExamenMedico()) {
 			listaRequerimientosIncompletos = listaRequerimientosIncompletos
 					.concat("- Examen médico requerido.\n");
@@ -1827,14 +1936,15 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 					.concat("- Examen psicofísico requerido.\n");
 
 		}
-		
-		if(!validarClasesDependientesE1())
-		{
-			listaRequerimientosIncompletos = listaRequerimientosIncompletos.concat("- Debe tener experiencia con una Clase B1 de un año como mínimo.\n");
+
+		if (!validarClasesDependientesE1()) {
+			listaRequerimientosIncompletos = listaRequerimientosIncompletos
+					.concat("- Debe tener experiencia con una Clase B1 de un año como mínimo.\n");
 		}
-		
+
 		// Comprobaciones para licencias Aprendizaje y Primer licencia.
-		if (jComboBoxTipoTramite.getSelectedItem().toString().equalsIgnoreCase("Aprendizaje")
+		if (jComboBoxTipoTramite.getSelectedItem().toString().equalsIgnoreCase(
+				"Aprendizaje")
 				|| jComboBoxTipoTramite.getSelectedItem().toString()
 						.equalsIgnoreCase("Primer licencia")) {
 
@@ -1847,27 +1957,24 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 				listaRequerimientosIncompletos = listaRequerimientosIncompletos
 						.concat("- Examen teórico requerido.\n");
 			}
-			
-			if(!validarClasesLicenciaAprendizaje())
-			{
+
+			if (!validarClasesLicenciaAprendizaje()) {
 				listaRequerimientosIncompletos = listaRequerimientosIncompletos
-				.concat("- Clase de licencia no permitida para tipo trámite.\n");
+						.concat("- Clase de licencia no permitida para tipo trámite.\n");
 			}
-			
-			if(!validarClasesB1())
-			{
-				listaRequerimientosIncompletos = listaRequerimientosIncompletos.concat("- Período de vigencia no permitido. Máximo permitido 1 año.\n");
-			}			
+
+			if (!validarClasesB1()) {
+				listaRequerimientosIncompletos = listaRequerimientosIncompletos
+						.concat("- Período de vigencia no permitido. Máximo permitido 1 año.\n");
+			}
 
 		}
-		
+
 		// Presenta licencia anterior
-		if (jComboBoxTipoTramite.getSelectedItem().toString().equalsIgnoreCase("Presenta licencia anterior")) {
-
-	
+		if (jComboBoxTipoTramite.getSelectedItem().toString().equalsIgnoreCase(
+				"Presenta licencia anterior")) {
 
 		}
-		
 
 		// Comprobaciones para licencias Duplicado, Modificada y Renovación.
 		if (jComboBoxTipoTramite.getSelectedItem().toString().equalsIgnoreCase(
@@ -1876,10 +1983,10 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 						.equalsIgnoreCase("Modificada")
 				|| jComboBoxTipoTramite.getSelectedItem().toString()
 						.equalsIgnoreCase("Renovación")) {
-			if(!tieneLicencia())
-			{
+			if (!tieneLicencia()) {
 				//listaRequerimientosIncompletos = listaRequerimientosIncompletos.concat("- Debe tener por lo menos una licencia clase: "+claseLicenciaSeleccionada.getCllNombreClase()+" emitida para realizar el tipo trámite.\n");
-				listaRequerimientosIncompletos = listaRequerimientosIncompletos.concat("- Debe tener por lo menos una licencia emitida para realizar el tipo trámite.\n");
+				listaRequerimientosIncompletos = listaRequerimientosIncompletos
+						.concat("- Debe tener por lo menos una licencia emitida para realizar el tipo trámite.\n");
 			}
 
 		}
@@ -1896,7 +2003,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 	private int calcularEdadDePersona(Persona persona) {
 		Date nacimiento = persona.getPerFechaNacimiento();
 		if (nacimiento != null) {
-			int anos=Util.calcularEdad(nacimiento);
+			int anos = Util.calcularEdad(nacimiento);
 			if (anos >= 0) {
 				return anos;
 			} else {
@@ -1924,6 +2031,8 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 			fechaOtorgamiento = getFechaOtorgamiento();
 			calcularFechaVencimiento();
 		}
+		
+		setImporteSegunDuracionyClase();
 	}
 
 	private void jComboBoxClaseLicenciaActionPerformed(
@@ -1943,6 +2052,8 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 					.getCllVigenciaPredeterminada()));
 
 			jComboBoxPeriodoDeVigencia.setSelectedItem(dominio);
+			
+			setImporteSegunDuracionyClase();
 
 		} catch (NullPointerException e) {
 
@@ -1953,8 +2064,8 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 
 	private void jComboBoxTipoTramiteActionPerformed(
 			java.awt.event.ActionEvent evt) {
-		Dominio dom=(Dominio)jComboBoxTipoTramite.getSelectedItem();
-		
+		Dominio dom = (Dominio) jComboBoxTipoTramite.getSelectedItem();
+
 		/*if(dom.getDomCodigo().equals("Presenta licencia anterior"))
 		{
 			jTextAreaObservaciones.setText("Presenta licencia anterior")
@@ -1984,6 +2095,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 	private javax.swing.JComboBox jComboBoxResponsableFirmanteDeLicencia;
 	private javax.swing.JComboBox jComboBoxTipoTramite;
 	private javax.swing.JFormattedTextField jFormattedFieldFechaOtorgamiento;
+	private javax.swing.JLabel jLabeImporte;
 	private javax.swing.JLabel jLabelAntecedentes;
 	private javax.swing.JLabel jLabelClaseDeLicencia;
 	private javax.swing.JLabel jLabelError;
@@ -2015,10 +2127,11 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 	private javax.swing.JPanel jPanelRequisitosPrevios;
 	private javax.swing.JScrollPane jScrollPaneObservaciones;
 	private javax.swing.JTextArea jTextAreaObservaciones;
+	private javax.swing.JFormattedTextField jftfImporte;
 	private javax.swing.JLabel lbFechaEjemplo2;
 	// End of variables declaration//GEN-END:variables
 
 	private String proValidar = ContextManager
 			.getProperty("SISTEMA.VALIDAR_REQUISITOS_SN");
-
+	private boolean isCajaEnable;
 }

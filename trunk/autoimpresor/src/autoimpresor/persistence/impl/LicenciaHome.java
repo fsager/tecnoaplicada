@@ -1,6 +1,5 @@
 package autoimpresor.persistence.impl;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,15 +9,14 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.impl.CriteriaImpl;
 
 import testerGeneral.domain.Propiedad;
 import testerGeneral.persistence.DAOObject;
 import testerGeneral.persistence.impl.Util;
 import autoimpresor.business.ContextManager;
-import autoimpresor.domain.CarnetLicencias;
 import autoimpresor.domain.Licencia;
 import autoimpresor.persistence.LicenciaDao;
 
@@ -154,6 +152,71 @@ public class LicenciaHome extends DAOObject implements LicenciaDao {
             
             //cri.setMaxResults(1000);
             
+            List results = cri.list();
+            log.debug("find by example successful, result size: " + results.size());
+            return results;
+        }
+        catch (RuntimeException re) {
+            //log.error("find by example failed", re);
+            throw re;
+        }
+    }
+    
+    public List<Object[]> getAllEstadisticas(Licencia p_example,Date desdeOtor, Date hastaOtor,Date desdeEdad, Date hastaEdad,String agrupador) throws Exception {
+    	
+        log.debug("finding Licencia instance by example");
+        try {
+            Criteria cri = getSession().createCriteria(Licencia.class);
+            Criteria criPersona=null;
+            cri.add(Example.create(p_example).enableLike().ignoreCase());
+            
+            if(p_example.getPersona()!=null)
+            {
+            	 p_example.getPersona().setPerFirma(null);
+            	 p_example.getPersona().setPerFoto(null);     
+                 
+            	 criPersona=cri.createCriteria("persona","persona");
+            	 criPersona.add(Example.create(p_example.getPersona()).enableLike().ignoreCase());
+            	 
+                 if(desdeEdad!=null)
+                 {
+                	criPersona.add(Restrictions.le("perFechaNacimiento",desdeEdad));
+                 }
+                 if(hastaEdad!=null)
+                 {
+                	criPersona.add(Restrictions.ge("perFechaNacimiento",hastaEdad));
+                 }
+            }
+            
+            
+            if(desdeOtor!=null)
+            {
+            	cri.add(Restrictions.ge("licFechaOtorgada",desdeOtor));
+            }
+            if(hastaOtor!=null)
+            {
+            	cri.add(Restrictions.le("licFechaOtorgada",hastaOtor));
+            }
+
+            ProjectionList projList = Projections.projectionList();
+            /*projList.add(Projections.property(criPersona.getAlias()+"."+agrupador));
+            projList.add(Projections.count(criPersona.getAlias()+"."+agrupador),"count");
+            projList.add(Projections.groupProperty(criPersona.getAlias()+"."+agrupador));*/
+            projList.add(Projections.groupProperty(agrupador));
+            //projList.add(Projections.property(agrupador));
+            if(agrupador.startsWith("persona"))
+            	projList.add(Projections.countDistinct("persona.perId"),"count");            
+            else
+            	projList.add(Projections.count(agrupador),"count");
+            	
+            
+            
+            //criPersona.
+            cri.setProjection(projList);
+            
+            cri.addOrder(Order.desc("count"));
+
+         
             List results = cri.list();
             log.debug("find by example successful, result size: " + results.size());
             return results;

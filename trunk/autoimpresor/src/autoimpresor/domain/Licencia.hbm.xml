@@ -10,10 +10,10 @@
             <column name="LIC_ID" />
             <generator class="identity" />
         </id>
-        <many-to-one name="usuarioByUsrConfeccionoLicencia" class="autoimpresor.domain.Usuario" fetch="select">
+        <many-to-one name="usuarioByUsrConfeccionoLicencia" class="autoimpresor.domain.Usuario" fetch="select" lazy="false">
             <column name="USR_CONFECCIONO_LICENCIA" not-null="true" />
         </many-to-one>
-        <many-to-one name="usuarioByUsrNombreResponsable" class="autoimpresor.domain.Usuario" fetch="select">
+        <many-to-one name="usuarioByUsrNombreResponsable" class="autoimpresor.domain.Usuario" fetch="select" lazy="false">
             <column name="USR_NOMBRE_RESPONSABLE" not-null="true" />
         </many-to-one>
         <many-to-one name="usuarioByUsrNombreFirma" class="autoimpresor.domain.Usuario" fetch="select" lazy="false">
@@ -57,7 +57,13 @@
         </property>
         <property name="licNumero" type="java.lang.Long">
             <column name="LIC_NUMERO" not-null="true" />
+        </property>        
+        <property name="licRecibo" type="java.lang.Long">
+            <column name="LIC_RECIBO" not-null="false" />
         </property>
+                <property name="licImporte" type="java.lang.Double">
+            <column name="LIC_IMPORTE" not-null="false" />
+        </property>        
         <property name="licCodLicencia" type="java.lang.String">
             <column name="LIC_COD_LICENCIA" length="50" not-null="true" />
         </property>

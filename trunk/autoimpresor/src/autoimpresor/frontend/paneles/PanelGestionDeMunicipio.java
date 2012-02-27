@@ -22,9 +22,11 @@ import testerGeneral.domain.Propiedad;
 import testerGeneral.service.PropiedadDefinition;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.ClaseLicencia;
+import autoimpresor.domain.Licencia;
 import autoimpresor.domain.Usuario;
 import autoimpresor.frontend.tablemodels.TableModelClaseLicencia;
 import autoimpresor.service.ClaseLicenciaDefinition;
+import autoimpresor.service.LicenciaDefinition;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -45,6 +47,8 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 			.getBizObject("propiedadService");
 	private ClaseLicenciaDefinition claseLicenciaService = (ClaseLicenciaDefinition) ContextManager
 			.getBizObject("claseLicenciaService");
+	LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager
+			.getBizObject("licenciaService");
 	Usuario usuarioLogueado = (Usuario) Util.usuarioCommon;
 
 	/** Creates new form PanelGestionDeMunicipio */
@@ -100,6 +104,10 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 		jTableClasesDeLicencia = new javax.swing.JTable();
 		jButtonNuevaClaseLicencia = new javax.swing.JButton();
 		jButtonEditarClaseLicencia = new javax.swing.JButton();
+		checkHabilitarCaja = new javax.swing.JCheckBox();
+		jLabelCodigoMunicipio1 = new javax.swing.JLabel();
+		jFormattedTextFieldEdadMinima = new javax.swing.JFormattedTextField();
+		jButtonEliminarCL = new javax.swing.JButton();
 		btnExaminarFoto = new ButtonExaminar();
 		jLabelLogoMunicipio = new javax.swing.JLabel();
 		btnCancelarFoto = new ButtonCancelarMini();
@@ -425,6 +433,27 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 					}
 				});
 
+		checkHabilitarCaja.setSelected(true);
+		checkHabilitarCaja.setText("Habilitar caja");
+
+		jLabelCodigoMunicipio1.setText("Importe de los duplicado:");
+
+		jFormattedTextFieldEdadMinima
+				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
+						new javax.swing.text.NumberFormatter(
+								new java.text.DecimalFormat("#0.00"))));
+		jFormattedTextFieldEdadMinima.setMaximumSize(new java.awt.Dimension(86,
+				22));
+
+		jButtonEliminarCL.setText("Eliminar clase");
+		jButtonEliminarCL.setEnabled(false);
+		jButtonEliminarCL
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						jButtonEliminarCLActionPerformed(evt);
+					}
+				});
+
 		javax.swing.GroupLayout jPanelClasesDeLicenciaLayout = new javax.swing.GroupLayout(
 				jPanelClasesDeLicencia);
 		jPanelClasesDeLicencia.setLayout(jPanelClasesDeLicenciaLayout);
@@ -453,7 +482,29 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																		.addComponent(
-																				jButtonEditarClaseLicencia)))
+																				jButtonEditarClaseLicencia)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jButtonEliminarCL)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																				294,
+																				Short.MAX_VALUE)
+																		.addComponent(
+																				jLabelCodigoMunicipio1)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jFormattedTextFieldEdadMinima,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				60,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addComponent(
+																checkHabilitarCaja,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																157,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addContainerGap()));
 		jPanelClasesDeLicenciaLayout
 				.setVerticalGroup(jPanelClasesDeLicenciaLayout
@@ -463,11 +514,13 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 								javax.swing.GroupLayout.Alignment.TRAILING,
 								jPanelClasesDeLicenciaLayout
 										.createSequentialGroup()
-										.addContainerGap()
+										.addComponent(checkHabilitarCaja)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(
 												jScrollPaneClasesDeLicencia,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
-												196, Short.MAX_VALUE)
+												199, Short.MAX_VALUE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
@@ -477,7 +530,16 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 														.addComponent(
 																jButtonNuevaClaseLicencia)
 														.addComponent(
-																jButtonEditarClaseLicencia))));
+																jButtonEditarClaseLicencia)
+														.addComponent(
+																jFormattedTextFieldEdadMinima,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																jLabelCodigoMunicipio1)
+														.addComponent(
+																jButtonEliminarCL))));
 
 		btnExaminarFoto.setIcon(new ImageIcon(getClass().getResource(
 				"/images/agregar.png")));
@@ -655,6 +717,49 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	private void jButtonEliminarCLActionPerformed(java.awt.event.ActionEvent evt) {
+
+		try {
+			if (JOptionPaneTesterGral.showInternal(Constantes.MENSAJE_ELIMINAR,
+					Constantes.MENSAJE_ELIMINADO_TIT,
+					JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+
+				int indiceClaseLicenciaSeleccionada = jTableClasesDeLicencia
+						.getSelectedRow();
+				indiceClaseLicenciaSeleccionada = jTableClasesDeLicencia
+						.convertRowIndexToModel(indiceClaseLicenciaSeleccionada);
+
+				TableModelClaseLicencia tableModelClaseLicencia = (TableModelClaseLicencia) jTableClasesDeLicencia
+						.getModel();
+				ClaseLicencia claseLicenciaSeleccionada = tableModelClaseLicencia
+						.getValueAt(indiceClaseLicenciaSeleccionada);
+
+				Licencia exampleLic = new Licencia();
+				exampleLic.setLicClase(claseLicenciaSeleccionada
+						.getCllNombreClase());
+				List licencias = licenciaService.getAll(exampleLic);
+
+				if (licencias.size() <= 0) {
+
+					claseLicenciaService.delete(claseLicenciaSeleccionada);
+					cargarValoresPanelClasesDeLicencia();
+					JOptionPaneTesterGral.showInternalMessageDialog(
+							Constantes.MENSAJE_ELIMINADO,
+							Constantes.MENSAJE_ELIMINADO_TIT,
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPaneTesterGral.showInternalError(
+							Util.frameContenedor, new Throwable(
+									Constantes.MENSAJE_ERROR_ELIMINAR));
+
+				}
+
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	private void btnCancelarFotoActionPerformed(java.awt.event.ActionEvent evt) {
 		jLabelLogoMunicipio.setIcon(null);
 	}
@@ -679,11 +784,13 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	private void jTableClasesDeLicenciaMouseClicked(
 			java.awt.event.MouseEvent evt) {
 		jButtonEditarClaseLicencia.setEnabled(true);
+		jButtonEliminarCL.setEnabled(true);
 	}
 
 	private void jButtonEditarClaseLicenciaActionPerformed(
 			java.awt.event.ActionEvent evt) {
 		jButtonEditarClaseLicencia.setEnabled(false);
+		jButtonEliminarCL.setEnabled(false);
 		final JInternalFrameTesterGral internalframe = new JInternalFrameTesterGral(
 				"Editar Clase de licencia", false, true, false, false);
 
@@ -799,6 +906,21 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	private void cargarValoresDePropiedades() {
 		cargarValoresPanelDatosMunicipio();
 		cargarValoresPanelClasesDeLicencia();
+		String utilizarCaja = ContextManager.getProperty("UTILIZAR_CAJA_SN");
+		if(utilizarCaja.equals("S"))
+			checkHabilitarCaja.setSelected(true);
+		else
+			checkHabilitarCaja.setSelected(false);
+			
+		String cajaImporteDuplicado = ContextManager
+				.getProperty("CAJA_IMPORTE_DUPLICADO");
+		if(!cajaImporteDuplicado.equals(""))
+		{
+			cajaImporteDuplicado=cajaImporteDuplicado.replace(".","#");
+			cajaImporteDuplicado=cajaImporteDuplicado.replace(",",".");
+			cajaImporteDuplicado=cajaImporteDuplicado.replace("#",",");			
+			jFormattedTextFieldEdadMinima.setValue(Double.valueOf(cajaImporteDuplicado));
+		}
 
 	}
 
@@ -923,6 +1045,18 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 
 		propiedadFotoMunicipio.setPropBlob(bytesFotoMunicipio);
 		propiedadFotoMunicipio.setPropValor("Foto logo del municipio");
+		
+		Propiedad utilizarCaja = ContextManager.getPropertyObj("UTILIZAR_CAJA_SN");
+		utilizarCaja.setPropBlob(new byte[1]);
+		if(checkHabilitarCaja.isSelected())
+			utilizarCaja.setPropValor("S");
+		else
+			utilizarCaja.setPropValor("N");
+			
+		Propiedad cajaImporteDuplicado = ContextManager.getPropertyObj("CAJA_IMPORTE_DUPLICADO");
+		cajaImporteDuplicado.setPropValor(jFormattedTextFieldEdadMinima.getText());
+		cajaImporteDuplicado.setPropBlob(new byte[1]);
+		
 		try {
 
 			if (hasta > desde) {
@@ -931,6 +1065,8 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 				propiedadService.update(propiedadFotoMunicipio);
 				propiedadService.update(propiedadRangoDesde);
 				propiedadService.update(propiedadRangoHasta);
+				propiedadService.update(utilizarCaja);
+				propiedadService.update(cajaImporteDuplicado);
 
 				if (usuarioLogueado.getUsrId() == -1) {
 					propiedadService.update(propiedadEsCentroImpresorSN);
@@ -958,7 +1094,8 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 
 	public void buscarImagen(final JLabel label) {
 
-		final VentanaSeleccionImagen internalframe = new VentanaSeleccionImagen(null,true);
+		final VentanaSeleccionImagen internalframe = new VentanaSeleccionImagen(
+				null, true);
 		internalframe.pack();
 		Util.agregarIframe(internalframe);
 
@@ -1003,12 +1140,16 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	private javax.swing.JButton btnCancelarFoto;
 	private javax.swing.JButton btnExaminarFoto;
 	private javax.swing.ButtonGroup buttonGroupCentroImpresorSiNo;
+	private javax.swing.JCheckBox checkHabilitarCaja;
 	private javax.swing.JButton jButtonEditarClaseLicencia;
+	private javax.swing.JButton jButtonEliminarCL;
 	private javax.swing.JButton jButtonGuardar;
 	private javax.swing.JButton jButtonNuevaClaseLicencia;
+	private javax.swing.JFormattedTextField jFormattedTextFieldEdadMinima;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JLabel jLabelCodigoMunicipio;
+	private javax.swing.JLabel jLabelCodigoMunicipio1;
 	private javax.swing.JLabel jLabelLogoMunicipio;
 	private javax.swing.JLabel jLabelNombreMunicipio;
 	private javax.swing.JPanel jPanelBotones;

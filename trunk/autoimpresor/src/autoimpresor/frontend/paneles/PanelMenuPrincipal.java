@@ -470,6 +470,12 @@ public class PanelMenuPrincipal extends PanelMenu {
 			}
 		});
 		
+		/*btnCaja.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				seleccionarCaja();
+			}
+		});*/
+		
 		btnCerrarSession.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -707,9 +713,11 @@ public class PanelMenuPrincipal extends PanelMenu {
 		btnPanelControl.setVisible(true);
 		toolbarSubNivel.add(btnPanelControl);
 
-		/*Muestro y agrego al menu*/
-		/*btnInformesEstadistica.setVisible(true);
-		toolbarSubNivel.add(btnInformesEstadistica);*/
+		/*btnCaja.setVisible(true);
+		toolbarSubNivel.add(btnCaja);*/
+		
+		btnInformesEstadistica.setVisible(true);
+		toolbarSubNivel.add(btnInformesEstadistica);
 
 		btnLogEventos.setVisible(true);
 		toolbarSubNivel.add(btnLogEventos);
@@ -741,6 +749,21 @@ public class PanelMenuPrincipal extends PanelMenu {
 
 		panelLicencia.setVisible(true);
 		panelContenido.add(panelLicencia);
+
+		doAfterLoadMenuContenido();
+
+	}
+	
+	public void seleccionarCaja() {
+
+		unSelectButtons(toolbarSubNivel, btnCaja);
+		panelContenido.removeAll();
+
+		PanelCaja panelCaja = new PanelCaja();
+		panelCaja.validate();
+
+		panelCaja.setVisible(true);
+		panelContenido.add(panelCaja);
 
 		doAfterLoadMenuContenido();
 
@@ -790,11 +813,11 @@ public class PanelMenuPrincipal extends PanelMenu {
 		unSelectButtons(toolbarSubNivel, btnInformesEstadistica);
 		panelContenido.removeAll();
 
-		/*PanelBuscarPersona panelBuscarPersona = new PanelBuscarPersona();
-		panelBuscarPersona.validate();
+		PanelInformesYEstadisticas panelInformesYEstadisticas = new PanelInformesYEstadisticas();
+		panelInformesYEstadisticas.validate();
 		
-		panelBuscarPersona.setVisible(true);
-		panelContenido.add(panelBuscarPersona);*/
+		panelInformesYEstadisticas.setVisible(true);
+		panelContenido.add(panelInformesYEstadisticas);
 
 		doAfterLoadMenuContenido();
 	}
@@ -1016,7 +1039,11 @@ public class PanelMenuPrincipal extends PanelMenu {
 	private javax.swing.JToggleButton btnConfigurarLicencia = new JToggleButton(
 			Constantes.MENU_SUB_PANEL_CONFIGURAR_LICENCIA);
 	
+	private javax.swing.JToggleButton btnCaja = new JToggleButton(
+			Constantes.MENU_SUB_PANEL_CAJA);
+	
 	private javax.swing.JToggleButton btnConfigurarMargenes = new JToggleButton("Configurar Márgenes");
+
 	
 	private int enPendiente;
 	private int enHistorico;
