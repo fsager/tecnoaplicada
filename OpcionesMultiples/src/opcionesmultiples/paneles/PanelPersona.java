@@ -2318,6 +2318,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			ImageIcon imgIcon = new ImageIcon(internalframe.getImg());
 			lbFirma.setIcon(imgIcon);
 		}
+		System.gc();
 
 	}
 
@@ -2339,6 +2340,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			if (internalframe.getArchivoSeleccionado() != null)
 				internalframe.getArchivoSeleccionado().delete();
 		}
+		System.gc();
 
 	}
 
