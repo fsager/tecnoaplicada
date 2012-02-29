@@ -82,6 +82,8 @@ public class Util {
 		fos.write(template.getBytes());
 		fos.close();
 		
+		
+		JasperCompileManager.compileReportToFile(srcReport);
 		JasperReport report = JasperCompileManager.compileReport(srcReport);
 		
 		return report;
@@ -91,6 +93,9 @@ public class Util {
 		try {
 			String srcString = "reportes/carnets.jasper";
 			File f = new File(srcString);
+			
+			if(!f.exists())
+				compileReport();
 			
 			String printer=ContextManager.getProperty("DEFAULT_PRINTER");
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(list);
