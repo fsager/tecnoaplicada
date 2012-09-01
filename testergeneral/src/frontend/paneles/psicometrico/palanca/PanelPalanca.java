@@ -189,7 +189,7 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 
 		errores++;
 		//txtErrores.setText("" + errores);
-		Util.playSound(Constantes.SOUND_ERROR, 100);
+		//Util.playSound(Constantes.SOUND_ERROR, 100);
 		onError = true;
 		//System.out.println("inicia la cuenta del tiempo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1".toUpperCase());
 		tiempoIniError = System.currentTimeMillis();
