@@ -54,6 +54,7 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	/** Creates new form PanelGestionDeMunicipio */
 	public PanelGestionDeMunicipio() {
 		initComponents();
+		checkHabilitarCaja.setEnabled(false);
 		Util.mostrarError(lbSinResultados, "", true);
 		buttonGroupCentroImpresorSiNo
 				.add(jRadioButtonEsCentroImpresorDeLicencias);
@@ -433,8 +434,14 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 					}
 				});
 
-		checkHabilitarCaja.setSelected(true);
-		checkHabilitarCaja.setText("Habilitar caja");
+		checkHabilitarCaja
+				.setText("Habilitar caja (Funcionalidad no disponible actualmente)");
+		checkHabilitarCaja
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						checkHabilitarCajaActionPerformed(evt);
+					}
+				});
 
 		jLabelCodigoMunicipio1.setText("Importe de los duplicado:");
 
@@ -503,7 +510,7 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 														.addComponent(
 																checkHabilitarCaja,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																157,
+																377,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addContainerGap()));
 		jPanelClasesDeLicenciaLayout
@@ -717,6 +724,11 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	private void checkHabilitarCajaActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+	}
+
 	private void jButtonEliminarCLActionPerformed(java.awt.event.ActionEvent evt) {
 
 		try {
@@ -907,19 +919,19 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 		cargarValoresPanelDatosMunicipio();
 		cargarValoresPanelClasesDeLicencia();
 		String utilizarCaja = ContextManager.getProperty("UTILIZAR_CAJA_SN");
-		if(utilizarCaja.equals("S"))
+		if (utilizarCaja.equals("S"))
 			checkHabilitarCaja.setSelected(true);
 		else
 			checkHabilitarCaja.setSelected(false);
-			
+
 		String cajaImporteDuplicado = ContextManager
 				.getProperty("CAJA_IMPORTE_DUPLICADO");
-		if(!cajaImporteDuplicado.equals(""))
-		{
-			cajaImporteDuplicado=cajaImporteDuplicado.replace(".","#");
-			cajaImporteDuplicado=cajaImporteDuplicado.replace(",",".");
-			cajaImporteDuplicado=cajaImporteDuplicado.replace("#",",");			
-			jFormattedTextFieldEdadMinima.setValue(Double.valueOf(cajaImporteDuplicado));
+		if (!cajaImporteDuplicado.equals("")) {
+			cajaImporteDuplicado = cajaImporteDuplicado.replace(".", "#");
+			cajaImporteDuplicado = cajaImporteDuplicado.replace(",", ".");
+			cajaImporteDuplicado = cajaImporteDuplicado.replace("#", ",");
+			jFormattedTextFieldEdadMinima.setValue(Double
+					.valueOf(cajaImporteDuplicado));
 		}
 
 	}
@@ -1045,18 +1057,21 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 
 		propiedadFotoMunicipio.setPropBlob(bytesFotoMunicipio);
 		propiedadFotoMunicipio.setPropValor("Foto logo del municipio");
-		
-		Propiedad utilizarCaja = ContextManager.getPropertyObj("UTILIZAR_CAJA_SN");
+
+		Propiedad utilizarCaja = ContextManager
+				.getPropertyObj("UTILIZAR_CAJA_SN");
 		utilizarCaja.setPropBlob(new byte[1]);
-		if(checkHabilitarCaja.isSelected())
+		if (checkHabilitarCaja.isSelected())
 			utilizarCaja.setPropValor("S");
 		else
 			utilizarCaja.setPropValor("N");
-			
-		Propiedad cajaImporteDuplicado = ContextManager.getPropertyObj("CAJA_IMPORTE_DUPLICADO");
-		cajaImporteDuplicado.setPropValor(jFormattedTextFieldEdadMinima.getText());
+
+		Propiedad cajaImporteDuplicado = ContextManager
+				.getPropertyObj("CAJA_IMPORTE_DUPLICADO");
+		cajaImporteDuplicado.setPropValor(jFormattedTextFieldEdadMinima
+				.getText());
 		cajaImporteDuplicado.setPropBlob(new byte[1]);
-		
+
 		try {
 
 			if (hasta > desde) {

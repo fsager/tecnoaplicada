@@ -334,7 +334,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jFormattedTextFieldEdadMinima" min="-2" pref="60" max="-2" attributes="1"/>
                       </Group>
-                      <Component id="checkHabilitarCaja" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
+                      <Component id="checkHabilitarCaja" alignment="0" min="-2" pref="377" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -404,9 +404,11 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="checkHabilitarCaja">
           <Properties>
-            <Property name="selected" type="boolean" value="true"/>
-            <Property name="text" type="java.lang.String" value="Habilitar caja"/>
+            <Property name="text" type="java.lang.String" value="Habilitar caja (Funcionalidad no disponible actualmente)"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkHabilitarCajaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCodigoMunicipio1">
           <Properties>

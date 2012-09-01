@@ -1915,6 +1915,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 									"Emitir Duplicado",
 									JOptionPane.ERROR_MESSAGE);
 				} else {
+					boolean conError=false;
 					lic.setLicId(null);
 					lic.setLicFechaOtorgada(new Date());
 					lic
@@ -1933,17 +1934,23 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 							lic.setLicImporte(Double.valueOf(cajaImporteDuplicado));							
 						}
 						else
+						{
 							JOptionPaneTesterGral
 							.showInternal(
 									"No se encuentra definido el importe para el duplicado de los carnets.",
 									"Emitir Duplicado",
 									JOptionPane.INFORMATION_MESSAGE);
+							conError=true;
+						}
 					}
 					LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager
 							.getBizObject("licenciaService");
 
-					licenciaService.insert(lic);
-					cargarLicencias();
+					if(!conError)
+					{
+						licenciaService.insert(lic);
+						cargarLicencias();
+					}
 				}
 
 			} catch (Exception e) {
