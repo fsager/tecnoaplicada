@@ -254,7 +254,7 @@ public class LicenceManager {
 			
 			actualizarLicencia(licencia,nroLicencia);
 		} catch (org.springframework.remoting.RemoteAccessException e) {
-
+e.printStackTrace();
 			Calendar calendarUltimoIntentoActivacion=Calendar.getInstance();
 			Integer intentoDayOfYear=null;
 			if(fechaUltimoIntentoActivacion!=null)
