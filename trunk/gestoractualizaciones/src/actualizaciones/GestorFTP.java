@@ -127,6 +127,7 @@ public class GestorFTP {
 			}
 
 			output.close();
+			f.disconnect();
 			System.out.println("Se descargó el archivo ftp: " + fileName
 					+ " en " + destination.getAbsolutePath());
 
