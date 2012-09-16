@@ -50,6 +50,12 @@ public class LicenciaBiz implements LicenciaDefinition {
 	}
 	
 	public void insert(Licencia p_domain) throws Exception {
+		String utilizarCaja = ContextManager.getProperty("UTILIZAR_CAJA_SN");
+		if(utilizarCaja.equals("S")){
+			Long nroRecibo=dao.getMaxNumeroRecibo();
+			p_domain.setLicRecibo(nroRecibo);
+		}
+		
 		dao.insert(p_domain);
 	}
 

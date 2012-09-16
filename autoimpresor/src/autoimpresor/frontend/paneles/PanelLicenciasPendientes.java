@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -61,6 +62,15 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 			btnReimprimir.setVisible(false);
 			btnReimprimirPendietes.setVisible(false);
 		}
+		String utilizarCaja = ContextManager.getProperty("UTILIZAR_CAJA_SN");
+		if (utilizarCaja.equals("S")) {
+			btnImprimirRecibo.setVisible(true);
+			btnImprimirRecibo.setEnabled(true);
+		} else {
+			btnImprimirRecibo.setVisible(false);
+			btnImprimirRecibo.setEnabled(false);
+		}
+
 	}
 
 	public void cargarLicencias() {
@@ -130,6 +140,7 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 		btnEliminarLicenciaSeleccionada = new javax.swing.JButton();
 		btnPlantillaConf = new javax.swing.JButton();
 		btnExportarArchivo = new javax.swing.JButton();
+		btnImprimirRecibo = new javax.swing.JButton();
 
 		jScrollPane1.setMinimumSize(new java.awt.Dimension(828, 458));
 
@@ -218,6 +229,15 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 					}
 				});
 
+		btnImprimirRecibo.setText("Imprimir Recibo");
+		btnImprimirRecibo.setEnabled(false);
+		btnImprimirRecibo
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						btnImprimirReciboActionPerformed(evt);
+					}
+				});
+
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout
@@ -236,9 +256,10 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 																jScrollPane1,
 																javax.swing.GroupLayout.Alignment.TRAILING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																1405,
+																1540,
 																Short.MAX_VALUE)
 														.addGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
 																layout
 																		.createSequentialGroup()
 																		.addComponent(
@@ -271,6 +292,15 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				232,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addGap(
+																				18,
+																				18,
+																				18)
+																		.addComponent(
+																				btnImprimirRecibo,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
@@ -329,10 +359,31 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 																btnPlantillaConf,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																19,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																btnImprimirRecibo,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																20,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addGap(27, 27, 27)));
 	}// </editor-fold>
 	//GEN-END:initComponents
+
+	private void btnImprimirReciboActionPerformed(java.awt.event.ActionEvent evt) {
+		try {
+
+			int row = tableLicencias.getSelectedRow();
+			int sel = tableLicencias.convertRowIndexToModel(row);
+			List<Licencia> licencias = new ArrayList();
+			licencias.add(((TableModelLicenciaFull) tableLicencias.getModel())
+					.getValueAt(sel));
+
+			autoimpresor.util.Util.printReportRecibo(new HashMap(), licencias);
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	private void btnExportarArchivoActionPerformed(
 			java.awt.event.ActionEvent evt) {
@@ -616,14 +667,17 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 	}
 
 	public void sendMail(List<CarnetLicencias> carnetLicencias) {
-		try {			
-			File dirDestino=new File(System.getProperty("user.home")+File.separator+"Mis documentos"+File.separator+"Correos enviados licencia conducir"); 
+		try {
+			File dirDestino = new File(System.getProperty("user.home")
+					+ File.separator + "Mis documentos" + File.separator
+					+ "Correos enviados licencia conducir");
 			dirDestino.mkdirs();
-			
+
 			String fileName = getNombreArchivo();
-			String fullFileName=dirDestino.getAbsolutePath()+File.separator+fileName;
-			
-			byte adjunto[] = toFile(carnetLicencias,fullFileName,false);
+			String fullFileName = dirDestino.getAbsolutePath() + File.separator
+					+ fileName;
+
+			byte adjunto[] = toFile(carnetLicencias, fullFileName, false);
 
 			UeMail mail = new UeMail();
 			mail.setUserFrom(ContextManager
@@ -674,6 +728,7 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 	private javax.swing.JButton btnExportarArchivo;
 	private javax.swing.JButton btnExportarSel;
 	private javax.swing.JButton btnExportarTodo;
+	private javax.swing.JButton btnImprimirRecibo;
 	private javax.swing.JButton btnPlantillaConf;
 	private javax.swing.JButton btnReimprimir;
 	private javax.swing.JButton btnReimprimirPendietes;

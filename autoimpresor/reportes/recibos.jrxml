@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recibos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.4641000000000015"/>
+	<property name="ireport.x" value="17"/>
+	<property name="ireport.y" value="918"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="persona" class="autoimpresor.domain.Persona">
+		<fieldDescription><![CDATA[persona]]></fieldDescription>
+	</field>
+	<field name="licExamenOftalmologico" class="java.lang.String">
+		<fieldDescription><![CDATA[licExamenOftalmologico]]></fieldDescription>
+	</field>
+	<field name="licFechaReal" class="java.util.Date">
+		<fieldDescription><![CDATA[licFechaReal]]></fieldDescription>
+	</field>
+	<field name="antecedente" class="autoimpresor.domain.Antecedente">
+		<fieldDescription><![CDATA[antecedente]]></fieldDescription>
+	</field>
+	<field name="licExamenPractico" class="java.lang.String">
+		<fieldDescription><![CDATA[licExamenPractico]]></fieldDescription>
+	</field>
+	<field name="licFechaOtorgada" class="java.util.Date">
+		<fieldDescription><![CDATA[licFechaOtorgada]]></fieldDescription>
+	</field>
+	<field name="licNumero" class="java.lang.Long">
+		<fieldDescription><![CDATA[licNumero]]></fieldDescription>
+	</field>
+	<field name="licFechaVencimiento" class="java.util.Date">
+		<fieldDescription><![CDATA[licFechaVencimiento]]></fieldDescription>
+	</field>
+	<field name="licTramite" class="java.lang.String">
+		<fieldDescription><![CDATA[licTramite]]></fieldDescription>
+	</field>
+	<field name="licExamenTeorico" class="java.lang.String">
+		<fieldDescription><![CDATA[licExamenTeorico]]></fieldDescription>
+	</field>
+	<field name="licExamenPsicofisico" class="java.lang.String">
+		<fieldDescription><![CDATA[licExamenPsicofisico]]></fieldDescription>
+	</field>
+	<field name="licRequisitosSn" class="java.lang.String">
+		<fieldDescription><![CDATA[licRequisitosSn]]></fieldDescription>
+	</field>
+	<field name="licClase" class="java.lang.String">
+		<fieldDescription><![CDATA[licClase]]></fieldDescription>
+	</field>
+	<field name="licCodLicencia" class="java.lang.String">
+		<fieldDescription><![CDATA[licCodLicencia]]></fieldDescription>
+	</field>
+	<field name="licRecibo" class="java.lang.Long">
+		<fieldDescription><![CDATA[licRecibo]]></fieldDescription>
+	</field>
+	<field name="licImporte" class="java.lang.Double">
+		<fieldDescription><![CDATA[licImporte]]></fieldDescription>
+	</field>
+	<field name="licDeudaSn" class="java.lang.String">
+		<fieldDescription><![CDATA[licDeudaSn]]></fieldDescription>
+	</field>
+	<field name="licObservaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[licObservaciones]]></fieldDescription>
+	</field>
+	<field name="licId" class="java.lang.Long">
+		<fieldDescription><![CDATA[licId]]></fieldDescription>
+	</field>
+	<field name="licExamenMedico" class="java.lang.String">
+		<fieldDescription><![CDATA[licExamenMedico]]></fieldDescription>
+	</field>
+	<field name="licEstado" class="java.lang.String">
+		<fieldDescription><![CDATA[licEstado]]></fieldDescription>
+	</field>
+	<title>
+		<band height="802" splitType="Stretch">
+			<rectangle>
+				<reportElement x="134" y="692" width="100" height="25"/>
+				<graphicElement>
+					<pen lineWidth="2.5"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="256" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="36" width="25" height="198"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[PARA CONTRIBUYENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="36" width="86" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[RECIBO N°:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="467" y="36" width="88" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{licRecibo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="67" width="530" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[NOMBRE Y APELLIDO: ............................................................................. CATEGORÍA: ...............................]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="67" width="220" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="467" y="67" width="88" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{licClase}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="92" width="530" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[NRO. LICENCIA:.................. FECHA OTORGAMIENTO: .................... FECHA VENCIMIENTO: ....................]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="92" width="51" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{licNumero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="493" y="92" width="62" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{licFechaVencimiento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="308" y="92" width="63" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{licFechaOtorgada}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="371" y="193" width="159" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Firma Funcionario Autorizado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="138" width="107" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[VALOR EN PESOS:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="132" y="138" width="100" height="25"/>
+				<graphicElement>
+					<pen lineWidth="2.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="&apos;$&apos; #,##0.00">
+				<reportElement x="151" y="138" width="81" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{licImporte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="466" y="307" width="88" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{licRecibo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="492" y="363" width="62" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{licFechaVencimiento}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="131" y="409" width="100" height="25"/>
+				<graphicElement>
+					<pen lineWidth="2.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="24" y="409" width="107" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[VALOR EN PESOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="271" width="555" height="36"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DE BERROTARÁN - LICENCIA DE CONDUCIR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="338" width="530" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[NOMBRE Y APELLIDO: ............................................................................. CATEGORÍA: ...............................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="307" width="25" height="198"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[PARA CAJA MUNICIPAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="307" width="86" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[RECIBO N°:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="538" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="109" y="363" width="51" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{licNumero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="363" width="530" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[NRO. LICENCIA:.................. FECHA OTORGAMIENTO: .................... FECHA VENCIMIENTO: ....................]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="307" y="363" width="63" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{licFechaOtorgada}]]></textFieldExpression>
+			</textField>
+			<textField pattern="&apos;$&apos; #,##0.00">
+				<reportElement x="150" y="409" width="81" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{licImporte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="464" width="159" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Firma Funcionario Autorizado]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="466" y="338" width="88" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{licClase}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="338" width="220" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="554" width="555" height="36"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DE BERROTARÁN - LICENCIA DE CONDUCIR]]></text>
+			</staticText>
+			<textField pattern="&apos;$&apos; #,##0.00">
+				<reportElement x="153" y="692" width="81" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{licImporte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="27" y="621" width="530" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[NOMBRE Y APELLIDO: ............................................................................. CATEGORÍA: ...............................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="692" width="107" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[VALOR EN PESOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="590" width="25" height="198"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[PARA SISTEMA LICENCIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="747" width="159" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Firma Funcionario Autorizado]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="112" y="646" width="51" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{licNumero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="495" y="646" width="62" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{licFechaVencimiento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="373" y="590" width="86" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[RECIBO N°:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="310" y="646" width="63" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{licFechaOtorgada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="621" width="220" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="36"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DE BERROTARÁN - LICENCIA DE CONDUCIR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="469" y="621" width="88" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{licClase}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="590" width="88" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{licRecibo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="27" y="646" width="530" height="25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[NRO. LICENCIA:.................. FECHA OTORGAMIENTO: .................... FECHA VENCIMIENTO: ....................]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

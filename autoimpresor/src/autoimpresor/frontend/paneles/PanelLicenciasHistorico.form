@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
@@ -19,8 +19,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel1" alignment="0" max="32767" attributes="1"/>
                   <Group type="102" alignment="1" attributes="0">
+                      <Component id="btnImprimirResultados" min="-2" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnReimprimir" min="-2" max="-2" attributes="1"/>
-                      <EmptySpace pref="277" max="32767" attributes="0"/>
+                      <EmptySpace pref="131" max="32767" attributes="0"/>
                       <Component id="btnMoverPendiente" min="-2" max="-2" attributes="1"/>
                   </Group>
                   <Component id="jPanel3" alignment="0" min="-2" max="-2" attributes="1"/>
@@ -38,6 +40,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnMoverPendiente" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="btnImprimirResultados" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="btnReimprimir" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -256,7 +259,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane1" alignment="0" pref="699" max="32767" attributes="1"/>
-                      <Component id="lbSinResultados" alignment="0" min="-2" pref="355" max="-2" attributes="1"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lbSinResultados" min="-2" pref="355" max="-2" attributes="1"/>
+                          <EmptySpace pref="144" max="32767" attributes="0"/>
+                          <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtImporteTotal" min="-2" pref="120" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -267,7 +276,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jScrollPane1" min="-2" pref="335" max="-2" attributes="1"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lbSinResultados" min="-2" pref="24" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lbSinResultados" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="1"/>
+                      <Component id="txtImporteTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -333,6 +346,19 @@
             </Property>
           </Properties>
         </Component>
+        <Component class="javax.swing.JLabel" name="jLabel21">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Importe Total:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="txtImporteTotal">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+              <Format format="#0.00" subtype="-1" type="0"/>
+            </Property>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="btnReimprimir">
@@ -341,6 +367,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReimprimirActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnImprimirResultados">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Imprimir Resultados"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirResultadosActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

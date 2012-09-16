@@ -54,7 +54,8 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	/** Creates new form PanelGestionDeMunicipio */
 	public PanelGestionDeMunicipio() {
 		initComponents();
-		checkHabilitarCaja.setEnabled(false);
+		checkHabilitarCaja.setEnabled(true);
+		checkImprimirRecibo.setVisible(false);
 		Util.mostrarError(lbSinResultados, "", true);
 		buttonGroupCentroImpresorSiNo
 				.add(jRadioButtonEsCentroImpresorDeLicencias);
@@ -109,6 +110,7 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 		jLabelCodigoMunicipio1 = new javax.swing.JLabel();
 		jFormattedTextFieldEdadMinima = new javax.swing.JFormattedTextField();
 		jButtonEliminarCL = new javax.swing.JButton();
+		checkImprimirRecibo = new javax.swing.JCheckBox();
 		btnExaminarFoto = new ButtonExaminar();
 		jLabelLogoMunicipio = new javax.swing.JLabel();
 		btnCancelarFoto = new ButtonCancelarMini();
@@ -434,8 +436,7 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 					}
 				});
 
-		checkHabilitarCaja
-				.setText("Habilitar caja (Funcionalidad no disponible actualmente)");
+		checkHabilitarCaja.setText("Habilitar caja");
 		checkHabilitarCaja
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -458,6 +459,15 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
 						jButtonEliminarCLActionPerformed(evt);
+					}
+				});
+
+		checkImprimirRecibo
+				.setText("Imprimir automaticamente recibo al generar licencia. ");
+		checkImprimirRecibo
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						checkImprimirReciboActionPerformed(evt);
 					}
 				});
 
@@ -507,11 +517,21 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				60,
 																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																checkHabilitarCaja,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																377,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																jPanelClasesDeLicenciaLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				checkHabilitarCaja,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				113,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				checkImprimirRecibo,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				377,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)))
 										.addContainerGap()));
 		jPanelClasesDeLicenciaLayout
 				.setVerticalGroup(jPanelClasesDeLicenciaLayout
@@ -521,7 +541,14 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 								javax.swing.GroupLayout.Alignment.TRAILING,
 								jPanelClasesDeLicenciaLayout
 										.createSequentialGroup()
-										.addComponent(checkHabilitarCaja)
+										.addGroup(
+												jPanelClasesDeLicenciaLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																checkHabilitarCaja)
+														.addComponent(
+																checkImprimirRecibo))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(
@@ -724,6 +751,11 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	private void checkImprimirReciboActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+	}
+
 	private void checkHabilitarCajaActionPerformed(
 			java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
@@ -923,6 +955,13 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 			checkHabilitarCaja.setSelected(true);
 		else
 			checkHabilitarCaja.setSelected(false);
+		
+		String reciboAutomatico= ContextManager.getProperty("IMPRIMIR_RECIBO_AUTOMATICAMENTE");
+		if (reciboAutomatico.equals("S"))
+			checkImprimirRecibo.setSelected(true);
+		else
+			checkImprimirRecibo.setSelected(false);
+		
 
 		String cajaImporteDuplicado = ContextManager
 				.getProperty("CAJA_IMPORTE_DUPLICADO");
@@ -1066,6 +1105,13 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 		else
 			utilizarCaja.setPropValor("N");
 
+		Propiedad reciboAutomatico = ContextManager.getPropertyObj("IMPRIMIR_RECIBO_AUTOMATICAMENTE");
+		reciboAutomatico.setPropBlob(new byte[1]);
+		if (checkImprimirRecibo.isSelected())
+			reciboAutomatico.setPropValor("S");
+		else
+			reciboAutomatico.setPropValor("N");
+		
 		Propiedad cajaImporteDuplicado = ContextManager
 				.getPropertyObj("CAJA_IMPORTE_DUPLICADO");
 		cajaImporteDuplicado.setPropValor(jFormattedTextFieldEdadMinima
@@ -1081,6 +1127,7 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 				propiedadService.update(propiedadRangoDesde);
 				propiedadService.update(propiedadRangoHasta);
 				propiedadService.update(utilizarCaja);
+				propiedadService.update(reciboAutomatico);				
 				propiedadService.update(cajaImporteDuplicado);
 
 				if (usuarioLogueado.getUsrId() == -1) {
@@ -1156,6 +1203,7 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	private javax.swing.JButton btnExaminarFoto;
 	private javax.swing.ButtonGroup buttonGroupCentroImpresorSiNo;
 	private javax.swing.JCheckBox checkHabilitarCaja;
+	private javax.swing.JCheckBox checkImprimirRecibo;
 	private javax.swing.JButton jButtonEditarClaseLicencia;
 	private javax.swing.JButton jButtonEliminarCL;
 	private javax.swing.JButton jButtonGuardar;

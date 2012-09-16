@@ -53,4 +53,6 @@ public interface LicenciaDao {
 	public abstract List getAll(Licencia p_example,Date desde, Date hasta) throws Exception;
 	
     public List<Object[]> getAllEstadisticas(Licencia p_example,Date desdeOtor, Date hastaOtor,Date desdeEdad, Date hastaEdad,String agrupador) throws Exception;
+    
+    public abstract Long getMaxNumeroRecibo() throws Exception;
 }

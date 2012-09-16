@@ -252,4 +252,26 @@ public class LicenciaHome extends DAOObject implements LicenciaDao {
             throw re;
         }
     }
+    
+    public Long getMaxNumeroRecibo() throws Exception {
+        log.debug("finding Licencia instance by getMaxNumeroRecibo");
+        try {
+       	
+        	Query query = getSession().createQuery("select max(licRecibo) from Licencia");
+        	
+        	Long maxNroReciboMasUno=1l;
+        	if(query.uniqueResult()!=null)
+        	{
+        		Long maxNroRecibo=(Long)query.uniqueResult();
+        		maxNroReciboMasUno=maxNroRecibo+1;
+        	}
+        	
+            return maxNroReciboMasUno;
+            
+        }
+        catch (RuntimeException re) {
+            //log.error("find by example failed", re);
+            throw re;
+        }
+    }
 }
