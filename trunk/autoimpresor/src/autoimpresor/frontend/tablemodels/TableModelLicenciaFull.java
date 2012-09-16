@@ -51,7 +51,7 @@ public class TableModelLicenciaFull extends AbstractTableModel {
     	if(col==6)
     		return lic.getLicClase();
     	if(col==7)
-    		return lic.getLicImporte()!=null ? lic.getLicImporte() : "";
+    		return lic.getLicImporte()!=null ? lic.getLicImporte() : 0;
     	if(col==8)
     		return lic.getLicObservaciones()!=null ? lic.getLicObservaciones() : "";
     	if(col==9)

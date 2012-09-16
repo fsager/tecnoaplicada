@@ -124,5 +124,37 @@ public class Util {
 		}
 	}
 	
+	public static void printReportRecibo(HashMap parameterMap,List list) {
+		try {
+			String srcString = "reportes/recibos.jasper";
+			File f = new File(srcString);
+			
+			String printer=ContextManager.getProperty("DEFAULT_PRINTER");
+			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(list);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(f.getAbsolutePath(),parameterMap, ds);
+			PrinterJob job = PrinterJob.getPrinterJob();
+
+			PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
+			for(int i = 0; i < services.length;i++){
+				if(services[i].getName().equals(printer)){
+					job.setPrintService(services[i]);
+					break;
+				}
+			}
+			
+			JRPrintServiceExporter exporter;
+			exporter = new JRPrintServiceExporter();
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);				
+			exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE,job.getPrintService());
+			exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, job.getPrintService().getAttributes());
+			exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+			exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.FALSE);
+			exporter.exportReport();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	
 }

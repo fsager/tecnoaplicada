@@ -216,6 +216,11 @@ public class Persona  implements java.io.Serializable {
 		return this.perApellido+", "+perNombre;
 	}
 	
+	
+	public String toString() {
+		return this.perApellido+", "+perNombre;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

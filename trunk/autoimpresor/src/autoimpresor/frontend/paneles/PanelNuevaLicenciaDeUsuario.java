@@ -1503,7 +1503,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 		licencia.setLicFechaOtorgada(getFechaOtorgamiento());
 		licencia.setLicFechaVencimiento(calcularFechaVencimiento());
 		if (ContextManager.getProperty(
-				"SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S")) {
+				"SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S") && !isCajaEnable) {
 			licencia.setLicEstado("H");
 		} else
 			licencia.setLicEstado("P");
@@ -1612,24 +1612,35 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 				guardarLicRqsIncompletos.setVisible(true);
 
 			}
-
-			if (ContextManager.getProperty(
-					"SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S")) {
-				String nombreMunicipio = ContextManager
-						.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
-				String codigoMunicipio = ContextManager
-						.getProperty("SISTEMA.CODIGO.MUNICIPIO");
-				byte[] escudoMunicipio = ContextManager.getPropertyObj(
-						"SISTEMA.FOTO.MUNICIPIO").getPropBlob();
-
-				CarnetLicencias carnet = new CarnetLicencias(licenciaService
-						.get(licencia.getLicId()), nombreMunicipio,
-						codigoMunicipio, escudoMunicipio);
-				List<CarnetLicencias> carnets = new ArrayList<CarnetLicencias>();
-				carnets.add(carnet);
+			
+			if (isCajaEnable && licencia.getLicId()!=null)
+			{
+				
+				List<Licencia> licencias = new ArrayList<Licencia>();
+				licencias.add(licencia);
 
 				autoimpresor.util.Util
-						.printReportCarnet(new HashMap(), carnets);
+						.printReportRecibo(new HashMap(), licencias);
+			}
+
+			if (ContextManager.getProperty(
+					"SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S") && !isCajaEnable && licencia.getLicId()!=null) {
+				
+							String nombreMunicipio = ContextManager
+							.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
+					String codigoMunicipio = ContextManager
+							.getProperty("SISTEMA.CODIGO.MUNICIPIO");
+					byte[] escudoMunicipio = ContextManager.getPropertyObj(
+							"SISTEMA.FOTO.MUNICIPIO").getPropBlob();
+		
+					CarnetLicencias carnet = new CarnetLicencias(licenciaService
+							.get(licencia.getLicId()), nombreMunicipio,
+							codigoMunicipio, escudoMunicipio);
+					List<CarnetLicencias> carnets = new ArrayList<CarnetLicencias>();
+					carnets.add(carnet);
+		
+					autoimpresor.util.Util
+							.printReportCarnet(new HashMap(), carnets);
 			}
 
 		} catch (Exception ex) {

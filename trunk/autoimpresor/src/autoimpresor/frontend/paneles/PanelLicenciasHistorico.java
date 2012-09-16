@@ -21,8 +21,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
-import net.sf.jasperreports.engine.JasperReport;
-
 import testerGeneral.comparetors.DateComparator;
 import testerGeneral.domain.Constantes;
 import autoimpresor.business.ContextManager;
@@ -34,6 +32,7 @@ import autoimpresor.service.LicenciaDefinition;
 import frontend.buttons.ButtonBuscar;
 import frontend.utils.Util;
 import frontend.ventanas.JInternalFrameTesterGral;
+import frontend.ventanas.VentanaReportes;
 
 /**
  *
@@ -41,6 +40,9 @@ import frontend.ventanas.JInternalFrameTesterGral;
  */
 public class PanelLicenciasHistorico extends javax.swing.JPanel {
 
+	private Date fechaDesde = null;
+	private Date fechaHasta = null;
+	
 	/** Creates new form PanelLicenciasHistorico */
 	public PanelLicenciasHistorico() {
 		lic = new Licencia();
@@ -52,16 +54,14 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 		valorPorDefectoFecha = txtOtorgadaDesde.getText();
 		setTableModelLicencias(new ArrayList());
 		Util.personaSinResultados(lbSinResultados, true);
-		
-		if (ContextManager.getProperty("SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S"))
-		{
+
+		if (ContextManager.getProperty(
+				"SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S")) {
 			btnReimprimir.setVisible(true);
-		}
-		else
-		{
+		} else {
 			btnReimprimir.setVisible(false);
 		}
-		
+
 	}
 
 	//GEN-BEGIN:initComponents
@@ -86,7 +86,10 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 		jScrollPane1 = new javax.swing.JScrollPane();
 		tableLicencias = new javax.swing.JTable();
 		lbSinResultados = new javax.swing.JLabel();
+		jLabel21 = new javax.swing.JLabel();
+		txtImporteTotal = new javax.swing.JFormattedTextField();
 		btnReimprimir = new javax.swing.JButton();
+		btnImprimirResultados = new javax.swing.JButton();
 
 		btnMoverPendiente.setText("Mover a pendiente licencias seleccionadas");
 		btnMoverPendiente.setEnabled(false);
@@ -372,6 +375,14 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 				Constantes.IMG_ERROR)));
 		lbSinResultados.setText(Constantes.ERROR_SIN_RESULTADOS);
 
+		jLabel21.setText("Importe Total:");
+
+		txtImporteTotal.setEditable(false);
+		txtImporteTotal
+				.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
+						new javax.swing.text.NumberFormatter(
+								new java.text.DecimalFormat("#0.00"))));
+
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
 				jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
@@ -392,11 +403,27 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																699,
 																Short.MAX_VALUE)
-														.addComponent(
-																lbSinResultados,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																355,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																jPanel1Layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				lbSinResultados,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				355,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																				144,
+																				Short.MAX_VALUE)
+																		.addComponent(
+																				jLabel21)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				txtImporteTotal,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				120,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)))
 										.addContainerGap()));
 		jPanel1Layout
 				.setVerticalGroup(jPanel1Layout
@@ -412,11 +439,21 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												lbSinResultados,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												24,
-												javax.swing.GroupLayout.PREFERRED_SIZE)));
+										.addGroup(
+												jPanel1Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																lbSinResultados,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																24,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLabel21)
+														.addComponent(
+																txtImporteTotal,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE))));
 
 		btnReimprimir.setText("Imprimir licencias seleccionadas");
 		btnReimprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -424,6 +461,14 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 				btnReimprimirActionPerformed(evt);
 			}
 		});
+
+		btnImprimirResultados.setText("Imprimir Resultados");
+		btnImprimirResultados
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						btnImprimirResultadosActionPerformed(evt);
+					}
+				});
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
@@ -449,10 +494,14 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 																layout
 																		.createSequentialGroup()
 																		.addComponent(
+																				btnImprimirResultados)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
 																				btnReimprimir)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				277,
+																				131,
 																				Short.MAX_VALUE)
 																		.addComponent(
 																				btnMoverPendiente))
@@ -493,6 +542,11 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 																20,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(
+																btnImprimirResultados,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																20,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
 																btnReimprimir,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																20,
@@ -503,22 +557,53 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	private void btnImprimirResultadosActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		
+		Util.ocultarSinResultados(lbSinResultados, true);
+		String srcString = "reportes/carnetsImpresosImportes.jasper";
+		TableModelLicenciaFull tableModel = (TableModelLicenciaFull) tableLicencias
+				.getModel();
+
+		if(fechaDesde==null || fechaHasta==null){
+			Util.mostrarError(lbSinResultados,"Ingrese un rango de fechas.", false);
+		}
+		if(tableModel.getLst().size()>0)
+		{
+			HashMap parameterMap = new HashMap();
+
+			parameterMap.put("fecha_desde", sdf.format(fechaDesde));
+			parameterMap.put("fecha_hasta", sdf.format(fechaHasta));
+			parameterMap.put("total", "" + tableModel.getLst().size());
+			parameterMap.put("importeTotal",txtImporteTotal.getValue());
+
+			VentanaReportes ventanaReportes = new VentanaReportes(this,
+					parameterMap, srcString, tableModel.getLst());			
+		}
+
+	}
+
 	private void btnReimprimirActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
-			String nombreMunicipio = ContextManager.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
-			String codigoMunicipio = ContextManager.getProperty("SISTEMA.CODIGO.MUNICIPIO");
-			byte[] escudoMunicipio = ContextManager.getPropertyObj("SISTEMA.FOTO.MUNICIPIO").getPropBlob();
-			
+			String nombreMunicipio = ContextManager
+					.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
+			String codigoMunicipio = ContextManager
+					.getProperty("SISTEMA.CODIGO.MUNICIPIO");
+			byte[] escudoMunicipio = ContextManager.getPropertyObj(
+					"SISTEMA.FOTO.MUNICIPIO").getPropBlob();
+
 			List<CarnetLicencias> carnets = new ArrayList<CarnetLicencias>();
 			int[] rows = tableLicencias.getSelectedRows();
 			for (int i = 0; i < rows.length; i++) {
 				int sel = tableLicencias.convertRowIndexToModel(rows[i]);
-				Licencia lic=((TableModelLicenciaFull) tableLicencias.getModel()).getValueAt(sel);
-						
-				CarnetLicencias carnet = new CarnetLicencias(lic,nombreMunicipio, codigoMunicipio, escudoMunicipio);
+				Licencia lic = ((TableModelLicenciaFull) tableLicencias
+						.getModel()).getValueAt(sel);
+
+				CarnetLicencias carnet = new CarnetLicencias(lic,
+						nombreMunicipio, codigoMunicipio, escudoMunicipio);
 				carnets.add(carnet);
 			}
-			
+
 			final JInternalFrameTesterGral internalframe = new JInternalFrameTesterGral(
 					"Imprimir", false, true, false, false);
 			PanelMargenesImpresion panel = new PanelMargenesImpresion(carnets);
@@ -561,7 +646,7 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 
 			internalframe.doModal(Util.framePrincipal.getRootPane());
 			internalframe.setVisible(true);
-			
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -613,33 +698,32 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 		tableLicencias
 				.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tableLicencias.setRowSorter(null);
-		
+
 		TableColumn column = tableLicencias.getColumnModel().getColumn(1);
 		column.setPreferredWidth(90);
 		column.setWidth(90);
 		column.setMinWidth(90);
-		
+
 		column = tableLicencias.getColumnModel().getColumn(4);
 		column.setPreferredWidth(55);
 		column.setWidth(55);
 		column.setMinWidth(55);
-		
+
 		column = tableLicencias.getColumnModel().getColumn(5);
 		column.setPreferredWidth(60);
 		column.setWidth(60);
 		column.setMinWidth(60);
-		
+
 		column = tableLicencias.getColumnModel().getColumn(6);
 		column.setPreferredWidth(35);
 		column.setWidth(35);
 		column.setMinWidth(35);
-		
+
 		column = tableLicencias.getColumnModel().getColumn(7);
 		column.setPreferredWidth(35);
 		column.setWidth(35);
 		column.setMinWidth(35);
 
-		
 		//tableLicencias.setAutoCreateRowSorter(false);
 
 		if (lst.size() > 0) {
@@ -659,10 +743,11 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 	public void buscarLicencias() {
 		LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager
 				.getBizObject("licenciaService");
-		Date fechaDesde = null;
-		Date fechaHasta = null;
+		fechaDesde = null;
+		fechaHasta = null;
 		boolean error = false;
 		setTableModelLicencias(new ArrayList());
+		txtImporteTotal.setText("");
 		try {
 			Util.ocultarSinResultados(lbSinResultados, true);
 			Persona per = new Persona();
@@ -711,6 +796,14 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 			if (!error && liciencias != null && liciencias.size() > 0) {
 				tableLicencias.setRowSelectionInterval(0, 0);
 				setCantidadResultados(liciencias.size());
+				//set importe total
+				double importeTotal = 0;
+				for (Licencia licencia : liciencias) {
+					if (licencia.getLicImporte() != null)
+						importeTotal += licencia.getLicImporte();
+				}
+
+				txtImporteTotal.setValue(importeTotal);
 			}
 
 		} catch (Exception e) {
@@ -750,10 +843,12 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
 	private javax.swing.JButton btnBuscar;
+	private javax.swing.JButton btnImprimirResultados;
 	private javax.swing.JButton btnMoverPendiente;
 	private javax.swing.JButton btnReimprimir;
 	private javax.swing.JLabel jLabel19;
 	private javax.swing.JLabel jLabel20;
+	private javax.swing.JLabel jLabel21;
 	private javax.swing.JLabel jLabel3;
 	private javax.swing.JLabel jLabel6;
 	private javax.swing.JLabel jLabel8;
@@ -766,6 +861,7 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 	private javax.swing.JTextField txtBusquedaApellido;
 	private javax.swing.JFormattedTextField txtBusquedaDni;
 	private javax.swing.JTextField txtBusquedaNombre;
+	private javax.swing.JFormattedTextField txtImporteTotal;
 	private javax.swing.JFormattedTextField txtOtorgadaDesde;
 	private javax.swing.JFormattedTextField txtOtorgadaHasta;
 	// End of variables declaration//GEN-END:variables
