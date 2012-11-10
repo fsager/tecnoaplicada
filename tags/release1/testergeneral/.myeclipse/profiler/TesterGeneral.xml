@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="profiler.settings.instrument.empty.methods">true</entry>
+<entry key="ProfilerCPUSettings_profile_runnables">true</entry>
+<entry key="profiler.settings.n.profiled.threads.limit">32</entry>
+<entry key="ProfilerCPUSettings_filter_type">2</entry>
+<entry key="profiler.settings.obj.alloc.stack.sampling.depth">-1</entry>
+<entry key="profiler.settings.instrument.method.invoke">true</entry>
+<entry key="profiler.settings.instr.scheme">1</entry>
+<entry key="ProfilerMemorySettings_track_every">10</entry>
+<entry key="ProfilerMemorySettings_mode">4</entry>
+<entry key="ProfilerCPUSettings_root_classes">ar.com.trimix.common.codegen.**
+examenes.psicometrico.domain.**
+examenes.util.**
+frontend.buttons.**
+frontend.components.**
+frontend.paneles.**
+frontend.tablemodel.**
+frontend.utils.**
+frontend.ventanas.**
+testerGeneral.**
+</entry>
+<entry key="ProfilerCPUSettings_filter_value">ar.com.trimix.common.codegen.*,&#13;
+examenes.psicometrico.domain.*,&#13;
+examenes.util.*,&#13;
+frontend.buttons.*,&#13;
+frontend.components.*,&#13;
+frontend.paneles.*,&#13;
+frontend.tablemodel.*,&#13;
+frontend.utils.*,&#13;
+frontend.ventanas.*,&#13;
+testerGeneral.*</entry>
+<entry key="profiler.settings.istrument.getter.setter.methods">true</entry>
+<entry key="myeclipse.profiling.mode">0</entry>
+<entry key="ProfilerMemorySettings_stacktraces">-1</entry>
+<entry key="profiler.settings.sampling.interval">10</entry>
+<entry key="profiler.settings.cpu.profiling.type">0</entry>
+</properties>
