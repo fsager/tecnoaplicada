@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportPersonaExamen" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="14" bottomMargin="0">
+	<property name="template.type" value="columnar"/>
+	<property name="ireport.zoom" value="1.2396694214876036"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="28"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="restriccionesVisuales">
+		<parameter name="per_id" class="java.math.BigDecimal"/>
+		<queryString>
+			<![CDATA[select * from app.persona p, app.persona_restricion pr,app.dominio d
+where p.per_id =pr.per_id
+  and d.dom_id=pr.dom_id
+  and d.dom_clave = 'Restricción Visual'
+  and p.per_id = $P{per_id}]]>
+		</queryString>
+		<field name="DOM_VALOR_MOSTRAR" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="p_pexa_id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[10]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\programacion\\Workspaces3\\TesterGeneral\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="otrasAflicciones" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select per.*,perexa.*,exa.*,detalleRes.*,detalle.*,
+		(select distinct 'SI' from app.persona p, app.persona_restricion pr,app.dominio d
+		where p.per_id =pr.per_id
+		  and d.dom_id=pr.dom_id
+		  and d.dom_clave = 'Restricción Visual'
+		  and (lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Lentes de Contacto') or lower(d.DOM_VALOR_MOSTRAR) like lower('Usa Anteojos'))
+		  and p.per_id = per.per_id) utiliza_Correcion,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_VISION_NOCTURNA') as vision_crepuscular,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_ENCANDILAMIENTO') as deslumbramiento,
+		  (select detalleResE.rde_detalle_resultado|| ' seg.'
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_REC_ENCANDILAMIENTO') as rec_encandilamiento,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_ISHIHARA') as vision_cromatica	,
+		  (select detalleResE.rde_detalle_resultado
+		 from  app.persona_examen perexaE,
+		 	   app.resultado_detalle_examen detalleResE,
+			   app.examen_detalle detalleE
+		where perexaE.pexa_id= detalleResE.pexa_id
+		    and detalleE.exad_id = detalleResE.exad_id
+		    and perexaE.pexa_id = perexa.pexa_id
+		    and detalleE.exad_codigo = 'TEST_CAMPIMETRIA') as campo_visual
+ from app.persona per,
+              app.persona_examen perexa,
+              app.examen exa,
+              app.resultado_detalle_examen detalleRes,
+	      app.examen_detalle detalle
+where perexa.per_id = per.per_id
+    and exa.exa_id=perexa.exa_id
+    and perexa.pexa_id= detalleRes.pexa_id
+    and detalle.exad_id = detalleRes.exad_id
+    and perexa.pexa_id = $P{p_pexa_id}
+order by detalle.exad_detalle]]>
+	</queryString>
+	<field name="PER_ID" class="java.lang.Long"/>
+	<field name="PER_APELLIDO" class="java.lang.String"/>
+	<field name="PER_NOMBRE" class="java.lang.String"/>
+	<field name="PER_TIPO_DOC" class="java.lang.String"/>
+	<field name="PER_NUMERO_DOC" class="java.lang.String"/>
+	<field name="PER_SEXO" class="java.lang.String"/>
+	<field name="PER_FECHA_NACIMIENTO" class="java.sql.Timestamp"/>
+	<field name="PER_ESTADO_CIVIL" class="java.lang.String"/>
+	<field name="PER_GRUPO_SANGUINEO" class="java.lang.String"/>
+	<field name="PER_TELEFONO" class="java.lang.String"/>
+	<field name="PER_CELULAR" class="java.lang.String"/>
+	<field name="PER_CORREO" class="java.lang.String"/>
+	<field name="PER_ESTUDIOS" class="java.lang.String"/>
+	<field name="PER_DOMICILIO" class="java.lang.String"/>
+	<field name="PER_OBSERVACIONES" class="java.lang.String"/>
+	<field name="PER_FOTO" class="java.sql.Blob"/>
+	<field name="PER_FIRMA" class="java.sql.Blob"/>
+	<field name="PER_LOCALIDAD" class="java.lang.String"/>
+	<field name="PER_EDUCACION" class="java.lang.String"/>
+	<field name="PER_LICENCIA_DE_CONDUCIR" class="java.lang.String"/>
+	<field name="PER_TIEMPO_QUE_LLEVA_CONDUCIENDO" class="java.lang.String"/>
+	<field name="PER_TOMA_MEDICAMENTOS_REGULARMENTE_SN" class="java.lang.String"/>
+	<field name="PER_TOMO_HOY_PSICOFARMACOS" class="java.lang.String"/>
+	<field name="PER_TOMO_HOY_ALCOHOL" class="java.lang.String"/>
+	<field name="PEXA_ID" class="java.lang.Long"/>
+	<field name="EXA_ID" class="java.lang.Long"/>
+	<field name="PEXA_FECHA" class="java.sql.Timestamp"/>
+	<field name="PEXA_RESULTADO" class="java.lang.String"/>
+	<field name="PEXA_ESTADO" class="java.lang.String"/>
+	<field name="PEXA_NOTA" class="java.math.BigDecimal"/>
+	<field name="PEXA_OBS" class="java.lang.String"/>
+	<field name="PEXA_ADJ" class="java.sql.Blob"/>
+	<field name="PEXA_RESULTADO_MEDICO" class="java.lang.String"/>
+	<field name="PEXA_NOMBRE_ADJUNTO" class="java.lang.String"/>
+	<field name="PEXA_TIPO_EXAMEN" class="java.lang.String"/>
+	<field name="EXA_CODIGO" class="java.lang.String"/>
+	<field name="EXA_NOMBRE" class="java.lang.String"/>
+	<field name="EXA_ORDEN" class="java.lang.Long"/>
+	<field name="RDE_ID" class="java.lang.Long"/>
+	<field name="EXAD_ID" class="java.lang.Long"/>
+	<field name="RDE_RESULTADO" class="java.lang.String"/>
+	<field name="RDE_DETALLE_RESULTADO" class="java.lang.String"/>
+	<field name="RDE_PARAMETROS_CORRECCION" class="java.lang.String"/>
+	<field name="RDE_NOTA" class="java.math.BigDecimal"/>
+	<field name="RDE_NOTA2" class="java.math.BigDecimal"/>
+	<field name="RDE_NOTA3" class="java.math.BigDecimal"/>
+	<field name="RDE_NOTA4" class="java.math.BigDecimal"/>
+	<field name="EXAD_DETALLE" class="java.lang.String"/>
+	<field name="EXAD_CODIGO" class="java.lang.String"/>
+	<field name="EXAD_ORDEN" class="java.lang.Long"/>
+	<field name="EXAD_PARAMETROS_CORRECCION" class="java.lang.String"/>
+	<field name="UTILIZA_CORRECION" class="java.lang.String"/>
+	<field name="VISION_CREPUSCULAR" class="java.lang.String"/>
+	<field name="DESLUMBRAMIENTO" class="java.lang.String"/>
+	<field name="REC_ENCANDILAMIENTO" class="java.lang.String"/>
+	<field name="VISION_CROMATICA" class="java.lang.String"/>
+	<field name="CAMPO_VISUAL" class="java.lang.String"/>
+	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="Page">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+	</variable>
+	<variable name="PER_ID_SUM" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{PER_ID}]]></variableExpression>
+	</variable>
+	<variable name="PER_ID_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{PER_ID}]]></variableExpression>
+	</variable>
+	<filterExpression><![CDATA[$P{p_pexa_id}]]></filterExpression>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="637" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="3" y="80" width="140" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Documento de Identidad N°:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="144" y="80" width="260" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PER_NUMERO_DOC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="3" y="49" width="59" height="28" forecolor="#000000"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Apellido/s y Nombre/s:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="63" y="58" width="454" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PER_APELLIDO}+", "+$F{PER_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="329" y="1" width="42" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="372" y="0" width="177" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{PEXA_FECHA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Title" x="4" y="21" width="548" height="23"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXÁMEN OFTALMOLÓGICO]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="146" y="103" width="253" height="20" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="per_id">
+					<subreportParameterExpression><![CDATA[$F{PER_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "utilizaCorreccion.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="3" y="103" width="108" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Utiliza Corrección:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="111" y="103" width="33" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{UTILIZA_CORRECION}==null ? "NO" : $F{UTILIZA_CORRECION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="158" width="83" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Agudeza Visual:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="118" y="156" width="176" height="20"/>
+				<subreportParameter name="p_codigo_examen">
+					<subreportParameterExpression><![CDATA["TEST_AGUDEZA_VISUAL_LEJANA"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_pexa_id">
+					<subreportParameterExpression><![CDATA[$P{p_pexa_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "agudezaVisualMonocular.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="188" width="83" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Binocular: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="217" width="100" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Anisometropía:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="2" y="242" width="122" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[VISION NOCTURNA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="132" y="243" width="100" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Visión Crepuscular:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="241" y="243" width="158" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{VISION_CREPUSCULAR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="241" y="266" width="158" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESLUMBRAMIENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="132" y="266" width="100" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Deslumbramiento:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="354" y="293" width="203" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{REC_ENCANDILAMIENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="131" y="293" width="223" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tiempo de readaptacion al encandilamiento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="321" width="101" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Visión Cromática:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="2" y="346" width="181" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Movimientos Oculares Extrínsecos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="188" y="346" width="64" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Estrabismo]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="201" y="551" width="351" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PEXA_OBS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="147" y="615" width="62" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="551" width="194" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Estudios Complementarios solicitados:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="3" y="595" width="59" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[APTITUD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="3" y="572" width="87" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Conclusiones:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="149" y="530" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Si]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="224" y="530" width="13" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="200" y="530" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="2" y="369" width="181" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Movimientos Oculares Extrínsecos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="189" y="370" width="64" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Anisocoría]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="173" y="530" width="13" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="394" width="40" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[BMC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="44" y="401" width="68" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Conjuntivas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="44" y="421" width="68" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Córneas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="44" y="441" width="68" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[C. Ant:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="43" y="461" width="68" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cristalinos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="485" width="107" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tensión Ocular: O.D]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="285" y="485" width="34" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[O.I]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="507" width="82" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Campo Visual:(Conclusión)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="530" width="83" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fondo de Ojo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="88" y="530" width="55" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dilatación:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="4" y="136" width="545" height="1" forecolor="#FFFFFF"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="6" y="183" width="545" height="1" forecolor="#FFFFFF"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="5" y="213" width="545" height="1" forecolor="#FFFFFF"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="163" y="221" width="19" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="112" y="221" width="19" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Si]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="187" y="219" width="13" height="15"/>
+			</rectangle>
+			<rectangle>
+				<reportElement positionType="Float" x="136" y="219" width="13" height="15"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="111" y="321" width="355" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{VISION_CROMATICA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="312" y="346" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="336" y="346" width="13" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="261" y="346" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Si]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="285" y="346" width="13" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="313" y="370" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="337" y="370" width="13" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="262" y="370" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Si]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="286" y="370" width="13" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="59" y="595" width="36" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[APTO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="95" y="595" width="47" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement positionType="Float" x="200" y="595" width="47" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="147" y="595" width="51" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NO APTO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="200" y="615" width="47" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement positionType="Float" x="312" y="596" width="47" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="252" y="596" width="62" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RETENIDO]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="85" y="158" width="33" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{UTILIZA_CORRECION}==null ? "S/C" : "C/C"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="86" y="507" width="167" height="20"/>
+				<subreportParameter name="p_pexa_id">
+					<subreportParameterExpression><![CDATA[$P{p_pexa_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "campimetria_izq.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement positionType="Float" x="3" y="527" width="545" height="1" forecolor="#FFFFFF"/>
+			</line>
+			<subreport>
+				<reportElement positionType="Float" x="255" y="507" width="181" height="20"/>
+				<subreportParameter name="p_pexa_id">
+					<subreportParameterExpression><![CDATA[$P{p_pexa_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "campimetria_der.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="439" y="507" width="113" height="20"/>
+				<subreportParameter name="p_pexa_id">
+					<subreportParameterExpression><![CDATA[$P{p_pexa_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "campimetria_na.jasper"]]></subreportExpression>
+			</subreport>
+			<rectangle>
+				<reportElement positionType="Float" x="114" y="191" width="13" height="15"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="141" y="193" width="19" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement positionType="Float" x="165" y="191" width="13" height="15"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="90" y="193" width="19" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Si]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="3" y="129" width="92" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Otras Aflicciones:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="95" y="129" width="457" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{otrasAflicciones}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="3" y="126" width="545" height="1" forecolor="#FFFFFF"/>
+			</line>
+		</band>
+	</title>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="73" splitType="Stretch">
+			<elementGroup>
+				<staticText>
+					<reportElement x="391" y="22" width="135" height="17"/>
+					<textElement>
+						<font fontName="Arial" size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Firma y Sello del Médico Examinador]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="383" y="5" width="129" height="17"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[...................................................]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="15" y="5" width="100" height="17"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[...................................................]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="17" y="22" width="108" height="17"/>
+					<textElement>
+						<font fontName="Arial" size="11" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Firma del Postulante]]></text>
+				</staticText>
+			</elementGroup>
+			<staticText>
+				<reportElement x="12" y="39" width="511" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[GERENCIA DE CONTROL TECNICO. DEPARTAMENTO DE CONTROL PSICOFISICO]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
