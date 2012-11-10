@@ -137,7 +137,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		tablePersona.getSelectionModel().addListSelectionListener(
 				new SharedListSelectionHandler());
-
+		btnAgregarTipoDoc.setVisible(false);
+		btnAgregarNacionalidad.setVisible(false);
 	}
 
 	public void cargarListboxs() {
@@ -153,10 +154,11 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		Util
 				.cargarDominios(cbTipoDoc, Constantes.DOMINIO_CLAVE_TIPO_DOC,
 						false);
-		Util.selectDominios(cbTipoDoc, "DNI");
+		Util.selectDominios(cbTipoDoc, "DNI-Documento Nacional de Identidad");
 
 		Util.cargarDominios(cbNacionalidad,
 				Constantes.DOMINIO_CLAVE_NACIONALIDAD, false);
+		Util.selectDominios(cbNacionalidad, "ARG");
 
 		Util.cargarDominios(cbDonante, Constantes.DOMINIO_CLAVE_DONANTE, false);
 
@@ -2230,6 +2232,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		txtApellido.setText("");
 		txtNombre.setText("");
+		
+		//TODO
 		Util.selectDominios(cbTipoDoc, "DNI");
 		txtNroDoc.setText(null);
 		cbSexo.setSelectedIndex(0);
@@ -2280,18 +2284,19 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			persona.setPerDomicilio(txtDomicilio.getText());
 			persona.setPerTelefono(txtTelefono.getText());
 
+			//TODO puedo hacer un SUBSTRING del NO o SI
 			if (txtMedicacion.getText() == null
 					|| txtMedicacion.getText().equals(""))
 				persona.setPerMedicacion("NO");
 			else
 				persona.setPerMedicacion(txtMedicacion.getText());
-
+			//TODO puedo hacer un SUBSTRING del NO o SI
 			if (txtRestricciones.getText() == null
 					|| txtRestricciones.getText().equals(""))
 				persona.setPerRestricciones("NO");
 			else
 				persona.setPerRestricciones(txtRestricciones.getText());
-
+			//TODO puedo hacer un SUBSTRING del NO o SI
 			if (txtAlergico.getText() == null
 					|| txtAlergico.getText().equals(""))
 				persona.setPerAlergia("NO");
