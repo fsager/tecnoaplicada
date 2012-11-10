@@ -1,9 +1,0 @@
-Instalar Driver de Camara Web.
-Instalar Driver de Tablet.
-Desactivar Camara Web Integrada.
-Instalar aplicacion TesterGeneral con JMF.
-Activar nuevamente la WebCam integrada.
-
-Validaciones:
-	Probar de hacer un examen.
-	Probar de hacer una firma y capturar una foto.
