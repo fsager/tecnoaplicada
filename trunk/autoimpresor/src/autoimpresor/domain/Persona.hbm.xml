@@ -17,7 +17,7 @@
             <column name="PER_NOMBRE" length="160" not-null="true" />
         </property>
         <property name="perTipoDoc" type="java.lang.String">
-            <column name="PER_TIPO_DOC" length="30" not-null="true" />
+            <column name="PER_TIPO_DOC" length="200" not-null="true" />
         </property>
         <property name="perNumeroDoc" type="java.lang.String">
             <column name="PER_NUMERO_DOC" length="30" not-null="true" />
