@@ -154,7 +154,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		Util
 				.cargarDominios(cbTipoDoc, Constantes.DOMINIO_CLAVE_TIPO_DOC,
 						false);
-		Util.selectDominios(cbTipoDoc, "DNI-Documento Nacional de Identidad");
+		Util.selectDominios(cbTipoDoc, "DNI-DNI");
 
 		Util.cargarDominios(cbNacionalidad,
 				Constantes.DOMINIO_CLAVE_NACIONALIDAD, false);
@@ -752,9 +752,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 						.addGroup(
 								jPanel5Layout
 										.createSequentialGroup()
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
+										.addContainerGap(17, Short.MAX_VALUE)
 										.addGroup(
 												jPanel5Layout
 														.createParallelGroup(
@@ -947,7 +945,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		jLabel1.setText(Constantes.LB_APELLIDO);
 
-		jLabel4.setText("Tipo de Documento:");
+		jLabel4.setText("Tipo de Doc:");
 
 		cbSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -1002,7 +1000,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 						.addGroup(
 								jPanel7Layout
 										.createSequentialGroup()
-										.addContainerGap()
 										.addGroup(
 												jPanel7Layout
 														.createParallelGroup(
@@ -1045,9 +1042,9 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																Short.MAX_VALUE)
 														.addComponent(
 																jLabel4,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																69,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
@@ -1075,25 +1072,25 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																				53,
 																				Short.MAX_VALUE))
 														.addComponent(cbSexo,
-																0, 160,
+																0, 200,
 																Short.MAX_VALUE)
 														.addComponent(
 																txtNroDoc,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																160,
+																200,
 																Short.MAX_VALUE)
 														.addComponent(
 																cbNacionalidad,
-																0, 160,
+																0, 200,
 																Short.MAX_VALUE)
 														.addComponent(
 																txtNombre,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																160,
+																200,
 																Short.MAX_VALUE)
 														.addComponent(
 																cbTipoDoc, 0,
-																160,
+																200,
 																Short.MAX_VALUE)
 														.addGroup(
 																jPanel7Layout
@@ -1113,9 +1110,9 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 														.addComponent(
 																txtApellido,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																160,
+																200,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(22, Short.MAX_VALUE)));
+										.addContainerGap(19, Short.MAX_VALUE)));
 
 		jPanel7Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
 				new java.awt.Component[] { cbSexo, cbTipoDoc, txtNombre,
@@ -1128,7 +1125,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 						.addGroup(
 								jPanel7Layout
 										.createSequentialGroup()
-										.addContainerGap()
 										.addGroup(
 												jPanel7Layout
 														.createParallelGroup(
@@ -1157,12 +1153,12 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 												jPanel7Layout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel4)
 														.addComponent(
 																cbTipoDoc,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLabel4))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
@@ -1234,7 +1230,9 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(0, 0, 0)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(
 				jPanel8);
@@ -1252,96 +1250,76 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING,
 																false)
-														.addGroup(
-																jPanel8Layout
-																		.createSequentialGroup()
-																		.addGroup(
-																				jPanel8Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING,
-																								false)
-																						.addComponent(
-																								jPanel5,
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								jPanel8Layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												jLabel12,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												125,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																										.addComponent(
-																												txtTelefono,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												150,
-																												Short.MAX_VALUE))
-																						.addGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								jPanel8Layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												jLabel14)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																										.addComponent(
-																												txtRestricciones,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												150,
-																												Short.MAX_VALUE))
-																						.addGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								jPanel8Layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												jLabel15,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												117,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																										.addComponent(
-																												txtMedicacion,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												150,
-																												Short.MAX_VALUE))
-																						.addGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								jPanel8Layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												jLabel16,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												117,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																										.addComponent(
-																												txtAlergico,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												150,
-																												Short.MAX_VALUE)))
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+														.addComponent(
+																jPanel5,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
 														.addGroup(
 																jPanel8Layout
 																		.createSequentialGroup()
 																		.addComponent(
-																				jPanel7,
+																				jLabel12,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				125,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addGap(
-																				1,
-																				1,
-																				1)))
-										.addContainerGap(13, Short.MAX_VALUE)));
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				txtTelefono,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				150,
+																				Short.MAX_VALUE))
+														.addGroup(
+																jPanel8Layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jLabel14)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				txtRestricciones,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				150,
+																				Short.MAX_VALUE))
+														.addGroup(
+																jPanel8Layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jLabel15,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				117,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				txtMedicacion,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				150,
+																				Short.MAX_VALUE))
+														.addGroup(
+																jPanel8Layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jLabel16,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				117,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				txtAlergico,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				150,
+																				Short.MAX_VALUE))
+														.addComponent(
+																jPanel7,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jPanel8Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
 				new java.awt.Component[] { jLabel12, jLabel14, jLabel15,
@@ -1412,7 +1390,9 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																22,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(40, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jPanel9.setOpaque(false);
 
@@ -1619,7 +1599,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																						.addComponent(
 																								lbFirma,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								298,
+																								299,
 																								Short.MAX_VALUE)
 																						.addComponent(
 																								lbFoto,
@@ -1642,22 +1622,22 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																										.addComponent(
 																												btnCancelarFoto,
 																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												76,
+																												78,
 																												Short.MAX_VALUE))
 																						.addComponent(
 																								btnCancelarFirma,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								76,
+																								78,
 																								Short.MAX_VALUE)
 																						.addComponent(
 																								btnExaminarFirma,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								76,
+																								78,
 																								Short.MAX_VALUE)
 																						.addComponent(
 																								btnExaminarFoto,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								76,
+																								78,
 																								Short.MAX_VALUE)))
 														.addComponent(
 																jPanel4,
@@ -1740,36 +1720,21 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
 				jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
-		jPanel2Layout
-				.setHorizontalGroup(jPanel2Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel2Layout
-										.createSequentialGroup()
-										.addGap(0, 0, 0)
-										.addComponent(
-												jPanel8,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												314,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jPanel9,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addContainerGap())
-						.addGroup(
-								jPanel2Layout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(
-												lbError,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												698, Short.MAX_VALUE).addGap(9,
-												9, 9)));
+		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				jPanel2Layout.createSequentialGroup().addGap(0, 0, 0)
+						.addComponent(jPanel8,
+								javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE).addGap(
+								0, 0, 0).addComponent(jPanel9,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE).addContainerGap()).addGroup(
+				jPanel2Layout.createSequentialGroup().addContainerGap()
+						.addComponent(lbError,
+								javax.swing.GroupLayout.DEFAULT_SIZE, 698,
+								Short.MAX_VALUE).addGap(9, 9, 9)));
 		jPanel2Layout
 				.setVerticalGroup(jPanel2Layout
 						.createParallelGroup(
@@ -2068,9 +2033,21 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	}
 
 	private void btnNuevaLicenciaActionPerformed(java.awt.event.ActionEvent evt) {
-		abrirVentanaLicencia(null);
-		((PanelMenuPrincipal) Util.panelMenu).calcularLicenciasPorEstado();
-		cargarLicencias();
+		if(!(persona.getPerDomNro()==null))
+		{
+			abrirVentanaLicencia(null);
+			((PanelMenuPrincipal) Util.panelMenu).calcularLicenciasPorEstado();
+			cargarLicencias();
+		}
+		else
+		{
+			JOptionPaneTesterGral
+			.showInternal(
+					"Debe completar los datos del domicilio.",
+					"Datos domicilio",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 
 	private void btnVerLicenciasEmitidasActionPerformed(
