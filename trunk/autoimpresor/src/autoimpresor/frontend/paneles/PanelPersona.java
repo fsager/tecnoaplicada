@@ -346,8 +346,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 					}
 				});
 
-		lbFechaEjemplo.setFont(new java.awt.Font("Segoe UI", 0, 8));
 		lbFechaEjemplo.setText("jLabel17");
+		lbFechaEjemplo.setFont(new java.awt.Font("Segoe UI", 0, 8));
 
 		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(
 				jPanel3);
@@ -593,11 +593,11 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		});
 		jScrollPane1.setViewportView(tablePersona);
 
-		lbSinResultados.setFont(new java.awt.Font("Segoe UI", 0, 10));
-		lbSinResultados.setForeground(new java.awt.Color(204, 0, 0));
 		lbSinResultados.setIcon(new ImageIcon(getClass().getResource(
 				Constantes.IMG_ERROR)));
 		lbSinResultados.setText(Constantes.ERROR_SIN_RESULTADOS);
+		lbSinResultados.setFont(new java.awt.Font("Segoe UI", 0, 10));
+		lbSinResultados.setForeground(new java.awt.Color(204, 0, 0));
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
 				jPanel1);
@@ -704,8 +704,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		jLabel7.setText(Constantes.LB_FECHA_NACIMIENTO);
 
-		lbEdad.setFont(new java.awt.Font("Segoe UI", 0, 11));
 		lbEdad.setText(Constantes.LB_EDAD);
+		lbEdad.setFont(new java.awt.Font("Segoe UI", 0, 11));
 		lbEdad.setPreferredSize(new java.awt.Dimension(69, 22));
 
 		jLabel10.setText(Constantes.LB_GRUPO_SANGUIENEO);
@@ -721,7 +721,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		txtDomicilio.setMinimumSize(new java.awt.Dimension(150, 22));
 		jScrollPane2.setViewportView(txtDomicilio);
 
-		jLabel11.setText(Constantes.LB_DOMICILIO);
+		jLabel11.setText("Calle:");
 
 		jLabel12.setText("Tel\u00e9fono Emergencia:");
 
@@ -760,10 +760,10 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			}
 		});
 
-		lbFechaEjemplo2.setFont(new java.awt.Font("Segoe UI", 0, 8));
 		lbFechaEjemplo2.setText("jLabel17");
+		lbFechaEjemplo2.setFont(new java.awt.Font("Segoe UI", 0, 8));
 
-		jLabel18.setText("Nacionalidad:");
+		jLabel18.setText("Pa\u00edz:");
 
 		cbNacionalidad.setModel(new javax.swing.DefaultComboBoxModel(
 				new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -970,101 +970,90 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																												0,
 																												0,
 																												Short.MAX_VALUE)
-																										.addContainerGap())))
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
 														.addGroup(
 																jPanel8Layout
 																		.createSequentialGroup()
+																		.addComponent(
+																				jLabel11,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				125,
+																				Short.MAX_VALUE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jScrollPane2,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				180,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																jPanel8Layout
+																		.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.TRAILING,
+																				false)
 																		.addGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING,
 																				jPanel8Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING)
-																						.addGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								jPanel8Layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												jLabel11,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												125,
-																												Short.MAX_VALUE)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																										.addComponent(
-																												jScrollPane2,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												150,
-																												javax.swing.GroupLayout.PREFERRED_SIZE))
-																						.addGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								jPanel8Layout
-																										.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.TRAILING,
-																												false)
-																										.addGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING,
-																												jPanel8Layout
-																														.createSequentialGroup()
-																														.addComponent(
-																																jLabel12,
-																																javax.swing.GroupLayout.PREFERRED_SIZE,
-																																125,
-																																javax.swing.GroupLayout.PREFERRED_SIZE)
-																														.addPreferredGap(
-																																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																														.addComponent(
-																																txtTelefono,
-																																javax.swing.GroupLayout.DEFAULT_SIZE,
-																																150,
-																																Short.MAX_VALUE))
-																										.addGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING,
-																												jPanel8Layout
-																														.createSequentialGroup()
-																														.addComponent(
-																																jLabel14)
-																														.addPreferredGap(
-																																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																														.addComponent(
-																																txtRestricciones,
-																																javax.swing.GroupLayout.DEFAULT_SIZE,
-																																150,
-																																Short.MAX_VALUE))
-																										.addGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING,
-																												jPanel8Layout
-																														.createSequentialGroup()
-																														.addComponent(
-																																jLabel15,
-																																javax.swing.GroupLayout.PREFERRED_SIZE,
-																																117,
-																																javax.swing.GroupLayout.PREFERRED_SIZE)
-																														.addPreferredGap(
-																																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																														.addComponent(
-																																txtMedicacion,
-																																javax.swing.GroupLayout.DEFAULT_SIZE,
-																																150,
-																																Short.MAX_VALUE))
-																										.addGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING,
-																												jPanel8Layout
-																														.createSequentialGroup()
-																														.addComponent(
-																																jLabel16,
-																																javax.swing.GroupLayout.PREFERRED_SIZE,
-																																117,
-																																javax.swing.GroupLayout.PREFERRED_SIZE)
-																														.addPreferredGap(
-																																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																														.addComponent(
-																																txtAlergico,
-																																javax.swing.GroupLayout.DEFAULT_SIZE,
-																																150,
-																																Short.MAX_VALUE))))
-																		.addGap(
-																				0,
-																				0,
-																				0)))));
+																						.createSequentialGroup()
+																						.addComponent(
+																								jLabel12,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								125,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addPreferredGap(
+																								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																						.addComponent(
+																								txtTelefono,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								150,
+																								Short.MAX_VALUE))
+																		.addGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING,
+																				jPanel8Layout
+																						.createSequentialGroup()
+																						.addComponent(
+																								jLabel14)
+																						.addPreferredGap(
+																								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																						.addComponent(
+																								txtRestricciones,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								150,
+																								Short.MAX_VALUE))
+																		.addGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING,
+																				jPanel8Layout
+																						.createSequentialGroup()
+																						.addComponent(
+																								jLabel15,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								117,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addPreferredGap(
+																								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																						.addComponent(
+																								txtMedicacion,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								150,
+																								Short.MAX_VALUE))
+																		.addGroup(
+																				javax.swing.GroupLayout.Alignment.LEADING,
+																				jPanel8Layout
+																						.createSequentialGroup()
+																						.addComponent(
+																								jLabel16,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								117,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addPreferredGap(
+																								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																						.addComponent(
+																								txtAlergico,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								150,
+																								Short.MAX_VALUE))))
+										.addGap(0, 0, 0)));
 
 		jPanel8Layout
 				.linkSize(javax.swing.SwingConstants.HORIZONTAL,
@@ -1259,12 +1248,11 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 														.addComponent(
 																jScrollPane2,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																74,
+																25,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
+												56, Short.MAX_VALUE)
 										.addGroup(
 												jPanel8Layout
 														.createParallelGroup(
@@ -1636,11 +1624,11 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 												202,
 												javax.swing.GroupLayout.PREFERRED_SIZE)));
 
+		lbError.setIcon(new ImageIcon(getClass().getResource(
+				Constantes.IMG_ERROR)));
 		lbError.setBackground(new java.awt.Color(204, 0, 0));
 		lbError.setFont(new java.awt.Font("Segoe UI", 0, 10));
 		lbError.setForeground(new java.awt.Color(204, 0, 0));
-		lbError.setIcon(new ImageIcon(getClass().getResource(
-				Constantes.IMG_ERROR)));
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
 				jPanel2);
@@ -1917,39 +1905,40 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 									"Emitir Duplicado",
 									JOptionPane.ERROR_MESSAGE);
 				} else {
-					boolean conError=false;
+					boolean conError = false;
 					lic.setLicId(null);
 					lic.setLicFechaOtorgada(new Date());
 					lic
 							.setLicTramite(Constantes.DOMINIO_TIPO_TRAMITE_RENOVACION);
 					lic.setLicEstado("P");
-					
-					String utilizarCaja = ContextManager.getProperty("UTILIZAR_CAJA_SN");
-					if(utilizarCaja.equals("S"))
-					{
-						String cajaImporteDuplicado = ContextManager.getProperty("CAJA_IMPORTE_DUPLICADO");
-						if(!cajaImporteDuplicado.equals(""))
-						{
-							cajaImporteDuplicado=cajaImporteDuplicado.replace(".","#");
-							cajaImporteDuplicado=cajaImporteDuplicado.replace(",",".");
-							cajaImporteDuplicado=cajaImporteDuplicado.replace("#",",");
-							lic.setLicImporte(Double.valueOf(cajaImporteDuplicado));							
-						}
-						else
-						{
+
+					String utilizarCaja = ContextManager
+							.getProperty("UTILIZAR_CAJA_SN");
+					if (utilizarCaja.equals("S")) {
+						String cajaImporteDuplicado = ContextManager
+								.getProperty("CAJA_IMPORTE_DUPLICADO");
+						if (!cajaImporteDuplicado.equals("")) {
+							cajaImporteDuplicado = cajaImporteDuplicado
+									.replace(".", "#");
+							cajaImporteDuplicado = cajaImporteDuplicado
+									.replace(",", ".");
+							cajaImporteDuplicado = cajaImporteDuplicado
+									.replace("#", ",");
+							lic.setLicImporte(Double
+									.valueOf(cajaImporteDuplicado));
+						} else {
 							JOptionPaneTesterGral
-							.showInternal(
-									"No se encuentra definido el importe para el duplicado de los carnets.",
-									"Emitir Duplicado",
-									JOptionPane.INFORMATION_MESSAGE);
-							conError=true;
+									.showInternal(
+											"No se encuentra definido el importe para el duplicado de los carnets.",
+											"Emitir Duplicado",
+											JOptionPane.INFORMATION_MESSAGE);
+							conError = true;
 						}
 					}
 					LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager
 							.getBizObject("licenciaService");
 
-					if(!conError)
-					{
+					if (!conError) {
 						licenciaService.insert(lic);
 						cargarLicencias();
 					}
@@ -2192,7 +2181,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			if (internalframe.getArchivoSeleccionado() != null)
 				internalframe.getArchivoSeleccionado().delete();
 		}
-		
+
 		System.gc();
 
 	}
@@ -2232,7 +2221,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		txtApellido.setText("");
 		txtNombre.setText("");
-		
+
 		//TODO
 		Util.selectDominios(cbTipoDoc, "DNI");
 		txtNroDoc.setText(null);

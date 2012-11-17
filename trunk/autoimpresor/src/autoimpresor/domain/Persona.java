@@ -30,6 +30,20 @@ public class Persona  implements java.io.Serializable {
      private String perRestricciones;
      private String perMedicacion;
      private String perDomicilio;
+     
+     //QR
+     private Integer perDomNro;
+     private Integer perDomNroPiso;     
+     private String perDomLetraDpt;
+     private String perDomCodigoPostal;
+     private String perDomBarrio;
+     
+     private String perDomPais;
+     private String perDomProvincia;
+     private String perDomDepartamento;
+     private String perDomLocalidad;     
+     //QR
+     
      private String perObservaciones;
 	 private byte perFoto[]=new byte[1];
 	 private byte perFirma[]=new byte[1];
@@ -221,6 +235,100 @@ public class Persona  implements java.io.Serializable {
 		return this.perApellido+", "+perNombre;
 	}
 	
+	
+
+
+	
+	public Integer getPerDomNro() {
+		return perDomNro;
+	}
+
+
+	public void setPerDomNro(Integer perDomNro) {
+		this.perDomNro = perDomNro;
+	}
+
+
+	public Integer getPerDomNroPiso() {
+		return perDomNroPiso;
+	}
+
+
+	public void setPerDomNroPiso(Integer perDomNroPiso) {
+		this.perDomNroPiso = perDomNroPiso;
+	}
+
+
+	public String getPerDomLetraDpt() {
+		return perDomLetraDpt;
+	}
+
+
+	public void setPerDomLetraDpt(String perDomLetraDpt) {
+		this.perDomLetraDpt = perDomLetraDpt;
+	}
+
+
+	public String getPerDomCodigoPostal() {
+		return perDomCodigoPostal;
+	}
+
+
+	public void setPerDomCodigoPostal(String perDomCodigoPostal) {
+		this.perDomCodigoPostal = perDomCodigoPostal;
+	}
+
+
+	public String getPerDomBarrio() {
+		return perDomBarrio;
+	}
+
+
+	public void setPerDomBarrio(String perDomBarrio) {
+		this.perDomBarrio = perDomBarrio;
+	}
+
+
+	public String getPerDomPais() {
+		return perDomPais;
+	}
+
+
+	public void setPerDomPais(String perDomPais) {
+		this.perDomPais = perDomPais;
+	}
+
+
+	public String getPerDomProvincia() {
+		return perDomProvincia;
+	}
+
+
+	public void setPerDomProvincia(String perDomProvincia) {
+		this.perDomProvincia = perDomProvincia;
+	}
+
+
+	public String getPerDomDepartamento() {
+		return perDomDepartamento;
+	}
+
+
+	public void setPerDomDepartamento(String perDomDepartamento) {
+		this.perDomDepartamento = perDomDepartamento;
+	}
+
+
+	public String getPerDomLocalidad() {
+		return perDomLocalidad;
+	}
+
+
+	public void setPerDomLocalidad(String perDomLocalidad) {
+		this.perDomLocalidad = perDomLocalidad;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
