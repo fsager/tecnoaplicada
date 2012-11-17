@@ -1061,7 +1061,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																		.addComponent(
 																				cbGrupoSanguineo,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				47,
+																				57,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1072,8 +1072,29 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																		.addComponent(
 																				cbDonante,
 																				0,
-																				0,
+																				53,
 																				Short.MAX_VALUE))
+														.addComponent(cbSexo,
+																0, 160,
+																Short.MAX_VALUE)
+														.addComponent(
+																txtNroDoc,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																160,
+																Short.MAX_VALUE)
+														.addComponent(
+																cbNacionalidad,
+																0, 160,
+																Short.MAX_VALUE)
+														.addComponent(
+																txtNombre,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																160,
+																Short.MAX_VALUE)
+														.addComponent(
+																cbTipoDoc, 0,
+																160,
+																Short.MAX_VALUE)
 														.addGroup(
 																jPanel7Layout
 																		.createSequentialGroup()
@@ -1090,38 +1111,16 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																				0,
 																				Short.MAX_VALUE))
 														.addComponent(
-																cbSexo,
-																0,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																txtNroDoc,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																txtNombre,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
 																txtApellido,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																cbTipoDoc,
-																0,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																cbNacionalidad,
-																0,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																160,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(22, Short.MAX_VALUE)));
+
+		jPanel7Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
+				new java.awt.Component[] { cbSexo, cbTipoDoc, txtNombre,
+						txtNroDoc });
+
 		jPanel7Layout
 				.setVerticalGroup(jPanel7Layout
 						.createParallelGroup(

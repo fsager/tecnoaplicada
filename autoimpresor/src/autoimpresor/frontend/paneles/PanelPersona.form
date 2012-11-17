@@ -773,25 +773,25 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="1">
-                                  <Component id="cbGrupoSanguineo" min="-2" pref="47" max="-2" attributes="1"/>
+                                  <Component id="cbGrupoSanguineo" min="-2" pref="57" max="-2" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel22" min="-2" max="-2" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cbDonante" min="0" pref="0" max="32767" attributes="1"/>
+                                  <Component id="cbDonante" min="0" pref="53" max="32767" attributes="1"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="1">
+                              <Component id="cbSexo" linkSize="3" alignment="0" pref="160" max="32767" attributes="1"/>
+                              <Component id="txtNroDoc" linkSize="3" alignment="0" pref="160" max="32767" attributes="1"/>
+                              <Component id="cbNacionalidad" alignment="0" pref="160" max="32767" attributes="1"/>
+                              <Component id="txtNombre" linkSize="3" alignment="0" pref="160" max="32767" attributes="1"/>
+                              <Component id="cbTipoDoc" linkSize="3" alignment="0" pref="160" max="32767" attributes="1"/>
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="txtNacimiento" min="-2" pref="78" max="-2" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="lbEdad" min="0" pref="0" max="32767" attributes="2"/>
                               </Group>
-                              <Component id="cbSexo" alignment="0" max="32767" attributes="1"/>
-                              <Component id="txtNroDoc" alignment="0" max="32767" attributes="1"/>
-                              <Component id="txtNombre" alignment="0" max="32767" attributes="1"/>
-                              <Component id="txtApellido" alignment="0" max="32767" attributes="1"/>
-                              <Component id="cbTipoDoc" alignment="0" max="32767" attributes="1"/>
-                              <Component id="cbNacionalidad" alignment="0" max="32767" attributes="1"/>
+                              <Component id="txtApellido" alignment="0" min="-2" pref="160" max="-2" attributes="1"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
