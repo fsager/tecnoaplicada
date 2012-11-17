@@ -54,39 +54,38 @@ insert into APP.ANTECEDENTE (ANT_ID,ANT_DESCRIPCION,ANT_APRUEBA_SN) values (8,'C
 
 INSERT INTO APP.USUARIO values(-1,'Administrador Sistema','Administrador del Sistema','1',null,'S','N','S','S','S','S','S','N','S','N',NULL);
 
-
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CAP-Cedula de Capital','Cedula de Capital','Cedula de Capital');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CBSA-Cedula de la Provincia de Buenos Aires','Cedula de la Provincia de Buenos Aires','Cedula de la Provincia de Buenos Aires');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCAT-Cedula de la Provincia de Catamarca','Cedula de la Provincia de Catamarca','Cedula de la Provincia de Catamarca');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCBA-Cedula de la Provincia de Cordoba','Cedula de la Provincia de Cordoba','Cedula de la Provincia de Cordoba');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCHA-Cedula de la Provincia de Chaco','Cedula de la Provincia de Chaco','Cedula de la Provincia de Chaco');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCHB-Cedula de la Provincia de Chubut','Cedula de la Provincia de Chubut','Cedula de la Provincia de Chubut');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCRS-Cedula de la Provincia de Corrientes','Cedula de la Provincia de Corrientes','Cedula de la Provincia de Corrientes');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CBSA-Cedula de BS. AS','Cedula de BS. AS','Cedula de BS. AS');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCAT-Cedula de Catamarca','Cedula de Catamarca','Cedula de Catamarca');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCBA-Cedula de Cordoba','Cedula de Cordoba','Cedula de Cordoba');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCHA-Cedula de Chaco','Cedula de Chaco','Cedula de Chaco');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCHB-Cedula de Chubut','Cedula de Chubut','Cedula de Chubut');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CCRS-Cedula de Corrientes','Cedula de Corrientes','Cedula de Corrientes');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CE-Cedula ident. Extranjera','Cedula ident. Extranjera','Cedula ident. Extranjera');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CERI-Cedula de la Provincia de Entre Rios','Cedula de la Provincia de Entre Rios','Cedula de la Provincia de Entre Rios');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CERI-Cedula de  Entre Rios','Cedula de  Entre Rios','Cedula de  Entre Rios');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CF-Cedula Federal','Cedula Federal','Cedula Federal');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CFOR-Cedula de la Provincia de Formosa','Cedula de la Provincia de Formosa','Cedula de la Provincia de Formosa');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CFOR-Cedula de  Formosa','Cedula de  Formosa','Cedula de  Formosa');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CID-Cedula de Identidad (no identifica provincia)','Cedula de Identidad (no identifica provincia)','Cedula de Identidad (no identifica provincia)');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CIS-Cedula Identidad Sudamericana','Cedula Identidad Sudamericana','Cedula Identidad Sudamericana');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CJUJ-Cedula de la Provincia de Jujuy','Cedula de la Provincia de Jujuy','Cedula de la Provincia de Jujuy');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CLPA-Cedula de la Provincia de La Pampa','Cedula de la Provincia de La Pampa','Cedula de la Provincia de La Pampa');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CLRI-Cedula de la Provincia de La Rioja','Cedula de la Provincia de La Rioja','Cedula de la Provincia de La Rioja');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CJUJ-Cedula de  Jujuy','Cedula de  Jujuy','Cedula de  Jujuy');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CLPA-Cedula de  La Pampa','Cedula de  La Pampa','Cedula de  La Pampa');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CLRI-Cedula de  La Rioja','Cedula de  La Rioja','Cedula de  La Rioja');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CM-Certificado Migratorio','Certificado Migratorio','Certificado Migratorio');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CMIS-Cedula de la Provincia de Misiones','Cedula de la Provincia de Misiones','Cedula de la Provincia de Misiones');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CMZA-Cedula de la Provincia de Mendoza','Cedula de la Provincia de Mendoza','Cedula de la Provincia de Mendoza');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CNEU-Cedula de la Provincia de Neuquen','Cedula de la Provincia de Neuquen','Cedula de la Provincia de Neuquen');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CRNO-Cedula de la Provincia de Rio Negro','Cedula de la Provincia de Rio Negro','Cedula de la Provincia de Rio Negro');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSAL-Cedula de la Provincia de Salta','Cedula de la Provincia de Salta','Cedula de la Provincia de Salta');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSCZ-Cedula de la Provincia de Santa Cruz','Cedula de la Provincia de Santa Cruz','Cedula de la Provincia de Santa Cruz');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSFE-Cedula de la Provincia de Santa Fe','Cedula de la Provincia de Santa Fe','Cedula de la Provincia de Santa Fe');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSGO-Cedula de la Provincia de Santiago del Estero','Cedula de la Provincia de Santiago del Estero','Cedula de la Provincia de Santiago del Estero');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSJN-Cedula de la Provincia de San Juan','Cedula de la Provincia de San Juan','Cedula de la Provincia de San Juan');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSLU-Cedula de la Provincia de San Luis','Cedula de la Provincia de San Luis','Cedula de la Provincia de San Luis');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CTRF-Cedula de la Provincia de Tierra del Fuego','Cedula de la Provincia de Tierra del Fuego','Cedula de la Provincia de Tierra del Fuego');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CTUC-Cedula de la Provincia de Tucuman','Cedula de la Provincia de Tucuman','Cedula de la Provincia de Tucuman');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CMIS-Cedula de  Misiones','Cedula de  Misiones','Cedula de  Misiones');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CMZA-Cedula de  Mendoza','Cedula de  Mendoza','Cedula de  Mendoza');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CNEU-Cedula de  Neuquen','Cedula de  Neuquen','Cedula de  Neuquen');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CRNO-Cedula de  Rio Negro','Cedula de  Rio Negro','Cedula de  Rio Negro');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSAL-Cedula de  Salta','Cedula de  Salta','Cedula de  Salta');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSCZ-Cedula de  Santa Cruz','Cedula de  Santa Cruz','Cedula de  Santa Cruz');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSFE-Cedula de  Santa Fe','Cedula de  Santa Fe','Cedula de  Santa Fe');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSGO-Cedula de  Santiago del Estero','Cedula de  Santiago del Estero','Cedula de  Santiago del Estero');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSJN-Cedula de  San Juan','Cedula de  San Juan','Cedula de  San Juan');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CSLU-Cedula de  San Luis','Cedula de  San Luis','Cedula de  San Luis');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CTRF-Cedula de  Tierra del Fuego','Cedula de  Tierra del Fuego','Cedula de  Tierra del Fuego');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CTUC-Cedula de  Tucuman','Cedula de  Tucuman','Cedula de  Tucuman');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','CUIL-CUIL','CUIL','CUIL');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','DE-Documento Extranjero','Documento Extranjero','Documento Extranjero');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','DNI-Documento Nacional de Identidad','Documento Nacional de Identidad','Documento Nacional de Identidad');
+INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','DNI-DNI','DNI','DNI');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','DNIM-DNI (número múltiple)','DNI (número múltiple)','DNI (número múltiple)');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','DNRP-DNRP','DNRP','DNRP');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','ECP-Extranjero con Cret. de policia','Extranjero con Cret. de policia','Extranjero con Cret. de policia');
@@ -100,7 +99,7 @@ INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DES
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','MI-Matricula Individual','Matricula Individual','Matricula Individual');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','NE-Nros. Especiales','Nros. Especiales','Nros. Especiales');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','PSP-Pasaporte','Pasaporte','Pasaporte');
-INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','PSP-ALEMANIA OCCIDENTAL','ALEMANIA OCCIDENTAL','ALEMANIA OCCIDENTAL');
+/*INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','PSP-ALEMANIA OCCIDENTAL','ALEMANIA OCCIDENTAL','ALEMANIA OCCIDENTAL');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','PSP-ALEMANIA ORIENTAL','ALEMANIA ORIENTAL','ALEMANIA ORIENTAL');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','PSP-ARABIA','ARABIA','ARABIA');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','PSP-ARMENIA','ARMENIA','ARMENIA');
@@ -211,7 +210,7 @@ INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DES
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','PSP-YUGOSLAVIA','YUGOSLAVIA','YUGOSLAVIA');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','PSP-ZAIRE','ZAIRE','ZAIRE');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Tipo Documento','PSP-ALEMANIA','ALEMANIA','ALEMANIA');
-
+*/
 
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Sexo','01','MASCULINO','MASCULINO');
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION)  VALUES ('GRAL','Sexo','02','FEMENINO','FEMENINO');
