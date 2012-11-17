@@ -38,6 +38,7 @@
 		<mapping
 			resource="autoimpresor/domain/importers/AntecedenteImp.hbm.xml" />
 		<mapping resource="autoimpresor/domain/CarnetLicencias.hbm.xml" />
+		<mapping resource="autoimpresor/domain/CarnetLicenciasQR.hbm.xml" />
 
 	</session-factory>
 
