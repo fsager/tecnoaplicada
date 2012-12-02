@@ -34,4 +34,8 @@ public class PersonaBiz implements PersonaDefinition {
 		dao.update(p_domain);
 	}
 
+	public boolean migracionNecesaria() throws Exception
+	{
+		return dao.migracionNecesaria();
+	}
 }

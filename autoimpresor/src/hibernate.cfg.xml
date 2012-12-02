@@ -13,7 +13,7 @@
 
 		<property name="default_schema">APP</property>
 		<property name="connection.pool_size">0</property>
-		<property name="show_sql">false</property>
+		<property name="show_sql">true</property>
 		<property name="c3p0.timeout">0</property>
 
 		<mapping resource="testerGeneral/domain/Auditoria.hbm.xml" />
@@ -37,8 +37,12 @@
 			resource="autoimpresor/domain/importers/ClaseLicenciaImp.hbm.xml" />
 		<mapping
 			resource="autoimpresor/domain/importers/AntecedenteImp.hbm.xml" />
+		
+		
+			
 		<mapping resource="autoimpresor/domain/CarnetLicencias.hbm.xml" />
 		<mapping resource="autoimpresor/domain/CarnetLicenciasQR.hbm.xml" />
+		
 
 	</session-factory>
 

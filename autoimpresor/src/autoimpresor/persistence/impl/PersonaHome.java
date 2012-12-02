@@ -80,6 +80,27 @@ public class PersonaHome extends DAOObject implements PersonaDao {
         }
     }
     
+    public boolean migracionNecesaria() throws Exception 
+    {
+        log.debug("finding Persona instance by migracionNecesaria");
+        try {
+        	Persona p_example=new Persona();
+            p_example.setPerFirma(null);
+            p_example.setPerFoto(null);
+            p_example.setPerSexo("H");
+            
+            Criteria cri = getSession().createCriteria(Persona.class);
+            cri.add(Example.create(p_example).enableLike().ignoreCase());
+            cri.setMaxResults(1);
+            List results = cri.list();
+            
+            return !results.isEmpty();
+        }
+        catch (RuntimeException re) {
+            //log.error("find by example failed", re);
+            throw re;
+        }
+    }
     
     public List getAll(Persona p_example) throws Exception {
         log.debug("finding Persona instance by example");

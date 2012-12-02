@@ -25,6 +25,7 @@ import testerGeneral.comparetors.DateComparator;
 import testerGeneral.domain.Constantes;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.CarnetLicencias;
+import autoimpresor.domain.CarnetLicenciasQR;
 import autoimpresor.domain.Licencia;
 import autoimpresor.domain.Persona;
 import autoimpresor.frontend.tablemodels.TableModelLicenciaFull;
@@ -599,7 +600,7 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 				Licencia lic = ((TableModelLicenciaFull) tableLicencias
 						.getModel()).getValueAt(sel);
 
-				CarnetLicencias carnet = new CarnetLicencias(lic,
+				CarnetLicencias carnet = new CarnetLicenciasQR(lic,
 						nombreMunicipio, codigoMunicipio, escudoMunicipio);
 				carnets.add(carnet);
 			}

@@ -139,8 +139,11 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 				new SharedListSelectionHandler());
 		//btnAgregarTipoDoc.setVisible(false);
 		//btnAgregarNacionalidad.setVisible(false);
+		
 	}
 
+
+	
 	public void cargarListboxs() {
 
 		Util.cargarDominios(cbBusquedaGrupoSanguineo,
@@ -1964,60 +1967,72 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		if (op == JOptionPane.YES_OPTION) {
 			try {
-				int licSel = tableLicencias.getSelectedRow();
-				licSel = tableLicencias.convertRowIndexToModel(licSel);
-				TableModelLicencia tableModelLicencia = (TableModelLicencia) tableLicencias
-						.getModel();
+				
+				if(!(persona.getPerDomNro()==null))
+				{
+					int licSel = tableLicencias.getSelectedRow();
+					licSel = tableLicencias.convertRowIndexToModel(licSel);
+					TableModelLicencia tableModelLicencia = (TableModelLicencia) tableLicencias
+							.getModel();
 
-				Licencia lic = tableModelLicencia.getValueAt(licSel);
+					Licencia lic = tableModelLicencia.getValueAt(licSel);
 
-				Date hoy = new Date();
-				if (lic.getLicFechaVencimiento().before(hoy)) {
-					JOptionPaneTesterGral
-							.showInternal(
-									"La Licencia se encuentra vencida, no se puede emitir un duplicado.",
-									"Emitir Duplicado",
-									JOptionPane.ERROR_MESSAGE);
-				} else {
-					boolean conError = false;
-					lic.setLicId(null);
-					lic.setLicFechaOtorgada(new Date());
-					lic
-							.setLicTramite(Constantes.DOMINIO_TIPO_TRAMITE_RENOVACION);
-					lic.setLicEstado("P");
+					Date hoy = new Date();
+					if (lic.getLicFechaVencimiento().before(hoy)) {
+						JOptionPaneTesterGral
+								.showInternal(
+										"La Licencia se encuentra vencida, no se puede emitir un duplicado.",
+										"Emitir Duplicado",
+										JOptionPane.ERROR_MESSAGE);
+					} else {
+						boolean conError = false;
+						lic.setLicId(null);
+						lic.setLicFechaOtorgada(new Date());
+						lic
+								.setLicTramite(Constantes.DOMINIO_TIPO_TRAMITE_RENOVACION);
+						lic.setLicEstado("P");
 
-					String utilizarCaja = ContextManager
-							.getProperty("UTILIZAR_CAJA_SN");
-					if (utilizarCaja.equals("S")) {
-						String cajaImporteDuplicado = ContextManager
-								.getProperty("CAJA_IMPORTE_DUPLICADO");
-						if (!cajaImporteDuplicado.equals("")) {
-							cajaImporteDuplicado = cajaImporteDuplicado
-									.replace(".", "#");
-							cajaImporteDuplicado = cajaImporteDuplicado
-									.replace(",", ".");
-							cajaImporteDuplicado = cajaImporteDuplicado
-									.replace("#", ",");
-							lic.setLicImporte(Double
-									.valueOf(cajaImporteDuplicado));
-						} else {
-							JOptionPaneTesterGral
-									.showInternal(
-											"No se encuentra definido el importe para el duplicado de los carnets.",
-											"Emitir Duplicado",
-											JOptionPane.INFORMATION_MESSAGE);
-							conError = true;
+						String utilizarCaja = ContextManager
+								.getProperty("UTILIZAR_CAJA_SN");
+						if (utilizarCaja.equals("S")) {
+							String cajaImporteDuplicado = ContextManager
+									.getProperty("CAJA_IMPORTE_DUPLICADO");
+							if (!cajaImporteDuplicado.equals("")) {
+								cajaImporteDuplicado = cajaImporteDuplicado
+										.replace(".", "#");
+								cajaImporteDuplicado = cajaImporteDuplicado
+										.replace(",", ".");
+								cajaImporteDuplicado = cajaImporteDuplicado
+										.replace("#", ",");
+								lic.setLicImporte(Double
+										.valueOf(cajaImporteDuplicado));
+							} else {
+								JOptionPaneTesterGral
+										.showInternal(
+												"No se encuentra definido el importe para el duplicado de los carnets.",
+												"Emitir Duplicado",
+												JOptionPane.INFORMATION_MESSAGE);
+								conError = true;
+							}
+						}
+						LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager
+								.getBizObject("licenciaService");
+
+						if (!conError) {
+							licenciaService.insert(lic);
+							cargarLicencias();
 						}
 					}
-					LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager
-							.getBizObject("licenciaService");
-
-					if (!conError) {
-						licenciaService.insert(lic);
-						cargarLicencias();
-					}
 				}
-
+				else
+				{
+					JOptionPaneTesterGral
+					.showInternal(
+							"Debe completar los datos del domicilio.",
+							"Datos domicilio",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}

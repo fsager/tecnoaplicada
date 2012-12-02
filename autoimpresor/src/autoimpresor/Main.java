@@ -3,6 +3,7 @@ package autoimpresor;
 import java.io.File;
 import java.util.Date;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -21,6 +22,8 @@ import testerGeneral.service.AuditoriaDefinition;
 import actualizaciones.GestorActualizacionesUtil;
 import autoimpresor.business.ContextManager;
 import autoimpresor.frontend.ventanas.FrameContenedor;
+import autoimpresor.service.PersonaDefinition;
+import autoimpresor.service.impl.PersonaService;
 import frontend.utils.Util;
 import frontend.ventanas.VtnConfigurarDb;
 
@@ -61,6 +64,8 @@ public class Main {
 				 * del programa.
 				 */
 				GestorDBBackup.ejecutarSentenciaSQL();
+				
+				
 
 				try {
 					/*
@@ -91,7 +96,12 @@ public class Main {
 						} catch (Exception e) {
 							throw new RuntimeException(e);
 						}
-						new FrameContenedor().setVisible(true);
+						JFrame frame=new FrameContenedor();
+						frame.setVisible(true);
+						
+						migrarDatos(frame);
+						
+						
 						Thread
 								.setDefaultUncaughtExceptionHandler(new MyExceptionHandler());
 						System.setProperty("sun.awt.exception.handler",
@@ -118,6 +128,29 @@ public class Main {
 		}
 	}
 
+	public static void migrarDatos(JFrame frame)
+	{
+		try{
+			if(seRequiereMigracion())
+			{
+				int op=JOptionPane.showConfirmDialog(frame,"<HTML>Se requiere una migración de los datos. <B>Antes de continuar se recomienda realizar una copia de seguridad de la aplicación.</B> <BR>¿Desea continuar?</HTML>","Migración de datos",JOptionPane.YES_NO_OPTION);
+				if (op == JOptionPane.YES_OPTION) {
+					GestorDBBackup.ejecutarMigracionSQL();
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);				
+		}
+		
+	}
+	
+	public static boolean seRequiereMigracion() throws Exception
+	{
+		PersonaDefinition personaService = (PersonaDefinition) ContextManager.getBizObject("personaService");
+		return personaService.migracionNecesaria();
+		
+	}
+	
 	public static void encriptarString() {
 
 		System.out.println(GestorActualizacionesUtil

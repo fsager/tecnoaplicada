@@ -42,4 +42,9 @@ public class PersonaService implements PersonaDefinition {
 	public void update(Persona p_domain) throws Exception {
 		biz.update(p_domain);
 	}
+	
+	public boolean migracionNecesaria() throws Exception
+	{
+		return biz.migracionNecesaria();
+	}
 }

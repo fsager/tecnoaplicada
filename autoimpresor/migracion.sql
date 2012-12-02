@@ -369,12 +369,31 @@ INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DES
  							  WHEN upper(PER_GRUPO_SANGUINEO)='B -' THEN '8'
  							  ELSE PER_GRUPO_SANGUINEO
  					     END,
- 	PER_NACIONALIDAD = 'ARG',
- 	PER_TIPO_DOC='DNI-Documento Nacional de Identidad'
+ 	PER_NACIONALIDAD = (case when (SELECT DOM_CODIGO 
+							            	FROM APP.DOMINIO 
+							              WHERE DOM_CLAVE= 'Nacionalidad'
+							                AND DOM_CODIGO=PER_NACIONALIDAD) is null then 'ARG'
+							          else (SELECT DOM_CODIGO 
+							            	FROM APP.DOMINIO 
+							              WHERE DOM_CLAVE= 'Nacionalidad'
+							                AND DOM_CODIGO=PER_NACIONALIDAD) end),
+ 	PER_TIPO_DOC=(case when (SELECT DOM_CODIGO 
+							            	FROM APP.DOMINIO 
+							              WHERE DOM_CLAVE= 'Tipo Documento'
+							                AND DOM_CODIGO=PER_TIPO_DOC) is null then 'DNI-DNI'
+							          else (SELECT DOM_CODIGO 
+							            	FROM APP.DOMINIO 
+							              WHERE DOM_CLAVE= 'Tipo Documento'
+							                AND DOM_CODIGO=PER_TIPO_DOC) end)
  	;
+
 
 --BORRAR	
 /*
+
+update APP.PERSONA set PER_NACIONALIDAD='ALB',PER_TIPO_DOC='DNRP-DNRP', PER_SEXO ='H'
+WHERE PER_ID =67;
+
 select distinct PER_GRUPO_SANGUINEO,PER_OBSERVACIONES from APP.PERSONA;
 
 select distinct PER_DONANTE from APP.PERSONA;
@@ -383,7 +402,9 @@ where PER_SEXO = '01';
 
 23290365
 
-
+update APP.PERSONA set PER_NACIONALIDAD='ALB',PER_TIPO_DOC='DNRP-DNRP';
+ 
+select * from APP.PERSONA; 
  	
 */ 	
  	
