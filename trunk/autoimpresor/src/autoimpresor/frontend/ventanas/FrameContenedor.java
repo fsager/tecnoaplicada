@@ -13,14 +13,20 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.SplashScreen;
 
+import javax.swing.JOptionPane;
+
 import testerGeneral.db.ConexionManagerTesterGeneral;
 import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Propiedad;
+import testerGeneral.persistence.backup.GestorDBBackup;
 import testerGeneral.service.PropiedadDefinition;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.Usuario;
 import autoimpresor.frontend.paneles.PanelMenuPrincipal;
+import frontend.components.JOptionPaneTesterGral;
+import frontend.components.PanelMensajes;
 import frontend.utils.Util;
+import frontend.ventanas.JInternalFrameTesterGral;
 
 public class FrameContenedor extends javax.swing.JFrame {
 	private PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
@@ -44,17 +50,18 @@ public class FrameContenedor extends javax.swing.JFrame {
 			} 	
 			
 			Util.dp = dp;
-			Util.frameContenedor = this;
+			Util.frameContenedor = this;	
+			
 			Usuario usr=new Usuario();
 			Util.abrirInicioSesion(PanelMenuPrincipal.class,usr);
-
 			setVisible(true);
+			
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-
+	
 	public void setFullscreen() {
 		GraphicsDevice grafica = GraphicsEnvironment
 				.getLocalGraphicsEnvironment().getDefaultScreenDevice();

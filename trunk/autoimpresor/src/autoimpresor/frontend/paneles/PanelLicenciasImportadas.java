@@ -41,6 +41,7 @@ import testerGeneral.service.PropiedadDefinition;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.CarnetLicencias;
 import autoimpresor.domain.CarnetLicenciasExtendida;
+import autoimpresor.domain.CarnetLicenciasQR;
 import autoimpresor.frontend.ExtensionFileFilter;
 import autoimpresor.frontend.tablemodels.TableModelCarnet;
 import autoimpresor.service.CarnetLicenciasDefinition;
@@ -853,6 +854,8 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 								
 								if(carss instanceof CarnetLicenciasExtendida)
 									carss = new CarnetLicencias((CarnetLicenciasExtendida)carss);
+								else if(carss instanceof CarnetLicenciasQR)
+									((CarnetLicenciasQR)carss).actualizarFechas();
 								
 								if (!(carss.getPerFoto() != null && carss
 										.getPerFoto().length > 1))

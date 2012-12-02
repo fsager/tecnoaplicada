@@ -24,6 +24,7 @@ import testerGeneral.comparetors.DateComparator;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.CarnetLicencias;
 import autoimpresor.domain.CarnetLicenciasExtendida;
+import autoimpresor.domain.CarnetLicenciasQR;
 import autoimpresor.domain.Licencia;
 import autoimpresor.frontend.tablemodels.TableModelLicenciaFull;
 import autoimpresor.mails.MailSender;
@@ -621,7 +622,7 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 		List<CarnetLicencias> carnetLicencias = new ArrayList();
 		for (int i = 0; i < licencias.size(); i++) {
 			Licencia lic = licencias.get(i);
-			CarnetLicenciasExtendida car = new CarnetLicenciasExtendida(lic,
+			CarnetLicenciasQR car = new CarnetLicenciasQR(lic,
 					nombreMunicipio, codigoMunicipio, escudoMunicipio);
 			carnetLicencias.add(car);
 		}
@@ -634,7 +635,7 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 		List<CarnetLicencias> carnetLicencias = new ArrayList();
 		for (int i = 0; i < licencias.size(); i++) {
 			Licencia lic = licencias.get(i);
-			CarnetLicencias car = new CarnetLicencias(lic, nombreMunicipio,
+			CarnetLicencias car = new CarnetLicenciasQR(lic, nombreMunicipio,
 					codigoMunicipio, escudoMunicipio);
 			carnetLicencias.add(car);
 		}

@@ -30,6 +30,7 @@ import testerGeneral.domain.Constantes;
 import testerGeneral.domain.OrigenFotosEnum;
 import testerGeneral.domain.Propiedad;
 import testerGeneral.persistence.GestorExportarDB;
+import testerGeneral.persistence.backup.GestorDBBackup;
 import testerGeneral.service.PropiedadDefinition;
 import actualizaciones.GestorActualizacionesUtil;
 import autoimpresor.business.ContextManager;
@@ -1891,7 +1892,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 
 						DBImporter importadorAccess = new DBImporter();
 						importadorAccess.importar(rutaOrigenArchivoAccess);
-
+						GestorDBBackup.ejecutarMigracionSQL();
 						Util.ocultarPanelOperacionesLargas();
 						JOptionPaneTesterGral
 								.showInternalMessageDialog(

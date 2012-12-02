@@ -471,6 +471,5 @@ public class CarnetLicencias  implements java.io.Serializable {
 		return true;
 	}
 	
-	
 		
 }

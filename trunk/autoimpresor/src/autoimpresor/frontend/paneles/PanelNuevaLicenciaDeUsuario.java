@@ -6,11 +6,8 @@
 
 package autoimpresor.frontend.paneles;
 
-import java.awt.print.PageFormat;
 import java.awt.print.PrinterJob;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,19 +16,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.PageRanges;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.text.MaskFormatter;
 
 import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
@@ -47,6 +39,7 @@ import testerGeneral.service.UsuarioDefinition;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.Antecedente;
 import autoimpresor.domain.CarnetLicencias;
+import autoimpresor.domain.CarnetLicenciasQR;
 import autoimpresor.domain.ClaseLicencia;
 import autoimpresor.domain.Licencia;
 import autoimpresor.domain.Persona;
@@ -1440,7 +1433,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 			byte[] escudoMunicipio = ContextManager.getPropertyObj(
 					"SISTEMA.FOTO.MUNICIPIO").getPropBlob();
 
-			CarnetLicencias carnet = new CarnetLicencias(licencia,
+			CarnetLicenciasQR carnet = new CarnetLicenciasQR(licencia,
 					nombreMunicipio, codigoMunicipio, escudoMunicipio);
 			List<CarnetLicencias> carnets = new ArrayList();
 			carnets.add(carnet);
@@ -1633,7 +1626,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 					byte[] escudoMunicipio = ContextManager.getPropertyObj(
 							"SISTEMA.FOTO.MUNICIPIO").getPropBlob();
 		
-					CarnetLicencias carnet = new CarnetLicencias(licenciaService
+					CarnetLicencias carnet = new CarnetLicenciasQR(licenciaService
 							.get(licencia.getLicId()), nombreMunicipio,
 							codigoMunicipio, escudoMunicipio);
 					List<CarnetLicencias> carnets = new ArrayList<CarnetLicencias>();

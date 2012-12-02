@@ -44,5 +44,7 @@ public interface PersonaDao {
 	 * @param p_domain    p_domain
 	 */
 	public abstract void update(Persona p_domain) throws Exception;
+	
+    public boolean migracionNecesaria() throws Exception;
 
 }

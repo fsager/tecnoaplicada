@@ -14,22 +14,12 @@ import frontend.utils.Util;
  * CarnetLicencias entity. @author MyEclipse Persistence Tools
  */
 
-public class CarnetLicenciasQR extends  CarnetLicencias implements java.io.Serializable {
+public class CarnetLicenciasQR extends  CarnetLicenciasExtendida implements java.io.Serializable {
 
-
-    /**
-	 * 
-	 */
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -374384809011033049L;
-	/**
-	 * 
-	 */
 	
     //QR
+	private String formatoLicencia;
     private Integer perDomNro;
     private Integer perDomNroPiso;     
     private String perDomLetraDpt;
@@ -51,14 +41,17 @@ public class CarnetLicenciasQR extends  CarnetLicencias implements java.io.Seria
     // Constructors
     /** default constructor */
     
-    public CarnetLicenciasQR(Licencia lic,String nombreMunicipio,String codigoMunicipio,byte[] escudoMunicipio
-    		,String munDomPais
-    		,String munDomProvincia
-    		,String munDomDepartamento
-    		,String munDomLocalidad) {
+    public CarnetLicenciasQR(Licencia lic,String nombreMunicipio,String codigoMunicipio,byte[] escudoMunicipio) {
     	super(lic,nombreMunicipio,codigoMunicipio,escudoMunicipio);
 		try
 		{			
+	        this.munDomPais=ContextManager.getProperty("SISTEMA.PAIZ.MUNICIPIO");
+	        this.munDomProvincia=ContextManager.getProperty("SISTEMA.PROVINCIA.MUNICIPIO");
+	        this.munDomDepartamento=ContextManager.getProperty("SISTEMA.DEPARTAMENTO.MUNICIPIO");
+	        this.munDomLocalidad=ContextManager.getProperty("SISTEMA.LOCALIDAD.MUNICIPIO");
+	        
+    		
+			this.formatoLicencia=ContextManager.getProperty("LICENCIA.FORMATO");
 	    	this.perDomNro=lic.getPersona().getPerDomNro();
 	    	this.perDomNroPiso=lic.getPersona().getPerDomNroPiso();
 	    	this.perDomLetraDpt=lic.getPersona().getPerDomLetraDpt();
@@ -69,10 +62,23 @@ public class CarnetLicenciasQR extends  CarnetLicencias implements java.io.Seria
 	    	this.perDomDepartamento=lic.getPersona().getPerDomDepartamento();
 	    	this.perDomLocalidad=lic.getPersona().getPerDomLocalidad();
 	        
-	        this.munDomPais=munDomPais;
-	        this.munDomProvincia=munDomProvincia;
-	        this.munDomDepartamento=munDomDepartamento;
-	        this.munDomLocalidad=munDomLocalidad;			
+			
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+    }
+    
+    public void actualizarFechas() 
+    {
+    	try
+    	{
+			SimpleDateFormat sdf=new SimpleDateFormat(Util.formatoFecha); 
+			
+			this.setLicFechaOtorgada(sdf.parse(this.getLicFechaOtorgadaTxt()));
+			this.setLicFechaVencimiento(sdf.parse(this.getLicFechaVencimientoTxt()));
+			this.setPerFechaNacimiento(sdf.parse(this.getPerFechaNacimientoTxt()));
 		}
 		catch(Exception e)
 		{
@@ -190,6 +196,13 @@ public class CarnetLicenciasQR extends  CarnetLicencias implements java.io.Seria
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
-    
+	
+	public String getFormatoLicencia() {
+		return formatoLicencia;
+	}
+	
+	public void setFormatoLicencia(String formatoLicencia) {
+		this.formatoLicencia = formatoLicencia;
+	}    
     
 }
