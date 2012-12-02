@@ -49,7 +49,7 @@ public class FramePrincipal extends JInternalFrameTesterGral {
 		jButtonActualizarSistema.setVisible(GestorActualizaciones
 				.getSeEncontroActualizacion());
 
-		getSkins();
+		//getSkins();
 
 		panelMenu.setPanelContenido(panelContenido);
 		Util.panelContenido = this.panelContenido;
@@ -62,8 +62,9 @@ public class FramePrincipal extends JInternalFrameTesterGral {
 		
 		//if(!panelMenu.getClass().getName().equals("autoimpresor.frontend.paneles.PanelMenuPrincipal"))
 		//{
-			validadLicencia();	
-		//}		
+			//validadLicencia();	
+		//}	
+			
 	}
 
 	private void validadLicencia() throws Exception
