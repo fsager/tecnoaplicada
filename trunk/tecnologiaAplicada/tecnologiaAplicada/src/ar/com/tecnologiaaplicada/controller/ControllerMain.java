@@ -19,7 +19,8 @@ public class ControllerMain extends ControlerTecnologiaAplicada{
 	{
 		addUtiljs(wnd_main);
 		validateLogin();
-		lbUsr.setValue(usuario.getUsrNombre());
+		if(lbUsr!=null && usuario!=null)
+			lbUsr.setValue(usuario.getUsrNombre());
 	}
 	
 	public void onSelect$lstboxOpciones(Event evt) throws Exception
