@@ -224,6 +224,42 @@ public class GestorDBBackup implements Runnable {
 		}
 
 	}
+	
+	
+
+	public static void ejecutarMigracionSQL() {
+		try {
+			PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
+			.getBizObject("propiedadService");
+			File f = new File(System.getProperty("user.dir") + File.separator
+					+ "migracion.sql");
+
+			if (f.exists()) {
+
+					//Validar si hay que ejecutar la migracion
+
+					Connection conn = ContextManager.getConnection();
+					FileInputStream iStrArchivoScriptSql = new FileInputStream(
+							f);
+					FileOutputStream archivoSalidaScript = new FileOutputStream(
+							System.getProperty("user.dir") + File.separator
+									+ "scriptMigrar.out");
+
+					org.apache.derby.tools.ij.runScript(conn,
+							iStrArchivoScriptSql, "CP1252",
+							archivoSalidaScript, "CP1252");
+					conn.commit();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
 
 	public static void generarArchivoDeConexionDBRemota(String direccionIP,
 			int puertoConexion, String nombreUsuario, String password,
