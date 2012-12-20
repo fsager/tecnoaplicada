@@ -316,7 +316,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 
 	public void frenar() throws InterruptedException {
 		long tiempoActual = System.currentTimeMillis();
-		double resEtapa = ((tiempoActual - getInstanteSemaforoRojo()) * 0.93) / 10;
+		double resEtapa = ((tiempoActual - getInstanteSemaforoRojo()) * 0.91) / 10;
 		//log.debug("Tiempo de Frenado: "+(tiempoActual - getInstanteSemaforoRojo())+" current: "+System.currentTimeMillis());
 
 		//TODO comentar descomentar para pruebas edgardo
@@ -621,12 +621,18 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 						.get(0);
 			}
 
+			String detalleResultado = "<HTML><div width=\"200px\">";
 			Set resultados = resultadoDetalleExamen.getResultados();
 			resultados.clear();
 			for (int i = 0; i < this.resultados.size(); i++) {
 				this.resultados.get(i).setResultadoDetalleExamen(
 						resultadoDetalleExamen);
 				resultados.add(this.resultados.get(i));
+				if(this.resultados.get(i).getResValor1()!=null)
+				{
+					detalleResultado = detalleResultado
+					+ Util.redondear(this.resultados.get(i).getResValor1())+ "/ ";
+				}
 			}
 
 			Double pro[] = ExamenesUtils.calcularPromedio(resultados);
@@ -634,11 +640,16 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 					resultados);
 			resultadoDetalleExamen.setRdeNota(pro[0]);
 			resultadoDetalleExamen.setRdeNota2(pro[1]);
+			
+			
+			detalleResultado=detalleResultado+"<BR>Tiempo promedio: "
+				+ pro[0].intValue()
+				+ " Centésimas de segundos.<BR> Errores: "
+				+ pro[1].intValue() + ".</HTML>";
 			resultadoDetalleExamen
-					.setRdeDetalleResultado("<HTML>Tiempo promedio: "
-							+ pro[0].intValue()
-							+ " Centésimas de segundos.<BR> Errores: "
-							+ pro[1].intValue() + ".</HTML>");
+					.setRdeDetalleResultado(detalleResultado);			
+			
+
 			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
 					.getExadParametrosCorrecion());
 			resultadoDetalleExamen.setRdeResultado(resultado);
