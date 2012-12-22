@@ -16,7 +16,7 @@ import frontend.utils.Util;
 
 public class CarnetLicenciasExtendida extends  CarnetLicencias implements java.io.Serializable {
 
-	private static final long serialVersionUID = -6658822135383706444L;
+	private static final long serialVersionUID = -8323100901383094590L;
 	
 	// Fields   
     private String perFechaNacimientoTxt;

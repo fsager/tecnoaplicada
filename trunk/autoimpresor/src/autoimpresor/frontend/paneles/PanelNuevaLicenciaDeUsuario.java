@@ -1434,7 +1434,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 					"SISTEMA.FOTO.MUNICIPIO").getPropBlob();
 
 			CarnetLicenciasQR carnet = new CarnetLicenciasQR(licencia,
-					nombreMunicipio, codigoMunicipio, escudoMunicipio);
+					nombreMunicipio, codigoMunicipio, escudoMunicipio,null);
 			List<CarnetLicencias> carnets = new ArrayList();
 			carnets.add(carnet);
 
@@ -1628,7 +1628,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 		
 					CarnetLicencias carnet = new CarnetLicenciasQR(licenciaService
 							.get(licencia.getLicId()), nombreMunicipio,
-							codigoMunicipio, escudoMunicipio);
+							codigoMunicipio, escudoMunicipio,null);
 					List<CarnetLicencias> carnets = new ArrayList<CarnetLicencias>();
 					carnets.add(carnet);
 		

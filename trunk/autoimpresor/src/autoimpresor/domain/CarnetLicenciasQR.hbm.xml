@@ -67,9 +67,16 @@
         <property name="perFirma" type="byte[]">
             <column name="PER_FIRMA" />
         </property>
+        <property name="qr" type="byte[]">
+            <column name="QR" />
+        </property>
         <property name="licClase" type="java.lang.String">
             <column name="LIC_CLASE" length="20" not-null="true" />
         </property>
+        <property name="datosQR" type="java.lang.String">
+            <column name="DATOS_QR" length="4000"/>
+        </property>        
+        
         <property name="licClaseDesc" type="java.lang.String">
             <column name="LIC_CLASE_DESC" length="510" not-null="true" />
         </property>

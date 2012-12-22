@@ -1,10 +1,11 @@
 package autoimpresor.domain;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import testerGeneral.domain.Dominio;
 import autoimpresor.business.ContextManager;
-import autoimpresor.service.ClaseLicenciaDefinition;
 import frontend.utils.Util;
 
 
@@ -35,23 +36,31 @@ public class CarnetLicenciasQR extends  CarnetLicenciasExtendida implements java
     private String munDomProvincia;
     private String munDomDepartamento;
     private String munDomLocalidad;
+    
+    private String datosQR;
+    private byte[] qr=new byte[1];
+    
         
     //QR
     
     // Constructors
     /** default constructor */
     
-    public CarnetLicenciasQR(Licencia lic,String nombreMunicipio,String codigoMunicipio,byte[] escudoMunicipio) {
+    public CarnetLicenciasQR(Licencia lic,String nombreMunicipio,String codigoMunicipio,byte[] escudoMunicipio,String formato) {
     	super(lic,nombreMunicipio,codigoMunicipio,escudoMunicipio);
 		try
 		{			
+			actualizarFechas();
 	        this.munDomPais=ContextManager.getProperty("SISTEMA.PAIZ.MUNICIPIO");
 	        this.munDomProvincia=ContextManager.getProperty("SISTEMA.PROVINCIA.MUNICIPIO");
 	        this.munDomDepartamento=ContextManager.getProperty("SISTEMA.DEPARTAMENTO.MUNICIPIO");
 	        this.munDomLocalidad=ContextManager.getProperty("SISTEMA.LOCALIDAD.MUNICIPIO");
 	        
+    		if(formato==null)
+    			this.formatoLicencia=ContextManager.getProperty("LICENCIA.FORMATO");
+    		else
+    			this.formatoLicencia=formato;
     		
-			this.formatoLicencia=ContextManager.getProperty("LICENCIA.FORMATO");
 	    	this.perDomNro=lic.getPersona().getPerDomNro();
 	    	this.perDomNroPiso=lic.getPersona().getPerDomNroPiso();
 	    	this.perDomLetraDpt=lic.getPersona().getPerDomLetraDpt();
@@ -61,6 +70,18 @@ public class CarnetLicenciasQR extends  CarnetLicenciasExtendida implements java
 	    	this.perDomProvincia=lic.getPersona().getPerDomProvincia();
 	    	this.perDomDepartamento=lic.getPersona().getPerDomDepartamento();
 	    	this.perDomLocalidad=lic.getPersona().getPerDomLocalidad();
+	    	
+	    	List<Dominio> nacionalidades=Util.getDominios("Nacionalidad");
+	    	for(Dominio nac:nacionalidades)
+	    	{
+	    		if(nac.getDomCodigo().equals(getPerNacionalidad()))
+	    		{
+	    			setPerNacionalidad(nac.getDomValorMostrar());
+	    			break;
+	    		}
+	    		
+	    	}
+	    	
 	        
 			
 		}
@@ -75,10 +96,9 @@ public class CarnetLicenciasQR extends  CarnetLicenciasExtendida implements java
     	try
     	{
 			SimpleDateFormat sdf=new SimpleDateFormat(Util.formatoFecha); 
-			
-			this.setLicFechaOtorgada(sdf.parse(this.getLicFechaOtorgadaTxt()));
-			this.setLicFechaVencimiento(sdf.parse(this.getLicFechaVencimientoTxt()));
-			this.setPerFechaNacimiento(sdf.parse(this.getPerFechaNacimientoTxt()));
+			this.setLicFechaOtorgada(new Timestamp(sdf.parse(this.getLicFechaOtorgadaTxt()).getTime()));
+			this.setLicFechaVencimiento(new Timestamp(sdf.parse(this.getLicFechaVencimientoTxt()).getTime()));
+			this.setPerFechaNacimiento(new Timestamp(sdf.parse(this.getPerFechaNacimientoTxt()).getTime()));
 		}
 		catch(Exception e)
 		{
@@ -204,5 +224,20 @@ public class CarnetLicenciasQR extends  CarnetLicenciasExtendida implements java
 	public void setFormatoLicencia(String formatoLicencia) {
 		this.formatoLicencia = formatoLicencia;
 	}    
-    
+ 
+	public String getDatosQR() {
+		return datosQR;
+	}
+	
+	public void setDatosQR(String datosQR) {
+		this.datosQR = datosQR;
+	}
+	
+	public byte[] getQr() {
+		return qr;
+	}
+	
+	public void setQr(byte[] qr) {
+		this.qr = qr;
+	}
 }

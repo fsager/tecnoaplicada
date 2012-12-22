@@ -851,11 +851,11 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 						if (dominioService.getAll(dom).size() == 0) {
 							for (int i = 0; i < carnetLicencias.size(); i++) {
 								CarnetLicencias carss = carnetLicencias.get(i);
-								
-								if(carss instanceof CarnetLicenciasExtendida)
-									carss = new CarnetLicencias((CarnetLicenciasExtendida)carss);
-								else if(carss instanceof CarnetLicenciasQR)
+
+								if(carss instanceof CarnetLicenciasQR)
 									((CarnetLicenciasQR)carss).actualizarFechas();
+								else if(carss instanceof CarnetLicenciasExtendida)
+									carss = new CarnetLicencias((CarnetLicenciasExtendida)carss);
 								
 								if (!(carss.getPerFoto() != null && carss
 										.getPerFoto().length > 1))
@@ -866,6 +866,10 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 								if (!(carss.getUsrFirma() != null && carss
 										.getUsrFirma().length > 1))
 									carss.setUsrFirma(new byte[1]);
+								if (!(carss.getMncEscudo() != null && carss
+										.getMncEscudo().length > 1))
+									carss.setMncEscudo(new byte[1]);
+								//TODO hacer casteo a QR y insertar corresponediente metne
 								if (!(carss.getMncEscudo() != null && carss
 										.getMncEscudo().length > 1))
 									carss.setMncEscudo(new byte[1]);

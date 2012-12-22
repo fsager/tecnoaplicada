@@ -601,7 +601,7 @@ public class PanelLicenciasHistorico extends javax.swing.JPanel {
 						.getModel()).getValueAt(sel);
 
 				CarnetLicencias carnet = new CarnetLicenciasQR(lic,
-						nombreMunicipio, codigoMunicipio, escudoMunicipio);
+						nombreMunicipio, codigoMunicipio, escudoMunicipio,null);
 				carnets.add(carnet);
 			}
 

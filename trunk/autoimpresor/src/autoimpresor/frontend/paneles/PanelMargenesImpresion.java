@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.event.InternalFrameEvent;
@@ -29,7 +30,9 @@ import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Propiedad;
 import testerGeneral.service.PropiedadDefinition;
 import autoimpresor.domain.CarnetLicencias;
+import autoimpresor.domain.CarnetLicenciasQR;
 import autoimpresor.service.CarnetLicenciasDefinition;
+import frontend.components.JOptionPaneTesterGral;
 import frontend.utils.Util;
 import frontend.ventanas.JInternalFrameTesterGral;
 
@@ -59,6 +62,31 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 		btnExportarTodo.setVisible(true);
 		cbPrinter.setVisible(false);
 		jLabel2.setVisible(false);
+		
+		String formatoConQR="";
+		String formatoSinQR="";
+		for(CarnetLicencias licencia:lst)
+		{
+			if(licencia instanceof CarnetLicenciasQR)
+			{
+				if(((CarnetLicenciasQR)licencia).getFormatoLicencia().equals("QR"))
+					formatoConQR+=", "+licencia.getLicCodLicencia();
+				else
+					formatoSinQR+=", "+licencia.getLicCodLicencia();
+				
+			}
+		}
+		
+		if(!formatoConQR.equals("") && !formatoSinQR.equals(""))
+		{
+			JOptionPaneTesterGral
+			.showInternal(
+					"<HTML>No puede imprimir licencias con distintos formatos.</BR>Licencias con QR:"+formatoConQR+"</BR>Licencias sin QR:"+formatoSinQR+" <HTML>",
+					"Formato de licencias",
+					JOptionPane.ERROR_MESSAGE);
+			
+			btnExportarTodo.setEnabled(false);
+		}
 	}
 
 	public PanelMargenesImpresion() {
@@ -376,7 +404,8 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 		
 		try
 		{
-			autoimpresor.util.Util.compileReport();
+			String formato = ContextManager.getProperty("LICENCIA.FORMATO");
+			autoimpresor.util.Util.compileReport(formato);
 		}
 		catch(Exception e)
 		{
@@ -402,7 +431,14 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 					"select *   from APP.CARNET_LICENCIAS  where cli_id in ("
 							+ ids + ")");*/
 
-			JasperReport report = autoimpresor.util.Util.compileReport();
+			String formato="SinQR";
+			
+			if(lst.size()>0 && lst.get(0) instanceof CarnetLicenciasQR)
+			{
+				formato=((CarnetLicenciasQR)lst.get(0)).getFormatoLicencia();
+			}
+			
+			JasperReport report = autoimpresor.util.Util.compileReport(formato);
 
 			this.abrirVentanaReportes(Util.frameContenedor.getRootPane(),
 					(HashMap) param, report, lst);
