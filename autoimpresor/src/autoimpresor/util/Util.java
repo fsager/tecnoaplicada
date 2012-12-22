@@ -21,21 +21,26 @@ import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
+import autoimpresor.domain.CarnetLicenciasQR;
+
 import testerGeneral.business.ContextManager;
 
 public class Util {
 	
 	
-	public static JasperReport compileReport() throws Exception
+	public static JasperReport compileReport(String formato) throws Exception
 	{
 		String margenIzqVal=ContextManager.getProperty("LIC_MARGEN_IZQ");
 		String margenDerVal=ContextManager.getProperty("LIC_MARGEN_SUP");
 		String desplazamientoTraseroVal=ContextManager.getProperty("LIC_DESPLAZAMIENTO_TRAS");
 		
 		String srcString = "reportes/carnetsSrc.jrxml";
+		if(formato.equals("QR"))
+			srcString= "reportes/carnetsSrcQR.jrxml";
+		
 		File srcFile = new File(srcString);
 		String srcReport = srcFile.getParent() + File.separator
-				+ "carnets.jrxml";
+				+ "carnets"+formato+".jrxml";
 
 
 		FileInputStream fis = new FileInputStream(srcFile);
@@ -91,33 +96,43 @@ public class Util {
 	
 	public static void printReportCarnet(HashMap parameterMap,List list) {
 		try {
-			String srcString = "reportes/carnets.jasper";
-			File f = new File(srcString);
-			
-			if(!f.exists())
-				compileReport();
-			
-			String printer=ContextManager.getProperty("DEFAULT_PRINTER");
-			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(list);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(f.getAbsolutePath(),parameterMap, ds);
-			PrinterJob job = PrinterJob.getPrinterJob();
-
-			PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
-			for(int i = 0; i < services.length;i++){
-				if(services[i].getName().equals(printer)){
-					job.setPrintService(services[i]);
-					break;
+			if(list.size()>0)
+			{
+				String formato="SinQR";
+				
+				if(list.get(0) instanceof CarnetLicenciasQR)
+				{
+					formato=((CarnetLicenciasQR)list.get(0)).getFormatoLicencia();
 				}
+				
+				String srcString = "reportes/carnets"+formato+".jasper";
+				File f = new File(srcString);
+				
+				if(!f.exists())
+					compileReport(formato);
+				
+				String printer=ContextManager.getProperty("DEFAULT_PRINTER");
+				JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(list);
+				JasperPrint jasperPrint = JasperFillManager.fillReport(f.getAbsolutePath(),parameterMap, ds);
+				PrinterJob job = PrinterJob.getPrinterJob();
+	
+				PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
+				for(int i = 0; i < services.length;i++){
+					if(services[i].getName().equals(printer)){
+						job.setPrintService(services[i]);
+						break;
+					}
+				}
+				
+				JRPrintServiceExporter exporter;
+				exporter = new JRPrintServiceExporter();
+				exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);				
+				exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE,job.getPrintService());
+				exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, job.getPrintService().getAttributes());
+				exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+				exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.FALSE);
+				exporter.exportReport();
 			}
-			
-			JRPrintServiceExporter exporter;
-			exporter = new JRPrintServiceExporter();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);				
-			exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE,job.getPrintService());
-			exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, job.getPrintService().getAttributes());
-			exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
-			exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.FALSE);
-			exporter.exportReport();
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);

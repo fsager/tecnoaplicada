@@ -623,7 +623,7 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 		for (int i = 0; i < licencias.size(); i++) {
 			Licencia lic = licencias.get(i);
 			CarnetLicenciasQR car = new CarnetLicenciasQR(lic,
-					nombreMunicipio, codigoMunicipio, escudoMunicipio);
+					nombreMunicipio, codigoMunicipio, escudoMunicipio,null);
 			carnetLicencias.add(car);
 		}
 
@@ -636,7 +636,7 @@ public class PanelLicenciasPendientes extends javax.swing.JPanel {
 		for (int i = 0; i < licencias.size(); i++) {
 			Licencia lic = licencias.get(i);
 			CarnetLicencias car = new CarnetLicenciasQR(lic, nombreMunicipio,
-					codigoMunicipio, escudoMunicipio);
+					codigoMunicipio, escudoMunicipio,null);
 			carnetLicencias.add(car);
 		}
 

@@ -2048,12 +2048,14 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	}
 
 	private void btnNuevaLicenciaActionPerformed(java.awt.event.ActionEvent evt) {
-		if(!(persona.getPerDomNro()==null))
-		{
+		
+		//TODO descomentar!!!!!!!!!!!!!!!!!!!!!!!!!1
+		/*if(!(persona.getPerDomNro()==null))
+		{*/
 			abrirVentanaLicencia(null);
 			((PanelMenuPrincipal) Util.panelMenu).calcularLicenciasPorEstado();
 			cargarLicencias();
-		}
+		/*}
 		else
 		{
 			JOptionPaneTesterGral
@@ -2061,7 +2063,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 					"Debe completar los datos del domicilio.",
 					"Datos domicilio",
 					JOptionPane.ERROR_MESSAGE);
-		}
+		}*/
 		
 	}
 
