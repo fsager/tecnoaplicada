@@ -6,6 +6,8 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupActualizacionAlInicio">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="groupParametros">
+    </Component>
   </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -30,16 +32,17 @@
                           <Component id="jPanelFotos" alignment="1" max="32767" attributes="2"/>
                           <Component id="jPanelCompletitudDatosUsuario" alignment="0" max="32767" attributes="2"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanelBuscarActualizaciones" max="32767" attributes="1"/>
+                          <Component id="jPanel1" max="32767" attributes="0"/>
                           <Component id="jPanelImagenFondo" max="32767" attributes="1"/>
                           <Component id="jPanelBackup" max="32767" attributes="1"/>
                       </Group>
                   </Group>
                   <Component id="jPanelBotones" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -49,25 +52,28 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanelBackup" alignment="0" max="32767" attributes="1"/>
-                  <Component id="jPanelFotos" alignment="0" pref="172" max="32767" attributes="1"/>
+                  <Component id="jPanelFotos" alignment="0" pref="185" max="32767" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jPanelImagenFondo" min="-2" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanelBuscarActualizaciones" min="-2" pref="69" max="-2" attributes="1"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jPanelBotones" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jPanelSeguridad" min="-2" max="-2" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanelCompletitudDatosUsuario" min="-2" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanelDocumento" min="-2" max="-2" attributes="1"/>
                   </Group>
-                  <Component id="jPanelImagenFondo" alignment="1" min="0" pref="216" max="32767" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jPanelBuscarActualizaciones" max="32767" attributes="1"/>
-                  <Component id="jPanelDocumento" alignment="0" max="32767" attributes="1"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanelBotones" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -587,7 +593,7 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButtonExportarBaseDeDatos" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="26" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -682,45 +688,22 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jLabelRutaOrigenFondoAplicacion" alignment="0" max="32767" attributes="1"/>
-                      <Component id="jLabelRutaOrigenFondoMonitorSecundario" alignment="0" max="32767" attributes="1"/>
-                  </Group>
+                  <Component id="jLabelRutaOrigenFondoAplicacion" min="-2" max="-2" attributes="1"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jTextFieldRutaOrigenFondoMonitorSecundario" pref="570" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="jButtonExaminarRutaOrigenFondoMonitorSecundario" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="panelColor" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jColorChooser" pref="573" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="panelColor" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jColorChooser" pref="623" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButtonExaminarRutaOrigenFondoMonitorSecundario" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelRutaOrigenFondoMonitorSecundario" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldRutaOrigenFondoMonitorSecundario" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelRutaOrigenFondoAplicacion" min="-2" max="-2" attributes="0"/>
-                      <Component id="panelColor" min="-2" max="-2" attributes="0"/>
-                      <Component id="jColorChooser" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
+              <Component id="jLabelRutaOrigenFondoAplicacion" min="-2" max="-2" attributes="0"/>
+              <Component id="panelColor" min="-2" max="-2" attributes="0"/>
+              <Component id="jColorChooser" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -728,24 +711,6 @@
         <Component class="javax.swing.JLabel" name="jLabelRutaOrigenFondoAplicacion">
           <Properties>
             <Property name="text" type="java.lang.String" value="Color de Fondo de la aplicaci&#xf3;n:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButtonExaminarRutaOrigenFondoMonitorSecundario">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Examinar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExaminarRutaOrigenFondoMonitorSecundarioActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldRutaOrigenFondoMonitorSecundario">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabelRutaOrigenFondoMonitorSecundario">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Imagen de fondo del monitor secundario:"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="panelColor">
@@ -818,6 +783,59 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGuardarActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Par&#xe1;metros"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="radioArgentina" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="radioPeru" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="774" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="radioArgentina" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="radioPeru" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JRadioButton" name="radioArgentina">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="groupParametros"/>
+            </Property>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" value="Argentina"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="radioPeru">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="groupParametros"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Per&#xfa;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioPeruActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

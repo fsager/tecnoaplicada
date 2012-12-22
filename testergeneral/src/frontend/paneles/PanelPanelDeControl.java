@@ -8,11 +8,9 @@ package frontend.paneles;
 
 import java.awt.Color;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -22,18 +20,16 @@ import javax.swing.event.ChangeListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import actualizaciones.GestorActualizacionesUtil;
-
-import testerGeneral.actualizaciones.GestorActualizaciones;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
+import testerGeneral.domain.ExamenDetalle;
 import testerGeneral.domain.OrigenFotosEnum;
 import testerGeneral.domain.Propiedad;
 import testerGeneral.persistence.GestorExportarDB;
+import testerGeneral.service.ExamenDetalleDefinition;
 import testerGeneral.service.PropiedadDefinition;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.utils.Util;
-import frontend.utils.VentanasUtilTesterGral;
 import frontend.ventanas.VentanaExaminar;
 
 /**
@@ -47,6 +43,9 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private static final Log log = LogFactory.getLog(PanelPanelDeControl.class);
 	private PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
 			.getBizObject("propiedadService");
+	private ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
+	.getBizObject("examenDetalleService");
+
 
 	/** Creates new form PanelPanelDeControl */
 	public PanelPanelDeControl() {
@@ -64,6 +63,14 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		cargarValoresPanelSeguridad();
 		cargarValoresPanelImagenDeFondo();
 		cargarValoresPanelBackup();
+
+		String parametros = ContextManager
+				.getProperty("PARAMETROS.CONFIGURACION");
+		if (parametros.equals("ARGENTINA")) {
+			radioArgentina.setSelected(true);
+		} else if (parametros.equals("PERU")) {
+			radioPeru.setSelected(true);
+		}
 
 	}
 
@@ -267,8 +274,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 
 			String valorPropiedadImagenFondoAplicacion = propiedadImagenFondoAplicacion
 					.getPropValor();
-			jTextFieldRutaOrigenFondoMonitorSecundario
-					.setText(valorPropiedadImagenFondoAplicacion);
+			/*jTextFieldRutaOrigenFondoMonitorSecundario
+					.setText(valorPropiedadImagenFondoAplicacion);*/
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -560,7 +567,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	}
 
 	private void guardarValoresPanelImagenDeFondo() {
-		Propiedad propiedadImagenFondoAplicacionP = new Propiedad();
+		/*Propiedad propiedadImagenFondoAplicacionP = new Propiedad();
 		propiedadImagenFondoAplicacionP.setPropClave("SISTEMA.IMAGEN.PRIMARIA");
 		propiedadImagenFondoAplicacionP.setPropValor(""
 				+ panelColor.getBackground().getRGB());
@@ -600,15 +607,16 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		}
+		}*/
 	}
 
-	// GEN-BEGIN:initComponents
+	//GEN-BEGIN:initComponents
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
 
 		buttonGroupOrigenFotos = new javax.swing.ButtonGroup();
 		buttonGroupActualizacionAlInicio = new javax.swing.ButtonGroup();
+		groupParametros = new javax.swing.ButtonGroup();
 		jPanelFotos = new javax.swing.JPanel();
 		jPanelOrigenDeFotos = new javax.swing.JPanel();
 		jRadioButtonObtenerFotosDesdeDisco = new javax.swing.JRadioButton();
@@ -650,14 +658,14 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		jButtonExportarBaseDeDatos = new javax.swing.JButton();
 		jPanelImagenFondo = new javax.swing.JPanel();
 		jLabelRutaOrigenFondoAplicacion = new javax.swing.JLabel();
-		jButtonExaminarRutaOrigenFondoMonitorSecundario = new javax.swing.JButton();
-		jTextFieldRutaOrigenFondoMonitorSecundario = new javax.swing.JTextField();
-		jLabelRutaOrigenFondoMonitorSecundario = new javax.swing.JLabel();
 		panelColor = new javax.swing.JPanel();
 		jColorChooser = new javax.swing.JColorChooser();
 		jPanelBotones = new javax.swing.JPanel();
 		jButtonCancelar = new javax.swing.JButton();
 		jButtonGuardar = new javax.swing.JButton();
+		jPanel1 = new javax.swing.JPanel();
+		radioArgentina = new javax.swing.JRadioButton();
+		radioPeru = new javax.swing.JRadioButton();
 
 		jPanelFotos.setBorder(javax.swing.BorderFactory.createTitledBorder(
 				null, "Fotos",
@@ -1376,12 +1384,9 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																								javax.swing.GroupLayout.PREFERRED_SIZE,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								javax.swing.GroupLayout.PREFERRED_SIZE))))
-										.addGap(18, 18, 18)
-										.addComponent(
+										.addGap(18, 18, 18).addComponent(
 												jButtonExportarBaseDeDatos)
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+										.addContainerGap(26, Short.MAX_VALUE)));
 
 		jPanelImagenFondo.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(null, "Fondo",
@@ -1391,19 +1396,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 
 		jLabelRutaOrigenFondoAplicacion
 				.setText("Color de Fondo de la aplicaci\u00f3n:");
-
-		jButtonExaminarRutaOrigenFondoMonitorSecundario.setText("Examinar");
-		jButtonExaminarRutaOrigenFondoMonitorSecundario
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						jButtonExaminarRutaOrigenFondoMonitorSecundarioActionPerformed(evt);
-					}
-				});
-
-		jTextFieldRutaOrigenFondoMonitorSecundario.setEditable(false);
-
-		jLabelRutaOrigenFondoMonitorSecundario
-				.setText("Imagen de fondo del monitor secundario:");
 
 		panelColor.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1429,100 +1421,30 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 								jPanelImagenFondoLayout
 										.createSequentialGroup()
 										.addContainerGap()
-										.addGroup(
-												jPanelImagenFondoLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																false)
-														.addComponent(
-																jLabelRutaOrigenFondoAplicacion,
-																javax.swing.GroupLayout.Alignment.LEADING,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																jLabelRutaOrigenFondoMonitorSecundario,
-																javax.swing.GroupLayout.Alignment.LEADING,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
+										.addComponent(
+												jLabelRutaOrigenFondoAplicacion)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(
-												jPanelImagenFondoLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																jPanelImagenFondoLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				jTextFieldRutaOrigenFondoMonitorSecundario,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				570,
-																				Short.MAX_VALUE)
-																		.addGap(
-																				12,
-																				12,
-																				12)
-																		.addComponent(
-																				jButtonExaminarRutaOrigenFondoMonitorSecundario))
-														.addGroup(
-																jPanelImagenFondoLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				panelColor,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				jColorChooser,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				573,
-																				Short.MAX_VALUE)))
-										.addContainerGap()));
-		jPanelImagenFondoLayout
-				.setVerticalGroup(jPanelImagenFondoLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanelImagenFondoLayout
-										.createSequentialGroup()
-										.addGroup(
-												jPanelImagenFondoLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(
-																jButtonExaminarRutaOrigenFondoMonitorSecundario)
-														.addComponent(
-																jLabelRutaOrigenFondoMonitorSecundario)
-														.addComponent(
-																jTextFieldRutaOrigenFondoMonitorSecundario,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(
-												jPanelImagenFondoLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																jLabelRutaOrigenFondoAplicacion)
-														.addComponent(
-																panelColor,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																jColorChooser,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																170,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(
+										.addComponent(
+												panelColor,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												jColorChooser,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												623, Short.MAX_VALUE)
+										.addContainerGap()));
+		jPanelImagenFondoLayout.setVerticalGroup(jPanelImagenFondoLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addComponent(jLabelRutaOrigenFondoAplicacion).addComponent(
+						panelColor, javax.swing.GroupLayout.PREFERRED_SIZE,
+						javax.swing.GroupLayout.DEFAULT_SIZE,
+						javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(
+						jColorChooser, javax.swing.GroupLayout.PREFERRED_SIZE,
+						170, javax.swing.GroupLayout.PREFERRED_SIZE));
 
 		jButtonCancelar.setMnemonic('C');
 		jButtonCancelar.setText("Cancelar");
@@ -1578,6 +1500,43 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)));
 
+		jPanel1.setBorder(javax.swing.BorderFactory
+				.createTitledBorder("Par\u00e1metros"));
+
+		groupParametros.add(radioArgentina);
+		radioArgentina.setSelected(true);
+		radioArgentina.setText("Argentina");
+
+		groupParametros.add(radioPeru);
+		radioPeru.setText("Per\u00fa");
+		radioPeru.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				radioPeruActionPerformed(evt);
+			}
+		});
+
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
+				jPanel1);
+		jPanel1.setLayout(jPanel1Layout);
+		jPanel1Layout
+				.setHorizontalGroup(jPanel1Layout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								jPanel1Layout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(radioArgentina)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(radioPeru)
+										.addContainerGap(774, Short.MAX_VALUE)));
+		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				jPanel1Layout.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(radioArgentina).addComponent(radioPeru)));
+
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout
@@ -1632,6 +1591,11 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								Short.MAX_VALUE)
 																						.addComponent(
+																								jPanel1,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
 																								jPanelImagenFondo,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -1668,15 +1632,45 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 														.addComponent(
 																jPanelFotos,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																172,
+																185,
 																Short.MAX_VALUE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING,
-																false)
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jPanelImagenFondo,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanel1,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanelBuscarActualizaciones,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				69,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
+																		.addComponent(
+																				jPanelBotones,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
 														.addGroup(
 																layout
 																		.createSequentialGroup()
@@ -1691,40 +1685,21 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																				jPanelCompletitudDatosUsuario,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																jPanelImagenFondo,
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																0, 216,
-																Short.MAX_VALUE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(
-												layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING,
-																false)
-														.addComponent(
-																jPanelBuscarActualizaciones,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																92,
-																Short.MAX_VALUE)
-														.addComponent(
-																jPanelDocumento,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jPanelBotones,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanelDocumento,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)))
 										.addContainerGap()));
 	}// </editor-fold>
+	//GEN-END:initComponents
 
-	// GEN-END:initComponents
+	private void radioPeruActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+	}
 
 	private void jCheckBoxBackupAutomaticoCadaXDiasActionPerformed(
 			java.awt.event.ActionEvent evt) {
@@ -1855,21 +1830,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		}
 	}
 
-	private void jButtonExaminarRutaOrigenFondoMonitorSecundarioActionPerformed(
-			java.awt.event.ActionEvent evt) {
-		final VentanaExaminar ventanaExaminar = new VentanaExaminar(
-				JFileChooser.FILES_ONLY, JFileChooser.OPEN_DIALOG);
-		ventanaExaminar.pack();
-		Util.agregarIframe(ventanaExaminar);
-		ventanaExaminar.doModal(this.getRootPane());
-		ventanaExaminar.setVisible(true);
-
-		if (ventanaExaminar.getRutaSeleccionada() != null) {
-			jTextFieldRutaOrigenFondoMonitorSecundario.setText(ventanaExaminar
-					.getRutaSeleccionada());
-		}
-	}
-
 	public void setColor() {
 		AbstractColorChooserPanel[] colorPane = jColorChooser
 				.getChooserPanels();
@@ -1923,9 +1883,10 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		Util.mostrarPanelOperacionesLargas();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-					Util.panelControlActualizaciones();
-					Util.ocultarPanelOperacionesLargas();
-			}});
+				Util.panelControlActualizaciones();
+				Util.ocultarPanelOperacionesLargas();
+			}
+		});
 
 	}
 
@@ -1973,11 +1934,229 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		guardarValoresPanelSeguridad();
 		guardarValoresPanelBackup();
 		guardarValoresPanelImagenDeFondo();
+		guardarValoresPanelParametros();	
+
 
 		JOptionPaneTesterGral.showInternalMessageDialog(
 				"Los cambios se han guardado correctamente",
 				Constantes.MENSAJE_GUARDADO_TIT,
 				JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	private void guardarValoresPanelParametros() {
+
+
+		Propiedad propiedad= new Propiedad();
+		propiedad.setPropClave("PARAMETROS.CONFIGURACION");
+
+		if (radioArgentina.isSelected()) {
+
+			propiedad.setPropValor("ARGENTINA");
+			actualizaraParametrosArgentina();
+
+		} else if(radioPeru.isSelected()) {
+			propiedad.setPropValor("PERU");
+			actualizaraParametrosPeru();
+		}
+
+		try {
+			propiedadService.update(propiedad);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+	
+	public void actualizaraParametrosArgentina()
+	{
+		try
+		{
+			//PUNTEO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//La duración de esta prueba debe ser de 60 segundos.
+			Propiedad propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.EXAMEN.DURACION");
+			propiedad.setPropValor("60000");
+			propiedadService.update(propiedad);
+			
+			//Este parámetro debe corregirse para permitir hasta 10 errores como máximo.
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA");
+			propiedad.setPropValor("10");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PROFECIONAL");
+			propiedad.setPropValor("850");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PROFECIONAL");
+			propiedad.setPropValor("420");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PARTICULAR");
+			propiedad.setPropValor("970");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PARTICULAR");
+			propiedad.setPropValor("540");
+			propiedadService.update(propiedad);
+			
+			ExamenDetalle example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA);
+			List <ExamenDetalle>examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="Errores permitidos menor o igual a 10.";
+				ExamenDetalle coordinacionVM=examanes.get(0);
+				coordinacionVM.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(coordinacionVM);				
+			}
+			
+			//PALANCA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//tolere hasta 14 errores como máximo.
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.PALANCA.ERRORES.PUNTOS.SIN.ACTIVAR.HASTA");
+			propiedad.setPropValor("14");
+			propiedadService.update(propiedad);
+			
+			//El tiempo de permanencia en error (tiempo fuera del camino) es de 18 segundos.
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.PALANCA.ERRORES.TIEMPO");
+			propiedad.setPropValor("18000");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PROFECIONAL");
+			propiedad.setPropValor("80000");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PARTICULAR");
+			propiedad.setPropValor("100000");
+			propiedadService.update(propiedad);
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Tiempo fuera del circuito menor o igual a 1800 Centésimas de segundos.</li> "+
+												"<li>Puntos sin activar menor o igual a 14.</li> "+
+											"</ul>";
+				ExamenDetalle coordinacionFina=examanes.get(0);
+				coordinacionFina.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(coordinacionFina);				
+			}
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void actualizaraParametrosPeru()
+	{
+
+		try
+		{
+			//PUNTEO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//La duración de esta prueba debe ser de 30 segundos.
+			Propiedad propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.EXAMEN.DURACION");
+			propiedad.setPropValor("30000");
+			propiedadService.update(propiedad);
+			
+			//Este parámetro debe corregirse para permitir hasta 23 errores como máximo.
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA");
+			propiedad.setPropValor("23");
+			propiedadService.update(propiedad);
+			
+			
+			//Se requiere una velocidad equivalente a 30 revoluciones por minuto (es decir, una vuelta completa en 2 segundos). 
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PROFECIONAL");
+			propiedad.setPropValor("400");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PROFECIONAL");
+			propiedad.setPropValor("100");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PARTICULAR");
+			propiedad.setPropValor("400");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PARTICULAR");
+			propiedad.setPropValor("100");
+			propiedadService.update(propiedad);
+			
+			ExamenDetalle example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA);
+			List <ExamenDetalle>examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="Errores permitidos menor o igual a 23, con al menos 9 aciertos consecutivos.";
+				ExamenDetalle coordinacionVM=examanes.get(0);
+				coordinacionVM.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(coordinacionVM);				
+			}
+			
+			//PALANCA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//tolere hasta 12 errores como máximo.
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.PALANCA.ERRORES.PUNTOS.SIN.ACTIVAR.HASTA");
+			propiedad.setPropValor("12");
+			propiedadService.update(propiedad);
+			
+			//El tiempo de permanencia en error (tiempo fuera del camino) es de 5 segundos.
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.PALANCA.ERRORES.TIEMPO");
+			propiedad.setPropValor("5000");
+			propiedadService.update(propiedad);
+			
+			//El tiempo límite de la prueba debe ser 60 segundos.
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PROFECIONAL");
+			propiedad.setPropValor("60000");
+			propiedadService.update(propiedad);
+			
+			propiedad= new Propiedad();
+			propiedad.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PARTICULAR");
+			propiedad.setPropValor("60000");
+			propiedadService.update(propiedad);
+			
+
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Tiempo fuera del circuito menor o igual a 500 Centésimas de segundos.</li> "+
+												"<li>Puntos sin activar menor o igual a 12.</li> "+
+											"</ul>";
+				ExamenDetalle coordinacionFina=examanes.get(0);
+				coordinacionFina.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(coordinacionFina);				
+			}
+
+
+			
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+		
+		
 	}
 
 	private void jButtonExaminarRutaOrigenFotosActionPerformed(
@@ -1996,15 +2175,15 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		}
 	}
 
-	// GEN-BEGIN:variables
+	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
 	private javax.swing.ButtonGroup buttonGroupActualizacionAlInicio;
 	private javax.swing.ButtonGroup buttonGroupOrigenFotos;
+	private javax.swing.ButtonGroup groupParametros;
 	private javax.swing.JButton jButtonBuscarActualizaciones;
 	private javax.swing.JButton jButtonCancelar;
 	private javax.swing.JButton jButtonExaminarRutaBackupPrincipal;
 	private javax.swing.JButton jButtonExaminarRutaBackupSecundario;
-	private javax.swing.JButton jButtonExaminarRutaOrigenFondoMonitorSecundario;
 	private javax.swing.JButton jButtonExaminarRutaOrigenFotos;
 	private javax.swing.JButton jButtonExportarBaseDeDatos;
 	private javax.swing.JButton jButtonGuardar;
@@ -2023,10 +2202,10 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JLabel jLabelGuardarLogXDias2;
 	private javax.swing.JLabel jLabelMostrarFotos;
 	private javax.swing.JLabel jLabelRutaOrigenFondoAplicacion;
-	private javax.swing.JLabel jLabelRutaOrigenFondoMonitorSecundario;
 	private javax.swing.JLabel jLabelRutaOrigenFotos;
 	private javax.swing.JLabel jLabelTamanoFotos2;
 	private javax.swing.JLabel jLabelUbicacionBackupPrincipal;
+	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanelBackup;
 	private javax.swing.JPanel jPanelBotones;
 	private javax.swing.JPanel jPanelBuscarActualizaciones;
@@ -2044,11 +2223,12 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JSpinner jSpinnerDocumentoCantidadCaracteresFija;
 	private javax.swing.JSpinner jSpinnerGuardarLogXDias;
 	private javax.swing.JSpinner jSpinnerTamanoFotos;
-	private javax.swing.JTextField jTextFieldRutaOrigenFondoMonitorSecundario;
 	private javax.swing.JTextField jTextFieldRutaOrigenFotos;
 	private javax.swing.JTextField jTextFieldRutaUbicacionBackupPrincipal;
 	private javax.swing.JTextField jTextFieldRutaUbicacionBackupSecundario;
 	private javax.swing.JPanel panelColor;
+	private javax.swing.JRadioButton radioArgentina;
+	private javax.swing.JRadioButton radioPeru;
 	// End of variables declaration//GEN-END:variables
 
 }
