@@ -45,6 +45,7 @@ import frontend.utils.Util;
 public class PanelAgudezaVisual extends javax.swing.JPanel implements
 		Finalisable, PanelExamen {
 
+	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
 	private JToggleButton btn;
 	private PersonaExamen personaExamen;
 	//private ExamenDetalle exaDetalle;
@@ -125,9 +126,20 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				.getProperty("EXAMEN.AGUDEZA.VISUAL.IMG.MONOCULAR.IZQ");
 		String monoDer = ContextManager
 				.getProperty("EXAMEN.AGUDEZA.VISUAL.IMG.MONOCULAR.DER");
-		Util.setIcon(lbBinocular, binocular);
-		Util.setIcon(lbMonoIzq, monoIzq);
-		Util.setIcon(lbMonoDer, monoDer);
+		
+		if(configuracion.equals("PERU"))
+		{
+			Util.setIcon(lbBinocular, binocular+"PERU");
+			Util.setIcon(lbMonoIzq, monoIzq+"PERU");
+			Util.setIcon(lbMonoDer, monoDer+"PERU");
+		}
+		else
+		{
+			Util.setIcon(lbBinocular, binocular);
+			Util.setIcon(lbMonoIzq, monoIzq);
+			Util.setIcon(lbMonoDer, monoDer);
+		}
+
 	}
 
 	//GEN-BEGIN:initComponents
@@ -932,9 +944,21 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 				resultados.get(i).setResultadoDetalleExamen(
 						resultadoDetalleExamen);
 				setResultados.add(resultados.get(i));
-				detalleResultado = detalleResultado
-						+ resultados.get(i).getResEtapaDesc() + ": "
-						+ resultados.get(i).getResValor1() + ".<BR>";
+				if(configuracion.equals("PERU"))
+				{
+					detalleResultado = detalleResultado
+					+ resultados.get(i).getResEtapaDesc() + ": "
+					+ getFractionValue(resultados.get(i).getResValor1()) + ".<BR>";
+					
+					
+				}
+				else
+				{
+					detalleResultado = detalleResultado
+					+ resultados.get(i).getResEtapaDesc() + ": "
+					+ resultados.get(i).getResValor1() + ".<BR>";
+				}
+			
 			}
 
 			resultadoDetalleExamen.setRdeResultado(resultado);
@@ -948,6 +972,34 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 		}
 	}
 
+	public String getFractionValue(Double valor)
+	{
+		//1.0 20/20
+		//0.8 20/25
+		//0.7 20/30
+		//0.5 20/40
+		//0.4 20/50
+		//0.3 20/70
+		//0.2 20/100
+		//0.1 20/200
+		if(valor.compareTo(new Double(1.0d))==0)
+			return "20/20";
+		else if(valor.compareTo(new Double(0.8d))==0)
+			return "20/25";
+		else if(valor.compareTo(new Double(0.7d))==0)
+			return "20/30";
+		else if(valor.compareTo(new Double(0.5d))==0)
+			return "20/40";
+		else if(valor.compareTo(new Double(0.4d))==0)
+			return "20/50";
+		else if(valor.compareTo(new Double(0.3d))==0)
+			return "20/70";
+		else if(valor.compareTo(new Double(0.2d))==0)
+			return "20/100";
+		else 
+			return "20/200";
+	}
+	
 	public boolean isExamenValid() {
 		Util.mostrarError(lbError, null, true);
 

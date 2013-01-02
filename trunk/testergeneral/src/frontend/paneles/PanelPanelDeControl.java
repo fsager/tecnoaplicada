@@ -2051,6 +2051,34 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				coordinacionFina.setExadParametrosCorrecion(parametroCorreccion);
 				examenDetalleService.update(coordinacionFina);				
 			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional: 0.8 como mínimo (línea 6).</li> "+
+												"<li>Particular: 0.7 como mínimo (línea 5).</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional: 0.8 como mínimo (línea 6).</li> "+
+												"<li>Particular: 0.7 como mínimo (línea 5).</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
 		}
 		catch(Exception e)
 		{
@@ -2147,9 +2175,36 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				coordinacionFina.setExadParametrosCorrecion(parametroCorreccion);
 				examenDetalleService.update(coordinacionFina);				
 			}
-
-
 			
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional: 20/25 como mínimo (línea 6).</li> "+
+												"<li>Particular: 20/30 como mínimo (línea 5).</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional: 20/25 como mínimo (línea 6).</li> "+
+												"<li>Particular: 20/30 como mínimo (línea 5).</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+					
 		}
 		catch(Exception e)
 		{
