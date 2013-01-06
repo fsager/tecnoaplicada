@@ -236,8 +236,6 @@ public class GestorDBBackup implements Runnable {
 
 			if (f.exists()) {
 
-					//Validar si hay que ejecutar la migracion
-
 					Connection conn = ContextManager.getConnection();
 					FileInputStream iStrArchivoScriptSql = new FileInputStream(
 							f);
