@@ -869,10 +869,12 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 								if (!(carss.getMncEscudo() != null && carss
 										.getMncEscudo().length > 1))
 									carss.setMncEscudo(new byte[1]);
-								//TODO hacer casteo a QR y insertar corresponediente metne
-								if (!(carss.getMncEscudo() != null && carss
-										.getMncEscudo().length > 1))
-									carss.setMncEscudo(new byte[1]);
+								
+								if(carss instanceof CarnetLicenciasQR)
+								{
+									if (!(((CarnetLicenciasQR)carss).getQr() != null && ((CarnetLicenciasQR)carss).getQr().length > 1))
+										((CarnetLicenciasQR)carss).setQr(new byte[1]);
+								}
 
 								carss.setCliFechaImport(new Date());
 								carnetLicenciasService.insert(carss);								

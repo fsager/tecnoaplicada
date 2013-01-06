@@ -584,9 +584,9 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtRestricciones5" min="-2" pref="132" max="-2" attributes="1"/>
+                                  <Component id="txtLocalidad" min="-2" pref="132" max="-2" attributes="1"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnBuscarLocalidad" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="1">
@@ -594,20 +594,20 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jFormattedTextField1" max="32767" attributes="0"/>
+                                      <Component id="txtNro" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jFormattedTextField2" min="-2" pref="36" max="-2" attributes="0"/>
+                                      <Component id="txtPiso" min="-2" pref="36" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel17" min="-2" max="-2" attributes="1"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtRestricciones2" min="-2" pref="36" max="-2" attributes="1"/>
+                                      <Component id="txtDpt" min="-2" pref="36" max="-2" attributes="1"/>
                                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                                       <Component id="jLabel24" min="-2" max="-2" attributes="1"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtRestricciones4" min="-2" pref="57" max="-2" attributes="1"/>
+                                      <Component id="txtCP" min="-2" pref="57" max="-2" attributes="1"/>
                                   </Group>
-                                  <Component id="txtRestricciones3" alignment="0" max="32767" attributes="1"/>
+                                  <Component id="txtBarrio" alignment="0" max="32767" attributes="1"/>
                               </Group>
                           </Group>
                       </Group>
@@ -620,27 +620,27 @@
                               <Component id="jLabel11" linkSize="1" alignment="3" min="-2" max="-2" attributes="1"/>
                               <Component id="txtDomicilio" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jFormattedTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNro" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jFormattedTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtPiso" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="1"/>
-                              <Component id="txtRestricciones2" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                              <Component id="txtDpt" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                               <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="1"/>
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtRestricciones4" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                              <Component id="txtCP" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="1"/>
-                              <Component id="txtRestricciones3" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                              <Component id="txtBarrio" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtRestricciones5" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtLocalidad" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="btnBuscarLocalidad" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="1"/>
                           </Group>
@@ -664,7 +664,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
+                <Component class="javax.swing.JFormattedTextField" name="txtNro">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel9">
                   <Properties>
@@ -676,9 +676,9 @@
                     <Property name="text" type="java.lang.String" value="Piso:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField2">
+                <Component class="javax.swing.JFormattedTextField" name="txtPiso">
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtRestricciones2">
+                <Component class="javax.swing.JTextField" name="txtDpt">
                   <Properties>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[150, 22]"/>
@@ -698,7 +698,7 @@
                     <Property name="text" type="java.lang.String" value="Barrio:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtRestricciones3">
+                <Component class="javax.swing.JTextField" name="txtBarrio">
                   <Properties>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[150, 22]"/>
@@ -713,7 +713,7 @@
                     <Property name="text" type="java.lang.String" value="C/P:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtRestricciones4">
+                <Component class="javax.swing.JTextField" name="txtCP">
                   <Properties>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[150, 22]"/>
@@ -723,8 +723,9 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtRestricciones5">
+                <Component class="javax.swing.JTextField" name="txtLocalidad">
                   <Properties>
+                    <Property name="enabled" type="boolean" value="false"/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[150, 22]"/>
                     </Property>
@@ -738,9 +739,10 @@
                     <Property name="text" type="java.lang.String" value="Localidad:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
+                <Component class="javax.swing.JButton" name="btnBuscarLocalidad">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Buscar"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -997,7 +999,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel18">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Pa&#xed;z:"/>
+                    <Property name="text" type="java.lang.String" value="Pa&#xed;s:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cbNacionalidad">

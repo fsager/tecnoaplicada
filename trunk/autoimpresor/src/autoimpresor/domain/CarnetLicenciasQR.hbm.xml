@@ -46,6 +46,12 @@
         <property name="perDonante" type="java.lang.String">
             <column name="PER_DONANTE" length="4" not-null="true" />
         </property>
+        <property name="perSexo" type="java.lang.String">
+            <column name="PER_SEXO" length="2"/>
+        </property>
+        <property name="codigoSeguridad" type="java.lang.Long">
+            <column name="CODIGO_SEGURIDAD" />
+        </property>  
         <property name="perAlergia" type="java.lang.String">
             <column name="PER_ALERGIA" length="80" not-null="true" />
         </property>
