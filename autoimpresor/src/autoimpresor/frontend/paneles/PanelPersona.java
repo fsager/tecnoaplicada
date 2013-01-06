@@ -41,6 +41,7 @@ import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Dominio;
 import testerGeneral.domain.Propiedad;
 import testerGeneral.focus.MyOwnFocusTraversalPolicy;
+import testerGeneral.service.DominioDefinition;
 import autoimpresor.business.ContextManager;
 import autoimpresor.domain.Licencia;
 import autoimpresor.domain.Persona;
@@ -115,6 +116,12 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		order.add(cbNacionalidad);
 		order.add(cbDonante);
 		order.add(txtDomicilio);
+		order.add(txtDomicilio);
+		order.add(txtNro);
+		order.add(txtPiso);
+		order.add(txtDpt);
+		order.add(txtCP);
+		order.add(txtBarrio);
 		order.add(txtTelefono);
 		order.add(txtRestricciones);
 		order.add(txtMedicacion);
@@ -139,11 +146,9 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 				new SharedListSelectionHandler());
 		//btnAgregarTipoDoc.setVisible(false);
 		//btnAgregarNacionalidad.setVisible(false);
-		
+
 	}
 
-
-	
 	public void cargarListboxs() {
 
 		Util.cargarDominios(cbBusquedaGrupoSanguineo,
@@ -184,8 +189,13 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		cbGrupoSanguineo.setEnabled(habilitar);
 		cbNacionalidad.setEnabled(habilitar);
 		cbDonante.setEnabled(habilitar);
-
 		txtDomicilio.setEnabled(habilitar);
+		txtNro.setEnabled(habilitar);
+		txtPiso.setEnabled(habilitar);
+		txtDpt.setEnabled(habilitar);
+		txtCP.setEnabled(habilitar);
+		txtBarrio.setEnabled(habilitar);
+
 		txtTelefono.setEnabled(habilitar);
 		txtRestricciones.setEnabled(habilitar);
 		txtRestricciones.setEnabled(habilitar);
@@ -248,19 +258,19 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		jPanel5 = new javax.swing.JPanel();
 		jLabel11 = new javax.swing.JLabel();
 		txtDomicilio = new javax.swing.JTextField();
-		jFormattedTextField1 = new javax.swing.JFormattedTextField();
+		txtNro = new javax.swing.JFormattedTextField();
 		jLabel9 = new javax.swing.JLabel();
 		jLabel13 = new javax.swing.JLabel();
-		jFormattedTextField2 = new javax.swing.JFormattedTextField();
-		txtRestricciones2 = new javax.swing.JTextField();
+		txtPiso = new javax.swing.JFormattedTextField();
+		txtDpt = new javax.swing.JTextField();
 		jLabel17 = new javax.swing.JLabel();
 		jLabel23 = new javax.swing.JLabel();
-		txtRestricciones3 = new javax.swing.JTextField();
+		txtBarrio = new javax.swing.JTextField();
 		jLabel24 = new javax.swing.JLabel();
-		txtRestricciones4 = new javax.swing.JTextField();
-		txtRestricciones5 = new javax.swing.JTextField();
+		txtCP = new javax.swing.JTextField();
+		txtLocalidad = new javax.swing.JTextField();
 		jLabel25 = new javax.swing.JLabel();
-		jButton1 = new javax.swing.JButton();
+		btnBuscarLocalidad = new javax.swing.JButton();
 		jPanel7 = new javax.swing.JPanel();
 		txtNombre = new javax.swing.JTextField();
 		txtNroDoc = new javax.swing.JFormattedTextField();
@@ -723,27 +733,29 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		jLabel13.setText("Piso:");
 
-		txtRestricciones2.setMaximumSize(new java.awt.Dimension(150, 22));
-		txtRestricciones2.setMinimumSize(new java.awt.Dimension(150, 22));
+		txtDpt.setMaximumSize(new java.awt.Dimension(150, 22));
+		txtDpt.setMinimumSize(new java.awt.Dimension(150, 22));
 
 		jLabel17.setText("Dpt:");
 
 		jLabel23.setText("Barrio:");
 
-		txtRestricciones3.setMaximumSize(new java.awt.Dimension(150, 22));
-		txtRestricciones3.setMinimumSize(new java.awt.Dimension(150, 22));
+		txtBarrio.setMaximumSize(new java.awt.Dimension(150, 22));
+		txtBarrio.setMinimumSize(new java.awt.Dimension(150, 22));
 
 		jLabel24.setText("C/P:");
 
-		txtRestricciones4.setMaximumSize(new java.awt.Dimension(150, 22));
-		txtRestricciones4.setMinimumSize(new java.awt.Dimension(150, 22));
+		txtCP.setMaximumSize(new java.awt.Dimension(150, 22));
+		txtCP.setMinimumSize(new java.awt.Dimension(150, 22));
 
-		txtRestricciones5.setMaximumSize(new java.awt.Dimension(150, 22));
-		txtRestricciones5.setMinimumSize(new java.awt.Dimension(150, 22));
+		txtLocalidad.setEnabled(false);
+		txtLocalidad.setMaximumSize(new java.awt.Dimension(150, 22));
+		txtLocalidad.setMinimumSize(new java.awt.Dimension(150, 22));
 
 		jLabel25.setText("Localidad:");
 
-		jButton1.setText("Buscar");
+		btnBuscarLocalidad.setText("Buscar");
+		btnBuscarLocalidad.setEnabled(false);
 
 		javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(
 				jPanel5);
@@ -774,14 +786,14 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																jPanel5Layout
 																		.createSequentialGroup()
 																		.addComponent(
-																				txtRestricciones5,
+																				txtLocalidad,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				132,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
-																				jButton1))
+																				btnBuscarLocalidad))
 														.addGroup(
 																jPanel5Layout
 																		.createParallelGroup(
@@ -803,13 +815,13 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																						.addPreferredGap(
 																								javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																						.addComponent(
-																								jFormattedTextField1))
+																								txtNro))
 																		.addGroup(
 																				javax.swing.GroupLayout.Alignment.LEADING,
 																				jPanel5Layout
 																						.createSequentialGroup()
 																						.addComponent(
-																								jFormattedTextField2,
+																								txtPiso,
 																								javax.swing.GroupLayout.PREFERRED_SIZE,
 																								36,
 																								javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -820,7 +832,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																						.addPreferredGap(
 																								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																						.addComponent(
-																								txtRestricciones2,
+																								txtDpt,
 																								javax.swing.GroupLayout.PREFERRED_SIZE,
 																								36,
 																								javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -833,12 +845,12 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																						.addPreferredGap(
 																								javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																						.addComponent(
-																								txtRestricciones4,
+																								txtCP,
 																								javax.swing.GroupLayout.PREFERRED_SIZE,
 																								57,
 																								javax.swing.GroupLayout.PREFERRED_SIZE))
 																		.addComponent(
-																				txtRestricciones3,
+																				txtBarrio,
 																				javax.swing.GroupLayout.Alignment.LEADING,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -862,7 +874,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(jLabel9)
 														.addComponent(
-																jFormattedTextField1,
+																txtNro,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -873,20 +885,20 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.BASELINE)
 														.addComponent(
-																jFormattedTextField2,
+																txtPiso,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(jLabel17)
 														.addComponent(
-																txtRestricciones2,
+																txtDpt,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																22,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(jLabel24)
 														.addComponent(jLabel13)
 														.addComponent(
-																txtRestricciones4,
+																txtCP,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																22,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -898,7 +910,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																javax.swing.GroupLayout.Alignment.BASELINE)
 														.addComponent(jLabel23)
 														.addComponent(
-																txtRestricciones3,
+																txtBarrio,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																22,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -913,12 +925,12 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 																		.createParallelGroup(
 																				javax.swing.GroupLayout.Alignment.BASELINE)
 																		.addComponent(
-																				txtRestricciones5,
+																				txtLocalidad,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				22,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)
 																		.addComponent(
-																				jButton1))
+																				btnBuscarLocalidad))
 														.addComponent(jLabel25))));
 
 		txtNombre.setMaximumSize(new java.awt.Dimension(150, 22));
@@ -979,7 +991,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			}
 		});
 
-		jLabel18.setText("Pa\u00edz:");
+		jLabel18.setText("Pa\u00eds:");
 
 		cbNacionalidad.setModel(new javax.swing.DefaultComboBoxModel(
 				new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -1967,9 +1979,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		if (op == JOptionPane.YES_OPTION) {
 			try {
-				
-				if(!(persona.getPerDomNro()==null))
-				{
+
+				if (!(persona.getPerDomNro() == null)) {
 					int licSel = tableLicencias.getSelectedRow();
 					licSel = tableLicencias.convertRowIndexToModel(licSel);
 					TableModelLicencia tableModelLicencia = (TableModelLicencia) tableLicencias
@@ -2023,16 +2034,12 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 							cargarLicencias();
 						}
 					}
-				}
-				else
-				{
-					JOptionPaneTesterGral
-					.showInternal(
+				} else {
+					JOptionPaneTesterGral.showInternal(
 							"Debe completar los datos del domicilio.",
-							"Datos domicilio",
-							JOptionPane.ERROR_MESSAGE);
+							"Datos domicilio", JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -2048,23 +2055,17 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	}
 
 	private void btnNuevaLicenciaActionPerformed(java.awt.event.ActionEvent evt) {
-		
-		//TODO descomentar!!!!!!!!!!!!!!!!!!!!!!!!!1
-		/*if(!(persona.getPerDomNro()==null))
-		{*/
+
+		if (!(persona.getPerDomNro() == null)) {
 			abrirVentanaLicencia(null);
 			((PanelMenuPrincipal) Util.panelMenu).calcularLicenciasPorEstado();
 			cargarLicencias();
-		/*}
-		else
-		{
-			JOptionPaneTesterGral
-			.showInternal(
+		} else {
+			JOptionPaneTesterGral.showInternal(
 					"Debe completar los datos del domicilio.",
-					"Datos domicilio",
-					JOptionPane.ERROR_MESSAGE);
-		}*/
-		
+					"Datos domicilio", JOptionPane.ERROR_MESSAGE);
+		}
+
 	}
 
 	private void btnVerLicenciasEmitidasActionPerformed(
@@ -2084,7 +2085,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		final JInternalFrameTesterGral internalframe = new JInternalFrameTesterGral(
 				"Licencia", false, true, false, false);
 
-		//TODO ver esto
 		PanelNuevaLicenciaDeUsuario panelNuevaLicenciaDeUsuario = new PanelNuevaLicenciaDeUsuario(
 				persona, lic, internalframe);
 
@@ -2318,15 +2318,22 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		txtApellido.setText("");
 		txtNombre.setText("");
 
-		//TODO
-		Util.selectDominios(cbTipoDoc, "DNI");
+		Util.selectDominios(cbTipoDoc, "DNI-DNI");
+		Util.selectDominios(cbNacionalidad, "ARG");
 		txtNroDoc.setText(null);
 		cbSexo.setSelectedIndex(0);
 		txtNacimiento.setText(null);
 		cbDonante.setSelectedIndex(0);
-		cbNacionalidad.setSelectedIndex(0);
+		//cbNacionalidad.setSelectedIndex(0);
 		cbGrupoSanguineo.setSelectedIndex(0);
 		txtDomicilio.setText("");
+		txtNro.setText("");
+		txtPiso.setText("");
+		txtDpt.setText("");
+		txtCP.setText("");
+		;
+		txtBarrio.setText("");
+		txtLocalidad.setText("");
 		txtTelefono.setText("");
 		txtMedicacion.setText("");
 		txtRestricciones.setText("");
@@ -2367,21 +2374,29 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			persona.setPerNacionalidad(dom.getDomCodigo());
 
 			persona.setPerDomicilio(txtDomicilio.getText());
+
+			persona.setPerDomNro(new Integer(txtNro.getText()));
+			if (txtPiso.getText() != null && !txtPiso.getText().equals(""))
+				persona.setPerDomNroPiso(new Integer(txtPiso.getText()));
+
+			persona.setPerDomLetraDpt(txtDpt.getText());
+			persona.setPerDomCodigoPostal(txtCP.getText());
+			persona.setPerDomBarrio(txtBarrio.getText());
+
 			persona.setPerTelefono(txtTelefono.getText());
 
-			//TODO puedo hacer un SUBSTRING del NO o SI
 			if (txtMedicacion.getText() == null
 					|| txtMedicacion.getText().equals(""))
 				persona.setPerMedicacion("NO");
 			else
 				persona.setPerMedicacion(txtMedicacion.getText());
-			//TODO puedo hacer un SUBSTRING del NO o SI
+
 			if (txtRestricciones.getText() == null
 					|| txtRestricciones.getText().equals(""))
 				persona.setPerRestricciones("NO");
 			else
 				persona.setPerRestricciones(txtRestricciones.getText());
-			//TODO puedo hacer un SUBSTRING del NO o SI
+
 			if (txtAlergico.getText() == null
 					|| txtAlergico.getText().equals(""))
 				persona.setPerAlergia("NO");
@@ -2459,9 +2474,24 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 			return false;
 		}
 		if (txtDomicilio.getText() == null || txtDomicilio.getText().equals("")) {
-			Util.mostrarError(lbError, Constantes.ERROR_PER_DOMICILIO, false);
+			Util.mostrarError(lbError,
+					"Debe especificar la calle del domicilio", false);
 			return false;
 		}
+		if (txtNro.getText() == null || txtNro.getText().equals("")) {
+			Util.mostrarError(lbError,
+					"Debe especificar el número de calle del domicilio", false);
+			return false;
+		}
+		if (txtCP.getText() == null || txtCP.getText().equals("")) {
+			Util.mostrarError(lbError, "Debe especificar el C/P", false);
+			return false;
+		}
+		/*if (txtBarrio.getText() == null || txtBarrio.getText().equals("")) {
+			Util.mostrarError(lbError, "Debe especificar el barrio", false);
+			return false;
+		}*/
+
 		if (validarFoto.equals("S") && lbFoto.getIcon() == null) {
 			Util.mostrarError(lbError, Constantes.ERROR_PER_FOTO, false);
 			return false;
@@ -2689,6 +2719,39 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		Util.selectDominios(cbDonante, persona.getPerDonante());
 
 		txtDomicilio.setText(persona.getPerDomicilio());
+
+		if (persona.getPerDomNro() != null)
+			txtNro.setText(persona.getPerDomNro().toString());
+		if (persona.getPerDomNroPiso() != null)
+			txtPiso.setText(persona.getPerDomNroPiso().toString());
+
+		txtDpt.setText(persona.getPerDomLetraDpt());
+		txtCP.setText(persona.getPerDomCodigoPostal());
+		txtBarrio.setText(persona.getPerDomBarrio());
+
+		String codigoPais = null;
+		String codigoProvincia = null;
+		String codigoDepartamento = null;
+		String codigoLocalidad = null;
+
+		if (persona.getPerDomLocalidad() == null) {
+			codigoPais = ContextManager.getProperty("SISTEMA.PAIZ.MUNICIPIO");
+			codigoProvincia = ContextManager
+					.getProperty("SISTEMA.PROVINCIA.MUNICIPIO");
+			codigoDepartamento = ContextManager
+					.getProperty("SISTEMA.DEPARTAMENTO.MUNICIPIO");
+			codigoLocalidad = ContextManager
+					.getProperty("SISTEMA.LOCALIDAD.MUNICIPIO");
+
+			persona.setPerDomLocalidad(codigoLocalidad);
+			persona.setPerDomPais(codigoProvincia);
+			persona.setPerDomProvincia(codigoProvincia);
+			persona.setPerDomDepartamento(codigoDepartamento);
+		} else
+			codigoLocalidad = persona.getPerDomLocalidad();
+
+		mostrarLocalidad(codigoLocalidad);
+
 		txtTelefono.setText(persona.getPerTelefono());
 		txtRestricciones.setText(persona.getPerRestricciones());
 		txtMedicacion.setText(persona.getPerMedicacion());
@@ -2717,6 +2780,23 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		cargarLicencias();
 		habilitarBtnNuevaLicencia(true);
+	}
+
+	public void mostrarLocalidad(String codigoLocalidad) {
+		try {
+			Dominio localidadExample = new Dominio();
+			localidadExample.setDomClave("Localidad");
+			localidadExample.setDomCodigo(codigoLocalidad);
+
+			DominioDefinition dominioService = (DominioDefinition) ContextManager
+					.getBizObject("dominioService");
+			List<Dominio> localidades = dominioService.getAll(localidadExample);
+
+			if (localidades.size() > 0)
+				txtLocalidad.setText(localidades.get(0).getDomValorMostrar());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void cargarLicencias() {
@@ -2811,6 +2891,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
 	private javax.swing.JButton btnBuscar;
+	private javax.swing.JButton btnBuscarLocalidad;
 	private javax.swing.JButton btnCancelar;
 	private javax.swing.JButton btnCancelarFirma;
 	private javax.swing.JButton btnCancelarFoto;
@@ -2829,9 +2910,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private javax.swing.JComboBox cbNacionalidad;
 	private javax.swing.JComboBox cbSexo;
 	private javax.swing.JComboBox cbTipoDoc;
-	private javax.swing.JButton jButton1;
-	private javax.swing.JFormattedTextField jFormattedTextField1;
-	private javax.swing.JFormattedTextField jFormattedTextField2;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel10;
 	private javax.swing.JLabel jLabel11;
@@ -2878,20 +2956,22 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private javax.swing.JTable tablePersona;
 	private javax.swing.JTextField txtAlergico;
 	private javax.swing.JTextField txtApellido;
+	private javax.swing.JTextField txtBarrio;
 	private javax.swing.JTextField txtBusquedaApellido;
 	private javax.swing.JFormattedTextField txtBusquedaDni;
 	private javax.swing.JFormattedTextField txtBusquedaNacimiento;
 	private javax.swing.JTextField txtBusquedaNombre;
+	private javax.swing.JTextField txtCP;
 	private javax.swing.JTextField txtDomicilio;
+	private javax.swing.JTextField txtDpt;
+	private javax.swing.JTextField txtLocalidad;
 	private javax.swing.JTextField txtMedicacion;
 	private javax.swing.JFormattedTextField txtNacimiento;
 	private javax.swing.JTextField txtNombre;
+	private javax.swing.JFormattedTextField txtNro;
 	private javax.swing.JFormattedTextField txtNroDoc;
+	private javax.swing.JFormattedTextField txtPiso;
 	private javax.swing.JTextField txtRestricciones;
-	private javax.swing.JTextField txtRestricciones2;
-	private javax.swing.JTextField txtRestricciones3;
-	private javax.swing.JTextField txtRestricciones4;
-	private javax.swing.JTextField txtRestricciones5;
 	private javax.swing.JTextField txtTelefono;
 	// End of variables declaration//GEN-END:variables
 	private Persona persona = new Persona();

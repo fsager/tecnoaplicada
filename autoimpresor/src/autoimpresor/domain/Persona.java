@@ -353,4 +353,20 @@ public class Persona  implements java.io.Serializable {
 			return false;
 		return true;
 	}
+	
+	public String getDomicilioCompleto()
+	{
+		String domicilioCompleto=new String();
+		
+		domicilioCompleto+=perDomicilio;
+		
+		if(perDomNro!=null)
+			domicilioCompleto+=" "+perDomNro;		
+		if(perDomNroPiso!=null)
+			domicilioCompleto+=" Piso: "+perDomNroPiso;
+		if(perDomLetraDpt!=null && !perDomLetraDpt.equals(""))
+			domicilioCompleto+=" Dpt: "+perDomLetraDpt;
+		
+		return domicilioCompleto;		
+	}
 }

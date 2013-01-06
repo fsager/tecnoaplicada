@@ -75,5 +75,7 @@
 	<classpathentry kind="lib" path="libs/truexml.jar"/>
 	<classpathentry kind="lib" path="libs/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="libs/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/javase.jar"/>
+	<classpathentry kind="lib" path="lib/zxing_core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,7 +1,15 @@
 package autoimpresor;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 import java.util.Date;
+import java.util.Hashtable;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -23,7 +31,12 @@ import actualizaciones.GestorActualizacionesUtil;
 import autoimpresor.business.ContextManager;
 import autoimpresor.frontend.ventanas.FrameContenedor;
 import autoimpresor.service.PersonaDefinition;
-import autoimpresor.service.impl.PersonaService;
+
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+
 import frontend.utils.Util;
 import frontend.ventanas.VtnConfigurarDb;
 

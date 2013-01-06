@@ -877,10 +877,10 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 
 			//SEXO
 			if (jRadioButtonMasculino.isSelected()) {
-				per.setPerSexo("H");
+				per.setPerSexo("1");
 			}
 			if (jRadioButtonFemenino.isSelected()) {
-				per.setPerSexo("M");
+				per.setPerSexo("2");
 			}
 			if (jRadioButtonSexoAmbos.isSelected()) {
 				per.setPerSexo(null);

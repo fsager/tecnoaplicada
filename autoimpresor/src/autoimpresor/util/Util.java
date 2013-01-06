@@ -1,10 +1,16 @@
 package autoimpresor.util;
 
 import java.awt.print.PrinterJob;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.print.PrintService;
@@ -18,12 +24,14 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
-
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-
+import testerGeneral.business.ContextManager;
 import autoimpresor.domain.CarnetLicenciasQR;
 
-import testerGeneral.business.ContextManager;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public class Util {
 	
@@ -170,5 +178,45 @@ public class Util {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static byte[] getQRBytes(String datos)
+	{
+		byte[] qrBytes=null;
+		try
+		{
+			String encoding="UTF-8";
+		    Charset charset = Charset.forName(encoding);
+		    CharsetEncoder encoder = charset.newEncoder();
+		    byte[] byteData = null;
+	
+	        // Convert a string to UTF-8 bytes in a ByteBuffer
+	        ByteBuffer bbuf = encoder.encode(CharBuffer.wrap(datos));
+	        byteData = bbuf.array();
+	
+		    String newData = new String(byteData, encoding);
+	        BitMatrix matrix = null;
+	        int h = 130;
+	        int w = 130;
+	        com.google.zxing.Writer writer = new MultiFormatWriter();
+	        
+            Hashtable hints = new Hashtable(2);
+            hints.put(EncodeHintType.CHARACTER_SET,encoding);
+            hints.put(EncodeHintType.ERROR_CORRECTION,ErrorCorrectionLevel.H);
+            
+            matrix = writer.encode(newData,com.google.zxing.BarcodeFormat.QR_CODE, w, h, hints);
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(matrix, "PNG", os);
+            qrBytes=os.toByteArray();
+            
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	    
+	    return qrBytes;
+	}
+	
+	
 	
 }
