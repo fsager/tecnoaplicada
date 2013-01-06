@@ -5,6 +5,8 @@ import java.awt.Container;
 import java.awt.FocusTraversalPolicy;
 import java.util.Vector;
 
+import javax.swing.JLabel;
+
 public class MyOwnFocusTraversalPolicy extends FocusTraversalPolicy
 {
 	Vector<Component> order;
@@ -16,6 +18,7 @@ public class MyOwnFocusTraversalPolicy extends FocusTraversalPolicy
 	
 	public Component getComponentAfter(Container focusCycleRoot,Component aComponent)
 	{
+
 		int idx = (order.indexOf(aComponent) + 1) % order.size();
 		
 		Component comp=order.get(idx);
