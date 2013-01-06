@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -15,7 +14,7 @@ import org.hibernate.impl.CriteriaImpl;
 
 import testerGeneral.persistence.DAOObject;
 import autoimpresor.domain.CarnetLicencias;
-import autoimpresor.domain.Licencia;
+import autoimpresor.domain.CarnetLicenciasQR;
 import autoimpresor.persistence.CarnetLicenciasDao;
 
 /**
@@ -32,6 +31,12 @@ public class CarnetLicenciasHome extends DAOObject implements
 	public void insert(CarnetLicencias transientInstance) throws Exception {
 		log.debug("persisting CarnetLicencias instance");
 		try {
+			if(transientInstance instanceof CarnetLicenciasQR)
+			{
+				if (!(((CarnetLicenciasQR)transientInstance).getQr() != null && ((CarnetLicenciasQR)transientInstance).getQr().length > 1))
+					((CarnetLicenciasQR)transientInstance).setQr(new byte[1]);
+			}
+			
 			saveObject(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
@@ -43,6 +48,13 @@ public class CarnetLicenciasHome extends DAOObject implements
 	public void update(CarnetLicencias transientInstance) throws Exception {
 		log.debug("persisting CarnetLicencias instance");
 		try {
+			
+			if(transientInstance instanceof CarnetLicenciasQR)
+			{
+				if (!(((CarnetLicenciasQR)transientInstance).getQr() != null && ((CarnetLicenciasQR)transientInstance).getQr().length > 1))
+					((CarnetLicenciasQR)transientInstance).setQr(new byte[1]);
+			}
+			
 			updateObject(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
@@ -82,12 +94,16 @@ public class CarnetLicenciasHome extends DAOObject implements
 	public List getAll(CarnetLicencias p_example) throws Exception {
 		log.debug("finding CarnetLicencias instance by example");
 		try {
-			Criteria cri = getSession().createCriteria(CarnetLicencias.class);
+			Criteria cri = getSession().createCriteria(p_example.getClass());
 
 			p_example.setPerFirma(null);
 			p_example.setPerFoto(null);
 			p_example.setUsrFirma(null);
 			p_example.setMncEscudo(null);
+			if(p_example instanceof CarnetLicenciasQR)
+			{
+				((CarnetLicenciasQR)p_example).setQr(null);
+			}
 
 			cri.add(Example.create(p_example).enableLike().ignoreCase());
 			cri.addOrder(Order.asc("CAMBIAR"));
@@ -106,7 +122,7 @@ public class CarnetLicenciasHome extends DAOObject implements
 		log.debug("finding CarnetLicencias instance by example");
 		try {
 
-			Criteria cri = getSession().createCriteria(CarnetLicencias.class);
+			Criteria cri = getSession().createCriteria(p_example.getClass());
 
 			CriteriaImpl cImpl = (CriteriaImpl) cri;
 
@@ -114,6 +130,10 @@ public class CarnetLicenciasHome extends DAOObject implements
 			p_example.setPerFoto(null);
 			p_example.setUsrFirma(null);
 			p_example.setMncEscudo(null);
+			if(p_example instanceof CarnetLicenciasQR)
+			{
+				((CarnetLicenciasQR)p_example).setQr(null);
+			}
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(hasta);
@@ -166,7 +186,7 @@ public class CarnetLicenciasHome extends DAOObject implements
 	public List getPendientes() throws Exception {
 		log.debug("finding Licencia instance by getPendientes");
 		try {
-			Criteria cri = getSession().createCriteria(CarnetLicencias.class);
+			Criteria cri = getSession().createCriteria(CarnetLicenciasQR.class);
 			cri.add(Restrictions.isNull("cliFechaImpresion"));
 			cri.add(Restrictions.isNull("cliCantImpresiones"));
 

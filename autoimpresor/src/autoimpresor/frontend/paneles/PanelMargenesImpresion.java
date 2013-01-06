@@ -69,11 +69,10 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 		{
 			if(licencia instanceof CarnetLicenciasQR)
 			{
-				if(((CarnetLicenciasQR)licencia).getFormatoLicencia().equals("QR"))
-					formatoConQR+=", "+licencia.getLicCodLicencia();
+				if(((CarnetLicenciasQR)licencia).getFormatoLicencia()!=null && ((CarnetLicenciasQR)licencia).getFormatoLicencia().equals("QR"))
+					formatoConQR+=", "+licencia.getPerNumeroDoc();
 				else
-					formatoSinQR+=", "+licencia.getLicCodLicencia();
-				
+					formatoSinQR+=", "+licencia.getPerNumeroDoc();
 			}
 		}
 		
@@ -81,7 +80,7 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 		{
 			JOptionPaneTesterGral
 			.showInternal(
-					"<HTML>No puede imprimir licencias con distintos formatos.</BR>Licencias con QR:"+formatoConQR+"</BR>Licencias sin QR:"+formatoSinQR+" <HTML>",
+					"<HTML>No puede imprimir licencias con distintos formatos.</BR> Licencias con QR: "+formatoConQR+"</BR> Licencias sin QR: "+formatoSinQR+" <HTML>",
 					"Formato de licencias",
 					JOptionPane.ERROR_MESSAGE);
 			
@@ -435,7 +434,8 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 			
 			if(lst.size()>0 && lst.get(0) instanceof CarnetLicenciasQR)
 			{
-				formato=((CarnetLicenciasQR)lst.get(0)).getFormatoLicencia();
+				if(((CarnetLicenciasQR)lst.get(0)).getFormatoLicencia()!=null)
+					formato=((CarnetLicenciasQR)lst.get(0)).getFormatoLicencia();
 			}
 			
 			JasperReport report = autoimpresor.util.Util.compileReport(formato);

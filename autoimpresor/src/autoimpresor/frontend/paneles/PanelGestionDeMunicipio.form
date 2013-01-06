@@ -54,7 +54,7 @@
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                       <Component id="jLabelLogoMunicipio" alignment="0" max="32767" attributes="1"/>
-                      <Component id="jPanelDatosMunicipio" alignment="0" pref="176" max="32767" attributes="1"/>
+                      <Component id="jPanelDatosMunicipio" alignment="0" max="32767" attributes="1"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -114,24 +114,45 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jPanelEsCentroImpresor" alignment="0" min="-2" max="-2" attributes="1"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelCodigoMunicipio" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelNombreMunicipio" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jTextFieldCodigoMunicipio" max="32767" attributes="1"/>
+                              <Component id="jTextFieldNombreMunicipio" alignment="0" pref="123" max="32767" attributes="1"/>
+                          </Group>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelCodigoMunicipio" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelNombreMunicipio" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtCodigoProvincia" pref="57" max="32767" attributes="1"/>
+                      </Group>
+                      <Component id="jPanel1" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                          <Component id="txtCodigoLocalidad" pref="57" max="32767" attributes="1"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jTextFieldCodigoMunicipio" min="-2" pref="164" max="-2" attributes="0"/>
-                      <Component id="jTextFieldNombreMunicipio" pref="474" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="jPanelEsCentroImpresor" min="-2" max="-2" attributes="1"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel1" max="32767" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanelEsCentroImpresor1" min="-2" max="-2" attributes="1"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jPanelEsCentroImpresor1" min="-2" max="-2" attributes="1"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtCodigoDpt" pref="109" max="32767" attributes="1"/>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -143,6 +164,10 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelNombreMunicipio" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldNombreMunicipio" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtCodigoProvincia" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtCodigoDpt" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -150,6 +175,8 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabelCodigoMunicipio" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jTextFieldCodigoMunicipio" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtCodigoLocalidad" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -316,7 +343,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="checkFormatoLic" alignment="0" pref="98" max="32767" attributes="0"/>
+                  <Component id="checkFormatoLic" alignment="0" pref="102" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -336,6 +363,42 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Provincia:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Localidad:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Departamento:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtCodigoProvincia">
+          <Properties>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[164, 22]"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtCodigoLocalidad">
+          <Properties>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[164, 22]"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtCodigoDpt">
+          <Properties>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[164, 22]"/>
+            </Property>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanelClasesDeLicencia">

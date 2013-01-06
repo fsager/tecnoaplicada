@@ -1008,7 +1008,7 @@ public class PanelLicenciasImportadas extends javax.swing.JPanel {
 		setTableModelCarnets(new ArrayList());
 		try {
 			Util.ocultarSinResultados(lbSinResultados, true);
-			CarnetLicencias car = new CarnetLicencias();
+			CarnetLicenciasQR car = new CarnetLicenciasQR();
 			car.setPerApellido(txtBusquedaApellido.getText() + "%");
 			car.setPerNombre(txtBusquedaNombre.getText() + "%");
 
