@@ -103,6 +103,12 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 		txtRangoHasta = new javax.swing.JTextField();
 		jPanel1 = new javax.swing.JPanel();
 		checkFormatoLic = new javax.swing.JCheckBox();
+		jLabel3 = new javax.swing.JLabel();
+		jLabel4 = new javax.swing.JLabel();
+		jLabel5 = new javax.swing.JLabel();
+		txtCodigoProvincia = new javax.swing.JTextField();
+		txtCodigoLocalidad = new javax.swing.JTextField();
+		txtCodigoDpt = new javax.swing.JTextField();
 		jPanelClasesDeLicencia = new javax.swing.JPanel();
 		jScrollPaneClasesDeLicencia = new javax.swing.JScrollPane();
 		jTableClasesDeLicencia = new javax.swing.JTable();
@@ -290,12 +296,24 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				checkFormatoLic, javax.swing.GroupLayout.DEFAULT_SIZE, 98,
+				checkFormatoLic, javax.swing.GroupLayout.DEFAULT_SIZE, 102,
 				Short.MAX_VALUE));
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel1Layout.createSequentialGroup().addComponent(
 						checkFormatoLic).addContainerGap(10, Short.MAX_VALUE)));
+
+		jLabel3.setText("Provincia:");
+
+		jLabel4.setText("Localidad:");
+
+		jLabel5.setText("Departamento:");
+
+		txtCodigoProvincia.setMaximumSize(new java.awt.Dimension(164, 22));
+
+		txtCodigoLocalidad.setMaximumSize(new java.awt.Dimension(164, 22));
+
+		txtCodigoDpt.setMaximumSize(new java.awt.Dimension(164, 22));
 
 		javax.swing.GroupLayout jPanelDatosMunicipioLayout = new javax.swing.GroupLayout(
 				jPanelDatosMunicipio);
@@ -307,52 +325,106 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 						.addGroup(
 								jPanelDatosMunicipioLayout
 										.createSequentialGroup()
-										.addContainerGap()
 										.addGroup(
 												jPanelDatosMunicipioLayout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(
-																jLabelCodigoMunicipio)
-														.addComponent(
-																jLabelNombreMunicipio))
-										.addGap(12, 12, 12)
-										.addGroup(
-												jPanelDatosMunicipioLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																jTextFieldCodigoMunicipio,
+																jPanelEsCentroImpresor,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
-																164,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																jTextFieldNombreMunicipio,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																474,
-																Short.MAX_VALUE)))
-						.addGroup(
-								jPanelDatosMunicipioLayout
-										.createSequentialGroup()
-										.addComponent(
-												jPanelEsCentroImpresor,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addGroup(
+																jPanelDatosMunicipioLayout
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addGroup(
+																				jPanelDatosMunicipioLayout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addComponent(
+																								jLabelCodigoMunicipio)
+																						.addComponent(
+																								jLabelNombreMunicipio))
+																		.addGap(
+																				12,
+																				12,
+																				12)
+																		.addGroup(
+																				jPanelDatosMunicipioLayout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING,
+																								false)
+																						.addComponent(
+																								jTextFieldCodigoMunicipio,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								jTextFieldNombreMunicipio,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								123,
+																								Short.MAX_VALUE))))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jPanel1,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
+										.addGroup(
+												jPanelDatosMunicipioLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																jPanelDatosMunicipioLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jLabel3)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				txtCodigoProvincia,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				57,
+																				Short.MAX_VALUE))
+														.addComponent(
+																jPanel1,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addGroup(
+																jPanelDatosMunicipioLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jLabel4)
+																		.addGap(
+																				3,
+																				3,
+																				3)
+																		.addComponent(
+																				txtCodigoLocalidad,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				57,
+																				Short.MAX_VALUE)))
 										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addComponent(
-												jPanelEsCentroImpresor1,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												jPanelDatosMunicipioLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																jPanelEsCentroImpresor1,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addGroup(
+																jPanelDatosMunicipioLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jLabel5)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				txtCodigoDpt,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				109,
+																				Short.MAX_VALUE)))
 										.addContainerGap()));
 		jPanelDatosMunicipioLayout
 				.setVerticalGroup(jPanelDatosMunicipioLayout
@@ -373,6 +445,18 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 																jTextFieldNombreMunicipio,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLabel3)
+														.addComponent(
+																txtCodigoProvincia,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLabel5)
+														.addComponent(
+																txtCodigoDpt,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -391,6 +475,13 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 																								jLabelCodigoMunicipio)
 																						.addComponent(
 																								jTextFieldCodigoMunicipio,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								jLabel4)
+																						.addComponent(
+																								txtCodigoLocalidad,
 																								javax.swing.GroupLayout.PREFERRED_SIZE,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -753,7 +844,7 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 																				jPanelDatosMunicipio,
 																				javax.swing.GroupLayout.Alignment.LEADING,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				176,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				Short.MAX_VALUE)))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1009,6 +1100,15 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 			jFormattedTextFieldEdadMinima.setValue(Double
 					.valueOf(cajaImporteDuplicado));
 		}
+		
+		String txtCodigoLocalidad = ContextManager.getProperty("SISTEMA.LOCALIDAD.MUNICIPIO");
+		this.txtCodigoLocalidad.setText(txtCodigoLocalidad);
+		
+		String txtCodigoDepartamento = ContextManager.getProperty("SISTEMA.DEPARTAMENTO.MUNICIPIO");
+		this.txtCodigoDpt.setText(txtCodigoDepartamento);
+		
+		String txtCodigoProvincia = ContextManager.getProperty("SISTEMA.PROVINCIA.MUNICIPIO");
+		this.txtCodigoProvincia.setText(txtCodigoProvincia);
 
 	}
 
@@ -1155,13 +1255,27 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 		cajaImporteDuplicado.setPropValor(jFormattedTextFieldEdadMinima
 				.getText());
 		cajaImporteDuplicado.setPropBlob(new byte[1]);
-		
-		Propiedad licenciaFormato = ContextManager.getPropertyObj("LICENCIA.FORMATO");
+
+		Propiedad licenciaFormato = ContextManager
+				.getPropertyObj("LICENCIA.FORMATO");
 		licenciaFormato.setPropBlob(new byte[1]);
 		if (checkFormatoLic.isSelected())
 			licenciaFormato.setPropValor("QR");
 		else
 			licenciaFormato.setPropValor("SinQR");
+		
+		
+		Propiedad codigoLocalidad = ContextManager.getPropertyObj("SISTEMA.LOCALIDAD.MUNICIPIO");
+		codigoLocalidad.setPropValor(txtCodigoLocalidad.getText());
+		codigoLocalidad.setPropBlob(new byte[1]);
+		
+		Propiedad codigoDpt = ContextManager.getPropertyObj("SISTEMA.DEPARTAMENTO.MUNICIPIO");
+		codigoDpt.setPropValor(txtCodigoDpt.getText());
+		codigoDpt.setPropBlob(new byte[1]);
+		
+		Propiedad codigoProvincia = ContextManager.getPropertyObj("SISTEMA.PROVINCIA.MUNICIPIO");
+		codigoProvincia.setPropValor(txtCodigoProvincia.getText());
+		codigoProvincia.setPropBlob(new byte[1]);
 
 		try {
 
@@ -1175,6 +1289,9 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 				propiedadService.update(reciboAutomatico);
 				propiedadService.update(cajaImporteDuplicado);
 				propiedadService.update(licenciaFormato);
+				propiedadService.update(codigoLocalidad);
+				propiedadService.update(codigoDpt);
+				propiedadService.update(codigoProvincia);
 
 				if (usuarioLogueado.getUsrId() == -1) {
 					propiedadService.update(propiedadEsCentroImpresorSN);
@@ -1188,12 +1305,6 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 				Util.mostrarError(lbSinResultados,
 						"El rango de licencias es incorrecto.", false);
 			}
-			
-			
-
-	
-		
-			
 
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
@@ -1264,6 +1375,9 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	private javax.swing.JFormattedTextField jFormattedTextFieldEdadMinima;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
+	private javax.swing.JLabel jLabel3;
+	private javax.swing.JLabel jLabel4;
+	private javax.swing.JLabel jLabel5;
 	private javax.swing.JLabel jLabelCodigoMunicipio;
 	private javax.swing.JLabel jLabelCodigoMunicipio1;
 	private javax.swing.JLabel jLabelLogoMunicipio;
@@ -1281,6 +1395,9 @@ public class PanelGestionDeMunicipio extends javax.swing.JPanel {
 	private javax.swing.JTextField jTextFieldCodigoMunicipio;
 	private javax.swing.JTextField jTextFieldNombreMunicipio;
 	private javax.swing.JLabel lbSinResultados;
+	private javax.swing.JTextField txtCodigoDpt;
+	private javax.swing.JTextField txtCodigoLocalidad;
+	private javax.swing.JTextField txtCodigoProvincia;
 	private javax.swing.JTextField txtRangoDesde;
 	private javax.swing.JTextField txtRangoHasta;
 	// End of variables declaration//GEN-END:variables

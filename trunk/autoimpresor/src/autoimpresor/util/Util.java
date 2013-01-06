@@ -110,7 +110,8 @@ public class Util {
 				
 				if(list.get(0) instanceof CarnetLicenciasQR)
 				{
-					formato=((CarnetLicenciasQR)list.get(0)).getFormatoLicencia();
+					if(((CarnetLicenciasQR)list.get(0)).getFormatoLicencia()!=null)
+						formato=((CarnetLicenciasQR)list.get(0)).getFormatoLicencia();
 				}
 				
 				String srcString = "reportes/carnets"+formato+".jasper";

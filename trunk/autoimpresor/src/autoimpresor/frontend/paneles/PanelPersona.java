@@ -116,7 +116,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		order.add(cbNacionalidad);
 		order.add(cbDonante);
 		order.add(txtDomicilio);
-		order.add(txtDomicilio);
 		order.add(txtNro);
 		order.add(txtPiso);
 		order.add(txtDpt);

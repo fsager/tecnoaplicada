@@ -76,6 +76,9 @@
         <property name="qr" type="byte[]">
             <column name="QR" />
         </property>
+        <property name="formatoLicencia" type="java.lang.String">
+            <column name="FORMATO_LICENCIA" length="200" not-null="false" />
+        </property>
         <property name="licClase" type="java.lang.String">
             <column name="LIC_CLASE" length="20" not-null="true" />
         </property>

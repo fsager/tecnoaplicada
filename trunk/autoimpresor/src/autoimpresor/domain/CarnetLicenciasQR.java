@@ -407,6 +407,7 @@ public class CarnetLicenciasQR extends  CarnetLicenciasExtendida implements java
 	public void setPerSexo(String perSexo) {
 		this.perSexo = perSexo;
 	}
+
 	
 
 }
