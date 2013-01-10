@@ -106,7 +106,7 @@ public class CarnetLicenciasHome extends DAOObject implements
 			}
 
 			cri.add(Example.create(p_example).enableLike().ignoreCase());
-			cri.addOrder(Order.asc("CAMBIAR"));
+			cri.addOrder(Order.asc("cliId"));
 			List results = cri.list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

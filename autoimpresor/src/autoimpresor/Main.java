@@ -8,8 +8,11 @@ import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -29,7 +32,11 @@ import testerGeneral.persistence.backup.GestorDBBackup;
 import testerGeneral.service.AuditoriaDefinition;
 import actualizaciones.GestorActualizacionesUtil;
 import autoimpresor.business.ContextManager;
+import autoimpresor.domain.CarnetLicencias;
+import autoimpresor.domain.CarnetLicenciasQR;
 import autoimpresor.frontend.ventanas.FrameContenedor;
+import autoimpresor.service.CarnetLicenciasDefinition;
+import autoimpresor.service.LicenciaDefinition;
 import autoimpresor.service.PersonaDefinition;
 
 import com.google.zxing.EncodeHintType;
@@ -45,10 +52,47 @@ public class Main {
 	private static final Log log = LogFactory.getLog(Main.class);
 
 	public static void main(String[] args) throws Exception {
-		init();
+		if(args.length>0)
+			impresionDirecta(args[0]);
+		else
+			init();
 		//autoimpresor.util.Util.printReport(null, null, null);
 		//encriptarString();
 		//desencriptarString();
+		//
+	}
+	
+	public static void impresionDirecta(String dni)
+	{
+		try
+		{
+		CarnetLicenciasDefinition carnetLicenciasService = (CarnetLicenciasDefinition) ContextManager.getBizObject("carnetLicenciasService");
+		LicenciaDefinition licenciaService = (LicenciaDefinition) ContextManager.getBizObject("licenciaService");
+		
+		CarnetLicenciasQR car = new CarnetLicenciasQR();
+		//car.setPerNumeroDoc("16502199");
+		//car.setPerNumeroDoc("06652843");
+		car.setPerNumeroDoc(dni);
+		
+		
+		List list=carnetLicenciasService.getAll(car);
+		CarnetLicencias carnet=null;
+		if(list.size()>0)
+			carnet=(CarnetLicencias)list.get(list.size()-1);
+		
+		
+		/*CarnetLicencias carnet = new CarnetLicenciasQR(licenciaService.get(licencia.getLicId()), "Prueba",
+				"Prueba",null,null);*/
+		List<CarnetLicencias> carnets = new ArrayList<CarnetLicencias>();
+		carnets.add(carnet);
+
+		autoimpresor.util.Util
+				.printReportCarnet(new HashMap(), carnets);
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void init() {
