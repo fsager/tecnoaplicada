@@ -47,8 +47,8 @@ public class Util {
 			srcString= "reportes/carnetsSrcQR.jrxml";
 		
 		File srcFile = new File(srcString);
-		String srcReport = srcFile.getParent() + File.separator
-				+ "carnets"+formato+".jrxml";
+		String nombreSinExtencion=srcFile.getParent() + File.separator+ "carnets"+formato;
+		String destinoSrcReport = nombreSinExtencion+".jrxml";
 
 
 		FileInputStream fis = new FileInputStream(srcFile);
@@ -91,13 +91,13 @@ public class Util {
 		template = template.replaceAll("#!NOMBRE_Y!#", (120+desplazamientoTrasero+""));
 		template = template.replaceAll("#!FIRMA_Y!#", (92+desplazamientoTrasero+""));
 
-		FileOutputStream fos = new FileOutputStream(srcReport);
+		FileOutputStream fos = new FileOutputStream(destinoSrcReport);
 		fos.write(template.getBytes());
 		fos.close();
 		
 		
-		JasperCompileManager.compileReportToFile(srcReport);
-		JasperReport report = JasperCompileManager.compileReport(srcReport);
+		JasperCompileManager.compileReportToFile(destinoSrcReport,nombreSinExtencion+".jasper");
+		JasperReport report = JasperCompileManager.compileReport(destinoSrcReport);
 		
 		return report;
 	}
@@ -111,7 +111,7 @@ public class Util {
 				if(list.get(0) instanceof CarnetLicenciasQR)
 				{
 					if(((CarnetLicenciasQR)list.get(0)).getFormatoLicencia()!=null)
-						formato=((CarnetLicenciasQR)list.get(0)).getFormatoLicencia();
+						formato=((CarnetLicenciasQR)list.get(0)).getFormatoLicencia();//QR
 				}
 				
 				String srcString = "reportes/carnets"+formato+".jasper";
