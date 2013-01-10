@@ -51,7 +51,7 @@
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{perFechaNacimiento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="92" y="33" width="50" height="12" forecolor="#009933"/>
+				<reportElement x="92" y="33" width="60" height="12" forecolor="#009933"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
@@ -97,7 +97,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perNumeroDoc}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="92" y="48" width="50" height="12" forecolor="#FF0000"/>
+				<reportElement x="92" y="48" width="60" height="12" forecolor="#FF0000"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
