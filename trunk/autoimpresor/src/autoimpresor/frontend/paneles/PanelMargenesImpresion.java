@@ -146,15 +146,15 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 			pro.setPropBlob(new byte[1]);
 			propiedadService.update(pro);
 			
-			if(cbPrinter.getSelectedIndex()!=-1)
-			{
-				pro = ContextManager.getPropertyObj("DEFAULT_PRINTER");
-				pro.setPropValor(cbPrinter.getSelectedItem().toString());
-				pro.setPropBlob(new byte[1]);
-				propiedadService.update(pro);
+			if(btnGuardar.isVisible()){
+				if(cbPrinter.getSelectedIndex()!=-1)
+				{
+					pro = ContextManager.getPropertyObj("DEFAULT_PRINTER");
+					pro.setPropValor(cbPrinter.getSelectedItem().toString());
+					pro.setPropBlob(new byte[1]);
+					propiedadService.update(pro);
+				}
 			}
-			
-
 			
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -415,7 +415,6 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 
 	private void txtDesplazamientoTraseroActionPerformed(
 			java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
 	}
 
 	private void btnExportarTodoActionPerformed(java.awt.event.ActionEvent evt) {
@@ -541,9 +540,8 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report,
 					parameterMap, ds);
 			JRViewer viewer = new JRViewer(jasperPrint);
-			//TODO dejar el imprimir y eliminar el guardar.
-			//((JPanel) viewer.getComponent(0)).remove(0);
-			((JPanel) viewer.getComponent(0)).remove(1);
+			((JPanel) viewer.getComponent(0)).remove(0);
+			//((JPanel) viewer.getComponent(0)).remove(1);
 
 			((JButton) ((JPanel) viewer.getComponent(0)).getComponent(0))
 					.addActionListener(new ActionListener() {
