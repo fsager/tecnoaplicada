@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JRSaveContributor;
 import net.sf.jasperreports.view.JRViewer;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Propiedad;
@@ -540,7 +541,9 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report,
 					parameterMap, ds);
 			JRViewer viewer = new JRViewer(jasperPrint);
-			((JPanel) viewer.getComponent(0)).remove(0);
+			//TODO dejar el imprimir y eliminar el guardar.
+			//((JPanel) viewer.getComponent(0)).remove(0);
+			((JPanel) viewer.getComponent(0)).remove(1);
 
 			((JButton) ((JPanel) viewer.getComponent(0)).getComponent(0))
 					.addActionListener(new ActionListener() {
@@ -549,7 +552,14 @@ public class PanelMargenesImpresion extends javax.swing.JPanel {
 							setImprimio(true);
 						}
 					});
+			
+			
 
+			JRSaveContributor[] jRSaveContributor=viewer.getSaveContributors();
+			JRSaveContributor[] jRSaveContributorDes=new JRSaveContributor[1];
+			System.arraycopy(jRSaveContributor,1,jRSaveContributorDes,0,1);
+			viewer.setSaveContributors(jRSaveContributorDes);
+			
 			internalframe.add(viewer);
 			internalframe.pack();
 			internalframe.setSize(900, 650);

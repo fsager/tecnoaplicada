@@ -12,7 +12,7 @@ import autoimpresor.domain.Persona;
 
 public class TableModelLicenciaFull extends AbstractTableModel {
 	SimpleDateFormat sdf=new SimpleDateFormat(ContextManager.getProperty("FORMATO.FECHA"));
-    private String[] columnNames = {"Nombre Completo","Documento","Nro de autorización","Trámite","Otorgada","Vencimiento","Clase","Importe","Observaciones","Confeccionó","Responsable"};
+    private String[] columnNames = {"Nombre Completo","Documento","Código de Seguridad","Trámite","Otorgada","Vencimiento","Clase","Importe","Observaciones","Confeccionó","Responsable"};
     private List<Licencia> lst;
 
     public int getColumnCount() {

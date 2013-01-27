@@ -79,17 +79,35 @@ public class Util {
 		template = template.replaceAll("#!PAGE_HEIGHT!#", "" + height);
 
 		int desplazamientoTrasero=(int)(pixel*Integer.valueOf(desplazamientoTraseroVal));
-		template = template.replaceAll("#!OBSERVACIONES_Y!#", (72+desplazamientoTrasero+""));
-		template = template.replaceAll("#!RESTRICCIONES_Y!#", (40+desplazamientoTrasero+""));
-		template = template.replaceAll("#!ALERGIAS_Y!#", (56+desplazamientoTrasero+""));
-		template = template.replaceAll("#!GRUPO_SANGINEO_Y!#", (24+desplazamientoTrasero+""));
-		template = template.replaceAll("#!TELEFONO_Y!#", (24+desplazamientoTrasero+""));
-		template = template.replaceAll("#!DOMICILIO_Y!#", (8+desplazamientoTrasero+""));
-		template = template.replaceAll("#!DONANTE_Y!#", (24+desplazamientoTrasero+""));
-		template = template.replaceAll("#!MEDICACION_Y!#", (55+desplazamientoTrasero+""));
-		template = template.replaceAll("#!CARGO_Y!#", (126+desplazamientoTrasero+""));
-		template = template.replaceAll("#!NOMBRE_Y!#", (120+desplazamientoTrasero+""));
-		template = template.replaceAll("#!FIRMA_Y!#", (92+desplazamientoTrasero+""));
+		if(!formato.equals("QR"))
+		{
+			template = template.replaceAll("#!OBSERVACIONES_Y!#", (72+desplazamientoTrasero+""));
+			template = template.replaceAll("#!RESTRICCIONES_Y!#", (40+desplazamientoTrasero+""));
+			template = template.replaceAll("#!ALERGIAS_Y!#", (56+desplazamientoTrasero+""));
+			template = template.replaceAll("#!GRUPO_SANGINEO_Y!#", (24+desplazamientoTrasero+""));
+			template = template.replaceAll("#!TELEFONO_Y!#", (24+desplazamientoTrasero+""));
+			template = template.replaceAll("#!DOMICILIO_Y!#", (8+desplazamientoTrasero+""));
+			template = template.replaceAll("#!DONANTE_Y!#", (24+desplazamientoTrasero+""));
+			template = template.replaceAll("#!MEDICACION_Y!#", (55+desplazamientoTrasero+""));
+			template = template.replaceAll("#!CARGO_Y!#", (126+desplazamientoTrasero+""));
+			template = template.replaceAll("#!NOMBRE_Y!#", (120+desplazamientoTrasero+""));
+			template = template.replaceAll("#!FIRMA_Y!#", (92+desplazamientoTrasero+""));
+		}
+		else
+		{
+			template = template.replaceAll("#!OBSERVACIONES_Y!#", (9+72+desplazamientoTrasero+""));
+			template = template.replaceAll("#!RESTRICCIONES_Y!#", (9+40+desplazamientoTrasero+""));
+			template = template.replaceAll("#!ALERGIAS_Y!#", (9+56+desplazamientoTrasero+""));
+			template = template.replaceAll("#!GRUPO_SANGINEO_Y!#", (9+24+desplazamientoTrasero+""));
+			template = template.replaceAll("#!TELEFONO_Y!#", (9+24+desplazamientoTrasero+""));
+			template = template.replaceAll("#!DOMICILIO_Y!#", (9+4+desplazamientoTrasero+""));
+			template = template.replaceAll("#!DONANTE_Y!#", (9+24+desplazamientoTrasero+""));
+			template = template.replaceAll("#!MEDICACION_Y!#", (9+55+desplazamientoTrasero+""));
+			template = template.replaceAll("#!CARGO_Y!#", (9+126+desplazamientoTrasero+""));
+			template = template.replaceAll("#!NOMBRE_Y!#", (9+120+desplazamientoTrasero+""));
+			template = template.replaceAll("#!FIRMA_Y!#", (9+92+desplazamientoTrasero+""));
+		}
+
 
 		FileOutputStream fos = new FileOutputStream(destinoSrcReport);
 		fos.write(template.getBytes());
@@ -196,8 +214,8 @@ public class Util {
 	
 		    String newData = new String(byteData, encoding);
 	        BitMatrix matrix = null;
-	        int h = 130;
-	        int w = 130;
+	        int h = 300;
+	        int w = 300;
 	        com.google.zxing.Writer writer = new MultiFormatWriter();
 	        
             Hashtable hints = new Hashtable(2);
@@ -208,6 +226,8 @@ public class Util {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             MatrixToImageWriter.writeToStream(matrix, "PNG", os);
             qrBytes=os.toByteArray();
+            /*File f=new File("c:/qr.png");
+            MatrixToImageWriter.writeToFile(matrix, "PNG", f);*/
             
 		}
 		catch(Exception e)
