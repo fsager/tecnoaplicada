@@ -1620,8 +1620,8 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 					"SISTEMA.MUNICIPIO.ES_CENTRO_IMPRESOR_S_N").equals("S") && !isCajaEnable && licencia.getLicId()!=null) {
 				
 				//IMPREME LICENCIAS
-				//TODO ACTIVAR: DESACTIVADO POR EL MOMENTO
-							/*String nombreMunicipio = ContextManager
+				
+							String nombreMunicipio = ContextManager
 							.getProperty("SISTEMA.NOMBRE.MUNICIPIO");
 					String codigoMunicipio = ContextManager
 							.getProperty("SISTEMA.CODIGO.MUNICIPIO");
@@ -1635,7 +1635,7 @@ public class PanelNuevaLicenciaDeUsuario extends javax.swing.JPanel {
 					carnets.add(carnet);
 					
 					autoimpresor.util.Util
-							.printReportCarnet(new HashMap(), carnets);*/
+							.printReportCarnet(new HashMap(), carnets);
 			}
 
 		} catch (Exception ex) {
