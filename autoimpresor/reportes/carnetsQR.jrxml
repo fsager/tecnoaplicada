@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carnets" pageWidth="251" pageHeight="169" columnWidth="237" leftMargin="14" rightMargin="0" topMargin="13" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carnets" pageWidth="238" pageHeight="158" columnWidth="237" leftMargin="1" rightMargin="0" topMargin="2" bottomMargin="0">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -39,26 +39,26 @@
 	<field name="qr" class="java.lang.Object"/>
 	<detail>
 		<band height="150" splitType="Stretch">
-			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
-				<reportElement x="113" y="108" width="50" height="30"/>
+			<image hAlign="Center" vAlign="Bottom" onErrorType="Blank">
+				<reportElement x="115" y="117" width="50" height="30"/>
 				<imageExpression class="java.awt.Image"><![CDATA[((byte[])$F{perFirma}).length > 1 ? JRImageLoader.loadImage((byte[])$F{perFirma}) : null]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="92" y="93" width="61" height="12"/>
+				<reportElement x="90" y="110" width="61" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{perFechaNacimiento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="92" y="33" width="50" height="12" forecolor="#009933"/>
+				<reportElement x="90" y="40" width="60" height="12" forecolor="#009933"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{licFechaOtorgada}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RealSize" onErrorType="Blank">
-				<reportElement x="162" y="1" width="67" height="71"/>
+				<reportElement x="164" y="3" width="67" height="71"/>
 				<imageExpression class="java.awt.Image"><![CDATA[((byte[])$F{perFoto}).length > 1 ? JRImageLoader.loadImage((byte[])$F{perFoto}) : null]]></imageExpression>
 			</image>
 			<textField>
@@ -69,35 +69,35 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{licTramite}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="204" y="72" width="25" height="12"/>
+				<reportElement x="200" y="70" width="25" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{mncCodigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="92" y="63" width="19" height="12"/>
+				<reportElement x="90" y="76" width="19" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perTipoDoc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="92" y="78" width="61" height="12"/>
+				<reportElement x="90" y="95" width="61" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perNacionalidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="111" y="63" width="48" height="12"/>
+				<reportElement x="107" y="76" width="48" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perNumeroDoc}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="92" y="48" width="50" height="12" forecolor="#FF0000"/>
+				<reportElement x="88" y="59" width="60" height="12" forecolor="#FF0000"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
@@ -111,104 +111,111 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{licClase}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="9" width="156" height="12"/>
+				<reportElement x="1" y="14" width="156" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="6" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{mncNombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="6" y="120" width="147" height="12"/>
+				<reportElement x="3" y="134" width="147" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perApellido}+", "+$F{perNombre}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle" onErrorType="Blank">
-				<reportElement x="0" y="33" width="86" height="86"/>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="0" y="38" width="89" height="89"/>
 				<imageExpression class="java.awt.Image"><![CDATA[((byte[])$F{qr}).length > 1 ? JRImageLoader.loadImage((byte[])$F{qr}) : null]]></imageExpression>
 			</image>
 		</band>
 		<band height="150">
 			<textField>
-				<reportElement x="0" y="85" width="222" height="12"/>
+				<reportElement x="0" y="0" width="222" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="81" width="222" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perObservaciones}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="53" width="221" height="12"/>
+				<reportElement x="0" y="49" width="221" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perRestricciones}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="69" width="98" height="12"/>
+				<reportElement x="0" y="65" width="98" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perAlergia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="37" width="34" height="12"/>
+				<reportElement x="0" y="33" width="34" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perGrupoSanguineo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="110" y="37" width="112" height="12"/>
+				<reportElement x="118" y="33" width="112" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perTelefono}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="101" width="144" height="28"/>
-				<textElement verticalAlignment="Top">
+				<reportElement x="3" y="100" width="144" height="28"/>
+				<textElement verticalAlignment="Bottom">
 					<font fontName="Franklin Gothic Medium" size="5" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{licClaseDesc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="21" width="221" height="12"/>
+				<reportElement x="0" y="13" width="221" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perDomicilio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="61" y="37" width="28" height="12"/>
+				<reportElement x="63" y="33" width="28" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perDonante}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="109" y="68" width="113" height="12"/>
+				<reportElement x="115" y="64" width="113" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Franklin Gothic Medium" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{perMedicacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="139" width="65" height="10"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="170" y="135" width="65" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Franklin Gothic Medium" size="5" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{usrCargo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="133" width="65" height="10"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement x="170" y="129" width="65" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Franklin Gothic Medium" size="5" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{usrNombre}]]></textFieldExpression>
 			</textField>
-			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
-				<reportElement x="157" y="105" width="63" height="30"/>
+			<image hAlign="Center" vAlign="Bottom" onErrorType="Blank">
+				<reportElement x="172" y="101" width="63" height="30"/>
 				<imageExpression class="java.awt.Image"><![CDATA[((byte[])$F{usrFirma}).length > 1 ? JRImageLoader.loadImage((byte[])$F{usrFirma}) : null]]></imageExpression>
 			</image>
 		</band>

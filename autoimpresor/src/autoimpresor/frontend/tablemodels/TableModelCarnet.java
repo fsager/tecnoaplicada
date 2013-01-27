@@ -7,12 +7,11 @@ import javax.swing.table.AbstractTableModel;
 
 import testerGeneral.business.ContextManager;
 import autoimpresor.domain.CarnetLicencias;
-import autoimpresor.domain.Licencia;
-import autoimpresor.domain.Persona;
+import autoimpresor.domain.CarnetLicenciasQR;
 
 public class TableModelCarnet extends AbstractTableModel {
 	SimpleDateFormat sdf=new SimpleDateFormat(ContextManager.getProperty("FORMATO.FECHA"));
-    private String[] columnNames = {"Fecha Impresión","Cant. de Impresiones","Nombre Completo","Documento","Municipalidad","Clase"};  
+    private String[] columnNames = {"Fecha Impresión","Código de Seguridad","Cant. de Impresiones","Nombre Completo","Documento","Municipalidad","Clase"};  
 
     private List<CarnetLicencias> lst;
 
@@ -40,14 +39,25 @@ public class TableModelCarnet extends AbstractTableModel {
     	if(col==0)
     		return  car.getCliFechaImpresion()!=null ? sdf.format(car.getCliFechaImpresion()) : "";
     	if(col==1)
-    		return  car.getCliCantImpresiones()!=null ? car.getCliCantImpresiones() : "";
+    	{
+    		if(car instanceof CarnetLicenciasQR)
+    		{
+    			CarnetLicenciasQR carQR=(CarnetLicenciasQR)car;
+    			return  carQR.getCodigoSeguridad()!=null ? carQR.getCodigoSeguridad().toString() : "";
+    		}
+    		else
+    			return "";
+    			
+    	}
     	if(col==2)
-    		return  car.getPerNombreCompleto();
+    		return  car.getCliCantImpresiones()!=null ? car.getCliCantImpresiones() : "";
     	if(col==3)
-    		return  car.getPerTipoDoc()+" - "+car.getPerNumeroDoc();
+    		return  car.getPerNombreCompleto();
     	if(col==4)
-    		return  car.getMncNombre();
+    		return  car.getPerTipoDoc()+" - "+car.getPerNumeroDoc();
     	if(col==5)
+    		return  car.getMncNombre();
+    	if(col==6)
     		return  car.getLicClase(); 
     	
     	    	

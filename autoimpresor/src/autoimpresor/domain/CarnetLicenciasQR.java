@@ -89,6 +89,9 @@ public class CarnetLicenciasQR extends  CarnetLicenciasExtendida implements java
 	    	perDomDepartamento=deCodigoaValorMostras("Departamento",perDomDepartamento);
 	    	perDomProvincia=deCodigoaValorMostras("Provincia",perDomProvincia);
 	    	perDomPais=deCodigoaValorMostras("Nacionalidad",perDomPais);
+	    	setPerGrupoSanguineo(deCodigoaValorMostras("Grupo Sanguíneo",getPerGrupoSanguineo()));
+	    	setPerDonante(deCodigoaValorMostras("Donante",getPerDonante()));
+	    	
 	    	setPerNacionalidad(deCodigoaValorMostras("Nacionalidad",getPerNacionalidad()));
 	    	
 	    	setPerDomicilio(lic.getPersona().getDomicilioCompleto());
