@@ -1043,7 +1043,15 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 	}
 
 	public String getResultado() {
-		int etapas[] = { 115, 110, 210, 115, 325, 320 };
+		//115, "70° izquierda"
+		//215, "70° derecha"
+		// 110, "55° izquierda"
+		// 210, "55° derecha"
+		//325, "Nasal superior"
+		//320, "Nasal inferior"
+		
+		
+		int etapas[] = { 115, 110, 210, 215, 325, 320 };
 		for (Resultado res : resultados) {
 
 			for (int i = 0; i < etapas.length; i++) {

@@ -45,6 +45,7 @@ import frontend.utils.Util;
 public class PanelVisionIshihara extends javax.swing.JPanel implements
 		Finalisable, PanelExamen {
 
+	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
 	private JToggleButton btn;
 	private PersonaExamen personaExamen;
 	private ExamenDetalle exaDetalle;
@@ -354,15 +355,31 @@ public class PanelVisionIshihara extends javax.swing.JPanel implements
 	}
 
 	public boolean isAprobed() {
-		if (this.personaExamen.getPexaTipoExamen().equals(
-				PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
-				&& getPorcentaje().intValue() < 80)
-			return false;
+		
+		if(configuracion.equals("PERU"))
+		{
+			if (this.personaExamen.getPexaTipoExamen().equals(
+					PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
+					&& getPorcentaje().intValue() != 100)
+				return false;
 
-		if (this.personaExamen.getPexaTipoExamen().equals(
-				PersonaExamen.TIPO_EXAMEN_PARTICULAR)
-				&& getPorcentaje().intValue() < 80)
-			return false;
+			if (this.personaExamen.getPexaTipoExamen().equals(
+					PersonaExamen.TIPO_EXAMEN_PARTICULAR)
+					&& getPorcentaje().intValue() != 100)
+				return false;
+		}
+		else
+		{
+			if (this.personaExamen.getPexaTipoExamen().equals(
+					PersonaExamen.TIPO_EXAMEN_PROFECIONAL)
+					&& getPorcentaje().intValue() < 80)
+				return false;
+
+			if (this.personaExamen.getPexaTipoExamen().equals(
+					PersonaExamen.TIPO_EXAMEN_PARTICULAR)
+					&& getPorcentaje().intValue() < 80)
+				return false;
+		}
 
 		return true;
 	}

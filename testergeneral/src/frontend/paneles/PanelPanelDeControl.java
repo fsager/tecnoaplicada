@@ -1967,10 +1967,15 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 
 	}
 	
-	public void actualizaraParametrosArgentina()
+	public static void actualizaraParametrosArgentina()
 	{
 		try
 		{
+			PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
+			.getBizObject("propiedadService");
+			ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
+			.getBizObject("examenDetalleService");
+			
 			//PUNTEO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//La duración de esta prueba debe ser de 60 segundos.
 			Propiedad propiedad= new Propiedad();
@@ -2078,6 +2083,53 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				ExamenDetalle detalle=examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
 				examenDetalleService.update(detalle);				
+			}			
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_VISION_NOCTURNA);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="80% de las imágenes reconocidas.";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_ENCANDILAMIENTO);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="Ver la imagen.";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="Ver la imagen antes de los 5 segundos.";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}	
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional:Como mínimo 50 Db.</li> "+
+												"<li>Particular:Como mínimo 60 Db.</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
 			}
 		}
 		catch(Exception e)
@@ -2086,11 +2138,17 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		}
 	}
 	
-	public void actualizaraParametrosPeru()
+	public static void actualizaraParametrosPeru()
 	{
 
 		try
 		{
+			PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
+			.getBizObject("propiedadService");
+			
+			ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
+			.getBizObject("examenDetalleService");
+			
 			//PUNTEO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//La duración de esta prueba debe ser de 30 segundos.
 			Propiedad propiedad= new Propiedad();
@@ -2131,7 +2189,11 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 			List <ExamenDetalle>examanes=examenDetalleService.getAll(example);
 			if(examanes.size()>0)
 			{
-				String parametroCorreccion="Errores permitidos menor o igual a 23, con al menos 9 aciertos consecutivos.";
+				String parametroCorreccion="<ul> "+
+												"<li>Errores permitidos menor o igual a 23.</li> "+
+												"<li>Aciertos: mayor o igual a 24.</li> "+
+												"<li>Por lo menos 4 segundos de permanencia en aciertos.</li> "+
+											"</ul>";	
 				ExamenDetalle coordinacionVM=examanes.get(0);
 				coordinacionVM.setExadParametrosCorrecion(parametroCorreccion);
 				examenDetalleService.update(coordinacionVM);				
@@ -2183,8 +2245,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 			if(examanes.size()>0)
 			{
 				String parametroCorreccion="<ul> "+
-												"<li>Profesional: 20/25 como mínimo (línea 6).</li> "+
-												"<li>Particular: 20/30 como mínimo (línea 5).</li> "+
+												"<li>Profesional: 20/20 como mínimo.</li> "+
+												"<li>Particular: 20/30 como mínimo.</li> "+
 											"</ul>";
 				ExamenDetalle detalle=examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
@@ -2197,13 +2259,62 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 			if(examanes.size()>0)
 			{
 				String parametroCorreccion="<ul> "+
-												"<li>Profesional: 20/25 como mínimo (línea 6).</li> "+
-												"<li>Particular: 20/30 como mínimo (línea 5).</li> "+
+												"<li>Profesional: 20/20 como mínimo.</li> "+
+												"<li>Particular: 20/30 como mínimo.</li> "+
 											"</ul>";
 				ExamenDetalle detalle=examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
 				examenDetalleService.update(detalle);				
 			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_VISION_NOCTURNA);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="100% de las imágenes reconocidas (Iluminación a 35 cd).";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_ENCANDILAMIENTO);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="Ver la imagen (Iluminación a 45 cd).";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="Ver la imagen antes de los 5 segundos (Iluminación a 35 cd).";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional:Como mínimo 40 Db.</li> "+
+												"<li>Particular:Como mínimo 80 Db.</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+
 					
 		}
 		catch(Exception e)
