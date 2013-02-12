@@ -80,10 +80,28 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 		initComponents();
 
 		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL))
-			OBJETIVO=50;
+		{
+			if(configuracion.equals("PERU"))
+			{
+				OBJETIVO=40;
+			}
+			else
+			{
+				OBJETIVO=50;
+			}
+		}
+			
 		else if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR))
-			OBJETIVO=60;
-		
+		{
+			if(configuracion.equals("PERU"))
+			{
+				OBJETIVO=80;
+			}
+			else
+			{
+				OBJETIVO=60;
+			}
+		}		
 		
 		try {
 			ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
@@ -2304,5 +2322,6 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 	private JFreeChart chart;
 	private int OBJETIVO = -1;
 	private DefaultCategoryDataset dataset;
+	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
 
 }

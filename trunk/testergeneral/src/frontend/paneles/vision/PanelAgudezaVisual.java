@@ -51,8 +51,8 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 	//private ExamenDetalle exaDetalle;
 	private List<Resultado> resultadosCercana = new ArrayList<Resultado>();
 	private List<Resultado> resultadosLejana = new ArrayList<Resultado>();
-	private static final int LINEA_PROFECIONAL = 6;
-	private static final int LINEA_PARTICULAR = 5;
+	private static int LINEA_PROFECIONAL = 6;
+	private static int LINEA_PARTICULAR = 5;
 	//private ThreadTrama thTrama;
 	private boolean luzDerechaPrendida = true;
 	private boolean luzIzquierdaPrendida = true;
@@ -73,6 +73,12 @@ public class PanelAgudezaVisual extends javax.swing.JPanel implements
 		cargarImagenes();
 		Util.mostrarError(lbError, null, true);
 
+		if(configuracion.equals("PERU"))
+		{
+			LINEA_PROFECIONAL = 8;
+			LINEA_PARTICULAR = 6;
+		}
+		
 		if (Util.connectToHard)
 			inicializarThreads();
 	}

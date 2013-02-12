@@ -219,7 +219,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 					if(demo)
 						Util.playSound(Constantes.SOUND_OK,100);
 					aciertosUno++;
-					cantidadAciertosConsecutivosAux++;
+					//cantidadAciertosConsecutivosAux++;
 				}
 			}
 				break;
@@ -232,7 +232,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 						Util.playSound(Constantes.SOUND_OK,100);
 					
 					aciertosDos++;
-					cantidadAciertosConsecutivosAux++;
+					//cantidadAciertosConsecutivosAux++;
 				}
 			}
 				break;
@@ -245,7 +245,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 						Util.playSound(Constantes.SOUND_OK,100);
 	
 					aciertosTres++;
-					cantidadAciertosConsecutivosAux++;
+					//cantidadAciertosConsecutivosAux++;
 				}
 			}
 				break;
@@ -258,7 +258,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 						Util.playSound(Constantes.SOUND_OK,100);
 	
 					aciertosCuatro++;
-					cantidadAciertosConsecutivosAux++;
+					//cantidadAciertosConsecutivosAux++;
 				}
 			}
 				break;
@@ -406,12 +406,12 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 
 	public void addError() {
 
-		if(cantidadAciertosConsecutivosAux>cantidadAciertosConsecutivos)
+		/*if(cantidadAciertosConsecutivosAux>cantidadAciertosConsecutivos)
 		{
 			cantidadAciertosConsecutivos=cantidadAciertosConsecutivosAux;
 		}
 		
-		cantidadAciertosConsecutivosAux=0;
+		cantidadAciertosConsecutivosAux=0;*/
 		
 		errores++;
 		panelAnimacionDibujar.setErrores(errores);
@@ -633,7 +633,10 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 			}
 			resultadoDetalleExamen.setRdeNota2(new Double(errores));
 			//resultadoDetalleExamen.setRdeNota(new Double(tiempoAcumuladoEnPosicion));
-			resultadoDetalleExamen.setRdeDetalleResultado("Errores: "+errores+". Aciertos consecutivos: "+cantidadAciertosConsecutivos);
+			int cantidadAciertos=aciertosUno+aciertosDos+aciertosTres+aciertosCuatro;
+			
+			
+			resultadoDetalleExamen.setRdeDetalleResultado("Errores: "+errores+". Aciertos: "+cantidadAciertos);
 			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
 			resultadoDetalleExamen.setRdeResultado(getResultado());
 			resultadoDetalleExamenService.update(resultadoDetalleExamen);
@@ -683,13 +686,13 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 		Double errores = Double.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA"));
 		//Double tiempoMinimo = Double.valueOf(ContextManager.getProperty("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.DENTRO.MINIMO.PERMITIDO"));
 
-		if(configuracion.equals("PERU"))
+		/*if(configuracion.equals("PERU"))
 		{
 			if(cantidadAciertosConsecutivos<9)
 			{
 				return Examen.RESULTADO_FUERA;
 			}
-		}
+		}*/
 		
 		
 		if (this.errores <= errores)
@@ -717,8 +720,8 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 		aciertosCuatro = 0;
 		tiempoTotal = 0;
 		pulsadorAPresionar = 0;
-		cantidadAciertosConsecutivos=0;
-		cantidadAciertosConsecutivosAux=0;
+		//cantidadAciertosConsecutivos=0;
+		//cantidadAciertosConsecutivosAux=0;
 
 		setAciertos();
 	}
@@ -890,8 +893,8 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 	private PanelAnimacion panelAnimacionDibujar = new PanelAnimacion();
 	private long tiempoEntreLuz=-1;
 	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
-	private int cantidadAciertosConsecutivos=0;
-	private int cantidadAciertosConsecutivosAux=0;
+	//private int cantidadAciertosConsecutivos=0;
+	//private int cantidadAciertosConsecutivosAux=0;
 	
 	//private long tiempoAcumuladoEnPosicion=0;
 	//private long tiempoEntroEnPiscion=0;

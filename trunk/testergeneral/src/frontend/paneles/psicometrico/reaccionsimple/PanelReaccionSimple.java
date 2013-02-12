@@ -316,7 +316,17 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 
 	public void frenar() throws InterruptedException {
 		long tiempoActual = System.currentTimeMillis();
-		double resEtapa = ((tiempoActual - getInstanteSemaforoRojo()) * 0.91) / 10;
+		double resEtapa = 0;
+		if(configuracion.equals("PERU"))
+		{
+			resEtapa = ((tiempoActual - getInstanteSemaforoRojo()) * 0.70) / 10;
+		}
+		else
+		{
+			resEtapa = ((tiempoActual - getInstanteSemaforoRojo()) * 0.91) / 10;
+		}
+		
+		
 		//log.debug("Tiempo de Frenado: "+(tiempoActual - getInstanteSemaforoRojo())+" current: "+System.currentTimeMillis());
 
 		//TODO comentar descomentar para pruebas edgardo
@@ -868,5 +878,6 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 	private int erroresPermitidos = Integer.valueOf(ContextManager
 			.getProperty("EXAMEN.REACCION.SIMPLE.ERRORES.PERMITIDOS.HASTA"));
 	private int erroresCometidos = 0;
+	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
 
 }

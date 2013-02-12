@@ -75,6 +75,9 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	/** Creates new form PanelPersona */
 	public PanelPersona(PanelMenuPrincipal menu) {
 
+		PanelPanelDeControl.actualizaraParametrosArgentina();
+		PanelPanelDeControl.actualizaraParametrosPeru();
+		
 		this.menu = menu;
 		initComponents();
 		btnCancelarFirma.setText("Borrar");
