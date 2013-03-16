@@ -2057,6 +2057,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				examenDetalleService.update(coordinacionFina);				
 			}
 			
+			////////VISION
+			
 			example=new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
 			examanes=examenDetalleService.getAll(example);
@@ -2118,8 +2120,38 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				examenDetalleService.update(detalle);				
 			}	
 			
+			
+			//AUDIO
 			example=new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional:Como mínimo 50 Db.</li> "+
+												"<li>Particular:Como mínimo 60 Db.</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_DER);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional:Como mínimo 50 Db.</li> "+
+												"<li>Particular:Como mínimo 60 Db.</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_IZQ);
 			examanes=examenDetalleService.getAll(example);
 			if(examanes.size()>0)
 			{
@@ -2238,6 +2270,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				examenDetalleService.update(coordinacionFina);				
 			}
 			
+			//VISIO
 			
 			example=new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
@@ -2300,6 +2333,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				examenDetalleService.update(detalle);				
 			}
 			
+			//AUDIO
+			
 			example=new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO);
 			examanes=examenDetalleService.getAll(example);
@@ -2314,7 +2349,34 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				examenDetalleService.update(detalle);				
 			}
 			
-
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_DER);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional:Como mínimo 40 Db.</li> "+
+												"<li>Particular:Como mínimo 80 Db.</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
+			example=new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_IZQ);
+			examanes=examenDetalleService.getAll(example);
+			if(examanes.size()>0)
+			{
+				String parametroCorreccion="<ul> "+
+												"<li>Profesional:Como mínimo 40 Db.</li> "+
+												"<li>Particular:Como mínimo 80 Db.</li> "+
+											"</ul>";
+				ExamenDetalle detalle=examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);				
+			}
+			
 					
 		}
 		catch(Exception e)

@@ -155,13 +155,27 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 			for (int i = 0; i < detallesExamenes.size(); i++) {
 				ExamenDetalle de = detallesExamenes.get(i);
 				if (!de.getExadCodigo().equals(
-						ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA)) {
+						ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA)
+					&& 
+						!de.getExadCodigo().equals(
+								ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_DER)
+					&& 
+					!de.getExadCodigo().equals(
+							ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_IZQ
+										)) {
 					String detalle = de.getExadDetalle();
 					if (de
 							.getExadCodigo()
 							.equals(
 									ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA))
 						detalle = detalle.replaceAll(" cercana", "");
+					
+					if (de
+							.getExadCodigo()
+							.equals(
+									ExamenDetalle.EXAD_CODIGO_TEST_AUDIO))
+						detalle = detalle.replaceAll(": ambos", "");
+					
 
 					if (agregarExamen(de)) {
 						JToggleButton btnExamen = new JToggleButton(detalle);

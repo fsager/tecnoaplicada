@@ -312,11 +312,22 @@ INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_
  VALUES('Test de campimetría','TEST_CAMPIMETRIA',1,10,'70° a cada lado.','S');
   
 INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED) 
-	VALUES('Test de audio','TEST_AUDIO',1,11,'<ul>
+	VALUES('Test de audio: ambos','TEST_AUDIO',1,11,'<ul>
 												<li>Profesional:Como mínimo 50 Db.</li>
 												<li>Particular:Como mínimo 60 Db.</li>
 											 </ul>','S');
 
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED) 
+	VALUES('Test de audio: derecho','TEST_AUDIO_DER',1,12,'<ul>
+												<li>Profesional:Como mínimo 50 Db.</li>
+												<li>Particular:Como mínimo 60 Db.</li>
+											 </ul>','S');
+
+INSERT INTO APP.EXAMEN_DETALLE (EXAD_DETALLE,EXAD_CODIGO,EXA_ID,EXAD_ORDEN,EXAD_PARAMETROS_CORRECCION,EXAD_LICENCED) 
+	VALUES('Test de audio: izquierdo','TEST_AUDIO_IZQ',1,13,'<ul>
+												<li>Profesional:Como mínimo 50 Db.</li>
+												<li>Particular:Como mínimo 60 Db.</li>
+											 </ul>','S');
 
 
 INSERT INTO APP.DOMINIO (DOM_TIPO,DOM_CLAVE,DOM_CODIGO,DOM_VALOR_MOSTRAR,DOM_DESCRIPCION) VALUES ('GRAL','Tipo Documento','DNI','DNI','DNI');

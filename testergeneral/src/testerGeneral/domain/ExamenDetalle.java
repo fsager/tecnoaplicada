@@ -30,6 +30,8 @@ public class ExamenDetalle implements java.io.Serializable {
 	public static final String EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO="TEST_REC_ENCANDILAMIENTO";
 	public static final String EXAD_CODIGO_TEST_CAMPIMETRIA="TEST_CAMPIMETRIA";
 	public static final String EXAD_CODIGO_TEST_AUDIO="TEST_AUDIO";
+	public static final String EXAD_CODIGO_TEST_AUDIO_DER="TEST_AUDIO_DER";
+	public static final String EXAD_CODIGO_TEST_AUDIO_IZQ="TEST_AUDIO_IZQ";
 	public static final String EXAD_CODIGO_TEST_ISHIHARA="TEST_ISHIHARA";	
 	
 	
