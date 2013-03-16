@@ -8,6 +8,7 @@ package frontend.paneles.audio;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -26,6 +27,7 @@ import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
@@ -71,7 +73,8 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 	private PersonaExamenDefinition personaExamenService = (PersonaExamenDefinition) ContextManager
 			.getBizObject("personaExamenService");
 	private String operacionLargaMensaje = "Aguarde la respuesta del paciente";
-	private ExamenDetalle exaDetalle;
+
+	//private ExamenDetalle exaDetalle;
 
 	/** Creates new form Eeddd */
 	public PanelAudio(JToggleButton btn, PersonaExamen personaExamen) {
@@ -79,40 +82,24 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 		this.personaExamen = personaExamen;
 		initComponents();
 
-		if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PROFECIONAL))
-		{
-			if(configuracion.equals("PERU"))
-			{
-				OBJETIVO=40;
-			}
-			else
-			{
-				OBJETIVO=50;
+		if (this.personaExamen.getPexaTipoExamen().equals(
+				PersonaExamen.TIPO_EXAMEN_PROFECIONAL)) {
+			if (configuracion.equals("PERU")) {
+				radioAmbos.setEnabled(false);
+				radioDerecho.setSelected(true);
+				OBJETIVO = 40;
+			} else {
+				OBJETIVO = 50;
 			}
 		}
-			
-		else if (this.personaExamen.getPexaTipoExamen().equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR))
-		{
-			if(configuracion.equals("PERU"))
-			{
-				OBJETIVO=80;
-			}
-			else
-			{
-				OBJETIVO=60;
-			}
-		}		
-		
-		try {
-			ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
-					.getBizObject("examenDetalleService");
-			exaDetalle = new ExamenDetalle();
-			exaDetalle.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO);
-			exaDetalle = (ExamenDetalle) examenDetalleService
-					.getAll(exaDetalle).get(0);
 
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		else if (this.personaExamen.getPexaTipoExamen().equals(
+				PersonaExamen.TIPO_EXAMEN_PARTICULAR)) {
+			if (configuracion.equals("PERU")) {
+				OBJETIVO = 80;
+			} else {
+				OBJETIVO = 60;
+			}
 		}
 
 		inicializarResultados();
@@ -126,125 +113,174 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 		});
 
 		Util.mostrarError(lbError, null, true);
-		
-		
 
-		agragrGrafico();
+		datasetAmbos = new DefaultCategoryDataset();
+		chartAmbos = ChartFactory.createLineChart("Ambos oído", // chart title
+				"Hz", // x axis label
+				"Db", // y axis label
+				datasetAmbos, // data
+				PlotOrientation.VERTICAL, true, // include legend
+				true, // tooltips
+				false // urls
+				);
+		
+		//CategoryAxis domainAxis = chartAmbos.getPlot().getD
+
+
+		datasetDerecho = new DefaultCategoryDataset();
+		chartDerecho = ChartFactory.createLineChart("Oído Derecho", // chart title
+				"Hz", // x axis label
+				"Db", // y axis label
+				datasetDerecho, // data
+				PlotOrientation.VERTICAL, true, // include legend
+				true, // tooltips
+				false // urls
+				);
+
+		datasetIzquierdo = new DefaultCategoryDataset();
+		chartIzquierdo = ChartFactory.createLineChart("Oído Izquierdo", // chart title
+				"Hz", // x axis label
+				"Db", // y axis label
+				datasetIzquierdo, // data
+				PlotOrientation.VERTICAL, true, // include legend
+				true, // tooltips
+				false // urls
+				);
+
+		//chartIzquierdo.getPlot().get
+
+		agragrGrafico(chartAmbos, datasetAmbos);
+		agragrGrafico(chartDerecho, datasetDerecho);
+		agragrGrafico(chartIzquierdo, datasetIzquierdo);
+
+		agregarAlGrafico(chartAmbos, datasetAmbos, resultadosAmbos);
+		agregarAlGrafico(chartDerecho, datasetDerecho, resultadosDerecho);
+		agregarAlGrafico(chartIzquierdo, datasetIzquierdo, resultadosIzquierdo);
+
 		agregarAlGrafico();
 
 		if (Util.connectToHard)
 			inicializarThreads();
-		else
-		{
+		else {
 			agregarDatosPrueba();
 		}
 	}
 
 	public void agregarDatosPrueba() {
-			Resultado res = new Resultado();
-			res.setResEtapa(250l);
-			int subida=34;
-			int bajada=45;
-			res.setResValor1(new Double(subida));
-			res.setResValor2(new Double(bajada));
-			double promedio = (new Double(subida) + new Double(bajada)) / 2d;
-			promedio = Util.redondear(promedio);
-			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
-			resultados.add(res);
+		Resultado res = new Resultado();
+		res.setResEtapa(250l);
+		int subida = 34;
+		int bajada = 45;
+		res.setResValor1(new Double(subida));
+		res.setResValor2(new Double(bajada));
+		double promedio = (new Double(subida) + new Double(bajada)) / 2d;
+		promedio = Util.redondear(promedio);
+		res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+		resultadosAmbos.add(res);
 
-			res = new Resultado();
-			res.setResEtapa(500l);
-			subida=56;
-			bajada=45;
-			res.setResValor1(new Double(subida));
-			res.setResValor2(new Double(bajada));
-			promedio = (new Double(subida) + new Double(bajada)) / 2d;
-			promedio = Util.redondear(promedio);
-			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
-			resultados.add(res);
+		res = new Resultado();
+		res.setResEtapa(500l);
+		subida = 56;
+		bajada = 45;
+		res.setResValor1(new Double(subida));
+		res.setResValor2(new Double(bajada));
+		promedio = (new Double(subida) + new Double(bajada)) / 2d;
+		promedio = Util.redondear(promedio);
+		res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+		resultadosAmbos.add(res);
 
-			res = new Resultado();
-			res.setResEtapa(1000l);
-			subida=30;
-			bajada=45;
-			res.setResValor1(new Double(subida));
-			res.setResValor2(new Double(bajada));
-			promedio = (new Double(subida) + new Double(bajada)) / 2d;
-			promedio = Util.redondear(promedio);
-			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
-			resultados.add(res);
+		res = new Resultado();
+		res.setResEtapa(1000l);
+		subida = 30;
+		bajada = 45;
+		res.setResValor1(new Double(subida));
+		res.setResValor2(new Double(bajada));
+		promedio = (new Double(subida) + new Double(bajada)) / 2d;
+		promedio = Util.redondear(promedio);
+		res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+		resultadosAmbos.add(res);
 
-			res = new Resultado();
-			res.setResEtapa(2000l);
-			subida=10;
-			bajada=70;
-			res.setResValor1(new Double(subida));
-			res.setResValor2(new Double(bajada));
-			promedio = (new Double(subida) + new Double(bajada)) / 2d;
-			promedio = Util.redondear(promedio);
-			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
-			resultados.add(res);
+		res = new Resultado();
+		res.setResEtapa(2000l);
+		subida = 10;
+		bajada = 70;
+		res.setResValor1(new Double(subida));
+		res.setResValor2(new Double(bajada));
+		promedio = (new Double(subida) + new Double(bajada)) / 2d;
+		promedio = Util.redondear(promedio);
+		res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+		resultadosAmbos.add(res);
 
-			res = new Resultado();
-			res.setResEtapa(3000l);
-			subida=40;
-			bajada=75;
-			res.setResValor1(new Double(subida));
-			res.setResValor2(new Double(bajada));
-			promedio = (new Double(subida) + new Double(bajada)) / 2d;
-			promedio = Util.redondear(promedio);
-			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
-			resultados.add(res);
+		res = new Resultado();
+		res.setResEtapa(3000l);
+		subida = 40;
+		bajada = 75;
+		res.setResValor1(new Double(subida));
+		res.setResValor2(new Double(bajada));
+		promedio = (new Double(subida) + new Double(bajada)) / 2d;
+		promedio = Util.redondear(promedio);
+		res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+		resultadosAmbos.add(res);
 
-			res = new Resultado();
-			res.setResEtapa(4000l);
-			subida=40;
-			bajada=55;
-			res.setResValor1(new Double(subida));
-			res.setResValor2(new Double(bajada));
-			promedio = (new Double(subida) + new Double(bajada)) / 2d;
-			promedio = Util.redondear(promedio);
-			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
-			resultados.add(res);
+		res = new Resultado();
+		res.setResEtapa(4000l);
+		subida = 40;
+		bajada = 55;
+		res.setResValor1(new Double(subida));
+		res.setResValor2(new Double(bajada));
+		promedio = (new Double(subida) + new Double(bajada)) / 2d;
+		promedio = Util.redondear(promedio);
+		res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+		resultadosAmbos.add(res);
 
-			res = new Resultado();
-			res.setResEtapa(6000l);
-			subida=40;
-			bajada=75;
-			res.setResValor1(new Double(subida));
-			res.setResValor2(new Double(bajada));
-			promedio = (new Double(subida) + new Double(bajada)) / 2d;
-			promedio = Util.redondear(promedio);
-			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
-			resultados.add(res);
+		res = new Resultado();
+		res.setResEtapa(6000l);
+		subida = 40;
+		bajada = 75;
+		res.setResValor1(new Double(subida));
+		res.setResValor2(new Double(bajada));
+		promedio = (new Double(subida) + new Double(bajada)) / 2d;
+		promedio = Util.redondear(promedio);
+		res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+		resultadosAmbos.add(res);
 
-			res = new Resultado();
-			res.setResEtapa(8000l);
-			subida=40;
-			bajada=75;
-			res.setResValor1(new Double(subida));
-			res.setResValor2(new Double(bajada));
-			promedio = (new Double(subida) + new Double(bajada)) / 2d;
-			promedio = Util.redondear(promedio);
-			res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
-			resultados.add(res);
-			
+		res = new Resultado();
+		res.setResEtapa(8000l);
+		subida = 40;
+		bajada = 75;
+		res.setResValor1(new Double(subida));
+		res.setResValor2(new Double(bajada));
+		promedio = (new Double(subida) + new Double(bajada)) / 2d;
+		promedio = Util.redondear(promedio);
+		res.setResEtapaDesc(res.getResEtapa() + "Hz: " + promedio + " Db");
+		resultadosAmbos.add(res);
 
-			agregarAlGrafico();
+		agregarAlGrafico();
 	}
-	
+
 	public void agregarAlGrafico() {
+		if (radioAmbos.isSelected())
+			agregarAlGrafico(chartAmbos, datasetAmbos, resultadosAmbos);
+		else if (radioDerecho.isSelected())
+			agregarAlGrafico(chartDerecho, datasetDerecho, resultadosDerecho);
+		else
+			agregarAlGrafico(chartIzquierdo, datasetIzquierdo,
+					resultadosIzquierdo);
+	}
+
+	public void agregarAlGrafico(JFreeChart chart,
+			DefaultCategoryDataset dataset, List<Resultado> resultados) {
 		dataset.clear();
-		
-		dataset.addValue(OBJETIVO,seriesObjetivo,""+250);//Serie Objetivo		
-		dataset.addValue(OBJETIVO,seriesObjetivo,""+500);//Serie Objetivo
-		dataset.addValue(OBJETIVO,seriesObjetivo,""+1000);//Serie Objetivo
-		dataset.addValue(OBJETIVO,seriesObjetivo,""+2000);//Serie Objetivo
-		dataset.addValue(OBJETIVO,seriesObjetivo,""+3000);//Serie Objetivo
-		dataset.addValue(OBJETIVO,seriesObjetivo,""+4000);//Serie Objetivo
-		dataset.addValue(OBJETIVO,seriesObjetivo,""+6000);//Serie Objetivo
-		dataset.addValue(OBJETIVO,seriesObjetivo,""+8000);//Serie Objetivo
-		
+
+		dataset.addValue(OBJETIVO, seriesObjetivo, "" + 250);//Serie Objetivo		
+		dataset.addValue(OBJETIVO, seriesObjetivo, "" + 500);//Serie Objetivo
+		dataset.addValue(OBJETIVO, seriesObjetivo, "" + 1000);//Serie Objetivo
+		dataset.addValue(OBJETIVO, seriesObjetivo, "" + 2000);//Serie Objetivo
+		dataset.addValue(OBJETIVO, seriesObjetivo, "" + 3000);//Serie Objetivo
+		dataset.addValue(OBJETIVO, seriesObjetivo, "" + 4000);//Serie Objetivo
+		dataset.addValue(OBJETIVO, seriesObjetivo, "" + 6000);//Serie Objetivo
+		dataset.addValue(OBJETIVO, seriesObjetivo, "" + 8000);//Serie Objetivo
+
 		for (int i = 0; i < resultados.size(); i++) {
 			Resultado resultado = resultados.get(i);
 			if (resultado.getResValor1() != null) {
@@ -260,25 +296,18 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 			}
 
 		}
-		
+
 		chart.fireChartChanged();
 	}
 
-	public void agragrGrafico() {
-		dataset = new DefaultCategoryDataset();
-		chart = ChartFactory.createLineChart(null, // chart title
-				"Hz", // x axis label
-				"Db", // y axis label
-				dataset, // data
-				PlotOrientation.VERTICAL, true, // include legend
-				true, // tooltips
-				false // urls
-				);
+	public void agragrGrafico(JFreeChart chart, DefaultCategoryDataset dataset) {
+
 		CategoryPlot plot = chart.getCategoryPlot();
+		plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+
 		plot.setBackgroundPaint(Color.lightGray);
 		plot.setDomainGridlinePaint(Color.white);
 		plot.setRangeGridlinePaint(Color.white);
-		
 
 		LineAndShapeRenderer renderer = new LineAndShapeRenderer();
 		renderer.setSeriesLinesVisible(0, true);
@@ -290,18 +319,24 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 
 		plot.setRenderer(renderer);
 
-		BasicStroke basicStroke=new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,2.0f, new float[] {8.0f, 8.0f}, 0.0f);
-		renderer.setSeriesStroke(0,basicStroke);
+		BasicStroke basicStroke = new BasicStroke(3.0f, BasicStroke.CAP_ROUND,
+				BasicStroke.JOIN_ROUND, 2.0f, new float[] { 8.0f, 8.0f }, 0.0f);
+		renderer.setSeriesStroke(0, basicStroke);
 		plot.getRenderer().setSeriesPaint(0, Color.GREEN.darker().darker());
 		plot.getRenderer().setSeriesPaint(1, jProgress250S.getForeground());
 		plot.getRenderer().setSeriesPaint(2, jProgress250B.getForeground());
-		
+
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		panelGrafico.add(chartPanel);
 		
+		
+		
+		
+
 	}
 
-	public void agregarResultado(int etapa, int subida, int bajada) {
+	public void agregarResultado(List<Resultado> resultados, int etapa,
+			int subida, int bajada) {
 		System.out.println("agregarResultado: " + etapa + " subida: " + subida);
 		for (Resultado res : resultados) {
 			if (res.getResEtapa().intValue() == etapa) {
@@ -317,6 +352,12 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 	}
 
 	public void inicializarResultados() {
+		inicializarResultados(resultadosAmbos);
+		inicializarResultados(resultadosDerecho);
+		inicializarResultados(resultadosIzquierdo);
+	}
+
+	public void inicializarResultados(List<Resultado> resultados) {
 		Resultado res = new Resultado();
 		res.setResEtapa(250l);
 		resultados.add(res);
@@ -353,35 +394,34 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 
 	public void inicializarThreads() {
 
-		
-			
-			Util.mostrarPanelOperacionesLargas();
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						if (Util.thTrama != null && !(Util.thTrama.getTrama() instanceof TramaAudio))
-							Util.thTrama.desconnect();
-						
-						if (Util.thTrama == null)
-						{
-							ThreadTrama thTrama = new ThreadTrama(new TramaAudio());
-							thTrama.setEjecutar(false);
-							Util.thTrama = thTrama;
-							thTrama.setEjecucion(99999);
-							thTrama.start();
-						}
-						/*thTrama.sendOrden(ThreadTrama.ORDEN_START_AUTOMATICO_STEREO);
-						Thread.sleep(50);
-						thTrama.sendOrden(ThreadTrama.ORDEN_STOP_AUTOMATICO);*/
+		Util.mostrarPanelOperacionesLargas();
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					if (Util.thTrama != null
+							&& !(Util.thTrama.getTrama() instanceof TramaAudio))
+						Util.thTrama.desconnect();
 
-					} catch (ExceptionIsNotHadware e) {
-						JOptionPaneTesterGral.showInternalMessageDialog(e.getMessage(),
-								"Error", JOptionPane.ERROR_MESSAGE);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
+					if (Util.thTrama == null) {
+						ThreadTrama thTrama = new ThreadTrama(new TramaAudio());
+						thTrama.setEjecutar(false);
+						Util.thTrama = thTrama;
+						thTrama.setEjecucion(99999);
+						thTrama.start();
 					}
-						Util.ocultarPanelOperacionesLargas();
-				}});
+					/*thTrama.sendOrden(ThreadTrama.ORDEN_START_AUTOMATICO_STEREO);
+					Thread.sleep(50);
+					thTrama.sendOrden(ThreadTrama.ORDEN_STOP_AUTOMATICO);*/
+
+				} catch (ExceptionIsNotHadware e) {
+					JOptionPaneTesterGral.showInternalMessageDialog(e
+							.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+				Util.ocultarPanelOperacionesLargas();
+			}
+		});
 
 	}
 
@@ -418,9 +458,20 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 				}
 			});
 
-			if (!cancel)
-				agregarResultado(getRealFrecuencia(frecuencia), tAudio
-						.getDbSubida(), tAudio.getDbBajanda());
+			if (!cancel) {
+				if (radioAmbos.isSelected())
+					agregarResultado(resultadosAmbos,
+							getRealFrecuencia(frecuencia),
+							tAudio.getDbSubida(), tAudio.getDbBajanda());
+				else if (radioDerecho.isSelected())
+					agregarResultado(resultadosDerecho,
+							getRealFrecuencia(frecuencia),
+							tAudio.getDbSubida(), tAudio.getDbBajanda());
+				else
+					agregarResultado(resultadosIzquierdo,
+							getRealFrecuencia(frecuencia),
+							tAudio.getDbSubida(), tAudio.getDbBajanda());
+			}
 
 		} catch (InterruptedException e) {
 
@@ -470,9 +521,20 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 					}
 				});
 
-				if (!cancel)
-					agregarResultado(getRealFrecuencia(i),
-							tAudio.getDbSubida(), tAudio.getDbBajanda());
+				if (!cancel) {
+					if (radioAmbos.isSelected())
+						agregarResultado(resultadosAmbos, getRealFrecuencia(i),
+								tAudio.getDbSubida(), tAudio.getDbBajanda());
+					else if (radioDerecho.isSelected())
+						agregarResultado(resultadosDerecho,
+								getRealFrecuencia(i), tAudio.getDbSubida(),
+								tAudio.getDbBajanda());
+					else
+						agregarResultado(resultadosIzquierdo,
+								getRealFrecuencia(i), tAudio.getDbSubida(),
+								tAudio.getDbBajanda());
+				}
+
 			}
 
 		} catch (InterruptedException e) {
@@ -865,7 +927,9 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 																radioDerecho)
 														.addComponent(
 																radioIzquierdo))
-										.addContainerGap(100, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 		jPanel11Layout
 				.setVerticalGroup(jPanel11Layout
 						.createParallelGroup(
@@ -882,7 +946,7 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 										.addComponent(radioIzquierdo)));
 
 		btnComenzarAutomatico.setFont(new java.awt.Font("Segoe UI", 3, 14));
-		btnComenzarAutomatico.setText("Comenzar Test Completo");
+		btnComenzarAutomatico.setText("<html>Iniciar Test<BR> Completo</html>");
 		btnComenzarAutomatico
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1804,81 +1868,94 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 																javax.swing.GroupLayout.Alignment.LEADING,
 																false)
 														.addComponent(
-																jPanel11,
+																jPanel3,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
+																117,
 																Short.MAX_VALUE)
 														.addComponent(
 																btnComenzarAutomatico,
+																0, 0,
+																Short.MAX_VALUE)
+														.addComponent(
+																jPanel11,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
+																24,
 																Short.MAX_VALUE))
-										.addGap(18, 18, 18)
-										.addComponent(
-												panelGrafico,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												765, Short.MAX_VALUE)
-										.addContainerGap())
-						.addGroup(
-								jPanel1Layout
-										.createSequentialGroup()
-										.addComponent(
-												jPanel3,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												117,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jPanel4,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												117,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jPanel5,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												117,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jPanel6,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												117,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jPanel10,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												117,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addComponent(
-												jPanel9,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												117,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jPanel8,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												117,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jPanel7,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												117,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(5, 5, 5)));
+										.addGroup(
+												jPanel1Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																jPanel1Layout
+																		.createSequentialGroup()
+																		.addGap(
+																				10,
+																				10,
+																				10)
+																		.addComponent(
+																				panelGrafico,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				844,
+																				Short.MAX_VALUE)
+																		.addContainerGap())
+														.addGroup(
+																jPanel1Layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				jPanel4,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				117,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanel5,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				117,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanel6,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				117,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanel10,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				117,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
+																		.addComponent(
+																				jPanel9,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				117,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanel8,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				117,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				jPanel7,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				117,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addGap(
+																				5,
+																				5,
+																				5)))));
 
 		jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
 				new java.awt.Component[] { jPanel10, jPanel3, jPanel4, jPanel5,
@@ -1954,7 +2031,10 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 																		.addComponent(
-																				btnComenzarAutomatico))
+																				btnComenzarAutomatico,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				74,
+																				Short.MAX_VALUE))
 														.addGroup(
 																jPanel1Layout
 																		.createSequentialGroup()
@@ -1963,7 +2043,7 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 																		.addComponent(
 																				panelGrafico,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				176,
+																				189,
 																				Short.MAX_VALUE)))
 										.addContainerGap()));
 
@@ -2018,7 +2098,9 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(
 																btnGuardar))
-										.addContainerGap(14, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
@@ -2075,7 +2157,19 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 
 	public boolean isExamenValid() {
 		Util.mostrarError(lbError, null, true);
-		for (Resultado res : resultados) {
+		for (Resultado res : resultadosAmbos) {
+			if (res.getResValor1() != null) {
+				return true;
+			}
+		}
+
+		for (Resultado res : resultadosDerecho) {
+			if (res.getResValor1() != null) {
+				return true;
+			}
+		}
+
+		for (Resultado res : resultadosIzquierdo) {
 			if (res.getResValor1() != null) {
 				return true;
 			}
@@ -2087,9 +2181,19 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 	}
 
 	public void cargarResultados() {
-		for (int i = resultados.size() - 1; i >= 0; i--) {
-			if (resultados.get(i).getResValor1() == null)
-				resultados.remove(i);
+		for (int i = resultadosAmbos.size() - 1; i >= 0; i--) {
+			if (resultadosAmbos.get(i).getResValor1() == null)
+				resultadosAmbos.remove(i);
+		}
+
+		for (int i = resultadosDerecho.size() - 1; i >= 0; i--) {
+			if (resultadosDerecho.get(i).getResValor1() == null)
+				resultadosDerecho.remove(i);
+		}
+
+		for (int i = resultadosIzquierdo.size() - 1; i >= 0; i--) {
+			if (resultadosIzquierdo.get(i).getResValor1() == null)
+				resultadosIzquierdo.remove(i);
 		}
 	}
 
@@ -2107,53 +2211,45 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 			if (isExamenValid()) {
 				cargarResultados();
 
-				ResultadoDetalleExamen resultadoDetalleExamen = new ResultadoDetalleExamen();
-				resultadoDetalleExamen.setExamenDetalle(exaDetalle);
-				resultadoDetalleExamen.setPersonaExamen(personaExamen);
-				List lstResultados = resultadoDetalleExamenService
-						.getAll(resultadoDetalleExamen);
+				if (!resultadosAmbos.isEmpty()) {
 
-				if (lstResultados.size() < 1) {
-					resultadoDetalleExamenService
-							.insert(resultadoDetalleExamen);
-				} else if (lstResultados.size() == 1) {
-					resultadoDetalleExamen = (ResultadoDetalleExamen) lstResultados
-							.get(0);
+					ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
+							.getBizObject("examenDetalleService");
+					ExamenDetalle exaDetalle = new ExamenDetalle();
+					exaDetalle
+							.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO);
+					exaDetalle = (ExamenDetalle) examenDetalleService.getAll(
+							exaDetalle).get(0);
+
+					grabarExamen(exaDetalle, resultadosAmbos, chartAmbos);
 				}
 
-				String detalleResultado = "<HTML>";
-				Set setResultados = resultadoDetalleExamen.getResultados();
-				setResultados.clear();
-				for (int i = 0; i < this.resultados.size(); i++) {
-					this.resultados.get(i).setResultadoDetalleExamen(
-							resultadoDetalleExamen);
-					setResultados.add(this.resultados.get(i));
-					detalleResultado = detalleResultado
-							+ this.resultados.get(i).getResEtapaDesc() + "/ ";
-					int resto = i % 2;
-					if (resto != 0)
-						detalleResultado += "<BR>";
+				if (!resultadosDerecho.isEmpty()) {
 
+					ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
+							.getBizObject("examenDetalleService");
+					ExamenDetalle exaDetalle = new ExamenDetalle();
+					exaDetalle
+							.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_DER);
+					exaDetalle = (ExamenDetalle) examenDetalleService.getAll(
+							exaDetalle).get(0);
+
+					grabarExamen(exaDetalle, resultadosDerecho, chartDerecho);
 				}
 
-				String resultado = getResultado();
-				
-				if(resultado==null)
-					return;
+				if (!resultadosIzquierdo.isEmpty()) {
 
-				resultadoDetalleExamen.setRdeResultado(resultado);
-				resultadoDetalleExamen.setRdeDetalleResultado(detalleResultado
-						+ "</HTML>");
-				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
-						.getExadParametrosCorrecion());
-				
-				resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
-						.getExadParametrosCorrecion());
+					ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
+							.getBizObject("examenDetalleService");
+					ExamenDetalle exaDetalle = new ExamenDetalle();
+					exaDetalle
+							.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_IZQ);
+					exaDetalle = (ExamenDetalle) examenDetalleService.getAll(
+							exaDetalle).get(0);
 
-				resultadoDetalleExamen.setRdeImagen(chartToImageAsByteArray());
-				
-
-				resultadoDetalleExamenService.update(resultadoDetalleExamen);
+					grabarExamen(exaDetalle, resultadosIzquierdo,
+							chartIzquierdo);
+				}
 
 				btn.setForeground(Color.BLACK);
 				Util.setIcon(btn, Constantes.IMG_ACEPTAR_SMALL);
@@ -2165,15 +2261,68 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 			throw new RuntimeException(e);
 		}
 	}
+
+	public void grabarExamen(ExamenDetalle exaDetalle,
+			List<Resultado> resultados, JFreeChart chart) throws Exception {
+
+		ResultadoDetalleExamen resultadoDetalleExamen = new ResultadoDetalleExamen();
+		resultadoDetalleExamen.setExamenDetalle(exaDetalle);
+		resultadoDetalleExamen.setPersonaExamen(personaExamen);
+		List lstResultados = resultadoDetalleExamenService
+				.getAll(resultadoDetalleExamen);
+
+		if (lstResultados.size() < 1) {
+			resultadoDetalleExamenService.insert(resultadoDetalleExamen);
+		} else if (lstResultados.size() == 1) {
+			resultadoDetalleExamen = (ResultadoDetalleExamen) lstResultados
+					.get(0);
+		}
+
+		String detalleResultado = "<HTML>";
+		Set setResultados = resultadoDetalleExamen.getResultados();
+		setResultados.clear();
+		for (int i = 0; i < resultados.size(); i++) {
+			resultados.get(i).setResultadoDetalleExamen(resultadoDetalleExamen);
+			setResultados.add(resultados.get(i));
+			detalleResultado = detalleResultado
+					+ resultados.get(i).getResEtapaDesc() + "/ ";
+			int resto = i % 2;
+			if (resto != 0)
+				detalleResultado += "<BR>";
+
+		}
+
+		String resultado = getResultado(resultados);
+
+		if (resultado == null)
+			return;
+
+		resultadoDetalleExamen.setRdeResultado(resultado);
+		resultadoDetalleExamen.setRdeDetalleResultado(detalleResultado
+				+ "</HTML>");
+		resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
+				.getExadParametrosCorrecion());
+
+		resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle
+				.getExadParametrosCorrecion());
+
+		resultadoDetalleExamen.setRdeImagen(chartToImageAsByteArray(chart));
+
+		resultadoDetalleExamenService.update(resultadoDetalleExamen);
+	}
+
+	public byte[] chartToImageAsByteArray(JFreeChart chart) {
+		Component panel=panelGrafico.getComponent(0);
+		
 	
-	public byte[] chartToImageAsByteArray()
-	{
-		int width=600;
-		int height=160;
-		BufferedImage img = new BufferedImage(width ,height ,BufferedImage.TYPE_INT_RGB); 
-		Graphics2D g2 = img.createGraphics(); 
-		chart.draw(g2, new Rectangle2D.Double(0, 0, width, height)); 
-		g2.dispose();  
+		int width = panel.getSize().width;
+		int height = panel.getSize().height;
+
+		BufferedImage img = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2 = img.createGraphics();
+		chart.draw(g2, new Rectangle2D.Double(0, 0, width, height));
+		g2.dispose();
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 
 		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(os);
@@ -2186,10 +2335,10 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 		}
 	}
 
-	public String getResultado() {
-		String etapasFueraDePromedio="";
-		String resultado="";
-		
+	public String getResultado(List<Resultado> resultados) {
+		String etapasFueraDePromedio = "";
+		String resultado = "";
+
 		for (Resultado res : resultados) {
 
 			/*double diferencia = Math.abs(res.getResValor1()
@@ -2199,7 +2348,7 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 			{
 				etapasFueraDePromedio+=res.getResEtapa()+" Hz, ";
 			}*/
-			
+
 			/*double promedio = (res.getResValor1() + res.getResValor2()) / 2d;
 			promedio = Util.redondear(promedio);
 
@@ -2209,11 +2358,11 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 					.equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR)
 					&& promedio > 60)
 				resultado=Examen.RESULTADO_FUERA;*/
-			
+
 			if (res.getResValor1() > OBJETIVO || res.getResValor2() > OBJETIVO)
-				resultado=Examen.RESULTADO_FUERA;
+				resultado = Examen.RESULTADO_FUERA;
 		}
-		
+
 		/*if(!etapasFueraDePromedio.equals(""))
 		{
 			etapasFueraDePromedio=etapasFueraDePromedio.substring(0,etapasFueraDePromedio.length()-2);
@@ -2230,14 +2379,11 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 				return null;
 			}
 		}
-		else*/ if(resultado.equals(""))
-		{
-			return Examen.RESULTADO_DENTRO;	
-		}
-		else
-		{
+		else*/if (resultado.equals("")) {
+			return Examen.RESULTADO_DENTRO;
+		} else {
 			return Examen.RESULTADO_FUERA;
-		}		
+		}
 	}
 
 	@Override
@@ -2313,15 +2459,29 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 	private javax.swing.JRadioButton radioDerecho;
 	private javax.swing.JRadioButton radioIzquierdo;
 	// End of variables declaration//GEN-END:variables
+
 	private javax.swing.JButton btnCancelar;
 	private boolean cancel = false;
-	private List<Resultado> resultados = new ArrayList();
+	private List<Resultado> resultadosAmbos = new ArrayList();
+	private List<Resultado> resultadosDerecho = new ArrayList();
+	private List<Resultado> resultadosIzquierdo = new ArrayList();
+
 	private String seriesSubida = "Subida";
 	private String seriesBajada = "Bajada";
 	private String seriesObjetivo = "Objetivo";
-	private JFreeChart chart;
+
+	private JFreeChart chartAmbos;
+	private DefaultCategoryDataset datasetAmbos;
+
+	private JFreeChart chartDerecho;
+	private DefaultCategoryDataset datasetDerecho;
+
+	private JFreeChart chartIzquierdo;
+	private DefaultCategoryDataset datasetIzquierdo;
+
 	private int OBJETIVO = -1;
-	private DefaultCategoryDataset dataset;
-	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
+
+	private String configuracion = ContextManager
+			.getProperty("PARAMETROS.CONFIGURACION");
 
 }
