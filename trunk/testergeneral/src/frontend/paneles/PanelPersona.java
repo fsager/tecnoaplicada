@@ -75,8 +75,15 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	/** Creates new form PanelPersona */
 	public PanelPersona(PanelMenuPrincipal menu) {
 
-		PanelPanelDeControl.actualizaraParametrosArgentina();
-		PanelPanelDeControl.actualizaraParametrosPeru();
+		if(configuracion.equals("PERU"))
+		{
+			PanelPanelDeControl.actualizaraParametrosPeru();
+		}
+		else
+		{
+			PanelPanelDeControl.actualizaraParametrosArgentina();	
+		}
+		
 		
 		this.menu = menu;
 		initComponents();
@@ -3222,6 +3229,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	private ActionListener actVerExamenes;
 	private ActionListener actVerExamen;
 	private Usuario usr=((Usuario)Util.usuarioCommon);
+	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
 	// private SharedListSelectionHandler sharedListSelectionHandler=new
 	// SharedListSelectionHandler();
 }
