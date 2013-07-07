@@ -6,16 +6,12 @@
 
 package frontend.paneles;
 
-import java.awt.Color;
 import java.io.File;
 import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,8 +40,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
 			.getBizObject("propiedadService");
 	private ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
-	.getBizObject("examenDetalleService");
-
+			.getBizObject("examenDetalleService");
 
 	/** Creates new form PanelPanelDeControl */
 	public PanelPanelDeControl() {
@@ -265,9 +260,9 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 
 			Propiedad propiedadImagenFondoAplicacionP = propiedadService
 					.get("SISTEMA.IMAGEN.PRIMARIA");
-
-			panelColor.setBackground(new Color(Integer
-					.valueOf(propiedadImagenFondoAplicacionP.getPropValor())));
+//
+//			panelColor.setBackground(new Color(Integer
+//					.valueOf(propiedadImagenFondoAplicacionP.getPropValor())));
 
 			Propiedad propiedadImagenFondoAplicacion = propiedadService
 					.get("SISTEMA.IMAGEN.SECUNDARIA");
@@ -656,10 +651,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		jSpinnerBackupAutomaticoCadaXDias = new javax.swing.JSpinner();
 		jLabelBackupAutomaticoCadaXDias2 = new javax.swing.JLabel();
 		jButtonExportarBaseDeDatos = new javax.swing.JButton();
-		jPanelImagenFondo = new javax.swing.JPanel();
-		jLabelRutaOrigenFondoAplicacion = new javax.swing.JLabel();
-		panelColor = new javax.swing.JPanel();
-		jColorChooser = new javax.swing.JColorChooser();
 		jPanelBotones = new javax.swing.JPanel();
 		jButtonCancelar = new javax.swing.JButton();
 		jButtonGuardar = new javax.swing.JButton();
@@ -1026,7 +1017,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																				javax.swing.GroupLayout.PREFERRED_SIZE))
 														.addComponent(
 																jCheckBoxDocumentoPermitirSoloNumeros))
-										.addContainerGap(192, Short.MAX_VALUE)));
+										.addContainerGap(703, Short.MAX_VALUE)));
 		jPanelDocumentoLayout
 				.setVerticalGroup(jPanelDocumentoLayout
 						.createParallelGroup(
@@ -1168,7 +1159,8 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(
-												jCheckBoxExigirFirmaDigital)));
+												jCheckBoxExigirFirmaDigital)
+										.addContainerGap(19, Short.MAX_VALUE)));
 
 		jPanelBackup.setBorder(javax.swing.BorderFactory.createTitledBorder(
 				null, "Backup",
@@ -1388,64 +1380,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 												jButtonExportarBaseDeDatos)
 										.addContainerGap(26, Short.MAX_VALUE)));
 
-		jPanelImagenFondo.setBorder(javax.swing.BorderFactory
-				.createTitledBorder(null, "Fondo",
-						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-						javax.swing.border.TitledBorder.DEFAULT_POSITION,
-						new java.awt.Font("Segoe UI", 3, 12)));
-
-		jLabelRutaOrigenFondoAplicacion
-				.setText("Color de Fondo de la aplicaci\u00f3n:");
-
-		panelColor.setBorder(javax.swing.BorderFactory
-				.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-		javax.swing.GroupLayout panelColorLayout = new javax.swing.GroupLayout(
-				panelColor);
-		panelColor.setLayout(panelColorLayout);
-		panelColorLayout.setHorizontalGroup(panelColorLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 81, Short.MAX_VALUE));
-		panelColorLayout.setVerticalGroup(panelColorLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 21,
-				Short.MAX_VALUE));
-
-		javax.swing.GroupLayout jPanelImagenFondoLayout = new javax.swing.GroupLayout(
-				jPanelImagenFondo);
-		jPanelImagenFondo.setLayout(jPanelImagenFondoLayout);
-		jPanelImagenFondoLayout
-				.setHorizontalGroup(jPanelImagenFondoLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanelImagenFondoLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(
-												jLabelRutaOrigenFondoAplicacion)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												panelColor,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jColorChooser,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												623, Short.MAX_VALUE)
-										.addContainerGap()));
-		jPanelImagenFondoLayout.setVerticalGroup(jPanelImagenFondoLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(jLabelRutaOrigenFondoAplicacion).addComponent(
-						panelColor, javax.swing.GroupLayout.PREFERRED_SIZE,
-						javax.swing.GroupLayout.DEFAULT_SIZE,
-						javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(
-						jColorChooser, javax.swing.GroupLayout.PREFERRED_SIZE,
-						170, javax.swing.GroupLayout.PREFERRED_SIZE));
-
 		jButtonCancelar.setMnemonic('C');
 		jButtonCancelar.setText("Cancelar");
 		jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -1557,25 +1491,21 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																		.addGroup(
 																				layout
 																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING)
+																								javax.swing.GroupLayout.Alignment.LEADING)
 																						.addComponent(
-																								jPanelDocumento,
+																								jPanelCompletitudDatosUsuario,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								Short.MAX_VALUE)
 																						.addComponent(
 																								jPanelSeguridad,
+																								javax.swing.GroupLayout.Alignment.TRAILING,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								Short.MAX_VALUE)
 																						.addComponent(
 																								jPanelFotos,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								jPanelCompletitudDatosUsuario,
-																								javax.swing.GroupLayout.Alignment.LEADING,
+																								javax.swing.GroupLayout.Alignment.TRAILING,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								Short.MAX_VALUE))
@@ -1586,22 +1516,24 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																						.createParallelGroup(
 																								javax.swing.GroupLayout.Alignment.LEADING)
 																						.addComponent(
-																								jPanelBuscarActualizaciones,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								jPanel1,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								jPanelImagenFondo,
+																								jPanelDocumento,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								Short.MAX_VALUE)
 																						.addComponent(
 																								jPanelBackup,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								jPanel1,
+																								javax.swing.GroupLayout.Alignment.TRAILING,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								jPanelBuscarActualizaciones,
+																								javax.swing.GroupLayout.Alignment.TRAILING,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								Short.MAX_VALUE)))
@@ -1639,61 +1571,65 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
+																javax.swing.GroupLayout.Alignment.LEADING,
+																false)
 														.addGroup(
 																layout
 																		.createSequentialGroup()
-																		.addComponent(
-																				jPanelImagenFondo,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
 																				jPanel1,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)
 																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				jPanelBuscarActualizaciones,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				69,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				Short.MAX_VALUE)
 																		.addComponent(
-																				jPanelBotones,
+																				jPanelBuscarActualizaciones,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				69,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addComponent(
+																jPanelSeguridad,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addGroup(
+												layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING,
+																false)
+														.addGroup(
+																layout
+																		.createSequentialGroup()
+																		.addGap(
+																				13,
+																				13,
+																				13)
+																		.addComponent(
+																				jPanelDocumento,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				javax.swing.GroupLayout.PREFERRED_SIZE))
 														.addGroup(
 																layout
 																		.createSequentialGroup()
-																		.addComponent(
-																				jPanelSeguridad,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
 																				jPanelCompletitudDatosUsuario,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				jPanelDocumento,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
+																				Short.MAX_VALUE)))
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												jPanelBotones,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addGap(21, 21, 21)));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
@@ -1831,23 +1767,23 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	}
 
 	public void setColor() {
-		AbstractColorChooserPanel[] colorPane = jColorChooser
-				.getChooserPanels();
-		AbstractColorChooserPanel[] colorPane1 = new AbstractColorChooserPanel[1];
-		colorPane1[0] = colorPane[0];
+//		AbstractColorChooserPanel[] colorPane = jColorChooser
+//				.getChooserPanels();
+//		AbstractColorChooserPanel[] colorPane1 = new AbstractColorChooserPanel[1];
+//		colorPane1[0] = colorPane[0];
 
-		jColorChooser.setChooserPanels(colorPane1);
-		jColorChooser.getPreviewPanel().setVisible(false);
-		jColorChooser.getSelectionModel().addChangeListener(
-				new ChangeListener() {
-					public void stateChanged(ChangeEvent e) {
-						Color newColor = jColorChooser.getColor();
-						panelColor.setForeground(newColor);
-						panelColor.setBackground(newColor);
-
-					}
-
-				});
+//		jColorChooser.setChooserPanels(colorPane1);
+//		jColorChooser.getPreviewPanel().setVisible(false);
+//		jColorChooser.getSelectionModel().addChangeListener(
+//				new ChangeListener() {
+//					public void stateChanged(ChangeEvent e) {
+//						Color newColor = jColorChooser.getColor();
+//						panelColor.setForeground(newColor);
+//						panelColor.setBackground(newColor);
+//
+//					}
+//
+//				});
 	}
 
 	private void jButtonExportarBaseDeDatosActionPerformed(
@@ -1934,19 +1870,17 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		guardarValoresPanelSeguridad();
 		guardarValoresPanelBackup();
 		guardarValoresPanelImagenDeFondo();
-		guardarValoresPanelParametros();	
-
+		guardarValoresPanelParametros();
 
 		JOptionPaneTesterGral.showInternalMessageDialog(
 				"Los cambios se han guardado correctamente",
 				Constantes.MENSAJE_GUARDADO_TIT,
 				JOptionPane.INFORMATION_MESSAGE);
 	}
-	
+
 	private void guardarValoresPanelParametros() {
 
-
-		Propiedad propiedad= new Propiedad();
+		Propiedad propiedad = new Propiedad();
 		propiedad.setPropClave("PARAMETROS.CONFIGURACION");
 
 		if (radioArgentina.isSelected()) {
@@ -1954,7 +1888,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 			propiedad.setPropValor("ARGENTINA");
 			actualizaraParametrosArgentina();
 
-		} else if(radioPeru.isSelected()) {
+		} else if (radioPeru.isSelected()) {
 			propiedad.setPropValor("PERU");
 			actualizaraParametrosPeru();
 		}
@@ -1966,425 +1900,418 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		}
 
 	}
-	
-	public static void actualizaraParametrosArgentina()
-	{
-		try
-		{
+
+	public static void actualizaraParametrosArgentina() {
+		try {
 			PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
-			.getBizObject("propiedadService");
+					.getBizObject("propiedadService");
 			ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
-			.getBizObject("examenDetalleService");
-			
+					.getBizObject("examenDetalleService");
+
 			//PUNTEO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//La duración de esta prueba debe ser de 60 segundos.
-			Propiedad propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.EXAMEN.DURACION");
+			Propiedad propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.EXAMEN.DURACION");
 			propiedad.setPropValor("60000");
 			propiedadService.update(propiedad);
-			
+
 			//Este parámetro debe corregirse para permitir hasta 10 errores como máximo.
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA");
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA");
 			propiedad.setPropValor("10");
 			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PROFECIONAL");
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PROFECIONAL");
 			propiedad.setPropValor("850");
 			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PROFECIONAL");
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PROFECIONAL");
 			propiedad.setPropValor("420");
 			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PARTICULAR");
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PARTICULAR");
 			propiedad.setPropValor("970");
 			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PARTICULAR");
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PARTICULAR");
 			propiedad.setPropValor("540");
 			propiedadService.update(propiedad);
-			
-			ExamenDetalle example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA);
-			List <ExamenDetalle>examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="Errores permitidos menor o igual a 10.";
-				ExamenDetalle coordinacionVM=examanes.get(0);
+
+			ExamenDetalle example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA);
+			List<ExamenDetalle> examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "Errores permitidos menor o igual a 10.";
+				ExamenDetalle coordinacionVM = examanes.get(0);
 				coordinacionVM.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(coordinacionVM);				
+				examenDetalleService.update(coordinacionVM);
 			}
-			
+
 			//PALANCA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//tolere hasta 14 errores como máximo.
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.PALANCA.ERRORES.PUNTOS.SIN.ACTIVAR.HASTA");
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.PALANCA.ERRORES.PUNTOS.SIN.ACTIVAR.HASTA");
 			propiedad.setPropValor("14");
 			propiedadService.update(propiedad);
-			
+
 			//El tiempo de permanencia en error (tiempo fuera del camino) es de 18 segundos.
-			propiedad= new Propiedad();
+			propiedad = new Propiedad();
 			propiedad.setPropClave("EXAMEN.PALANCA.ERRORES.TIEMPO");
 			propiedad.setPropValor("18000");
 			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PROFECIONAL");
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PROFECIONAL");
 			propiedad.setPropValor("80000");
 			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PARTICULAR");
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PARTICULAR");
 			propiedad.setPropValor("100000");
 			propiedadService.update(propiedad);
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Tiempo fuera del circuito menor o igual a 1800 Centésimas de segundos.</li> "+
-												"<li>Puntos sin activar menor o igual a 14.</li> "+
-											"</ul>";
-				ExamenDetalle coordinacionFina=examanes.get(0);
-				coordinacionFina.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(coordinacionFina);				
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Tiempo fuera del circuito menor o igual a 1800 Centésimas de segundos.</li> "
+						+ "<li>Puntos sin activar menor o igual a 14.</li> "
+						+ "</ul>";
+				ExamenDetalle coordinacionFina = examanes.get(0);
+				coordinacionFina
+						.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(coordinacionFina);
 			}
-			
+
 			////////VISION
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional: 0.8 como mínimo (línea 6).</li> "+
-												"<li>Particular: 0.7 como mínimo (línea 5).</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional: 0.8 como mínimo (línea 6).</li> "
+						+ "<li>Particular: 0.7 como mínimo (línea 5).</li> "
+						+ "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional: 0.8 como mínimo (línea 6).</li> "+
-												"<li>Particular: 0.7 como mínimo (línea 5).</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional: 0.8 como mínimo (línea 6).</li> "
+						+ "<li>Particular: 0.7 como mínimo (línea 5).</li> "
+						+ "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
-			}			
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_VISION_NOCTURNA);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="80% de las imágenes reconocidas.";
-				ExamenDetalle detalle=examanes.get(0);
-				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_ENCANDILAMIENTO);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="Ver la imagen.";
-				ExamenDetalle detalle=examanes.get(0);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_VISION_NOCTURNA);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "80% de las imágenes reconocidas.";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="Ver la imagen antes de los 5 segundos.";
-				ExamenDetalle detalle=examanes.get(0);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_ENCANDILAMIENTO);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "Ver la imagen.";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
-			}	
-			
-			
+				examenDetalleService.update(detalle);
+			}
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "Ver la imagen antes de los 5 segundos.";
+				ExamenDetalle detalle = examanes.get(0);
+				detalle.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(detalle);
+			}
+
 			//AUDIO
-			example=new ExamenDetalle();
+			example = new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional:Como mínimo 50 Db.</li> "+
-												"<li>Particular:Como mínimo 60 Db.</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional:Como mínimo 50 Db.</li> "
+						+ "<li>Particular:Como mínimo 60 Db.</li> " + "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
+
+			example = new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_DER);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional:Como mínimo 50 Db.</li> "+
-												"<li>Particular:Como mínimo 60 Db.</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional:Como mínimo 50 Db.</li> "
+						+ "<li>Particular:Como mínimo 60 Db.</li> " + "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
+
+			example = new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_IZQ);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional:Como mínimo 50 Db.</li> "+
-												"<li>Particular:Como mínimo 60 Db.</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional:Como mínimo 50 Db.</li> "
+						+ "<li>Particular:Como mínimo 60 Db.</li> " + "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public static void actualizaraParametrosPeru()
-	{
 
-		try
-		{
+	public static void actualizaraParametrosPeru() {
+
+		try {
 			PropiedadDefinition propiedadService = (PropiedadDefinition) ContextManager
-			.getBizObject("propiedadService");
-			
+					.getBizObject("propiedadService");
+
 			ExamenDetalleDefinition examenDetalleService = (ExamenDetalleDefinition) ContextManager
-			.getBizObject("examenDetalleService");
-			
+					.getBizObject("examenDetalleService");
+
 			//PUNTEO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//La duración de esta prueba debe ser de 30 segundos.
-			Propiedad propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.EXAMEN.DURACION");
+			Propiedad propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.EXAMEN.DURACION");
 			propiedad.setPropValor("30000");
 			propiedadService.update(propiedad);
-			
+
 			//Este parámetro debe corregirse para permitir hasta 23 errores como máximo.
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA");
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ERRORES.PERMITIDOS.HASTA");
 			propiedad.setPropValor("23");
 			propiedadService.update(propiedad);
-			
-			
+
 			//Se requiere una velocidad equivalente a 30 revoluciones por minuto (es decir, una vuelta completa en 2 segundos). 
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PROFECIONAL");
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PROFECIONAL");
 			propiedad.setPropValor("400");
 			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PROFECIONAL");
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PROFECIONAL");
 			propiedad.setPropValor("100");
 			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PARTICULAR");
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.TIEMPO.LUZ.PARTICULAR");
 			propiedad.setPropValor("400");
 			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PARTICULAR");
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.COORDINACION.VISOMOTORA.ENTRE.TIEMPO.PARTICULAR");
 			propiedad.setPropValor("100");
 			propiedadService.update(propiedad);
-			
-			ExamenDetalle example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA);
-			List <ExamenDetalle>examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Errores permitidos menor o igual a 23.</li> "+
-												"<li>Aciertos: mayor o igual a 24.</li> "+
-												"<li>Por lo menos 4 segundos de permanencia en aciertos.</li> "+
-											"</ul>";	
-				ExamenDetalle coordinacionVM=examanes.get(0);
+
+			ExamenDetalle example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_VISOMOTORA);
+			List<ExamenDetalle> examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Errores permitidos menor o igual a 23.</li> "
+						+ "<li>Aciertos: mayor o igual a 24.</li> "
+						+ "<li>Por lo menos 4 segundos de permanencia en aciertos.</li> "
+						+ "</ul>";
+				ExamenDetalle coordinacionVM = examanes.get(0);
 				coordinacionVM.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(coordinacionVM);				
+				examenDetalleService.update(coordinacionVM);
 			}
-			
+
 			//PALANCA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//tolere hasta 12 errores como máximo.
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.PALANCA.ERRORES.PUNTOS.SIN.ACTIVAR.HASTA");
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.PALANCA.ERRORES.PUNTOS.SIN.ACTIVAR.HASTA");
 			propiedad.setPropValor("12");
 			propiedadService.update(propiedad);
-			
+
 			//El tiempo de permanencia en error (tiempo fuera del camino) es de 5 segundos.
-			propiedad= new Propiedad();
+			propiedad = new Propiedad();
 			propiedad.setPropClave("EXAMEN.PALANCA.ERRORES.TIEMPO");
 			propiedad.setPropValor("5000");
 			propiedadService.update(propiedad);
-			
-			//El tiempo límite de la prueba debe ser 60 segundos.
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PROFECIONAL");
-			propiedad.setPropValor("60000");
-			propiedadService.update(propiedad);
-			
-			propiedad= new Propiedad();
-			propiedad.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PARTICULAR");
-			propiedad.setPropValor("60000");
-			propiedadService.update(propiedad);
-			
 
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Tiempo fuera del circuito menor o igual a 500 Centésimas de segundos.</li> "+
-												"<li>Puntos sin activar menor o igual a 12.</li> "+
-											"</ul>";
-				ExamenDetalle coordinacionFina=examanes.get(0);
-				coordinacionFina.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(coordinacionFina);				
+			//El tiempo límite de la prueba debe ser 60 segundos.
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PROFECIONAL");
+			propiedad.setPropValor("60000");
+			propiedadService.update(propiedad);
+
+			propiedad = new Propiedad();
+			propiedad
+					.setPropClave("EXAMEN.PALANCA.TIEMPO.DURACION.HASTA.PARTICULAR");
+			propiedad.setPropValor("60000");
+			propiedadService.update(propiedad);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_COOR_BIMANUAL_FINA);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Tiempo fuera del circuito menor o igual a 500 Centésimas de segundos.</li> "
+						+ "<li>Puntos sin activar menor o igual a 12.</li> "
+						+ "</ul>";
+				ExamenDetalle coordinacionFina = examanes.get(0);
+				coordinacionFina
+						.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(coordinacionFina);
 			}
-			
+
 			//VISIO
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional: 20/20 como mínimo.</li> "+
-												"<li>Particular: 20/30 como mínimo.</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_CERCANA);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional: 20/20 como mínimo.</li> "
+						+ "<li>Particular: 20/30 como mínimo.</li> " + "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional: 20/20 como mínimo.</li> "+
-												"<li>Particular: 20/30 como mínimo.</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AGUDEZA_VISUAL_LEJANA);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional: 20/20 como mínimo.</li> "
+						+ "<li>Particular: 20/30 como mínimo.</li> " + "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_VISION_NOCTURNA);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="100% de las imágenes reconocidas (Iluminación a 35 cd).";
-				ExamenDetalle detalle=examanes.get(0);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_VISION_NOCTURNA);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "100% de las imágenes reconocidas (Iluminación a 35 cd).";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_ENCANDILAMIENTO);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="Ver la imagen (Iluminación a 45 cd).";
-				ExamenDetalle detalle=examanes.get(0);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_ENCANDILAMIENTO);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "Ver la imagen (Iluminación a 45 cd).";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
-			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="Ver la imagen antes de los 5 segundos (Iluminación a 35 cd).";
-				ExamenDetalle detalle=examanes.get(0);
+
+			example = new ExamenDetalle();
+			example
+					.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REC_ENCANDILAMIENTO);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "Ver la imagen antes de los 5 segundos (Iluminación a 35 cd).";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
+
 			//AUDIO
-			
-			example=new ExamenDetalle();
+
+			example = new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional:Como mínimo 40 Db.</li> "+
-												"<li>Particular:Como mínimo 80 Db.</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional:Como mínimo 40 Db.</li> "
+						+ "<li>Particular:Como mínimo 80 Db.</li> " + "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
+
+			example = new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_DER);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional:Como mínimo 40 Db.</li> "+
-												"<li>Particular:Como mínimo 80 Db.</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional:Como mínimo 40 Db.</li> "
+						+ "<li>Particular:Como mínimo 80 Db.</li> " + "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-			example=new ExamenDetalle();
+
+			example = new ExamenDetalle();
 			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_IZQ);
-			examanes=examenDetalleService.getAll(example);
-			if(examanes.size()>0)
-			{
-				String parametroCorreccion="<ul> "+
-												"<li>Profesional:Como mínimo 40 Db.</li> "+
-												"<li>Particular:Como mínimo 80 Db.</li> "+
-											"</ul>";
-				ExamenDetalle detalle=examanes.get(0);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {
+				String parametroCorreccion = "<ul> "
+						+ "<li>Profesional:Como mínimo 40 Db.</li> "
+						+ "<li>Particular:Como mínimo 80 Db.</li> " + "</ul>";
+				ExamenDetalle detalle = examanes.get(0);
 				detalle.setExadParametrosCorrecion(parametroCorreccion);
-				examenDetalleService.update(detalle);				
+				examenDetalleService.update(detalle);
 			}
-			
-					
-		}
-		catch(Exception e)
-		{
+
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
-		
+
 	}
 
 	private void jButtonExaminarRutaOrigenFotosActionPerformed(
@@ -2423,13 +2350,11 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JCheckBox jCheckBoxGuardarLogDeActividades;
 	private javax.swing.JCheckBox jCheckBoxHacerBackupSecundario;
 	private javax.swing.JCheckBox jCheckBoxMostrarResultadosAExaminado;
-	private javax.swing.JColorChooser jColorChooser;
 	private javax.swing.JLabel jLabelBackupAutomaticoCadaXDias2;
 	private javax.swing.JLabel jLabelBuscarActualizacionesAlInicio;
 	private javax.swing.JLabel jLabelGuardarLogXDias;
 	private javax.swing.JLabel jLabelGuardarLogXDias2;
 	private javax.swing.JLabel jLabelMostrarFotos;
-	private javax.swing.JLabel jLabelRutaOrigenFondoAplicacion;
 	private javax.swing.JLabel jLabelRutaOrigenFotos;
 	private javax.swing.JLabel jLabelTamanoFotos2;
 	private javax.swing.JLabel jLabelUbicacionBackupPrincipal;
@@ -2440,7 +2365,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JPanel jPanelCompletitudDatosUsuario;
 	private javax.swing.JPanel jPanelDocumento;
 	private javax.swing.JPanel jPanelFotos;
-	private javax.swing.JPanel jPanelImagenFondo;
 	private javax.swing.JPanel jPanelOrigenDeFotos;
 	private javax.swing.JPanel jPanelSeguridad;
 	private javax.swing.JRadioButton jRadioButtonBuscarActualizacionesNo;
@@ -2454,7 +2378,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JTextField jTextFieldRutaOrigenFotos;
 	private javax.swing.JTextField jTextFieldRutaUbicacionBackupPrincipal;
 	private javax.swing.JTextField jTextFieldRutaUbicacionBackupSecundario;
-	private javax.swing.JPanel panelColor;
 	private javax.swing.JRadioButton radioArgentina;
 	private javax.swing.JRadioButton radioPeru;
 	// End of variables declaration//GEN-END:variables
