@@ -86,7 +86,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 			Propiedad propiedadTamanoFotoRedimensionada = propiedadService
 					.get("SISTEMA.IMAGENES.PORCENTAJE.REDUCCION");
 			Propiedad propiedadTamanoFirmaRedimensionada = propiedadService
-			.get("SISTEMA.FIRMAS.PORCENTAJE.REDUCCION");
+					.get("SISTEMA.FIRMAS.PORCENTAJE.REDUCCION");
 			Propiedad propiedadDispositivoOrigenFoto = propiedadService
 					.get("SISTEMA.ORIGEN.FOTOS");
 			Propiedad propiedadRutaOrigenFoto = propiedadService
@@ -95,7 +95,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 			String valorPropiedadTamanoFotoRedimensionada = propiedadTamanoFotoRedimensionada
 					.getPropValor();
 			String valorPropiedadTamanoFirmaRedimensionada = propiedadTamanoFirmaRedimensionada
-			.getPropValor();
+					.getPropValor();
 			String valorPropiedadDispositivoOrigenFoto = propiedadDispositivoOrigenFoto
 					.getPropValor();
 			String valorPropiedadRutaOrigenFoto = propiedadRutaOrigenFoto
@@ -262,10 +262,10 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 					.get("SISTEMA.IMAGEN.PRIMARIA");
 
 			if (!propiedadImagenFondoAplicacion.getPropValor().isEmpty()) {
-				panelColor
-						.setBackground(new Color(Integer
-								.valueOf(propiedadImagenFondoAplicacion
-										.getPropValor())));
+//				panelColor
+//						.setBackground(new Color(Integer
+//								.valueOf(propiedadImagenFondoAplicacion
+//										.getPropValor())));
 			}
 
 		} catch (Exception ex) {
@@ -619,15 +619,15 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	}
 
 	private void guardarValoresPanelImagenDeFondo() {
-		Propiedad propiedadImagenFondoAplicacion = new Propiedad();
-		propiedadImagenFondoAplicacion.setPropClave("SISTEMA.IMAGEN.PRIMARIA");
-		propiedadImagenFondoAplicacion.setPropValor(""
-				+ panelColor.getBackground().getRGB());
-
-		ContextManager.updatePropiedad(propiedadImagenFondoAplicacion);
-		Util.frameContenedor.getContentPane().setBackground(
-				panelColor.getBackground());
-		Util.dp.repaint();
+//		Propiedad propiedadImagenFondoAplicacion = new Propiedad();
+//		propiedadImagenFondoAplicacion.setPropClave("SISTEMA.IMAGEN.PRIMARIA");
+//		propiedadImagenFondoAplicacion.setPropValor(""
+//				+ panelColor.getBackground().getRGB());
+//
+//		ContextManager.updatePropiedad(propiedadImagenFondoAplicacion);
+//		Util.frameContenedor.getContentPane().setBackground(
+//				panelColor.getBackground());
+//		Util.dp.repaint();
 
 	}
 
@@ -700,10 +700,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 		jLabelBackupAutomaticoCadaXDias2 = new javax.swing.JLabel();
 		jButtonExportarBaseDeDatos = new javax.swing.JButton();
 		jButtonImportarDBAccess = new javax.swing.JButton();
-		jPanelImagenFondo = new javax.swing.JPanel();
-		jLabelRutaOrigenFondoAplicacion = new javax.swing.JLabel();
-		panelColor = new javax.swing.JPanel();
-		jColorChooser = new javax.swing.JColorChooser();
 		jPanelCompletitudDatosUsuario = new javax.swing.JPanel();
 		jCheckBoxExigirFotografia = new javax.swing.JCheckBox();
 		jCheckBoxExigirFirmaDigital = new javax.swing.JCheckBox();
@@ -1087,7 +1083,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																				jRadioButtonBuscarActualizacionesNo))
 														.addComponent(
 																jButtonBuscarActualizaciones))
-										.addContainerGap(177, Short.MAX_VALUE)));
+										.addContainerGap(159, Short.MAX_VALUE)));
 		jPanelBuscarActualizacionesLayout
 				.setVerticalGroup(jPanelBuscarActualizacionesLayout
 						.createParallelGroup(
@@ -1360,95 +1356,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																jButtonImportarDBAccess))
 										.addContainerGap(15, Short.MAX_VALUE)));
 
-		jPanelImagenFondo.setBorder(javax.swing.BorderFactory
-				.createTitledBorder(null, "Fondo",
-						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-						javax.swing.border.TitledBorder.DEFAULT_POSITION,
-						new java.awt.Font("Segoe UI", 3, 12)));
-
-		jLabelRutaOrigenFondoAplicacion
-				.setText("Color de Fondo de la aplicaci\u00f3n:");
-
-		panelColor.setBorder(javax.swing.BorderFactory
-				.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-		javax.swing.GroupLayout panelColorLayout = new javax.swing.GroupLayout(
-				panelColor);
-		panelColor.setLayout(panelColorLayout);
-		panelColorLayout.setHorizontalGroup(panelColorLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 59, Short.MAX_VALUE));
-		panelColorLayout.setVerticalGroup(panelColorLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 21,
-				Short.MAX_VALUE));
-
-		javax.swing.GroupLayout jPanelImagenFondoLayout = new javax.swing.GroupLayout(
-				jPanelImagenFondo);
-		jPanelImagenFondo.setLayout(jPanelImagenFondoLayout);
-		jPanelImagenFondoLayout
-				.setHorizontalGroup(jPanelImagenFondoLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanelImagenFondoLayout
-										.createSequentialGroup()
-										.addGroup(
-												jPanelImagenFondoLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																jPanelImagenFondoLayout
-																		.createSequentialGroup()
-																		.addGap(
-																				7,
-																				7,
-																				7)
-																		.addComponent(
-																				jLabelRutaOrigenFondoAplicacion)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				panelColor,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																jPanelImagenFondoLayout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				jColorChooser,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				461,
-																				Short.MAX_VALUE)))
-										.addContainerGap()));
-		jPanelImagenFondoLayout
-				.setVerticalGroup(jPanelImagenFondoLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanelImagenFondoLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												jPanelImagenFondoLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																panelColor,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																jLabelRutaOrigenFondoAplicacion))
-										.addGap(18, 18, 18)
-										.addComponent(
-												jColorChooser,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												229,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(101, Short.MAX_VALUE)));
-
 		jPanelCompletitudDatosUsuario.setBorder(javax.swing.BorderFactory
 				.createTitledBorder(null, "Completitud de datos de la persona",
 						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -1541,7 +1448,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																		.addComponent(
 																				jTextFieldEmailCentroImpresion,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				323,
+																				305,
 																				Short.MAX_VALUE))
 														.addComponent(
 																jCheckBoxValidarRequisitos))
@@ -1679,75 +1586,81 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING,
 																false)
-														.addComponent(
-																jPanelBuscarActualizaciones,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																jPanelImpresionLicencias,
-																0,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																lbSinResultados,
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																jPanelFotos,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																jPanelSeguridad,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																jPanelDocumento,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																jPanelCompletitudDatosUsuario,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(
-												layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
-														.addGroup(
-																layout
-																		.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.TRAILING,
-																				false)
-																		.addComponent(
-																				jPanelImagenFondo,
-																				javax.swing.GroupLayout.Alignment.LEADING,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				jPanelBackup,
-																				javax.swing.GroupLayout.Alignment.LEADING,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE))
 														.addGroup(
 																layout
 																		.createSequentialGroup()
+																		.addGroup(
+																				layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING,
+																								false)
+																						.addComponent(
+																								jPanelFotos,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								jPanelSeguridad,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								jPanelDocumento,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								jPanelCompletitudDatosUsuario,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE))
+																		.addGroup(
+																				layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING,
+																								false)
+																						.addComponent(
+																								jPanelBuscarActualizaciones,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								jPanelImpresionLicencias,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addGroup(
+																								layout
+																										.createSequentialGroup()
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addComponent(
+																												jPanelBackup,
+																												javax.swing.GroupLayout.PREFERRED_SIZE,
+																												javax.swing.GroupLayout.DEFAULT_SIZE,
+																												javax.swing.GroupLayout.PREFERRED_SIZE))))
+														.addGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				lbSinResultados,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				794,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
 																		.addComponent(
 																				jButtonGuardar)
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
 																				jButtonCancelar)))
-										.addContainerGap(12, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 		layout
 				.setVerticalGroup(layout
 						.createParallelGroup(
@@ -1796,9 +1709,10 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																				jPanelDocumento,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																layout
+																		.createSequentialGroup()
 																		.addComponent(
 																				jPanelImpresionLicencias,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
@@ -1810,28 +1724,27 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 																				jPanelBuscarActualizaciones,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																jPanelImagenFondo,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
+																				javax.swing.GroupLayout.PREFERRED_SIZE)))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																layout
+																		.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.BASELINE)
+																		.addComponent(
+																				jButtonGuardar)
+																		.addComponent(
+																				jButtonCancelar))
 														.addComponent(
 																lbSinResultados,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																24,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																jButtonGuardar)
-														.addComponent(
-																jButtonCancelar))
-										.addGap(14, 14, 14)));
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addGap(35, 35, 35)));
 	}// </editor-fold>
 	//GEN-END:initComponents
 
@@ -2038,23 +1951,23 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	}
 
 	public void setColor() {
-		AbstractColorChooserPanel[] colorPane = jColorChooser
-				.getChooserPanels();
-		AbstractColorChooserPanel[] colorPane1 = new AbstractColorChooserPanel[1];
-		colorPane1[0] = colorPane[0];
-
-		jColorChooser.setChooserPanels(colorPane1);
-		jColorChooser.getPreviewPanel().setVisible(false);
-		jColorChooser.getSelectionModel().addChangeListener(
-				new ChangeListener() {
-					public void stateChanged(ChangeEvent e) {
-						Color newColor = jColorChooser.getColor();
-						panelColor.setForeground(newColor);
-						panelColor.setBackground(newColor);
-
-					}
-
-				});
+//		AbstractColorChooserPanel[] colorPane = jColorChooser
+//				.getChooserPanels();
+//		AbstractColorChooserPanel[] colorPane1 = new AbstractColorChooserPanel[1];
+//		colorPane1[0] = colorPane[0];
+//
+//		jColorChooser.setChooserPanels(colorPane1);
+//		jColorChooser.getPreviewPanel().setVisible(false);
+//		jColorChooser.getSelectionModel().addChangeListener(
+//				new ChangeListener() {
+//					public void stateChanged(ChangeEvent e) {
+//						Color newColor = jColorChooser.getColor();
+//						panelColor.setForeground(newColor);
+//						panelColor.setBackground(newColor);
+//
+//					}
+//
+//				});
 	}
 
 	private void jButtonExportarBaseDeDatosActionPerformed(
@@ -2199,7 +2112,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JCheckBox jCheckBoxGuardarLogDeActividades;
 	private javax.swing.JCheckBox jCheckBoxHacerBackupSecundario;
 	private javax.swing.JCheckBox jCheckBoxValidarRequisitos;
-	private javax.swing.JColorChooser jColorChooser;
 	private javax.swing.JLabel jLabel1jLabelTamanoFotos3;
 	private javax.swing.JLabel jLabelBackupAutomaticoCadaXDias2;
 	private javax.swing.JLabel jLabelBuscarActualizacionesAlInicio;
@@ -2207,7 +2119,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JLabel jLabelGuardarLogXDias;
 	private javax.swing.JLabel jLabelGuardarLogXDias2;
 	private javax.swing.JLabel jLabelMostrarFotos;
-	private javax.swing.JLabel jLabelRutaOrigenFondoAplicacion;
 	private javax.swing.JLabel jLabelRutaOrigenFotos;
 	private javax.swing.JLabel jLabelTamanoFotos2;
 	private javax.swing.JLabel jLabelUbicacionBackupPrincipal;
@@ -2216,7 +2127,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JPanel jPanelCompletitudDatosUsuario;
 	private javax.swing.JPanel jPanelDocumento;
 	private javax.swing.JPanel jPanelFotos;
-	private javax.swing.JPanel jPanelImagenFondo;
 	private javax.swing.JPanel jPanelImpresionLicencias;
 	private javax.swing.JPanel jPanelOrigenDeFotos;
 	private javax.swing.JPanel jPanelSeguridad;
@@ -2234,7 +2144,6 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	private javax.swing.JTextField jTextFieldRutaUbicacionBackupPrincipal;
 	private javax.swing.JTextField jTextFieldRutaUbicacionBackupSecundario;
 	private javax.swing.JLabel lbSinResultados;
-	private javax.swing.JPanel panelColor;
 	// End of variables declaration//GEN-END:variables
 
 }
