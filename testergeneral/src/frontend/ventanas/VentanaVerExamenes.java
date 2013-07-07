@@ -19,6 +19,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import net.sf.jasperreports.engine.JasperRunManager;
 import testerGeneral.business.ContextManager;
 import testerGeneral.comparetors.DateComparator;
@@ -26,6 +29,7 @@ import testerGeneral.domain.Constantes;
 import testerGeneral.domain.Examen;
 import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaExamen;
+import testerGeneral.exceptions.MyExceptionHandler;
 import testerGeneral.service.PersonaExamenDefinition;
 import testerGeneral.service.PersonaRestricionDefinition;
 import testerGeneral.service.ResultadoDetalleExamenDefinition;
@@ -39,6 +43,7 @@ import frontend.utils.Util;
  */
 public class VentanaVerExamenes extends JInternalFrameTesterGral {
 
+	private static final Log log = LogFactory.getLog(VentanaVerExamenes.class);
 	/** Creates new form VentanaVerExamenes */
 	public VentanaVerExamenes(Persona per) {
 		super("Ver examenes", false, true, false, false);
@@ -274,6 +279,7 @@ public class VentanaVerExamenes extends JInternalFrameTesterGral {
 		
 		}
 		catch (Exception e) {
+			log.error(e.getMessage(),e);
 			JOptionPaneTesterGral.showInternalMessageDialog(this,e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
 		}
 	}
