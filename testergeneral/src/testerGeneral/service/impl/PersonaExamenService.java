@@ -47,4 +47,8 @@ public class PersonaExamenService implements PersonaExamenDefinition {
 	public Long getCantidadExamenes(Date lastDate) throws Exception {
 		return biz.getCantidadExamenes(lastDate);
 	}
+	
+    public List getAll(PersonaExamen p_example,Date desde, Date hasta) throws Exception {
+    	return biz.getAll(p_example,desde, hasta);
+    }
 }

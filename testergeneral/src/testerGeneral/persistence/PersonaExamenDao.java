@@ -1,5 +1,6 @@
 package testerGeneral.persistence;
 import java.util.Date;
+import java.util.List;
 
 import testerGeneral.domain.PersonaExamen;
 
@@ -49,4 +50,5 @@ public interface PersonaExamenDao {
 	
 	public abstract Long getCantidadExamenes(Date lastDate) throws Exception;
 
+    public abstract List getAll(PersonaExamen p_example,Date desde, Date hasta) throws Exception;
 }

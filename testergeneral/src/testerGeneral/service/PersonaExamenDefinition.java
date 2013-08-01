@@ -1,5 +1,6 @@
 package testerGeneral.service;
 import java.util.Date;
+import java.util.List;
 
 import testerGeneral.domain.PersonaExamen;
 
@@ -49,4 +50,5 @@ public interface PersonaExamenDefinition {
 	
 	public Long getCantidadExamenes(Date lastDate) throws Exception;
 
+    public List getAll(PersonaExamen p_example,Date desde, Date hasta) throws Exception ;
 }

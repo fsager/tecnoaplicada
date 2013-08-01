@@ -90,19 +90,71 @@ public class PersonaExamenHome extends DAOObject implements PersonaExamenDao {
             p_example.setPexaAdj(null);   
             cri.add(Example.create(p_example).enableLike().ignoreCase());
             
-            if(p_example.getPersona()!=null)
+            if(p_example.getPersona()!=null  && p_example.getPersona().getPerId()!=null)
             	cri.createCriteria("persona").add(Restrictions.idEq(p_example.getPersona().getPerId()));
-            if(p_example.getExamen()!=null)
+            else if(p_example.getPersona()!=null)
+            {
+             	 p_example.getPersona().setPerFirma(null);
+            	 p_example.getPersona().setPerFoto(null);     
+                 
+            	 cri.createCriteria("persona").add(Example.create(p_example.getPersona()).enableLike().ignoreCase());
+            }
+            if(p_example.getExamen()!=null  && p_example.getExamen().getExaId()!=null)
             	cri.createCriteria("examen").add(Restrictions.idEq(p_example.getExamen().getExaId()));
 
             cri.addOrder(Order.desc("pexaFecha"));
             cri.addOrder(Order.asc("examen"));
             List results = cri.list();
             log.debug("find by example successful, result size: " + results.size());
-            return results;
+            return results;            
+          
         }
         catch (RuntimeException re) {
         	//log.error("find by example failed", re);
+            throw re;
+        }
+    }
+    
+    public List getAll(PersonaExamen p_example,Date desde, Date hasta) throws Exception {
+    	
+        log.debug("finding PersonaExamen instance by example");
+        try {
+            Criteria cri = getSession().createCriteria(PersonaExamen.class);
+            p_example.setPexaAdj(null);   
+            
+            cri.add(Example.create(p_example).enableLike().ignoreCase());
+            if(p_example.getPersona()!=null && p_example.getPersona().getPerId()!=null)
+            	cri.createCriteria("persona").add(Restrictions.idEq(p_example.getPersona().getPerId()));
+            else if(p_example.getPersona()!=null)
+            {
+            	 p_example.getPersona().setPerFirma(null);
+            	 p_example.getPersona().setPerFoto(null);     
+                 
+            	 cri.createCriteria("persona").add(Example.create(p_example.getPersona()).enableLike().ignoreCase());
+            }
+            
+            
+            if(desde!=null)
+            {
+            	cri.add(Restrictions.ge("pexaFecha",desde));
+            }
+            if(hasta!=null)
+            {
+            	cri.add(Restrictions.le("pexaFecha",hasta));
+            }
+
+            
+            cri.addOrder(Order.desc("pexaFecha"));
+            cri.addOrder(Order.asc("examen"));
+            
+            //cri.setMaxResults(1000);
+            
+            List results = cri.list();
+            log.debug("find by example successful, result size: " + results.size());
+            return results;
+        }
+        catch (RuntimeException re) {
+            //log.error("find by example failed", re);
             throw re;
         }
     }
