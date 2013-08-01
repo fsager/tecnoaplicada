@@ -398,6 +398,12 @@ public class PanelMenuPrincipal extends PanelMenu {
 				seleccionarPanelControl();
 			}
 		});
+		
+		btnPanelHistorico.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				seleccionarHistorico();
+			}
+		});
 
 		btnInformesEstadistica
 				.addActionListener(new java.awt.event.ActionListener() {
@@ -745,6 +751,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 		/*Muestro y agrego al menu*/
 		btnPanelControl.setVisible(true);
 		toolbarSubNivel.add(btnPanelControl);
+		
+		btnPanelHistorico.setVisible(true);
+		toolbarSubNivel.add(btnPanelHistorico);
 
 		/*Muestro y agrego al menu*/
 		btnInformesEstadistica.setVisible(true);
@@ -777,7 +786,21 @@ public class PanelMenuPrincipal extends PanelMenu {
 
 		doAfterLoadMenuContenido();
 	}
+	
+	public void seleccionarHistorico() {
 
+		testerGeneral.persistence.impl.Util.insertAudit("Histórico",null, null);
+
+		unSelectButtons(toolbarSubNivel, btnPanelHistorico);
+		panelContenido.removeAll();
+
+		PanelHistorico panelHistorico = new PanelHistorico();
+		panelContenido.add(panelHistorico);
+
+		doAfterLoadMenuContenido();
+	}
+
+	
 	public void seleccionarInformesEstadisticas() {
 
 		testerGeneral.persistence.impl.Util.insertAudit(
@@ -947,6 +970,8 @@ public class PanelMenuPrincipal extends PanelMenu {
 	/*Sub Menu Tareas Admisnitrativas*/
 	private javax.swing.JToggleButton btnPanelControl = new JToggleButton(
 			Constantes.MENU_SUB_PANEL_CONTROL);
+	
+	private javax.swing.JToggleButton btnPanelHistorico = new JToggleButton("Histórico");
 
 	private javax.swing.JToggleButton btnInformesEstadistica = new JToggleButton(
 			Constantes.MENU_SUB_INFORMES);

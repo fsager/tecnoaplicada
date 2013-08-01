@@ -38,4 +38,8 @@ public class PersonaExamenBiz implements PersonaExamenDefinition {
 	public Long getCantidadExamenes(Date lastDate) throws Exception {
 		return dao.getCantidadExamenes(lastDate);
 	}
+	
+    public List getAll(PersonaExamen p_example,Date desde, Date hasta) throws Exception {
+    	return dao.getAll(p_example,desde, hasta);
+    }
 }
