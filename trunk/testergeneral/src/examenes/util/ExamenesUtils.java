@@ -155,7 +155,7 @@ public class ExamenesUtils {
 		return null;
 	}
 	
-	public static String detalleExamenResultado(ExamenDetalle exad,Resultado[] resultados)
+	public static String detalleExamenResultado(ExamenDetalle exad,Resultado[] resultados,String pais,String tipo)
 	{
 		log.debug("ini detalleExamenResultado");
 		
@@ -181,6 +181,21 @@ public class ExamenesUtils {
 		{
 			Double errores=Double.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.ERRORES.PERMITIDOS.HASTA"));
 			Double tiempo=(Double.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.TIEMPO.PERMITIDOS.HASTA"))/10d);
+			
+			//particular en 55 centésimas de segundo y para el profesional en 50 como promedio
+			if(!pais.equals("PERU"))
+			{
+				if(tipo.equals(PersonaExamen.TIPO_EXAMEN_PARTICULAR))
+				{
+					tiempo=(Double.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.ARG.PART.TIEMPO.PERMITIDOS.HASTA"))/10d);
+				}
+				else
+				{
+					tiempo=(Double.valueOf(ContextManager.getProperty("EXAMEN.REACCION.SIMPLE.ARG.PROF.TIEMPO.PERMITIDOS.HASTA"))/10d);
+				}
+			}
+
+
 			
 			if(prom[0]<=tiempo && prom[1]<errores)
 				return Examen.RESULTADO_DENTRO;
@@ -224,14 +239,14 @@ public class ExamenesUtils {
 		return null;
 	}
 	
-	public static String detalleExamenResultado(ExamenDetalle exad,List<Resultado> resultados)
+	public static String detalleExamenResultado(ExamenDetalle exad,List<Resultado> resultados,String pais,String tipo)
 	{
-		return detalleExamenResultado(exad,toArray(resultados));
+		return detalleExamenResultado(exad,toArray(resultados),pais,tipo);
 	}
 	
-	public static String detalleExamenResultado(ExamenDetalle exad,Set<Resultado> resultados)
+	public static String detalleExamenResultado(ExamenDetalle exad,Set<Resultado> resultados,String pais,String tipo)
 	{
-		return detalleExamenResultado(exad,toArray(resultados));
+		return detalleExamenResultado(exad,toArray(resultados),pais,tipo);
 	}
 	
 	public static Resultado[] toArray(List<Resultado> resultados)

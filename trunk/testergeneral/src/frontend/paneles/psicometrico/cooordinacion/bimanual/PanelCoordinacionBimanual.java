@@ -48,7 +48,7 @@ import frontend.ventanas.JInternalFrameTesterGral;
  * @author  __USER__
  */
 public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Finalisable,PanelExamen {
-	
+	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
 	/** Creates new form PanelAnticipacion */
 	public PanelCoordinacionBimanual(JToggleButton btn,PersonaExamen personaExamen) {
 		this.btn=btn;
@@ -141,7 +141,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 				res.setResValor2(errores);
 				resultados.add(res);
 				
-				PanelResultado panelResultado=new PanelResultado(resultados,TableModelResultado.ERRORES_Y_RESULTADO,exaDetalle);
+				PanelResultado panelResultado=new PanelResultado(resultados,TableModelResultado.ERRORES_Y_RESULTADO,exaDetalle,personaExamen.getPexaTipoExamen());
 				panelCoordinacionBimanualUsuarioExaminador.getPanelContenido().add(panelResultado);
 				panelCoordinacionBimanualUsuarioExaminador.validate();
 				panelCoordinacionBimanualUsuarioExaminador.repaint();
@@ -152,7 +152,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 					if (panelCoordinacionBimanualUsuarioExaminado != null)
 					{
 						panelCoordinacionBimanualUsuarioExaminado.getPanelContenido().removeAll();
-						panelResultado=new PanelResultado(resultados,TableModelResultado.ERRORES_Y_RESULTADO,exaDetalle);
+						panelResultado=new PanelResultado(resultados,TableModelResultado.ERRORES_Y_RESULTADO,exaDetalle,personaExamen.getPexaTipoExamen());
 						panelCoordinacionBimanualUsuarioExaminado.getPanelContenido().add(panelResultado);
 						panelCoordinacionBimanualUsuarioExaminado.validate();
 						panelCoordinacionBimanualUsuarioExaminado.repaint();						
@@ -412,7 +412,7 @@ public class PanelCoordinacionBimanual extends javax.swing.JPanel implements Fin
 
 			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
 			pro[0]=this.resultados.get(0).getResValor1()+this.resultados.get(1).getResValor1();
-			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
+			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados,configuracion,personaExamen.getPexaTipoExamen());
 			resultadoDetalleExamen.setRdeNota(Util.redondear(pro[0]));//Promedio de tiempo
 			resultadoDetalleExamen.setRdeNota2(pro[1]);//Promedio de errores
 			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());

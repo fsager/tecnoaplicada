@@ -14,7 +14,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import testerGeneral.business.ContextManager;
+import testerGeneral.domain.Examen;
 import testerGeneral.domain.ExamenDetalle;
+import testerGeneral.domain.PersonaExamen;
 import testerGeneral.domain.Resultado;
 import testerGeneral.domain.ResultadoDetalleExamen;
 import testerGeneral.service.ResultadoDefinition;
@@ -30,9 +32,10 @@ public class PanelResultado extends javax.swing.JPanel {
 	private static final Log log = LogFactory.getLog(PanelResultado.class);
 	private ExamenDetalle exad;
 	private int colContenido;
+	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
 
 	/** Creates new form PanelResultado */
-	public PanelResultado(ResultadoDetalleExamen resultadoDetalleExamen,
+	/*public PanelResultado(ResultadoDetalleExamen resultadoDetalleExamen,
 			int colContenido, ExamenDetalle exad) {
 		initComponents();
 		this.colContenido = colContenido;
@@ -52,26 +55,26 @@ public class PanelResultado extends javax.swing.JPanel {
 			promedio += " - "
 					+ ExamenesUtils.detalleExamenResultado(
 							resultadoDetalleExamen.getExamenDetalle(),
-							resultados);
+							resultados,configuracion,resultadoDetalleExamen.getPersonaExamen().getPexaTipoExamen());
 			lbRes.setText(promedio);
 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
-	}
+	}*/
 
 	public PanelResultado(List<Resultado> resultados, int colContenido,
-			ExamenDetalle exad) {
+			ExamenDetalle exad,String tipoExamen) {
 		initComponents();
 		this.colContenido = colContenido;
 		this.exad = exad;
 
-		setTableModel(resultados);
+		setTableModel(resultados);		
 
 		String promedio = ExamenesUtils.mostrarResultados(resultados, exad);
 		promedio += " - "
-				+ ExamenesUtils.detalleExamenResultado(exad, resultados);
+				+ ExamenesUtils.detalleExamenResultado(exad, resultados,configuracion,tipoExamen);
 		lbRes.setText(promedio);
 	}
 
