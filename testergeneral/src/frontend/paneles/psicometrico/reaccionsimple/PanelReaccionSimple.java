@@ -408,7 +408,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 				panelReaccionSimpleUsuarioExaminador.getPanelContenido()
 						.removeAll();
 				PanelResultado panelResultado = new PanelResultado(resultados,
-						TableModelResultado.ERRORES_Y_RESULTADO, exaDetalle);
+						TableModelResultado.ERRORES_Y_RESULTADO, exaDetalle,personaExamen.getPexaTipoExamen());
 				panelReaccionSimpleUsuarioExaminador.getPanelContenido().add(
 						panelResultado);
 				panelReaccionSimpleUsuarioExaminador.validate();
@@ -422,7 +422,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 								.removeAll();
 						panelResultado = new PanelResultado(resultados,
 								TableModelResultado.ERRORES_Y_RESULTADO,
-								exaDetalle);
+								exaDetalle,personaExamen.getPexaTipoExamen());
 						panelReaccionSimpleUsuarioExaminado.getPanelContenido()
 								.add(panelResultado);
 						panelReaccionSimpleUsuarioExaminado.validate();
@@ -647,7 +647,7 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 
 			Double pro[] = ExamenesUtils.calcularPromedio(resultados);
 			String resultado = ExamenesUtils.detalleExamenResultado(exaDetalle,
-					resultados);
+					resultados,configuracion,personaExamen.getPexaTipoExamen());
 			resultadoDetalleExamen.setRdeNota(pro[0]);
 			resultadoDetalleExamen.setRdeNota2(pro[1]);
 			

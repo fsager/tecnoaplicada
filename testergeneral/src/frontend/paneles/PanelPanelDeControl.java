@@ -1998,6 +1998,24 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 						.setExadParametrosCorrecion(parametroCorreccion);
 				examenDetalleService.update(coordinacionFina);
 			}
+			
+			
+			//Reacción simple!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			example = new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {				
+				String parametroCorreccion = "<ul> "
+					+ "<li>Profesional: Tiempo promedio máximo 50 Centésimas de segundos.</li> "
+					+ "<li>Particular: Tiempo promedio máximo 55 Centésimas de segundos.</li> "
+					+ "</ul>"; 
+				
+				ExamenDetalle examenDetalle = examanes.get(0);
+				examenDetalle
+						.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(examenDetalle);
+			}
+			//Reacción simple!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 			////////VISION
 
@@ -2167,6 +2185,20 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 				examenDetalleService.update(coordinacionVM);
 			}
 
+			//Reacción simple!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			example = new ExamenDetalle();
+			example.setExadCodigo(ExamenDetalle.EXAD_CODIGO_TEST_REAC_SIMPLE);
+			examanes = examenDetalleService.getAll(example);
+			if (examanes.size() > 0) {				
+				String parametroCorreccion = "Tiempo promedio máximo 43 Centésimas de segundos."; 
+				
+				ExamenDetalle examenDetalle = examanes.get(0);
+				examenDetalle
+						.setExadParametrosCorrecion(parametroCorreccion);
+				examenDetalleService.update(examenDetalle);
+			}
+			//Reacción simple!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			
 			//PALANCA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//tolere hasta 12 errores como máximo.
 			propiedad = new Propiedad();

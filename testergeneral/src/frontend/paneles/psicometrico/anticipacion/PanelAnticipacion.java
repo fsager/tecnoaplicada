@@ -120,7 +120,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 				
 
 				panelAnticipacionUsuarioExaminador.getPanelContenido().removeAll();
-				PanelResultado panelResultado=new PanelResultado(resultados,TableModelResultado.SOLO_RESULTADO,exaDetalle);
+				PanelResultado panelResultado=new PanelResultado(resultados,TableModelResultado.SOLO_RESULTADO,exaDetalle,personaExamen.getPexaTipoExamen());
 				panelAnticipacionUsuarioExaminador.getPanelContenido().add(panelResultado);
 				panelAnticipacionUsuarioExaminador.validate();
 				panelAnticipacionUsuarioExaminador.repaint();
@@ -131,7 +131,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 					if (panelAnticipacionUsuarioExaminado != null)
 					{
 						panelAnticipacionUsuarioExaminado.getPanelContenido().removeAll();
-						panelResultado=new PanelResultado(resultados,TableModelResultado.SOLO_RESULTADO,exaDetalle);
+						panelResultado=new PanelResultado(resultados,TableModelResultado.SOLO_RESULTADO,exaDetalle,personaExamen.getPexaTipoExamen());
 						panelAnticipacionUsuarioExaminado.getPanelContenido().add(panelResultado);
 						panelAnticipacionUsuarioExaminado.validate();
 						panelAnticipacionUsuarioExaminado.repaint();						
@@ -649,7 +649,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 			}
 
 			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
-			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
+			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados,configuracion,personaExamen.getPexaTipoExamen());
 			resultadoDetalleExamen.setRdeNota(pro[0]);
 			resultadoDetalleExamen.setRdeDetalleResultado("Metros promedio: "+pro[0]+".");
 			resultadoDetalleExamen.setRdeParametrosCorrecion(exaDetalle.getExadParametrosCorrecion());
@@ -940,5 +940,6 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 	private static final Log log = LogFactory.getLog(PanelAnticipacion.class);
 	private JInternalFrameTesterGral internalFrame;
 	private JToggleButton btn;
+	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
 	
 }

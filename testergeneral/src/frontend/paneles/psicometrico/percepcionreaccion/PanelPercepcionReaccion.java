@@ -54,7 +54,8 @@ import frontend.ventanas.JInternalFrameTesterGral;
  */
 public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 		Finalisable {
-
+	private String configuracion=ContextManager.getProperty("PARAMETROS.CONFIGURACION");
+	
 	/** Creates new form PanelPercepcionReaccion */
 	public PanelPercepcionReaccion(JToggleButton btn,PersonaExamen personaExamen,ExamenDetalle exaDetalle) {
 		this.btn=btn;
@@ -688,7 +689,7 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 				}
 				
 				panelPercepcionReaccionUsuarioExaminador.getPanelContenido().removeAll();
-				PanelResultado panelResultado=new PanelResultado(resultados,TableModelResultado.SOLO_ERRORES,exaDetalle);
+				PanelResultado panelResultado=new PanelResultado(resultados,TableModelResultado.SOLO_ERRORES,exaDetalle,personaExamen.getPexaTipoExamen());
 				panelPercepcionReaccionUsuarioExaminador.getPanelContenido().add(panelResultado);
 				panelPercepcionReaccionUsuarioExaminador.validate();
 				panelPercepcionReaccionUsuarioExaminador.repaint();
@@ -699,7 +700,7 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 					if (panelPercepcionReaccionUsuarioExaminado != null)
 					{
 						panelPercepcionReaccionUsuarioExaminado.getPanelContenido().removeAll();
-						panelResultado=new PanelResultado(resultados,TableModelResultado.SOLO_ERRORES,exaDetalle);
+						panelResultado=new PanelResultado(resultados,TableModelResultado.SOLO_ERRORES,exaDetalle,personaExamen.getPexaTipoExamen());
 						panelPercepcionReaccionUsuarioExaminado.getPanelContenido().add(panelResultado);
 						panelPercepcionReaccionUsuarioExaminado.validate();
 						panelPercepcionReaccionUsuarioExaminado.repaint();						
@@ -908,7 +909,7 @@ public class PanelPercepcionReaccion extends javax.swing.JPanel implements
 			}
 			
 			Double pro[]=ExamenesUtils.calcularPromedio(resultados);
-			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados);
+			String resultado=ExamenesUtils.detalleExamenResultado(exaDetalle,resultados,configuracion,personaExamen.getPexaTipoExamen());
 			resultadoDetalleExamen.setRdeNota(pro[0]);//tiempo centecimas de segundos
 			resultadoDetalleExamen.setRdeNota2(pro[1]);//errores
 			resultadoDetalleExamen.setRdeDetalleResultado("Tiempo promedio: "+pro[0].intValue()+" Errores: "+pro[1].intValue());
