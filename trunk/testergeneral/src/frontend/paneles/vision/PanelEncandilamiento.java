@@ -221,7 +221,6 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 	//GEN-END:initComponents
 
 	private void jRadioNoActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
 	}
 
 	public String getResultado() {
@@ -285,7 +284,7 @@ public class PanelEncandilamiento extends javax.swing.JPanel implements
 
 	@Override
 	public void finalizar() {
-		// TODO Auto-generated method stub
+
 
 	}
 

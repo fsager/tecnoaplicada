@@ -342,7 +342,7 @@ public class PanelProfundidadVisual extends javax.swing.JPanel implements
 
 	@Override
 	public void finalizar() {
-		// TODO Auto-generated method stub
+
 
 	}
 

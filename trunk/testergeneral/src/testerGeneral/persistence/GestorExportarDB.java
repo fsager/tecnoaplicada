@@ -17,6 +17,8 @@ public class GestorExportarDB implements Runnable {
 
 	public static String rutaDestinoBackup;
 	public static String extensionArchivosDeBackup = ".sql";
+	private String fileDestino;
+	private boolean finish=false;
 
 	public static void setRutaDestinoBackup(String rutaDestino) {
 		rutaDestinoBackup = rutaDestino;
@@ -46,17 +48,27 @@ public class GestorExportarDB implements Runnable {
 			SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyss");
 			String fileOrigen = directorioBackup + File.separator
 					+ ContextManager.getProperty("SISTEMA.NOMBRE.PROGRAMA");
-			String fileDestino = directorioBackup + File.separator
+			fileDestino = directorioBackup + File.separator
 					+ ContextManager.getProperty("SISTEMA.NOMBRE.PROGRAMA") + sdf.format(new Date()) + ".zip";
 
 			testerGeneral.persistence.impl.Util.zipDir(fileDestino, fileOrigen);
 			testerGeneral.persistence.impl.Util.deleteDir(new File(fileOrigen));
+			
+			finish=true;
 
 		} catch (SQLException sqlExcep) {
 			sqlExcep.printStackTrace();
 
 		}
 
+	}
+	
+	public boolean isFinish() {
+		return finish;
+	}
+	
+	public String getFileDestino() {
+		return fileDestino;
 	}
 
 }

@@ -88,7 +88,7 @@ public class Constantes {
 	public static final String IMG_ICON_AUTOIMPRESOR="/images/autoimpresor.png";
 	public static final String IMG_ICON_SMALL_AUTOIMPRESOR="/images/autoimpresor_small.png";
 
-	//TODO CAMBIAR IMAGEN
+	
 	public static final String IMG_ICON_MC="/images/opcionesMultiples.png";
 	public static final String IMG_ICON_SMALL_MC="/images/opcionesMultiples_small.png";
 

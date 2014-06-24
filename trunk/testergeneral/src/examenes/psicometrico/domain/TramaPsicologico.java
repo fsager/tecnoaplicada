@@ -9,11 +9,11 @@ public class TramaPsicologico implements Trama{
 	
 	private static final Log log = LogFactory.getLog(TramaPsicologico.class);
 	
-	private Byte campoCabecera1=new Byte(new Integer(0x31).byteValue());
-	private Byte campoCabecera2=new Byte(new Integer(0x42).byteValue());
-	private Byte campoCabecera3=new Byte(new Integer(0x43).byteValue());
-	private Byte campoCabecera4=new Byte(new Integer(0x48).byteValue());
-	private Byte campoCierre1=new Byte(new Integer(0x0D).byteValue());
+	public Byte campoCabecera1=new Byte(new Integer(0x31).byteValue());
+	public Byte campoCabecera2=new Byte(new Integer(0x42).byteValue());
+	public Byte campoCabecera3=new Byte(new Integer(0x43).byteValue());
+	public Byte campoCabecera4=new Byte(new Integer(0x48).byteValue());
+	public Byte campoCierre1=new Byte(new Integer(0x0D).byteValue());
 	
 	private int campoNro=0;
 	private Byte[] tramaPsicologico=new Byte[10];
@@ -148,14 +148,30 @@ public class TramaPsicologico implements Trama{
 		tramaPsicologico[7]=2;
 	}
 	
+	public void setFrenoNotPressed()
+	{
+		tramaPsicologico[7]=0;
+	}
+	
 	public boolean isAceleradorPressed()
 	{
 		int acelerador=1;
 		
-		if(tramaPsicologico[7]==acelerador)
+		if(tramaPsicologico[7]==acelerador){
 			return true;
-		
+		}
+			
 		return false;
+	}
+	
+	public void setAceleradorPressed()
+	{
+		tramaPsicologico[7]=1;
+	}
+	
+	public void setAceleradorNotPressed()
+	{
+		tramaPsicologico[7]=0;
 	}
 	
 	public boolean isAnyButtonPress()
@@ -296,6 +312,18 @@ public class TramaPsicologico implements Trama{
 	public int getPotenciometroDerecho() {
 		
 		return tramaPsicologico[5];
+	}
+	
+	
+	public void setPotenciometroIzquierdo(Byte pos) {
+		
+		tramaPsicologico[4]=pos;
+	}
+	
+	
+	public void setPotenciometroDerecho(Byte pos) {
+		
+		tramaPsicologico[5]=pos;
 	}
 
 	@Override

@@ -489,11 +489,11 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 	//GEN-END:initComponents
 
 	private void jRadioDetalladaActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void jRadioResumidaActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -601,7 +601,7 @@ public class PanelInformesYEstadisticas extends javax.swing.JPanel {
 			
 			for (Persona persona : personas) {
 				Examen examen = new Examen();
-				examen.setExaId(new Long(3));//TODO obtener id del examen del combo
+				examen.setExaId(new Long(3));
 
 				PersonaExamen perExamenExamenple = new PersonaExamen();
 				perExamenExamenple.setPersona(persona);

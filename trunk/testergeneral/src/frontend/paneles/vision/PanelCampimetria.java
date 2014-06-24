@@ -57,7 +57,6 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 
 	/** Creates new form PanelAgudezaVisual */
 	public PanelCampimetria(JToggleButton btn, PersonaExamen personaExamen) {
-		System.out.println("PanelCampimetria");
 		
 		this.btn = btn;
 		this.personaExamen = personaExamen;
@@ -1138,7 +1137,7 @@ public class PanelCampimetria extends javax.swing.JPanel implements
 
 	@Override
 	public void finalizar() {
-		// TODO Auto-generated method stub
+
 
 	}
 

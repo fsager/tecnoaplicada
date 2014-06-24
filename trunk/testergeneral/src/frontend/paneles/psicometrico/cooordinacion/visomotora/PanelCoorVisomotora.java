@@ -787,7 +787,7 @@ public class PanelCoorVisomotora extends javax.swing.JPanel implements
 		try {
 			th.interrupt();
 		} catch (Exception e) {
-			// TODO: handle exception
+
 		}
 		run = false;
 

@@ -1352,19 +1352,19 @@ public class PanelFotocromatica extends javax.swing.JPanel implements
 	}
 
 	private void btn18ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+		
 	}
 
 	private void btn19ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+		
 	}
 
 	private void btn20ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+		
 	}
 
 	private void btn22ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+		
 	}
 
 	private void btn111ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1440,31 +1440,31 @@ public class PanelFotocromatica extends javax.swing.JPanel implements
 	}
 
 	private void btn31ActioionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+	
 	}
 
 	private void btn29Act7ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btn26A5ActctionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btn23A2ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btn2n1n18ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btn17ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btn16ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btn255ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1591,7 +1591,6 @@ public class PanelFotocromatica extends javax.swing.JPanel implements
 
 	@Override
 	public void finalizar() {
-		// TODO Auto-generated method stub
 
 	}
 

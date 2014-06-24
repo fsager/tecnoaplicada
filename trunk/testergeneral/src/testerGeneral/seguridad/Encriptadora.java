@@ -123,7 +123,7 @@ public class Encriptadora {
 			kg = KeyGenerator.getInstance(algoritmo);
 			this.clave = kg.generateKey();
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 

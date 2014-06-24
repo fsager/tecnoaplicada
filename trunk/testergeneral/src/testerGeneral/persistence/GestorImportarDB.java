@@ -42,7 +42,7 @@ public class GestorImportarDB implements Runnable {
 				DriverManager.getConnection(dataSource.getUrl()+";shutdown=true");
 								
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				
 			}
 
@@ -55,7 +55,7 @@ public class GestorImportarDB implements Runnable {
 			conexion.close();
 						
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -68,7 +68,7 @@ public class GestorImportarDB implements Runnable {
 				serverControl = new NetworkServerControl(InetAddress.getByName("localhost"),1527);
 				return serverControl;
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			return null;

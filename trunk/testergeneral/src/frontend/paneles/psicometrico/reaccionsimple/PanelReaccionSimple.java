@@ -329,8 +329,6 @@ public class PanelReaccionSimple extends javax.swing.JPanel implements
 		
 		//log.debug("Tiempo de Frenado: "+(tiempoActual - getInstanteSemaforoRojo())+" current: "+System.currentTimeMillis());
 
-		//TODO comentar descomentar para pruebas edgardo
-		//Util.thTrama.sendOrden(ThreadTrama.ORDEN_PRENDER_LED3);
 
 		setMensajes(continuarAnimacion);
 		Resultado res = resultados.get(etapaActual);

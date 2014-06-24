@@ -214,18 +214,24 @@ public class VentanaSeleccionImagen extends JInternalFrameTesterGral {
 		this.repaint();
 		Util.centrarIframes(this);
 
-		panelWebCam.getBtnAceptar().addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent evt) {
-				ImageIcon imageIcon = new ImageIcon(panelWebCam.getImg());
-				abriPanelImagen(imageIcon);
-			}
-		});
+		if(panelWebCam.getBtnAceptar()!=null){
+			panelWebCam.getBtnAceptar().addActionListener(new AbstractAction() {
+				public void actionPerformed(ActionEvent evt) {
+					ImageIcon imageIcon = new ImageIcon(panelWebCam.getImg());
+					abriPanelImagen(imageIcon);
+				}
+			});
+		}
+		
+		if(panelWebCam.getBtnCancelar()!=null){
+			panelWebCam.getBtnCancelar().addActionListener(new AbstractAction() {
+				public void actionPerformed(ActionEvent evt) {
+					cerrar();
+				}
+			});
+		}
 
-		panelWebCam.getBtnCancelar().addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent evt) {
-				cerrar();
-			}
-		});
+
 	}
 
 	public void abrirFileSystem() {

@@ -316,12 +316,12 @@ public class PanelExamenMultipleChoise extends javax.swing.JPanel implements
 			if(preguntasBiz.isExamenFinish(personaExamen))
 			{
 				preguntasBiz.finalizarExamen(personaExamen, "","");
-				//TODO Mostrar reporte
+
 				
 			}
 			else
 			{
-				//TODO informar que faltan cosas
+
 			}
 
 		} catch (Exception e) {
@@ -360,7 +360,7 @@ public class PanelExamenMultipleChoise extends javax.swing.JPanel implements
 
 	@Override
 	public void finalizar() {
-		// TODO Auto-generated method stub
+
 
 	}
 

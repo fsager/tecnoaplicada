@@ -8,12 +8,16 @@ import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+
+import jxl.read.biff.File;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,6 +29,9 @@ import testerGeneral.exceptions.ExceptionIsNotHadware;
 
 
 public class ThreadTrama extends Thread{
+	
+	public static boolean connectToHard=true;
+	
 	
 	public static final int ORDEN_PRENDER_LAZER=32; 
 	public static final int ORDEN_APAGAR_LAZER=33;
@@ -121,8 +128,25 @@ public class ThreadTrama extends Thread{
 		this.trama=trama;
 		this.tramaValida=trama.getInstance();
 		
-		buscarPuerto();
+		if(connectToHard)
+			buscarPuerto();
+		else
+			readFromFile();
+		
 
+	}
+	
+	public void readFromFile()
+	{
+		try{			
+		
+			in=new FileInputStream("C://temp//tramaInput.txt");			
+			out=new FileOutputStream("C://temp//tramaOut.txt");
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void buscarPuerto(){
@@ -245,6 +269,10 @@ public class ThreadTrama extends Thread{
 				
 					len = in.read(buffer);
 					log.debug("bytes reads: "+len+" bytes: "+buffer+" Instante: "+System.currentTimeMillis());
+					if(len!=-1)
+					{
+						System.out.println("bytes reads: "+len);
+					}
 					 
 					while (read && (len) > -1) 
 					{
@@ -259,7 +287,8 @@ public class ThreadTrama extends Thread{
 									if (trama.addCampo(buffer[i])) {
 										if (trama.isValid())
 										{
-											log.debug("trama valid "+System.currentTimeMillis());
+											//log.debug("trama valid "+System.currentTimeMillis());
+											//System.out.println("trama valid:"+trama.getPotenciometroDerecho());
 											setTramaValida(trama);
 											ejecurarAccion();
 											trama.init();

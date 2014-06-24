@@ -9,27 +9,36 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import actualizaciones.GestorActualizaciones;
-import actualizaciones.GestorActualizacionesUtil;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Propiedad;
 import testerGeneral.persistence.GestorExportarDB;
 import testerGeneral.seguridad.Encriptadora;
 import testerGeneral.service.PropiedadDefinition;
+import actualizaciones.GestorActualizacionesUtil;
+
 
 public class GestorDBBackup implements Runnable {
 	
+	private final static String stringClavePrivada = new String(
+			"czbmrndoritlekaz");
+	private final static String algoritmoEncriptacionClavePrivada = new String(
+			"AES");	
 
 	public void run() {
 		realizarBackupAutomatico();
@@ -54,7 +63,18 @@ public class GestorDBBackup implements Runnable {
 							.getProperty("DIRECTORIO.BACKUP.PRIMARIO"));
 					Thread threadGestorExportar = new Thread(gestorExportar);
 					threadGestorExportar.run();
-
+					
+					
+					//Espero que termine el proceso de exportación
+					while(!gestorExportar.isFinish()){
+						Thread.sleep(100);
+					}
+					
+					
+					upload(gestorExportar.getFileDestino());
+					
+					
+					
 					if (ContextManager.getProperty(
 							"SISTEMA.BACKUP.SECUNDARIO.SI-NO").equals("S")) {// Backup
 																				// secundario
@@ -87,11 +107,118 @@ public class GestorDBBackup implements Runnable {
 					propiedadFechaUltimoBackup.setPropValor(fechaParseada);
 
 					propiedadService.update(propiedadFechaUltimoBackup);
+					
+					
+					
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Desencripta una cadena usando la clave pública definida.
+	 * 
+	 * @return cadena de entrada desencriptada según la clave privada.
+	 */
+	public static String desencriptarString(String cadenaADesencriptar) {
+		SecretKeySpec clavePrivada = new SecretKeySpec(stringClavePrivada
+				.getBytes(), algoritmoEncriptacionClavePrivada);
+		Encriptadora encriptador = new Encriptadora("AES", clavePrivada);
+		String passwordDesencriptada = encriptador
+				.desencriptar(cadenaADesencriptar);
+		return passwordDesencriptada;
+	}
+	
+	public static void upload(String fileToUpload) throws Exception
+	{
+
+		String server = desencriptarString(ContextManager.getProperty("SISTEMA.FTP_PRINCIPAL_URL"));
+        int port = 21;
+        String user = desencriptarString(ContextManager.getProperty("SISTEMA.FTP_PRINCIPAL_USER"));
+        String pass = desencriptarString(ContextManager.getProperty("SISTEMA.FTP_PRINCIPAL_PASSWORD"));
+        String licence=ContextManager.getProperty("LICENCE.NRO");
+	 
+        FTPClient ftpClient = new FTPClient();
+        try {
+            	
+            ftpClient.connect(server, port);
+            ftpClient.login(user, pass);
+            ftpClient.enterLocalPassiveMode();
+ 
+            if(licence!=null)
+            {
+	            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+	            String fileDestination="/backups/"+ContextManager.getProperty("SISTEMA.NOMBRE.PROGRAMA")+"/Licencia_"+licence;
+	            createIntermediateFolders(ftpClient,fileDestination);
+	            FTPFile[] files=ftpClient.listFiles(fileDestination);
+	            
+	            if(files.length>=6)
+	            {
+	            	//Borro el más viejo de los archivos
+		            Arrays.sort(files, new Comparator<FTPFile>() {
+						@Override
+						public int compare(FTPFile o1, FTPFile o2) {
+							return o1.getTimestamp().compareTo(o2.getTimestamp());
+						}
+					});
+		            for(int i=0;i<files.length;i++)
+		            {
+		            	if(!files[i].getName().equals(".") && !files[i].getName().equals(".."))
+		            	{
+		            		ftpClient.deleteFile(fileDestination+"/"+files[i].getName());
+		            		break;
+		            	}
+		            		
+		            }
+		            	            	
+	            }	            
+	
+	            File localFile = new File(fileToUpload);
+	 
+				SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yyyy_ss");
+				
+
+				
+	            String remoteFile = fileDestination+"/"+ContextManager.getProperty("SISTEMA.NOMBRE.PROGRAMA") +"_"+ sdf.format(new Date()) + ".zip";
+	            InputStream inputStream = new FileInputStream(localFile);
+	
+	            ftpClient.storeFile(remoteFile, inputStream);
+	            inputStream.close();
+            }
+            
+
+ 
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+	}
+	
+	
+	public static void createIntermediateFolders(FTPClient ftpClient,String fileDestination) throws Exception
+	{
+		String[] folders=fileDestination.split("/");
+		String absolutFolder="";
+		for(String folder:folders)
+		{
+			absolutFolder+="/"+folder;
+			if(!ftpClient.changeWorkingDirectory(absolutFolder))
+			{
+				ftpClient.makeDirectory(absolutFolder);
+			}
+				
+		}
+		
 	}
 
 	/**

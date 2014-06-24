@@ -2219,7 +2219,6 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	//GEN-END:initComponents
 
 	private void txtNacimiento1FocusLost(java.awt.event.FocusEvent evt) {
-		// TODO add your handling code here:
 	}
 
 	private void txtBusquedaNacimientoActionPerformed(
@@ -2238,7 +2237,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 	private void btnAgregarEstadoCivil1ActionPerformed(
 			java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void txtNacimientoFocusLost(java.awt.event.FocusEvent evt) {

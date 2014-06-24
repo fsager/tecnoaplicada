@@ -1634,7 +1634,7 @@ public class PanelPanelDeControl extends javax.swing.JPanel implements Runnable 
 	//GEN-END:initComponents
 
 	private void radioPeruActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+	
 	}
 
 	private void jCheckBoxBackupAutomaticoCadaXDiasActionPerformed(
