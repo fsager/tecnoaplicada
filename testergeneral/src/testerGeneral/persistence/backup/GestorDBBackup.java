@@ -147,7 +147,7 @@ public class GestorDBBackup implements Runnable {
             ftpClient.login(user, pass);
             ftpClient.enterLocalPassiveMode();
  
-            if(licence!=null)
+            if(licence!=null && !licence.equals(""))
             {
 	            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 	            String fileDestination="/backups/"+ContextManager.getProperty("SISTEMA.NOMBRE.PROGRAMA")+"/Licencia_"+licence;
