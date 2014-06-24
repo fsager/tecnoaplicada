@@ -162,7 +162,13 @@ public class PanelDetalleExamen extends javax.swing.JPanel {
 					&& 
 					!de.getExadCodigo().equals(
 							ExamenDetalle.EXAD_CODIGO_TEST_AUDIO_IZQ
-										)) {
+										)
+										
+				&& 
+					!de.getExadCodigo().equals(
+							ExamenDetalle.EXAD_CODIGO_TEST_PERC_REAC
+										)				
+						) {
 					String detalle = de.getExadDetalle();
 					if (de
 							.getExadCodigo()

@@ -115,13 +115,12 @@ public class PanelFirma extends javax.swing.JPanel implements
 	// End of variables declaration//GEN-END:variables
 	@Override
 	public void penButtonEvent(PButtonEvent arg0) {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void penKindEvent(PKindEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -160,13 +159,13 @@ public class PanelFirma extends javax.swing.JPanel implements
 
 	@Override
 	public void penScrollEvent(PScrollEvent arg0) {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void penTock(long arg0) {
-		// TODO Auto-generated method stub
+
 
 	}
 }

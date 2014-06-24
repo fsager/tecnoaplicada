@@ -247,7 +247,7 @@ public class TramaVision implements Trama{
 	}
 	@Override
 	public void desconnect(ThreadTrama threadTrama) {
-		//TODO COMENTE ESTA LINEA PORQUE NO SE PORQUE ESTA 
+
 		//threadTrama.sendOrden(0x5000);
 		threadTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_IZQ);
 		threadTrama.sendOrden(ThreadTrama.ORDEN_CAMBIA_ESTADO_LUZ_DER);

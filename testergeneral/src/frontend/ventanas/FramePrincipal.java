@@ -6,15 +6,15 @@
 
 package frontend.ventanas;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -26,7 +26,6 @@ import testerGeneral.actualizaciones.GestorActualizaciones;
 import testerGeneral.business.ContextManager;
 import testerGeneral.domain.Constantes;
 import actualizaciones.GestorActualizacionesUtil;
-import ar.com.tecnologiaaplicada.LicenseException;
 import frontend.components.JOptionPaneTesterGral;
 import frontend.paneles.PanelMenu;
 import frontend.paneles.examenes.PanelContenido;
@@ -64,6 +63,7 @@ public class FramePrincipal extends JInternalFrameTesterGral {
 		//{
 			validadLicencia();	
 		//}	
+		
 			
 	}
 

@@ -6,22 +6,15 @@
 
 package frontend.paneles;
 
-import java.awt.Component;
 import java.awt.Image;
 
-import javax.media.Buffer;
 import javax.media.CaptureDeviceInfo;
 import javax.media.Format;
-import javax.media.Manager;
 import javax.media.MediaLocator;
 import javax.media.Player;
-import javax.media.cdm.CaptureDeviceManager;
 import javax.media.control.FormatControl;
-import javax.media.control.FrameGrabbingControl;
-import javax.media.format.VideoFormat;
 import javax.media.protocol.CaptureDevice;
 import javax.media.protocol.DataSource;
-import javax.media.util.BufferToImage;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,7 +22,9 @@ import javax.swing.JOptionPane;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import testerGeneral.business.ContextManager;
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+
 import frontend.components.JOptionPaneTesterGral;
 
 /**
@@ -38,27 +33,38 @@ import frontend.components.JOptionPaneTesterGral;
  */
 public class PanelWebCam extends javax.swing.JPanel {
 
-	private CaptureDeviceInfo dev;
-	private Format[] cfmts;
-	private MediaLocator loc;
-	private DataSource ds;
-	private Player player;
-	private static final Log log = LogFactory.getLog(PanelWebCam.class);
+//	private CaptureDeviceInfo dev;
+//	private Format[] cfmts;
+//	private MediaLocator loc;
+//	private DataSource ds;
+//	private Player player;
+//	private static final Log log = LogFactory.getLog(PanelWebCam.class);
 	private Image img;
-	private boolean frenado = false;
+//	private boolean frenado = false;
+	private Webcam webcam;
 
 	/** Creates new form PanelWebCam */
 	public PanelWebCam() {
-		initComponents();
-		iniciarCamara();
+		if(Webcam.getWebcams().size()>0)
+		{			
+			webcam=Webcam.getWebcams().get(0);
+			
+			if(webcam.getViewSizes()!=null && webcam.getViewSizes().length>0){
+				webcam.setViewSize(webcam.getViewSizes()[ webcam.getViewSizes().length-1]);
+			}
+			
+			initComponents();
+			iniciarCamara();
+		}else{
+			 
+			JOptionPaneTesterGral.showInternalMessageDialog("No se ha dectadado una webcam instalada","Webcam",JOptionPane.INFORMATION_MESSAGE);
+
+		}
+
 	}
 
 	private void iniciarCamara() {
 		try {
-			String camara = ContextManager
-					.getProperty("SISTEMA.DEVICES.CAMARA");
-			dev = CaptureDeviceManager.getDevice(camara);			
-			loc = dev.getLocator();
 			
 			startPlayer();
 
@@ -87,24 +93,14 @@ public class PanelWebCam extends javax.swing.JPanel {
 
 	private void startPlayer() {
 		try {
-			frenado = false;
-			ds = Manager.createDataSource(loc);			
-			requestCaptureFormat(dev.getFormats()[0],ds);
 			
-			player = Manager.createRealizedPlayer(ds);
-			
-			player.start();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
-
-			Component comp = null;
-			if ((comp = player.getVisualComponent()) != null)
-			{	panelWeb.removeAll();
-				panelWeb.add(comp);
-			}
-			
+			panelWeb.removeAll();
+			panelWeb.setPreferredSize(webcam.getViewSize());
+			panelWeb.setMaximumSize(webcam.getViewSize());
+			panelWeb.setMinimumSize(webcam.getViewSize());
+			WebcamPanel webcamPanel=new WebcamPanel(webcam);
+			webcamPanel.setFillArea(true);
+			panelWeb.add(webcamPanel);
 			this.validate();
 
 		} catch (Exception e) {
@@ -216,11 +212,11 @@ public class PanelWebCam extends javax.swing.JPanel {
 	//GEN-END:initComponents
 
 	private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btnInicarCamaraActionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,19 +238,14 @@ public class PanelWebCam extends javax.swing.JPanel {
 
 	private void btnCapturarActionPerformed(java.awt.event.ActionEvent evt) {
 
-		FrameGrabbingControl fgc = (FrameGrabbingControl) player
-				.getControl("javax.media.control.FrameGrabbingControl");
-		Buffer buf = fgc.grabFrame();
-		BufferToImage btoi = new BufferToImage((VideoFormat) buf.getFormat());
-		JLabel lb = new JLabel();
-		img = btoi.createImage(buf);
-
 		btnCapturar.setEnabled(false);
 		btnInicarCamara.setEnabled(true);
 		btnAceptar.setEnabled(true);
-
-		frenar();
-
+		
+		JLabel lb = new JLabel();
+		img=webcam.getImage();
+		webcam.close();
+		
 		ImageIcon imageIcon = new ImageIcon(img);
 		lb.setIcon(imageIcon);
 		panelWeb.removeAll();
@@ -264,16 +255,9 @@ public class PanelWebCam extends javax.swing.JPanel {
 	}
 
 	public void frenar() {
-		try {
-			if (!frenado) {
-				player.stop();
-				player.deallocate();
-				player.close();
-				frenado = true;
-			}
-		} catch (Exception ex) {
-			
-		}
+		if(webcam!=null && webcam.isOpen()){
+			webcam.close();
+		}		
 	}
 
 	//GEN-BEGIN:variables

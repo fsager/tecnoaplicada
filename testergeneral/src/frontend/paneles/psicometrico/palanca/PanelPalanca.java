@@ -615,11 +615,11 @@ public class PanelPalanca extends javax.swing.JPanel implements Finalisable,
 	//GEN-END:initComponents
 
 	private void txtTiempoActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+		
 	}
 
 	private void txtErroresActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {

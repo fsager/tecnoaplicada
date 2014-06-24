@@ -116,8 +116,6 @@ public class PanelReaccionSimpleAnimacion extends javax.swing.JPanel implements 
 						parent.setInstanteSemaforoRojo(System.currentTimeMillis());
 						parent.incrementarEjecucion();
 						
-						//TODO comentar descomentar para pruebas edgardo
-						//parent.getThTrama().sendOrden(ThreadTrama.ORDEN_PRENDER_LED1);
 					}
 				}
 				catch (Exception e) {

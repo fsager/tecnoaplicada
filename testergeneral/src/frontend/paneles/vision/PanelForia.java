@@ -545,7 +545,7 @@ public class PanelForia extends javax.swing.JPanel implements Finalisable,
 
 	@Override
 	public void finalizar() {
-		// TODO Auto-generated method stub
+
 
 	}
 

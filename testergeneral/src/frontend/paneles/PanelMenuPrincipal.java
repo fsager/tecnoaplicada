@@ -299,11 +299,11 @@ public class PanelMenuPrincipal extends PanelMenu {
 	}
 
 	private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+
 	}
 
 	public void doBeforLoadMenu(JToolBar toolbar, JToggleButton button) {

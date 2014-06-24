@@ -2388,13 +2388,13 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 
 	@Override
 	public void finalizar() {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void setBtn(JToggleButton btn) {
-		// TODO Auto-generated method stub
+
 
 	}
 

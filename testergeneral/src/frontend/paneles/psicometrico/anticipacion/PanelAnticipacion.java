@@ -113,7 +113,7 @@ public class PanelAnticipacion extends javax.swing.JPanel implements
 				try {
 					Thread.sleep(Constantes.TIEMPO_ENTRE_RESULTADO);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				String columns[]={"Etapa","Resultado"};
