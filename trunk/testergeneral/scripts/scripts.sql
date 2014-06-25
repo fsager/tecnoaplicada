@@ -1,3 +1,28 @@
+INSERT INTO app.persona (per_apellido,per_nombre,per_tipo_doc,per_numero_doc,per_sexo,
+	per_fecha_nacimiento,per_estado_civil,per_grupo_sanguineo,
+	per_telefono,per_celular,per_correo,per_estudios,per_domicilio,per_observaciones,per_foto,per_firma,
+	per_localidad,per_educacion,per_licencia_de_conducir,per_tiempo_que_lleva_conduciendo,per_toma_medicamentos_regularmente_sn
+	,per_tomo_hoy_psicofarmacos,per_tomo_hoy_alcohol)
+	SELECT per_apellido,per_nombre,per_tipo_doc,per_numero_doc,per_sexo,
+	per_fecha_nacimiento,per_estado_civil,per_grupo_sanguineo,
+	per_telefono,per_celular,per_correo,per_estudios,per_domicilio,per_observaciones,per_foto,per_firma,
+	per_localidad,per_educacion,per_licencia_de_conducir,per_tiempo_que_lleva_conduciendo,per_toma_medicamentos_regularmente_sn
+	,per_tomo_hoy_psicofarmacos,per_tomo_hoy_alcohol
+	FROM app.persona;
+
+insert into APP.PERSONA_EXAMEN (PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN)
+select PER_ID,EXA_ID,PEXA_FECHA,PEXA_RESULTADO,PEXA_ESTADO,PEXA_NOTA,PEXA_OBS,PEXA_ADJ,PEXA_RESULTADO_MEDICO,PEXA_NOMBRE_ADJUNTO,PEXA_TIPO_EXAMEN
+from APP.PERSONA_EXAMEN ;
+
+insert into app.RESULTADO_DETALLE_EXAMEN (EXAD_ID,PEXA_ID,RDE_RESULTADO,RDE_DETALLE_RESULTADO,RDE_PARAMETROS_CORRECCION,
+RDE_NOTA,RDE_NOTA2,RDE_NOTA3,RDE_NOTA4,RDE_IMAGEN)
+select EXAD_ID,PEXA_ID,RDE_RESULTADO,RDE_DETALLE_RESULTADO,RDE_PARAMETROS_CORRECCION,
+RDE_NOTA,RDE_NOTA2,RDE_NOTA3,RDE_NOTA4,RDE_IMAGEN from APP.RESULTADO_DETALLE_EXAMEN;
+
+insert into app.RESULTADO (RES_ETAPA,RDE_ID,RES_VALOR1,RES_VALOR2,RES_ETAPA_DESC)
+select RES_ETAPA,RDE_ID,RES_VALOR1,RES_VALOR2,RES_ETAPA_DESC from app.RESULTADO;
+
+
 alter table "APP"."EXAMEN" add EXA_LICENCED VARCHAR(1) not null default 'S';
 alter table "APP"."EXAMEN_DETALLE" add EXAD_LICENCED VARCHAR(1) not null default 'S';
 
