@@ -115,7 +115,7 @@ public class PanelAudio extends javax.swing.JPanel implements Finalisable,
 		Util.mostrarError(lbError, null, true);
 
 		datasetAmbos = new DefaultCategoryDataset();
-		chartAmbos = ChartFactory.createLineChart("Ambos oído", // chart title
+		chartAmbos = ChartFactory.createLineChart("Ambos oídos", // chart title
 				"Hz", // x axis label
 				"Db", // y axis label
 				datasetAmbos, // data
