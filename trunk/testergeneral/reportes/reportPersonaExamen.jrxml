@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportPersonaExamen" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportPersonaExamen" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="template.type" value="columnar"/>
 	<property name="ireport.zoom" value="0.9075000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="185"/>
-	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
-	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
-	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
-	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
-	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+	<property name="ireport.y" value="0"/>
+	<style name="Title" isDefault="false" forecolor="#000000" lineSpacing="Single" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" isDefault="false" forecolor="#666666" lineSpacing="Single" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" isDefault="false" forecolor="#666666" lineSpacing="Single" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" isDefault="false" mode="Transparent" lineSpacing="Single" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" isDefault="false" mode="Transparent" lineSpacing="Single" fontName="Times New Roman" pdfFontName="Times-Roman">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
-			<style mode="Opaque" backcolor="#F0EFEF"/>
+			<style isDefault="false" style="Row" mode="Opaque" backcolor="#F0EFEF" lineSpacing="Single"/>
 		</conditionalStyle>
 	</style>
 	<parameter name="p_pexa_id" class="java.lang.Long">
-		<defaultValueExpression><![CDATA[10]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[10l]]></defaultValueExpression>
 	</parameter>
 	<parameter name="p_parametros_correccion" class="java.lang.String"/>
 	<queryString>
@@ -37,7 +37,8 @@
 			   app.examen_detalle detalleE
 		where perexa.pexa_id= detalleResE.pexa_id
 		    and detalleE.exad_id = detalleResE.exad_id
-		    and detalleE.exad_codigo = 'TEST_AUDIO_IZQ') as GRAFICO_AUDIO_IZQ
+		    and detalleE.exad_codigo = 'TEST_AUDIO_IZQ') as GRAFICO_AUDIO_IZQ,
+		 (SELECT PROP_BLOB from app.propiedad where prop_clave = 'SISTEMA.IMAGENES.LOGO.EMPRESA') as IMAGEN_EMPRESA
   from app.persona per,
               app.persona_examen perexa,
               app.examen exa,
@@ -168,13 +169,13 @@ order by detalle.exad_orden,detalle.exad_id]]>
 	<field name="GRAFICO_AUDIO" class="java.io.InputStream"/>
 	<field name="GRAFICO_AUDIO_DER" class="java.io.InputStream"/>
 	<field name="GRAFICO_AUDIO_IZQ" class="java.io.InputStream"/>
+	<field name="IMAGEN_EMPRESA" class="java.io.InputStream"/>
 	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="Page">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
 	<variable name="PER_ID_SUM" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{PER_ID}]]></variableExpression>
 	</variable>
-	<filterExpression><![CDATA[$P{p_pexa_id}]]></filterExpression>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -186,106 +187,106 @@ order by detalle.exad_orden,detalle.exad_id]]>
 			</image>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="133" y="175" width="132" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Tipo Documento:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="133" y="195" width="132" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nro Documento:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="133" y="215" width="132" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Sexo:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="133" y="235" width="132" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Fecha Nacimiento:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="133" y="255" width="132" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Estado Civil:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="277" y="256" width="260" height="20"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PER_ESTADO_CIVIL}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="277" y="216" width="260" height="20"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PER_SEXO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="277" y="196" width="260" height="20"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PER_NUMERO_DOC}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="277" y="236" width="260" height="20"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{PER_FECHA_NACIMIENTO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="277" y="177" width="260" height="19"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PER_TIPO_DOC}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="133" y="157" width="132" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nombre Completo:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="277" y="158" width="260" height="19"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PER_APELLIDO}+", "+$F{PER_NOMBRE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="133" y="275" width="132" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Grupo Sanguineo:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="277" y="276" width="260" height="20"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font size="14" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PER_GRUPO_SANGUINEO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Title" positionType="Float" x="0" y="12" width="555" height="53"/>
-				<textElement textAlignment="Center">
-					<font size="40" isBold="true" pdfFontName="Times-Bold"/>
+				<reportElement style="Title" positionType="Float" x="81" y="0" width="474" height="53"/>
+				<textElement textAlignment="Center" lineSpacing="Single">
+					<font size="36" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{EXA_NOMBRE}]]></textFieldExpression>
 			</textField>
@@ -294,56 +295,56 @@ order by detalle.exad_orden,detalle.exad_id]]>
 			</line>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="0" y="72" width="113" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
+				<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Fecha del Examen:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="114" y="71" width="151" height="20"/>
-				<textElement verticalAlignment="Bottom">
+				<textElement verticalAlignment="Bottom" lineSpacing="Single">
 					<font size="11" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{PEXA_FECHA}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="280" y="72" width="62" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
+				<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Resultado:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="280" y="98" width="60" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
+				<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Estado:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="342" y="71" width="213" height="20"/>
-				<textElement verticalAlignment="Bottom">
+				<textElement verticalAlignment="Bottom" lineSpacing="Single">
 					<font size="11" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PEXA_RESULTADO_MEDICO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="342" y="97" width="210" height="20"/>
-				<textElement verticalAlignment="Bottom">
+				<textElement verticalAlignment="Bottom" lineSpacing="Single">
 					<font size="11" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PEXA_ESTADO}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="SubTitle" positionType="Float" x="0" y="123" width="160" height="34" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Datos de la persona:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" positionType="Float" x="0" y="310" width="133" height="34" forecolor="#000000"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Detalle Examen:]]></text>
@@ -353,60 +354,64 @@ order by detalle.exad_orden,detalle.exad_id]]>
 			</line>
 			<staticText>
 				<reportElement x="4" y="347" width="88" height="20"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" lineSpacing="Single">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Examen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="94" y="347" width="86" height="20"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" lineSpacing="Single">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Resultado]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="180" y="347" width="187" height="20"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" lineSpacing="Single">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Detalle]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="367" y="347" width="185" height="20"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" lineSpacing="Single">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Parámetros de correción]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="0" y="98" width="113" height="20" forecolor="#000000"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
+				<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="Single">
 					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Tipo de Examen:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="114" y="97" width="151" height="20"/>
-				<textElement verticalAlignment="Bottom">
+				<textElement verticalAlignment="Bottom" lineSpacing="Single">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PEXA_TIPO_EXAMEN}]]></textFieldExpression>
 			</textField>
+			<image onErrorType="Blank">
+				<reportElement x="4" y="0" width="94" height="53"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{IMAGEN_EMPRESA}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<detail>
 		<band height="54">
 			<textField>
 				<reportElement x="0" y="4" width="92" height="49"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{EXAD_DETALLE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="98" y="4" width="82" height="49"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{RDE_RESULTADO}]]></textFieldExpression>
@@ -419,7 +424,7 @@ order by detalle.exad_orden,detalle.exad_id]]>
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement x="185" y="4" width="182" height="49"/>
-				<textElement verticalAlignment="Middle" markup="html">
+				<textElement verticalAlignment="Middle" lineSpacing="Single" markup="html">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{RDE_DETALLE_RESULTADO}]]></textFieldExpression>
@@ -432,7 +437,7 @@ order by detalle.exad_orden,detalle.exad_id]]>
 			</line>
 			<textField>
 				<reportElement x="372" y="3" width="180" height="49"/>
-				<textElement verticalAlignment="Top" markup="html">
+				<textElement verticalAlignment="Top" lineSpacing="Single" markup="html">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{RDE_PARAMETROS_CORRECCION}]]></textFieldExpression>
@@ -450,22 +455,22 @@ order by detalle.exad_orden,detalle.exad_id]]>
 			<elementGroup>
 				<staticText>
 					<reportElement x="16" y="54" width="65" height="17"/>
-					<textElement/>
+					<textElement lineSpacing="Single"/>
 					<text><![CDATA[Firma Médico]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="4" y="37" width="100" height="17"/>
-					<textElement verticalAlignment="Top"/>
+					<textElement verticalAlignment="Top" lineSpacing="Single"/>
 					<text><![CDATA[...................................................]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="455" y="37" width="100" height="17"/>
-					<textElement verticalAlignment="Top"/>
+					<textElement verticalAlignment="Top" lineSpacing="Single"/>
 					<text><![CDATA[...................................................]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="461" y="54" width="84" height="17"/>
-					<textElement/>
+					<textElement lineSpacing="Single"/>
 					<text><![CDATA[Firma Examinado]]></text>
 				</staticText>
 			</elementGroup>
@@ -473,21 +478,21 @@ order by detalle.exad_orden,detalle.exad_id]]>
 				<reportElement mode="Opaque" x="2" y="75" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8"/>
 				<textField evaluationTime="Report">
 					<reportElement style="Column header" x="507" y="-1" width="40" height="13" forecolor="#FFFFFF"/>
-					<textElement verticalAlignment="Middle">
+					<textElement verticalAlignment="Middle" lineSpacing="Single">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Column header" x="421" y="-1" width="80" height="13" forecolor="#FFFFFF"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement style="Column header" x="14" y="-1" width="197" height="13" forecolor="#FFFFFF"/>
-					<textElement verticalAlignment="Middle">
+					<textElement verticalAlignment="Middle" lineSpacing="Single">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
@@ -505,14 +510,14 @@ order by detalle.exad_orden,detalle.exad_id]]>
 		<band height="211" splitType="Stretch">
 			<staticText>
 				<reportElement x="8" y="140" width="100" height="20"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Comentarios:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="117" y="140" width="329" height="69"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{PEXA_OBS}]]></textFieldExpression>
