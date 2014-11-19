@@ -404,7 +404,8 @@ public class PanelMenuPrincipal extends PanelMenu {
 				seleccionarHistorico();
 			}
 		});
-
+		
+		
 		btnInformesEstadistica
 				.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -430,6 +431,12 @@ public class PanelMenuPrincipal extends PanelMenu {
 			}
 		});
 
+		btnPanelLogo.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				seleccionarLogo();
+			}
+		});
+		
 		btnCerrarSession.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -767,6 +774,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 		
 		btnConfigurarLicencia.setVisible(true);
 		toolbarSubNivel.add(btnConfigurarLicencia);
+		
+		btnPanelLogo.setVisible(true);
+		toolbarSubNivel.add(btnPanelLogo);
 
 		/*Refresco para que se visualice correctamente*/
 		doAfterLoadMenu();
@@ -851,6 +861,24 @@ public class PanelMenuPrincipal extends PanelMenu {
 		doAfterLoadMenuContenido();
 
 	}
+	
+	
+	public void seleccionarLogo() {
+
+		unSelectButtons(toolbarSubNivel, btnPanelLogo);
+		panelContenido.removeAll();
+
+		PanelLogo panelLogo = new PanelLogo();
+		panelLogo.validate();
+
+		panelLogo.setVisible(true);
+		panelContenido.add(panelLogo);
+
+		doAfterLoadMenuContenido();
+
+	}
+	
+	
 	
 	public void seleccionarConfigurarLicencia() {
 
@@ -972,6 +1000,7 @@ public class PanelMenuPrincipal extends PanelMenu {
 			Constantes.MENU_SUB_PANEL_CONTROL);
 	
 	private javax.swing.JToggleButton btnPanelHistorico = new JToggleButton("Histórico");
+	private javax.swing.JToggleButton btnPanelLogo = new JToggleButton("Logo");
 
 	private javax.swing.JToggleButton btnInformesEstadistica = new JToggleButton(
 			Constantes.MENU_SUB_INFORMES);
