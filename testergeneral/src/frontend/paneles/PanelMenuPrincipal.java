@@ -487,6 +487,10 @@ public class PanelMenuPrincipal extends PanelMenu {
 		btnVerExamenPersona.setVisible(true);
 		btnVerExamenPersona.setEnabled(false);
 		toolbarSubNivel.add(btnVerExamenPersona);
+		
+		btnExportarPersona.setVisible(true);
+		btnExportarPersona.setEnabled(false);
+		toolbarSubNivel.add(btnExportarPersona);
 
 		/*Refresco para que se visualice correctamente*/
 		doAfterLoadMenu();
@@ -951,6 +955,16 @@ public class PanelMenuPrincipal extends PanelMenu {
 	public void setPanelSubMenu(javax.swing.JPanel panelSubMenu) {
 		this.panelSubMenu = panelSubMenu;
 	}
+	
+	public javax.swing.JToggleButton getBtnExportarPersona() {
+		return btnExportarPersona;
+	}
+	
+	
+	public void setBtnExportarPersona(
+			javax.swing.JToggleButton btnExportarPersona) {
+		this.btnExportarPersona = btnExportarPersona;
+	}
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
@@ -987,6 +1001,9 @@ public class PanelMenuPrincipal extends PanelMenu {
 	private javax.swing.JToggleButton btnVerExamenPersona = new JToggleButton(
 			Constantes.BTN_VER_EXAMENES);
 
+	private javax.swing.JToggleButton btnExportarPersona = new JToggleButton("Exportar datos");
+	
+	
 	/*Sub Menu Examenes*/
 
 	/*Sub Menu Usuarios*/

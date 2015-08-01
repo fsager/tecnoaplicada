@@ -16,17 +16,23 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
+
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -163,6 +169,15 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		};
 
 		menu.getBtnRealizarExamenPersona().addActionListener(actTomarExamen);
+		
+		java.awt.event.ActionListener actExportarPersona= new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btnExportarPersona();
+			}
+
+		};
+
+		menu.getBtnExportarPersona().addActionListener(actExportarPersona);
 
 		nuevo = new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,6 +203,47 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	
 	
 
+	private void btnExportarPersona() {
+		try
+		{
+			HashMap parameterMap = new HashMap();
+			parameterMap.put("p_per_id", persona.getPerId());
+
+			String file=System.getProperty("java.io.tmpdir")+System.currentTimeMillis()+".xls";
+            
+//			final byte[] buf = JasperRunManager.runReportToPdf("reportes/exportarDatos.jasper", parameterMap, ContextManager.getCurrentConnection());
+//			testerGeneral.persistence.impl.Util.toFile(file,buf);
+            
+            
+            JasperPrint print = JasperFillManager.fillReport("reportes/exportarDatos.jasper",parameterMap,ContextManager.getCurrentConnection());
+           
+            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+            JRXlsExporter exporterXLS = new JRXlsExporter();                
+
+            exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
+            exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, arrayOutputStream);
+            exporterXLS.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+            exporterXLS.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+            exporterXLS.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+            exporterXLS.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+            exporterXLS.setParameter(JRXlsExporterParameter.IS_IGNORE_CELL_BORDER, Boolean.TRUE);
+            
+            
+            exporterXLS.exportReport();
+			
+            testerGeneral.persistence.impl.Util.toFile(file,arrayOutputStream.toByteArray());
+            
+			Process p = Runtime.getRuntime().exec(
+					"rundll32 url.dll,FileProtocolHandler "
+							+ file);
+		
+		}
+		catch (Exception e) {
+			log.error(e.getMessage(),e);
+			JOptionPaneTesterGral.showInternalMessageDialog(this,e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
 
 	public void btnTomarExamen() {
 		menu.unSelectButtons(menu.getToolbarSubNivel(), menu
@@ -2370,6 +2426,8 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 		menu.getBtnRealizarExamenPersona().setEnabled(false);
 		menu.getBtnVerExamenPersona().setEnabled(false);
 		menu.getBtnNuevaPersona().setEnabled(false);
+		menu.getBtnExportarPersona().setEnabled(false);
+		
 
 		btnCancelar.setEnabled(false);
 		btnGuardar.setEnabled(false);
@@ -2768,6 +2826,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 	
 				menu.getBtnRealizarExamenPersona().setEnabled(false);
 				menu.getBtnVerExamenPersona().setEnabled(false);
+				menu.getBtnExportarPersona().setEnabled(false);
 	
 				btnGuardar.setEnabled(false);
 				btnCancelar.setEnabled(false);
@@ -2816,6 +2875,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		menu.getBtnRealizarExamenPersona().setEnabled(false);
 		menu.getBtnVerExamenPersona().setEnabled(false);
+		menu.getBtnExportarPersona().setEnabled(false);
 		menu.getBtnNuevaPersona().setEnabled(false);
 		menu.getBtnModificarPersona().setEnabled(false);
 		menu.getBtnEliminarPersona().setEnabled(false);
@@ -2828,6 +2888,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 				.getBtnNuevaPersona());
 		menu.getBtnRealizarExamenPersona().setEnabled(false);
 		menu.getBtnVerExamenPersona().setEnabled(false);
+		menu.getBtnExportarPersona().setEnabled(false);
 		menu.getBtnNuevaPersona().setEnabled(false);
 		menu.getBtnModificarPersona().setEnabled(false);
 		menu.getBtnEliminarPersona().setEnabled(false);
@@ -3023,6 +3084,7 @@ public class PanelPersona extends javax.swing.JPanel implements Finalisable {
 
 		menu.getBtnRealizarExamenPersona().setEnabled(true);
 		menu.getBtnVerExamenPersona().setEnabled(true);
+		menu.getBtnExportarPersona().setEnabled(true);
 
 		btnGuardar.setEnabled(false);
 		btnCancelar.setEnabled(true);
