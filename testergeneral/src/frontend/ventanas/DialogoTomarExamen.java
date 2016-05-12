@@ -7,10 +7,11 @@ package frontend.ventanas;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 
 import testerGeneral.business.ContextManager;
@@ -19,9 +20,10 @@ import testerGeneral.domain.Examen;
 import testerGeneral.domain.Persona;
 import testerGeneral.domain.PersonaExamen;
 import testerGeneral.service.ExamenDefinition;
+import testerGeneral.service.PersonaExamenDefinition;
 import examenes.util.ExamenesUtils;
+import frontend.components.PanelInput;
 import frontend.paneles.PanelMenuPrincipal;
-import frontend.paneles.examenes.PanelExamenes;
 import frontend.utils.Util;
 
 /**
@@ -125,6 +127,43 @@ public class DialogoTomarExamen extends JInternalFrameTesterGral {//JInternalFra
 				
 				panelMenu.cargarSubMenuExamenes(btnExamenVision,true);
 				panelMenu.seleccionarExamenVision(personaExamen);
+			}
+			else if (btn.getActionCommand().equals("EXA_TEORICO")) {
+				
+				ExamenDefinition examenService = (ExamenDefinition) ContextManager.getBizObject("examenService");
+				PersonaExamenDefinition personaExamenService = (PersonaExamenDefinition) ContextManager.getBizObject("personaExamenService");
+				Examen exa = new Examen();
+				exa.setExaCodigo("EXA_TEORICO");
+				exa = (Examen) examenService.getAll(exa).get(0);
+		
+				 
+				testerGeneral.persistence.impl.Util.insertAudit("Ingresó al Menú Examen Teórico",null, null);
+		
+				PersonaExamen personaExamen=new PersonaExamen();
+				personaExamen.setPexaTipoExamen(cmbTipoExamen.getSelectedItem().toString());
+				personaExamen.setPersona(per);
+				personaExamen.setExamen(exa);	
+				
+				Process p = Runtime.getRuntime().exec("kskCarnet.exe");
+				
+				final JInternalFrameTesterGral internalframe = new JInternalFrameTesterGral("Cargar Resultado: Examen Teórico", false, false, false, false);
+				PanelInput panelM=new PanelInput(internalframe,JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,"Resultado del examen (0 a 100): ");
+				internalframe.add(panelM);
+				internalframe.pack();
+				
+				internalframe.doModal(Util.framePrincipal.getRootPane());
+				internalframe.setVisible(true);
+
+				if(JOptionPane.YES_OPTION==panelM.getSelOpt())
+				{
+
+					Integer resultado=panelM.getResultado();
+					personaExamen.setPexaResultadoMedico(resultado+"%");
+					personaExamen.setPexaFecha(new Date());
+					personaExamen.setPexaEstado(Examen.ESTADO_FIN);
+					
+					personaExamenService.insert(personaExamen);
+				}				
 			}
 			/*else if (btn.getActionCommand().equals(Examen.EXA_CODIGO_AUDICION)) {
 				
